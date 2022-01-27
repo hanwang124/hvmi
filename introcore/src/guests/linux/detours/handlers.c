@@ -49,6 +49,9 @@ def_detour_hijack_vars(mprotect_fixup, vma_wants_writenotify);
 def_detour_hijack_vars(do_munmap, rb_erase);
 def_detour_hijack_vars(vma_adjust, rb_erase);
 
+def_detour_vars(sys_write);
+def_detour_vars(do_sys_open);
+
 
 LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
     .DetoursCount = det_max_id,
@@ -81,6 +84,9 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_hijack_field(mprotect_fixup, vma_wants_writenotify),
         init_detour_hijack_field(do_munmap, rb_erase),
         init_detour_hijack_field(vma_adjust, rb_erase),
+
+        init_detour_field(sys_write),
+        init_detour_field(do_sys_open),
     },
 };
 
@@ -540,6 +546,54 @@ void mprotect_fixup_vma_wants_writenotify(unsigned long vma)
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_write(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_write, save_fd, save_buf, save_count,save_rax,current_task);
+}
+
+/*
+__default_fn_attr
+void sys_write(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_write, save_fd, save_buf, save_count,save_rax,current_task);
+}
+*/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_write(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int* save_fd, char ** save_buf, int* save_count)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+    *save_count=count;
+    //vmcall_3(det_sys_write, fd, buf, count);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long *skip_call,char** save_filename, int* save_flags, long* save_mode)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_flags=flags;
+    *save_mode=mode;
+    //vmcall_3(det_sys_write, fd, buf, count);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long *skip_call,char* save_filename, int save_flags, long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_do_sys_open, current_task, save_filename, save_flags, save_mode,save_rax);
+}
 
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
@@ -573,6 +627,9 @@ void __asm_defines(void)
     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
     def_detour_hijack_asm_vars(do_munmap, rb_erase);
     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
+
+    def_detour_asm_vars(sys_write);
+    def_detour_asm_vars(do_sys_open);
 }
 
 

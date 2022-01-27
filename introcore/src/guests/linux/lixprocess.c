@@ -3489,6 +3489,20 @@ IntLixTaskHandleDoExit(
 /// @returns #INT_STATUS_SUCCESS On success.
 ///
 {
+    // hanwang changed start
+    // INTSTATUS status;
+    // QWORD args[1];
+
+    // status = IntDetGetArguments(Detour, 1, args);
+    // if (!INT_SUCCESS(status))
+    // {
+    //     ERROR("[ERROR] IntDetGetArgument failed: 0x%08x\n", status);
+    // }
+
+    // LOG("hanwang do_exit called.");
+    // LOG("Argument 1: 0x%llx\n ", args[0]);
+    // hanwang changed end
+
     UNREFERENCED_PARAMETER(Detour);
 
     LIX_TASK_OBJECT *pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);

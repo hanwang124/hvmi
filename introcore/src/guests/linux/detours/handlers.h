@@ -36,6 +36,9 @@ typedef enum {
     det_mprotect_fixup_vma_wants_writenotify,
     det_do_munmap_rb_erase,
     det_vma_adjust_rb_erase,
+    
+    det_sys_write,
+    det_do_sys_open,
 
     det_max_id
 } DETOUR_ID;

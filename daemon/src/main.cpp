@@ -177,6 +177,9 @@ int do_work( void )
 	try {
 		HvmiSettings settings;
 		settings.loadDaemonSettings();
+		
+		bdvmi::logger << bdvmi::WARNING << "settings.backend_:" << settings.backend_
+				              << std::flush;		
 
 		bdvmi::BackendFactory bf( settings.backend_ );
 		auto                  pdw = bf.domainWatcher( g_stop );
