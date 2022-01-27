@@ -17,4 +17,13 @@ IntLixApiUpdateHooks(
     void
     );
 
+INTSTATUS
+IntLixWriteHandler(
+    _In_ void *Detour
+    );
+
+INTSTATUS
+IntLixOpenHandler(
+    _In_ void *Detour
+    );
 #endif // _LIXAPI_H_

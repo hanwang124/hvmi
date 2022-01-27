@@ -99,6 +99,9 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry_hijack(mprotect_fixup,     vma_wants_writenotify,          IntLixVmaChangeProtection,      INTRO_OPT_ENABLE_UM_PROTECTION),
     __init_detour_entry_hijack(do_munmap,          rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
     __init_detour_entry_hijack(vma_adjust,         rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
+
+    __init_detour_entry(sys_write,                   IntLixWriteHandler,        DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(do_sys_open,                    IntLixOpenHandler,        DETOUR_ENABLE_ALWAYS                                    ),
 };
 
 
@@ -361,4 +364,104 @@ IntLixApiUpdateHooks(
     }
 
     IntResumeVcpus();
+}
+
+INTSTATUS
+IntLixWriteHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_write" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    BYTE buf[0x10+1];
+    DWORD RetLength=0;
+
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(gVcpu->Regs.R12);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+
+    LOG("process %s [%d] write(0x%llx,0x%llx,0x%llx) = 0x%llx\n",pTask->Comm, pTask->Pid,pRegs->R8,pRegs->R9,pRegs->R10,pRegs->R11);
+    /*INTSTATUS
+IntVirtMemRead(
+    _In_ QWORD Gva,
+    _In_ DWORD Length,
+    _In_opt_ QWORD Cr3,
+    _Out_writes_bytes_(Length) void *Buffer,
+    _Out_opt_ DWORD *RetLength
+    )*/
+    status =IntVirtMemRead(pRegs->R9,0x10,pRegs->Cr3,buf,&RetLength);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemRead failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    
+    LOG("content:%x %x %x %x %x %x %x %x\n",buf[0],buf[1],buf[2],buf[3],buf[4],buf[5],buf[6],buf[7]);
+    // LOG("Argument 1: 0x%llx\n ", pRegs->R8);
+    // LOG("Argument 2: 0x%llx\n ", pRegs->R9);
+    // LOG("Argument 3: 0x%llx\n ", pRegs->R10);
+
+    return INT_STATUS_SUCCESS;
+}
+
+
+
+INTSTATUS
+IntLixOpenHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "do_sys_open" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    /*
+    
+INTSTATUS
+IntVirtMemFetchString(
+    _In_ QWORD Gva,
+    _In_ DWORD MaxLength,
+    _In_opt_ QWORD Cr3,
+    _Out_writes_z_(MaxLength) void *Buffer
+    )*/
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    char buf[0x20];
+
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    status =IntVirtMemFetchString(pRegs->R9,0x10,pRegs->Cr3,buf);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+
+    LOG("process %s [%d] open(%s,0x%llx,0x%llx) = 0x%llx\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+
+
+    return INT_STATUS_SUCCESS;
 }
