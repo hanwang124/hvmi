@@ -12,6 +12,8 @@
 #include "crc32.h"
 #include "lixksym.h"
 
+INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
+INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -99,7 +101,78 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry_hijack(mprotect_fixup,     vma_wants_writenotify,          IntLixVmaChangeProtection,      INTRO_OPT_ENABLE_UM_PROTECTION),
     __init_detour_entry_hijack(do_munmap,          rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
     __init_detour_entry_hijack(vma_adjust,         rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
+    
+    __init_detour_entry(do_rmdir,                       IntLixRmdirHandle,              DETOUR_ENABLE_ALWAYS),
+    __init_detour_entry(sys_sysfs,                      IntLixSysfsHandle,              DETOUR_ENABLE_ALWAYS),
+
 };
+
+INTSTATUS
+IntLixSysfsHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sysfs" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
+    char buf[0x20];
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] sysfs(0x%x,0x%x,0x%x) = 0x%x\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+
+INTSTATUS
+IntLixRmdirHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "do_rmdir" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    char buf[0x20];
+
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,buf);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+
+    LOG("process %s [%d] rmdir(%s) = 0x%d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+
+
+    return INT_STATUS_SUCCESS;
+}
 
 
 

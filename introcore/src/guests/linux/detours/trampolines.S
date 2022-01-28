@@ -199,5 +199,5 @@ def_tramp_fn_hijack mprotect_fixup  vma_wants_writenotify   mprotect_fixup_vma_w
 def_tramp_fn_hijack do_munmap       rb_erase                do_munmap_rb_erase                      do_munmap_rb_erase_jmp
 def_tramp_fn_hijack vma_adjust      rb_erase                vma_adjust_rb_erase                     vma_adjust_rb_erase_jmp
 
-
-
+def_tramp_ret               do_rmdir                          1   do_rmdir_jmp
+def_tramp_ret               sys_sysfs                         3   sys_sysfs_jmp

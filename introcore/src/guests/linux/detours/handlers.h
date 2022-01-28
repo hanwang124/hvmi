@@ -37,6 +37,9 @@ typedef enum {
     det_do_munmap_rb_erase,
     det_vma_adjust_rb_erase,
 
+    det_do_rmdir,
+    det_sys_sysfs,
+
     det_max_id
 } DETOUR_ID;
 

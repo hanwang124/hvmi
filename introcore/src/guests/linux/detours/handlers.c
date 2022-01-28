@@ -28,6 +28,10 @@ def_detour_vars(wake_up_new_task);
 def_detour_vars(flush_old_exec);
 def_detour_vars(begin_new_exec);
 def_detour_vars(do_exit);
+
+def_detour_vars(do_rmdir);
+def_detour_vars(sys_sysfs);
+
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
 def_detour_vars(process_vm_rw_core);
@@ -81,6 +85,9 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_hijack_field(mprotect_fixup, vma_wants_writenotify),
         init_detour_hijack_field(do_munmap, rb_erase),
         init_detour_hijack_field(vma_adjust, rb_erase),
+
+        init_detour_field(do_rmdir),
+        init_detour_field(sys_sysfs),
     },
 };
 
@@ -540,6 +547,41 @@ void mprotect_fixup_vma_wants_writenotify(unsigned long vma)
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char** save_pathname)
+{
+    *skip_call=0;
+    *save_pathname=pathname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char* save_pathname)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_3(det_do_rmdir, current_task, save_pathname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
+{
+    *skip_call=0;
+    *save_option=option;
+    *save_arg1=arg1;
+    *save_arg2=arg2;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
+{
+    long x = __read_reg("rax");
+	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
+}
+
+
 
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
@@ -573,6 +615,9 @@ void __asm_defines(void)
     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
     def_detour_hijack_asm_vars(do_munmap, rb_erase);
     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
+
+    def_detour_asm_vars(do_rmdir);
+    def_detour_asm_vars(sys_sysfs);
 }
 
 
