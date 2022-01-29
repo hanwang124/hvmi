@@ -74,44 +74,44 @@ vmcall:
 	.cfi_def_cfa_offset 32
 	.cfi_offset 3, -32
 	mov	rbx, rax	#,
-# handlers.c:122:     return  (hypercall_info.Detours[id].EnableOptions == -1ULL)
+# handlers.c:123:     return  (hypercall_info.Detours[id].EnableOptions == -1ULL)
 	inc	rax	# tmp95
 	imul	rax, rax, 96	# tmp96, tmp95,
-# handlers.c:129: {
+# handlers.c:130: {
 	push	rcx	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 2, -40
 	push	rdx	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 1, -48
-# handlers.c:122:     return  (hypercall_info.Detours[id].EnableOptions == -1ULL)
+# handlers.c:123:     return  (hypercall_info.Detours[id].EnableOptions == -1ULL)
 	lea	rdx, hypercall_info[rip]	# tmp93,
 	mov	rax, QWORD PTR 8[rdx+rax]	# _8, hypercall_info.Detours[id_5(D)].EnableOptions
-# handlers.c:123:         || ((hypercall_info.Detours[id].EnableOptions & hypercall_info.ProtectionOptions) != 0);
+# handlers.c:124:         || ((hypercall_info.Detours[id].EnableOptions & hypercall_info.ProtectionOptions) != 0);
 	cmp	rax, -1	# _8,
 	je	.L2	#,
-# handlers.c:131:         return 0;
+# handlers.c:132:         return 0;
 	xor	esi, esi	# <retval>
-# handlers.c:130:     if (!is_detour_enabled(id)) {
+# handlers.c:131:     if (!is_detour_enabled(id)) {
 	test	QWORD PTR hypercall_info[rip], rax	# hypercall_info.ProtectionOptions, _8
 	je	.L1	#,
 .L2:
-# handlers.c:136:     asm volatile("vmcall" : "+S" (_out_param), "+a"(_out_value) : "D"(24), "b"(id): );
+# handlers.c:137:     asm volatile("vmcall" : "+S" (_out_param), "+a"(_out_value) : "D"(24), "b"(id): );
 	xor	esi, esi	# _out_param
 	mov	eax, 34	# _out_value,
 	mov	edi, 24	# tmp103,
 #APP
-# 136 "handlers.c" 1
+# 137 "handlers.c" 1
 	vmcall
 # 0 "" 2
-# handlers.c:139:     volatile struct inactive_task_frame _reserved = { 0 };
+# handlers.c:140:     volatile struct inactive_task_frame _reserved = { 0 };
 #NO_APP
 	lea	rdi, -56[rsp]	# tmp106,
 	mov	ecx, 14	# tmp108,
 	xor	eax, eax	# tmp107
 	rep stosd
 .L1:
-# handlers.c:143: }
+# handlers.c:144: }
 	pop	rdx	#
 	.cfi_def_cfa_offset 40
 	mov	rax, rsi	#, <retval>
@@ -159,21 +159,21 @@ d_path:
 	.cfi_offset 1, -72
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 80
-# handlers.c:149:     void *path = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
-	mov	esi, DWORD PTR hypercall_info[rip+2980]	# hypercall_info.OsSpecificFields.CurrentCpuOffset, hypercall_info.OsSpecificFields.CurrentCpuOffset
+# handlers.c:150:     void *path = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
+	mov	esi, DWORD PTR hypercall_info[rip+3076]	# hypercall_info.OsSpecificFields.CurrentCpuOffset, hypercall_info.OsSpecificFields.CurrentCpuOffset
 #APP
-# 149 "handlers.c" 1
+# 150 "handlers.c" 1
 	mov esi, gs:[rsi]	# ret, hypercall_info.OsSpecificFields.CurrentCpuOffset
 # 0 "" 2
-# handlers.c:151:     return hypercall_info.OsSpecificFields.DPathFnPtr(path_struct, path, PAGE_SIZE);
+# handlers.c:152:     return hypercall_info.OsSpecificFields.DPathFnPtr(path_struct, path, PAGE_SIZE);
 #NO_APP
 	mov	edx, 4096	#,
-# handlers.c:149:     void *path = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
+# handlers.c:150:     void *path = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
 	sal	esi, 12	#,
-	add	rsi, QWORD PTR hypercall_info[rip+2984]	# path, hypercall_info.OsSpecificFields.PercpuMemPtr
-# handlers.c:151:     return hypercall_info.OsSpecificFields.DPathFnPtr(path_struct, path, PAGE_SIZE);
-	call	[QWORD PTR hypercall_info[rip+2992]]	# hypercall_info.OsSpecificFields.DPathFnPtr
-# handlers.c:152: }
+	add	rsi, QWORD PTR hypercall_info[rip+3080]	# path, hypercall_info.OsSpecificFields.PercpuMemPtr
+# handlers.c:152:     return hypercall_info.OsSpecificFields.DPathFnPtr(path_struct, path, PAGE_SIZE);
+	call	[QWORD PTR hypercall_info[rip+3088]]	# hypercall_info.OsSpecificFields.DPathFnPtr
+# handlers.c:153: }
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 72
 	pop	rdx	#
@@ -212,23 +212,23 @@ _memcpy:
 	push	rcx	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 2, -32
-# handlers.c:161:     while (len--)
-	xor	ecx, ecx	# ivtmp.112
-# handlers.c:157: {
+# handlers.c:162:     while (len--)
+	xor	ecx, ecx	# ivtmp.116
+# handlers.c:158: {
 	push	rdx	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 1, -40
 .L14:
-# handlers.c:161:     while (len--)
-	cmp	rdx, rcx	# len, ivtmp.112
+# handlers.c:162:     while (len--)
+	cmp	rdx, rcx	# len, ivtmp.116
 	je	.L17	#,
-# handlers.c:163:         *d++ = *s++;
-	mov	dil, BYTE PTR [rsi+rcx]	# _1, MEM[base: src_7(D), index: ivtmp.112_14, offset: 0B]
-	mov	BYTE PTR [rax+rcx], dil	# MEM[base: dest_6(D), index: ivtmp.112_14, offset: 0B], _1
-	inc	rcx	# ivtmp.112
+# handlers.c:164:         *d++ = *s++;
+	mov	dil, BYTE PTR [rsi+rcx]	# _1, MEM[base: src_7(D), index: ivtmp.116_14, offset: 0B]
+	mov	BYTE PTR [rax+rcx], dil	# MEM[base: dest_6(D), index: ivtmp.116_14, offset: 0B], _1
+	inc	rcx	# ivtmp.116
 	jmp	.L14	#
 .L17:
-# handlers.c:167: }
+# handlers.c:168: }
 	pop	rdx	#
 	.cfi_def_cfa_offset 32
 	pop	rcx	#
@@ -261,150 +261,150 @@ store_regs:
 	.cfi_offset 0, -40
 	sub	rsp, 224	#,
 	.cfi_def_cfa_offset 264
-# handlers.c:175:     regs.Rax = __read_reg("rax");
+# handlers.c:176:     regs.Rax = __read_reg("rax");
 #APP
-# 175 "handlers.c" 1
+# 176 "handlers.c" 1
 	mov rax, rax	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR [rsp], rax	# regs.Rax, val
-# handlers.c:176:     regs.Rcx = __read_reg("rcx");
+# handlers.c:177:     regs.Rcx = __read_reg("rcx");
 #APP
-# 176 "handlers.c" 1
+# 177 "handlers.c" 1
 	mov rax, rcx	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 8[rsp], rax	# regs.Rcx, val
-# handlers.c:177:     regs.Rdx = __read_reg("rdx");
+# handlers.c:178:     regs.Rdx = __read_reg("rdx");
 #APP
-# 177 "handlers.c" 1
+# 178 "handlers.c" 1
 	mov rax, rdx	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 16[rsp], rax	# regs.Rdx, val
-# handlers.c:178:     regs.Rbx = __read_reg("rbx");
+# handlers.c:179:     regs.Rbx = __read_reg("rbx");
 #APP
-# 178 "handlers.c" 1
+# 179 "handlers.c" 1
 	mov rax, rbx	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 24[rsp], rax	# regs.Rbx, val
-# handlers.c:179:     regs.Rsp = __read_reg("rsp");
+# handlers.c:180:     regs.Rsp = __read_reg("rsp");
 #APP
-# 179 "handlers.c" 1
+# 180 "handlers.c" 1
 	mov rax, rsp	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 32[rsp], rax	# regs.Rsp, val
-# handlers.c:180:     regs.Rbp = __read_reg("rbp");
+# handlers.c:181:     regs.Rbp = __read_reg("rbp");
 #APP
-# 180 "handlers.c" 1
+# 181 "handlers.c" 1
 	mov rax, rbp	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 40[rsp], rax	# regs.Rbp, val
-# handlers.c:181:     regs.Rsi = __read_reg("rsi");
+# handlers.c:182:     regs.Rsi = __read_reg("rsi");
 #APP
-# 181 "handlers.c" 1
+# 182 "handlers.c" 1
 	mov rax, rsi	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 48[rsp], rax	# regs.Rsi, val
-# handlers.c:182:     regs.Rdi = __read_reg("rdi");
+# handlers.c:183:     regs.Rdi = __read_reg("rdi");
 #APP
-# 182 "handlers.c" 1
+# 183 "handlers.c" 1
 	mov rax, rdi	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 56[rsp], rax	# regs.Rdi, val
-# handlers.c:183:     regs.R8 = __read_reg("r8");
+# handlers.c:184:     regs.R8 = __read_reg("r8");
 #APP
-# 183 "handlers.c" 1
+# 184 "handlers.c" 1
 	mov rax, r8	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 64[rsp], rax	# regs.R8, val
-# handlers.c:184:     regs.R9 = __read_reg("r9");
+# handlers.c:185:     regs.R9 = __read_reg("r9");
 #APP
-# 184 "handlers.c" 1
+# 185 "handlers.c" 1
 	mov rax, r9	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 72[rsp], rax	# regs.R9, val
-# handlers.c:185:     regs.R10 = __read_reg("r10");
+# handlers.c:186:     regs.R10 = __read_reg("r10");
 #APP
-# 185 "handlers.c" 1
+# 186 "handlers.c" 1
 	mov rax, r10	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 80[rsp], rax	# regs.R10, val
-# handlers.c:186:     regs.R11 = __read_reg("r11");
+# handlers.c:187:     regs.R11 = __read_reg("r11");
 #APP
-# 186 "handlers.c" 1
+# 187 "handlers.c" 1
 	mov rax, r11	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 88[rsp], rax	# regs.R11, val
-# handlers.c:187:     regs.R12 = __read_reg("r12");
+# handlers.c:188:     regs.R12 = __read_reg("r12");
 #APP
-# 187 "handlers.c" 1
+# 188 "handlers.c" 1
 	mov rax, r12	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 96[rsp], rax	# regs.R12, val
-# handlers.c:188:     regs.R13 = __read_reg("r13");
+# handlers.c:189:     regs.R13 = __read_reg("r13");
 #APP
-# 188 "handlers.c" 1
+# 189 "handlers.c" 1
 	mov rax, r13	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 104[rsp], rax	# regs.R13, val
-# handlers.c:189:     regs.R14 = __read_reg("r14");
+# handlers.c:190:     regs.R14 = __read_reg("r14");
 #APP
-# 189 "handlers.c" 1
+# 190 "handlers.c" 1
 	mov rax, r14	# val
 	
 # 0 "" 2
 #NO_APP
 	mov	QWORD PTR 112[rsp], rax	# regs.R14, val
-# handlers.c:190:     regs.R15 = __read_reg("r15");
+# handlers.c:191:     regs.R15 = __read_reg("r15");
 #APP
-# 190 "handlers.c" 1
+# 191 "handlers.c" 1
 	mov rax, r15	# val
 	
 # 0 "" 2
-# handlers.c:192:     void *dst = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
+# handlers.c:193:     void *dst = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
 #NO_APP
-	mov	edi, DWORD PTR hypercall_info[rip+2980]	# hypercall_info.OsSpecificFields.CurrentCpuOffset, hypercall_info.OsSpecificFields.CurrentCpuOffset
-# handlers.c:190:     regs.R15 = __read_reg("r15");
+	mov	edi, DWORD PTR hypercall_info[rip+3076]	# hypercall_info.OsSpecificFields.CurrentCpuOffset, hypercall_info.OsSpecificFields.CurrentCpuOffset
+# handlers.c:191:     regs.R15 = __read_reg("r15");
 	mov	QWORD PTR 120[rsp], rax	# regs.R15, val
-# handlers.c:192:     void *dst = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
+# handlers.c:193:     void *dst = (void *)((unsigned long)hypercall_info.OsSpecificFields.PercpuMemPtr + (current_cpu * PAGE_SIZE));
 #APP
-# 192 "handlers.c" 1
+# 193 "handlers.c" 1
 	mov edi, gs:[rdi]	# ret, hypercall_info.OsSpecificFields.CurrentCpuOffset
 # 0 "" 2
 #NO_APP
 	sal	edi, 12	#,
-	add	rdi, QWORD PTR hypercall_info[rip+2984]	# dst, hypercall_info.OsSpecificFields.PercpuMemPtr
-# handlers.c:193:     _memcpy(dst, &regs, sizeof(regs));
+	add	rdi, QWORD PTR hypercall_info[rip+3080]	# dst, hypercall_info.OsSpecificFields.PercpuMemPtr
+# handlers.c:194:     _memcpy(dst, &regs, sizeof(regs));
 	mov	rsi, rsp	# tmp131,
 	mov	edx, 224	#,
 	call	_memcpy	#
-# handlers.c:194: }
+# handlers.c:195: }
 	add	rsp, 224	#,
 	.cfi_def_cfa_offset 40
 	pop	rax	#
@@ -431,9 +431,9 @@ commit_creds:
 	push	r8	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 8, -24
-# handlers.c:201:     void *current = current_task;
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
-# handlers.c:200: {
+# handlers.c:202:     void *current = current_task;
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:201: {
 	push	rdi	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 5, -32
@@ -443,29 +443,29 @@ commit_creds:
 	push	rax	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 0, -48
-# handlers.c:201:     void *current = current_task;
+# handlers.c:202:     void *current = current_task;
 #APP
-# 201 "handlers.c" 1
+# 202 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
-# handlers.c:203:     if (!hypercall_info.OsSpecificFields.Info.CredAltered) {
+# handlers.c:204:     if (!hypercall_info.OsSpecificFields.Info.CredAltered) {
 #NO_APP
-	cmp	DWORD PTR hypercall_info[rip+2896], 0	# hypercall_info.OsSpecificFields.Info.CredAltered,
+	cmp	DWORD PTR hypercall_info[rip+2992], 0	# hypercall_info.OsSpecificFields.Info.CredAltered,
 	jne	.L21	#,
-# handlers.c:204:         uint32_t *in_execve = (uint32_t *)((unsigned long)(current) + hypercall_info.OsSpecificFields.Task.InExecve);
-	mov	eax, DWORD PTR hypercall_info[rip+2940]	# hypercall_info.OsSpecificFields.Task.InExecve, hypercall_info.OsSpecificFields.Task.InExecve
-# handlers.c:206:         if ((*in_execve & BIT(hypercall_info.OsSpecificFields.Task.InExecveBit))) {
+# handlers.c:205:         uint32_t *in_execve = (uint32_t *)((unsigned long)(current) + hypercall_info.OsSpecificFields.Task.InExecve);
+	mov	eax, DWORD PTR hypercall_info[rip+3036]	# hypercall_info.OsSpecificFields.Task.InExecve, hypercall_info.OsSpecificFields.Task.InExecve
+# handlers.c:207:         if ((*in_execve & BIT(hypercall_info.OsSpecificFields.Task.InExecveBit))) {
 	mov	edx, DWORD PTR [r8+rax]	# *in_execve_18, *in_execve_18
-	mov	eax, DWORD PTR hypercall_info[rip+2944]	# hypercall_info.OsSpecificFields.Task.InExecveBit, hypercall_info.OsSpecificFields.Task.InExecveBit
+	mov	eax, DWORD PTR hypercall_info[rip+3040]	# hypercall_info.OsSpecificFields.Task.InExecveBit, hypercall_info.OsSpecificFields.Task.InExecveBit
 	bt	rdx, rax	# *in_execve_18, hypercall_info.OsSpecificFields.Task.InExecveBit
 	jc	.L20	#,
 .L21:
 	mov	r9, rdi	# creds, creds
-# handlers.c:211:     vmcall_2(det_commit_creds, current, creds);
+# handlers.c:212:     vmcall_2(det_commit_creds, current, creds);
 	xor	edi, edi	#
 	call	vmcall	#
 .L20:
-# handlers.c:212: }
+# handlers.c:213: }
 	pop	rax	#
 	.cfi_def_cfa_offset 40
 	pop	rdx	#
@@ -496,10 +496,10 @@ module_param_sysfs_setup:
 	push	rax	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 0, -32
-# handlers.c:219:     vmcall_1(det_module_param_sysfs_setup, module);
+# handlers.c:220:     vmcall_1(det_module_param_sysfs_setup, module);
 	mov	edi, 2	#,
 	call	vmcall	#
-# handlers.c:220: }
+# handlers.c:221: }
 	pop	rax	#
 	.cfi_def_cfa_offset 24
 	pop	rdi	#
@@ -526,10 +526,10 @@ module_param_sysfs_remove:
 	push	rax	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 0, -32
-# handlers.c:227:     vmcall_1(det_module_param_sysfs_remove, module);
+# handlers.c:228:     vmcall_1(det_module_param_sysfs_remove, module);
 	mov	edi, 3	#,
 	call	vmcall	#
-# handlers.c:228: }
+# handlers.c:229: }
 	pop	rax	#
 	.cfi_def_cfa_offset 24
 	pop	rdi	#
@@ -553,24 +553,24 @@ wake_up_new_task:
 	push	r8	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 8, -24
-# handlers.c:235:     vmcall_2(det_wake_up_new_task, current_task, task);
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
-# handlers.c:234: {
+# handlers.c:236:     vmcall_2(det_wake_up_new_task, current_task, task);
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:235: {
 	push	rdi	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 5, -32
 	push	rax	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 0, -40
-# handlers.c:235:     vmcall_2(det_wake_up_new_task, current_task, task);
+# handlers.c:236:     vmcall_2(det_wake_up_new_task, current_task, task);
 #APP
-# 235 "handlers.c" 1
+# 236 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
 	mov	edi, 4	#,
 	call	vmcall	#
-# handlers.c:236: }
+# handlers.c:237: }
 	pop	rax	#
 	.cfi_def_cfa_offset 32
 	pop	rdi	#
@@ -589,9 +589,9 @@ wake_up_new_task:
 flush_old_exec:
 .LFB9:
 	.cfi_startproc
-# handlers.c:243:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2948]	# hypercall_info.OsSpecificFields.Binprm.FileOffset, hypercall_info.OsSpecificFields.Binprm.FileOffset
-# handlers.c:242: {
+# handlers.c:244:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3044]	# hypercall_info.OsSpecificFields.Binprm.FileOffset, hypercall_info.OsSpecificFields.Binprm.FileOffset
+# handlers.c:243: {
 	push	r10	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 10, -16
@@ -608,19 +608,19 @@ flush_old_exec:
 	push	rdx	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 1, -48
-# handlers.c:243:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
+# handlers.c:244:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
 	mov	rdi, QWORD PTR [rax+rdi]	# file, *_4
-# handlers.c:246:     if (!file) {
+# handlers.c:247:     if (!file) {
 	test	rdi, rdi	# file
 	je	.L31	#,
-# handlers.c:250:     path_struct = file + hypercall_info.OsSpecificFields.File.PathOffset;
-	mov	edx, DWORD PTR hypercall_info[rip+2956]	# hypercall_info.OsSpecificFields.File.PathOffset, hypercall_info.OsSpecificFields.File.PathOffset
+# handlers.c:251:     path_struct = file + hypercall_info.OsSpecificFields.File.PathOffset;
+	mov	edx, DWORD PTR hypercall_info[rip+3052]	# hypercall_info.OsSpecificFields.File.PathOffset, hypercall_info.OsSpecificFields.File.PathOffset
 	add	rdi, rdx	# file, hypercall_info.OsSpecificFields.File.PathOffset
 .L31:
-# handlers.c:253:     return vmcall_3(det_flush_old_exec, current_task, binprm, d_path((void *)path_struct));
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:254:     return vmcall_3(det_flush_old_exec, current_task, binprm, d_path((void *)path_struct));
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 253 "handlers.c" 1
+# 254 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
@@ -628,7 +628,7 @@ flush_old_exec:
 	mov	r10, rax	# _12,
 	mov	edi, 5	#,
 	call	vmcall	#
-# handlers.c:254: }
+# handlers.c:255: }
 	pop	rdx	#
 	.cfi_def_cfa_offset 40
 	pop	rdi	#
@@ -649,9 +649,9 @@ flush_old_exec:
 begin_new_exec:
 .LFB10:
 	.cfi_startproc
-# handlers.c:261:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2948]	# hypercall_info.OsSpecificFields.Binprm.FileOffset, hypercall_info.OsSpecificFields.Binprm.FileOffset
-# handlers.c:260: {
+# handlers.c:262:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3044]	# hypercall_info.OsSpecificFields.Binprm.FileOffset, hypercall_info.OsSpecificFields.Binprm.FileOffset
+# handlers.c:261: {
 	push	r10	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 10, -16
@@ -668,19 +668,19 @@ begin_new_exec:
 	push	rdx	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 1, -48
-# handlers.c:261:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
+# handlers.c:262:     unsigned long file = *(unsigned long *)(binprm + hypercall_info.OsSpecificFields.Binprm.FileOffset);
 	mov	rdi, QWORD PTR [rax+rdi]	# file, *_4
-# handlers.c:264:     if (!file) {
+# handlers.c:265:     if (!file) {
 	test	rdi, rdi	# file
 	je	.L37	#,
-# handlers.c:268:     path_struct = file + hypercall_info.OsSpecificFields.File.PathOffset;
-	mov	edx, DWORD PTR hypercall_info[rip+2956]	# hypercall_info.OsSpecificFields.File.PathOffset, hypercall_info.OsSpecificFields.File.PathOffset
+# handlers.c:269:     path_struct = file + hypercall_info.OsSpecificFields.File.PathOffset;
+	mov	edx, DWORD PTR hypercall_info[rip+3052]	# hypercall_info.OsSpecificFields.File.PathOffset, hypercall_info.OsSpecificFields.File.PathOffset
 	add	rdi, rdx	# file, hypercall_info.OsSpecificFields.File.PathOffset
 .L37:
-# handlers.c:271:     return vmcall_3(det_begin_new_exec, current_task, binprm, d_path((void *)path_struct));
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:272:     return vmcall_3(det_begin_new_exec, current_task, binprm, d_path((void *)path_struct));
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 271 "handlers.c" 1
+# 272 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
@@ -688,7 +688,7 @@ begin_new_exec:
 	mov	r10, rax	# _12,
 	mov	edi, 6	#,
 	call	vmcall	#
-# handlers.c:272: }
+# handlers.c:273: }
 	pop	rdx	#
 	.cfi_def_cfa_offset 40
 	pop	rdi	#
@@ -716,24 +716,24 @@ do_exit:
 	push	r8	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 8, -24
-# handlers.c:279:     vmcall_2(det_do_exit, current_task, code);
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
-# handlers.c:278: {
+# handlers.c:280:     vmcall_2(det_do_exit, current_task, code);
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:279: {
 	push	rdi	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 5, -32
 	push	rax	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 0, -40
-# handlers.c:279:     vmcall_2(det_do_exit, current_task, code);
+# handlers.c:280:     vmcall_2(det_do_exit, current_task, code);
 #APP
-# 279 "handlers.c" 1
+# 280 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
 	mov	edi, 7	#,
 	call	vmcall	#
-# handlers.c:280: }
+# handlers.c:281: }
 	pop	rax	#
 	.cfi_def_cfa_offset 32
 	pop	rdi	#
@@ -752,12 +752,12 @@ do_exit:
 arch_ptrace:
 .LFB12:
 	.cfi_startproc
-# handlers.c:296:     return 0;
+# handlers.c:297:     return 0;
 	xor	eax, eax	# <retval>
-# handlers.c:288:         || request == PTRACE_POKETEXT
+# handlers.c:289:         || request == PTRACE_POKETEXT
 	cmp	rsi, 19	# request,
 	ja	.L49	#,
-# handlers.c:286: {
+# handlers.c:287: {
 	push	r9	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 9, -16
@@ -773,17 +773,17 @@ arch_ptrace:
 	push	rdx	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 1, -48
-# handlers.c:287:     if (request == PTRACE_POKEDATA
+# handlers.c:288:     if (request == PTRACE_POKEDATA
 	mov	edx, 565296	# tmp99,
 	bt	rdx, rsi	# tmp99, request
 	jnc	.L44	#,
 	mov	r9, rsi	# request, request
 	mov	r8, rdi	# child, child
-# handlers.c:293:         return vmcall_2(det_arch_ptrace, child, request);
+# handlers.c:294:         return vmcall_2(det_arch_ptrace, child, request);
 	mov	edi, 8	#,
 	call	vmcall	#
 .L44:
-# handlers.c:297: }
+# handlers.c:298: }
 	pop	rdx	#
 	.cfi_def_cfa_offset 40
 	pop	rsi	#
@@ -811,32 +811,32 @@ arch_ptrace:
 process_vm_rw_core:
 .LFB13:
 	.cfi_startproc
-# handlers.c:305:     if (!vm_write) {
+# handlers.c:306:     if (!vm_write) {
 	test	r9d, r9d	# vm_write
 	je	.L56	#,
-# handlers.c:304: {
+# handlers.c:305: {
 	push	r9	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 9, -16
 	push	r8	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 8, -24
-# handlers.c:309:     return vmcall_2(det_process_vm_rw_core, current_task, pid);
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
-# handlers.c:304: {
+# handlers.c:310:     return vmcall_2(det_process_vm_rw_core, current_task, pid);
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# handlers.c:305: {
 	push	rdi	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 5, -32
-# handlers.c:309:     return vmcall_2(det_process_vm_rw_core, current_task, pid);
+# handlers.c:310:     return vmcall_2(det_process_vm_rw_core, current_task, pid);
 #APP
-# 309 "handlers.c" 1
+# 310 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
 	movsx	r9, edi	# __p2, pid
 	mov	edi, 10	#,
 	call	vmcall	#
-# handlers.c:310: }
+# handlers.c:311: }
 	pop	rdi	#
 	.cfi_def_cfa_offset 24
 	pop	r8	#
@@ -877,30 +877,30 @@ __vma_link_rb:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:317:     long mm_flags = *(long *)((long)(mm) + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2928]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
-# handlers.c:319:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
+# handlers.c:318:     long mm_flags = *(long *)((long)(mm) + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3024]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
+# handlers.c:320:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rdi+rax]	# *_5, *_5
-	mov	eax, DWORD PTR hypercall_info[rip+2936]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3032]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	bt	rdx, rax	# *_5, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	jnc	.L61	#,
-# handlers.c:323:     long file = *(long *)((long)(vma) + hypercall_info.OsSpecificFields.Vma.FileOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2908]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
-# handlers.c:324:     if (file) {
+# handlers.c:324:     long file = *(long *)((long)(vma) + hypercall_info.OsSpecificFields.Vma.FileOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3004]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
+# handlers.c:325:     if (file) {
 	cmp	QWORD PTR [rax+rsi], 0	# *_14,
 	jne	.L61	#,
-# handlers.c:328:     long vm_flags = *(long *)((long)(vma) + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:329:     if (!(vm_flags & VM_EXEC)) {
+# handlers.c:329:     long vm_flags = *(long *)((long)(vma) + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:330:     if (!(vm_flags & VM_EXEC)) {
 	test	BYTE PTR [rsi+rax], 4	# *_18,
 	je	.L61	#,
 	mov	r8, rsi	# vma, vma
 	mov	r9, rdi	# mm, mm
-# handlers.c:333:     vmcall_2(det___vma_link_rb, vma, mm);
+# handlers.c:334:     vmcall_2(det___vma_link_rb, vma, mm);
 	mov	edi, 11	#,
 	call	vmcall	#
 .L61:
-# handlers.c:334: }
+# handlers.c:335: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -941,47 +941,47 @@ change_protection:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:342:     long file = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FileOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2908]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
-# handlers.c:343:     if (file) {
+# handlers.c:343:     long file = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FileOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3004]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
+# handlers.c:344:     if (file) {
 	cmp	QWORD PTR [rax+rdi], 0	# *_4,
 	jne	.L70	#,
-# handlers.c:347:     long mm = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+# handlers.c:348:     long mm = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
 	mov	r9, QWORD PTR [rax+rdi]	# mm, *_8
-# handlers.c:348:     long mm_flags = *(long *)(mm + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2928]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
-# handlers.c:350:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
+# handlers.c:349:     long mm_flags = *(long *)(mm + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3024]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
+# handlers.c:351:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+r9]	# *_12, *_12
-	mov	eax, DWORD PTR hypercall_info[rip+2936]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3032]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	bt	rdx, rax	# *_12, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	jnc	.L70	#,
-# handlers.c:354:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:356:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
-	mov	esi, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
-# handlers.c:354:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+# handlers.c:355:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:357:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+	mov	esi, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+# handlers.c:355:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
 	mov	rdx, QWORD PTR [rax+rdi]	# vm_flags, *_20
 	mov	rax, rdx	# _42, vm_flags
 	and	eax, 4	# _42,
-# handlers.c:356:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+# handlers.c:357:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
 	bt	rdx, rsi	# vm_flags, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L72	#,
-# handlers.c:356:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+# handlers.c:357:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
 	test	rax, rax	# _42
 	je	.L73	#,
 	jmp	.L70	#
 .L72:
-# handlers.c:357:         || (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && (vm_flags & VM_EXEC))) {
+# handlers.c:358:         || (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && (vm_flags & VM_EXEC))) {
 	test	rax, rax	# _42
 	je	.L70	#,
 .L73:
 	mov	r8, rdi	# vma, vma
-# handlers.c:360:         vmcall_2(det_change_protection, vma, mm);
+# handlers.c:361:         vmcall_2(det_change_protection, vma, mm);
 	mov	edi, 12	#,
 	call	vmcall	#
 .L70:
-# handlers.c:362: }
+# handlers.c:363: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -1013,38 +1013,38 @@ pre_vma_adjust:
 	push	rdx	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 1, -32
-# handlers.c:373:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	edx, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:370: {
+# handlers.c:374:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	edx, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:371: {
 	push	rax	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 0, -40
-# handlers.c:370: {
+# handlers.c:371: {
 	mov	rax, QWORD PTR 40[rsp]	# skip_call, skip_call
-# handlers.c:371:     *skip_call = 1;
+# handlers.c:372:     *skip_call = 1;
 	mov	QWORD PTR [rax], 1	# *skip_call_21(D),
-# handlers.c:374:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
+# handlers.c:375:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
 	mov	rsi, QWORD PTR [rdx+rdi]	# *_4, *_4
-	mov	edx, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+	mov	edx, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	bt	rsi, rdx	# *_4, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L84	#,
-# handlers.c:378:     *saved_vma = vma;
+# handlers.c:379:     *saved_vma = vma;
 	mov	rdx, QWORD PTR 48[rsp]	# saved_vma, saved_vma
 	mov	QWORD PTR [rdx], rdi	# *saved_vma_25(D), vma
-# handlers.c:379:     *next = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.VmNextOffset);
-	mov	edx, DWORD PTR hypercall_info[rip+2912]	# hypercall_info.OsSpecificFields.Vma.VmNextOffset, hypercall_info.OsSpecificFields.Vma.VmNextOffset
+# handlers.c:380:     *next = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.VmNextOffset);
+	mov	edx, DWORD PTR hypercall_info[rip+3008]	# hypercall_info.OsSpecificFields.Vma.VmNextOffset, hypercall_info.OsSpecificFields.Vma.VmNextOffset
 	mov	rsi, QWORD PTR [rdx+rdi]	# _13, *_12
 	mov	rdx, QWORD PTR 56[rsp]	# next, next
 	mov	QWORD PTR [rdx], rsi	# *next_27(D), _13
-# handlers.c:380:     *prev = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.VmPrevOffset);
-	mov	edx, DWORD PTR hypercall_info[rip+2916]	# hypercall_info.OsSpecificFields.Vma.VmPrevOffset, hypercall_info.OsSpecificFields.Vma.VmPrevOffset
+# handlers.c:381:     *prev = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.VmPrevOffset);
+	mov	edx, DWORD PTR hypercall_info[rip+3012]	# hypercall_info.OsSpecificFields.Vma.VmPrevOffset, hypercall_info.OsSpecificFields.Vma.VmPrevOffset
 	mov	rsi, QWORD PTR [rdx+rdi]	# _18, *_17
 	mov	rdx, QWORD PTR 64[rsp]	# prev, prev
 	mov	QWORD PTR [rdx], rsi	# *prev_29(D), _18
-# handlers.c:381:     *skip_call = 0;
+# handlers.c:382:     *skip_call = 0;
 	mov	QWORD PTR [rax], 0	# *skip_call_21(D),
 .L84:
-# handlers.c:384: }
+# handlers.c:385: }
 	pop	rax	#
 	.cfi_def_cfa_offset 32
 	pop	rdx	#
@@ -1087,25 +1087,25 @@ vma_adjust:
 	push	rax	#
 	.cfi_def_cfa_offset 72
 	.cfi_offset 0, -72
-# handlers.c:393:     long mm = *(long *)(saved_vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
-# handlers.c:391: {
+# handlers.c:394:     long mm = *(long *)(saved_vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+# handlers.c:392: {
 	mov	rcx, QWORD PTR 80[rsp]	# saved_vma, saved_vma
-# handlers.c:393:     long mm = *(long *)(saved_vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
+# handlers.c:394:     long mm = *(long *)(saved_vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
 	mov	rbx, QWORD PTR [rax+rcx]	# mm, *_4
-# handlers.c:395:     vmcall_4(det_vma_adjust, svma, mm, next, prev);
+# handlers.c:396:     vmcall_4(det_vma_adjust, svma, mm, next, prev);
 	mov	r8, rcx	# __p1, saved_vma
 	mov	r9, rbx	# __p2, mm
 	mov	r10, QWORD PTR 88[rsp]	# __p3, next
 	mov	r11, QWORD PTR 96[rsp]	# __p4, prev
 	mov	edi, 13	#,
 	call	vmcall	#
-# handlers.c:396:     vmcall_4(det___vma_adjust, svma, mm, next, prev);
+# handlers.c:397:     vmcall_4(det___vma_adjust, svma, mm, next, prev);
 	mov	r10, QWORD PTR 88[rsp]	# __p3, next
 	mov	r11, QWORD PTR 96[rsp]	# __p4, prev
 	mov	edi, 14	#,
 	call	vmcall	#
-# handlers.c:397: }
+# handlers.c:398: }
 	pop	rax	#
 	.cfi_def_cfa_offset 64
 	pop	rcx	#
@@ -1150,27 +1150,27 @@ vma_rb_erase:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:404:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:405:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
+# handlers.c:405:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:406:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+rdi]	# *_4, *_4
-	mov	eax, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	bt	rdx, rax	# *_4, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L92	#,
 	mov	rcx, rdi	# vma, vma
-# handlers.c:409:     vmcall_2(det_vma_rb_erase, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset));
+# handlers.c:410:     vmcall_2(det_vma_rb_erase, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset));
 	mov	r8, rdi	# __p1, vma
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
 	mov	r9, QWORD PTR [rax+rdi]	# __p2, *_13
 	mov	edi, 15	#,
 	call	vmcall	#
-# handlers.c:410:     vmcall_2(det___vma_rb_erase, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset));
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+# handlers.c:411:     vmcall_2(det___vma_rb_erase, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset));
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
 	mov	r9, QWORD PTR [rax+rcx]	# __p2, *_19
 	mov	edi, 16	#,
 	call	vmcall	#
 .L92:
-# handlers.c:411: }
+# handlers.c:412: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -1214,22 +1214,22 @@ expand_downwards:
 	push	rax	#
 	.cfi_def_cfa_offset 64
 	.cfi_offset 0, -64
-# handlers.c:418:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:419:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
+# handlers.c:419:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:420:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+rdi]	# *_4, *_4
-	mov	eax, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	bt	rdx, rax	# *_4, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L98	#,
 	mov	r10, rsi	# address, address
-# handlers.c:423:     vmcall_3(det_expand_downwards, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset), address);
+# handlers.c:424:     vmcall_3(det_expand_downwards, vma, *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset), address);
 	mov	r8, rdi	# __p1, vma
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
 	mov	r9, QWORD PTR [rax+rdi]	# __p2, *_13
 	mov	edi, 17	#,
 	call	vmcall	#
 .L98:
-# handlers.c:424: }
+# handlers.c:425: }
 	pop	rax	#
 	.cfi_def_cfa_offset 56
 	pop	rdx	#
@@ -1276,10 +1276,10 @@ complete_signal:
 	push	rdx	#
 	.cfi_def_cfa_offset 64
 	.cfi_offset 1, -64
-# handlers.c:432:         && sig != SIGILL
+# handlers.c:433:         && sig != SIGILL
 	cmp	edi, 11	# sig,
 	ja	.L105	#,
-# handlers.c:431:     if (sig != SIGQUIT
+# handlers.c:432:     if (sig != SIGQUIT
 	mov	eax, 2520	# tmp100,
 	bt	rax, rdi	# tmp100, sig
 	jc	.L106	#,
@@ -1288,17 +1288,17 @@ complete_signal:
 	jmp	.L104	#
 .L106:
 	mov	r8, rsi	# task, task
-# handlers.c:441:     int new_sig = vmcall_3(det_complete_signal, task, sig, type);
+# handlers.c:442:     int new_sig = vmcall_3(det_complete_signal, task, sig, type);
 	movsx	r9, edi	# __p2, sig
 	mov	r10d, edx	# __p3, type
 	mov	edi, 18	#,
 	call	vmcall	#
 	mov	edx, eax	# <retval>, _20
-# handlers.c:442:     return new_sig ? new_sig : sig;
+# handlers.c:443:     return new_sig ? new_sig : sig;
 	test	eax, eax	# _20
 	je	.L105	#,
 .L104:
-# handlers.c:443: }
+# handlers.c:444: }
 	mov	eax, edx	#, <retval>
 	pop	rdx	#
 	.cfi_def_cfa_offset 56
@@ -1333,9 +1333,9 @@ text_poke:
 	push	r8	#
 	.cfi_def_cfa_offset 32
 	.cfi_offset 8, -32
-# handlers.c:450:     vmcall_3(det_text_poke, addr, opcode, len);
+# handlers.c:451:     vmcall_3(det_text_poke, addr, opcode, len);
 	mov	r8, rdi	# __p1, addr
-# handlers.c:449: {
+# handlers.c:450: {
 	push	rbp	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 6, -40
@@ -1357,15 +1357,15 @@ text_poke:
 	push	rax	#
 	.cfi_def_cfa_offset 88
 	.cfi_offset 0, -88
-# handlers.c:450:     vmcall_3(det_text_poke, addr, opcode, len);
+# handlers.c:451:     vmcall_3(det_text_poke, addr, opcode, len);
 	mov	r9, rsi	# __p2, opcode
 	mov	r10, rdx	# __p3, len
 	mov	edi, 19	#,
 	call	vmcall	#
-# handlers.c:451:     vmcall_3(det___text_poke, addr, opcode, len);
+# handlers.c:452:     vmcall_3(det___text_poke, addr, opcode, len);
 	mov	edi, 20	#,
 	call	vmcall	#
-# handlers.c:452: }
+# handlers.c:453: }
 	pop	rax	#
 	.cfi_def_cfa_offset 80
 	pop	rdx	#
@@ -1419,11 +1419,11 @@ ftrace_write:
 	push	rax	#
 	.cfi_def_cfa_offset 64
 	.cfi_offset 0, -64
-# handlers.c:459:     vmcall_3(det_ftrace_write, ip, val, size);
+# handlers.c:460:     vmcall_3(det_ftrace_write, ip, val, size);
 	movsx	r10, edx	# __p3, size
 	mov	edi, 21	#,
 	call	vmcall	#
-# handlers.c:460: }
+# handlers.c:461: }
 	pop	rax	#
 	.cfi_def_cfa_offset 56
 	pop	rdx	#
@@ -1451,15 +1451,15 @@ panic:
 	push	rdi	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 5, -16
-# handlers.c:467:     vmcall(det_panic);
+# handlers.c:468:     vmcall(det_panic);
 	mov	edi, 22	#,
-# handlers.c:466: {
+# handlers.c:467: {
 	push	rax	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 0, -24
-# handlers.c:467:     vmcall(det_panic);
+# handlers.c:468:     vmcall(det_panic);
 	call	vmcall	#
-# handlers.c:468: }
+# handlers.c:469: }
 	pop	rax	#
 	.cfi_def_cfa_offset 16
 	pop	rdi	#
@@ -1490,11 +1490,11 @@ arch_jump_label_transform:
 	push	rax	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 0, -48
-# handlers.c:475:     vmcall_2(det_arch_jump_label_transform, entry, type);
+# handlers.c:476:     vmcall_2(det_arch_jump_label_transform, entry, type);
 	mov	r9d, esi	# __p2, type
 	mov	edi, 1	#,
 	call	vmcall	#
-# handlers.c:476: }
+# handlers.c:477: }
 	pop	rax	#
 	.cfi_def_cfa_offset 40
 	pop	rsi	#
@@ -1515,10 +1515,10 @@ arch_jump_label_transform:
 __access_remote_vm:
 .LFB25:
 	.cfi_startproc
-# handlers.c:484:     if ((gup_flags & 1) == 0) {
+# handlers.c:485:     if ((gup_flags & 1) == 0) {
 	test	r9b, 1	# gup_flags,
 	je	.L123	#,
-# handlers.c:483: {
+# handlers.c:484: {
 	push	r12	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 12, -16
@@ -1554,10 +1554,10 @@ __access_remote_vm:
 	push	rax	#
 	.cfi_def_cfa_offset 88
 	.cfi_offset 0, -88
-# handlers.c:488:     vmcall_5(det___access_remote_vm, mm, addr, buf, len, gup_flags);
+# handlers.c:489:     vmcall_5(det___access_remote_vm, mm, addr, buf, len, gup_flags);
 	mov	edi, 24	#,
 	call	vmcall	#
-# handlers.c:489: }
+# handlers.c:490: }
 	pop	rax	#
 	.cfi_def_cfa_offset 80
 	pop	rdx	#
@@ -1618,27 +1618,27 @@ do_munmap_rb_erase:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:496:     unsigned long vma = vma_vm_rb - hypercall_info.OsSpecificFields.Vma.Rb;
-	mov	eax, DWORD PTR hypercall_info[rip+2920]	# hypercall_info.OsSpecificFields.Vma.Rb, hypercall_info.OsSpecificFields.Vma.Rb
+# handlers.c:497:     unsigned long vma = vma_vm_rb - hypercall_info.OsSpecificFields.Vma.Rb;
+	mov	eax, DWORD PTR hypercall_info[rip+3016]	# hypercall_info.OsSpecificFields.Vma.Rb, hypercall_info.OsSpecificFields.Vma.Rb
 	sub	rdi, rax	# vma_vm_rb, hypercall_info.OsSpecificFields.Vma.Rb
-# handlers.c:498:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:500:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
+# handlers.c:499:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:501:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+rdi]	# *_8, *_8
-	mov	eax, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	bt	rdx, rax	# *_8, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L126	#,
 	mov	r8, rdi	# vma, vma_vm_rb
 	mov	r9, rsi	# mm_mm_rb, mm_mm_rb
-# handlers.c:504:     vmcall_2(det_do_munmap_rb_erase, vma, mm);
-# handlers.c:497:     unsigned long mm = mm_mm_rb - hypercall_info.OsSpecificFields.Mm.Rb;
-	mov	eax, DWORD PTR hypercall_info[rip+2932]	# _3, hypercall_info.OsSpecificFields.Mm.Rb
+# handlers.c:505:     vmcall_2(det_do_munmap_rb_erase, vma, mm);
+# handlers.c:498:     unsigned long mm = mm_mm_rb - hypercall_info.OsSpecificFields.Mm.Rb;
+	mov	eax, DWORD PTR hypercall_info[rip+3028]	# _3, hypercall_info.OsSpecificFields.Mm.Rb
 	sub	r9, rax	# __p2, _3
-# handlers.c:504:     vmcall_2(det_do_munmap_rb_erase, vma, mm);
+# handlers.c:505:     vmcall_2(det_do_munmap_rb_erase, vma, mm);
 	mov	edi, 26	#,
 	call	vmcall	#
 .L126:
-# handlers.c:505: }
+# handlers.c:506: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -1679,27 +1679,27 @@ vma_adjust_rb_erase:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:512:     unsigned long vma = vma_vm_rb - hypercall_info.OsSpecificFields.Vma.Rb;
-	mov	eax, DWORD PTR hypercall_info[rip+2920]	# hypercall_info.OsSpecificFields.Vma.Rb, hypercall_info.OsSpecificFields.Vma.Rb
+# handlers.c:513:     unsigned long vma = vma_vm_rb - hypercall_info.OsSpecificFields.Vma.Rb;
+	mov	eax, DWORD PTR hypercall_info[rip+3016]	# hypercall_info.OsSpecificFields.Vma.Rb, hypercall_info.OsSpecificFields.Vma.Rb
 	sub	rdi, rax	# vma_vm_rb, hypercall_info.OsSpecificFields.Vma.Rb
-# handlers.c:514:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:516:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
+# handlers.c:515:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:517:     if (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+rdi]	# *_8, *_8
-	mov	eax, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	bt	rdx, rax	# *_8, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L132	#,
 	mov	r8, rdi	# vma, vma_vm_rb
 	mov	r9, rsi	# mm_mm_rb, mm_mm_rb
-# handlers.c:520:     vmcall_2(det_vma_adjust_rb_erase, vma, mm);
-# handlers.c:513:     unsigned long mm = mm_mm_rb - hypercall_info.OsSpecificFields.Mm.Rb;
-	mov	eax, DWORD PTR hypercall_info[rip+2932]	# _3, hypercall_info.OsSpecificFields.Mm.Rb
+# handlers.c:521:     vmcall_2(det_vma_adjust_rb_erase, vma, mm);
+# handlers.c:514:     unsigned long mm = mm_mm_rb - hypercall_info.OsSpecificFields.Mm.Rb;
+	mov	eax, DWORD PTR hypercall_info[rip+3028]	# _3, hypercall_info.OsSpecificFields.Mm.Rb
 	sub	r9, rax	# __p2, _3
-# handlers.c:520:     vmcall_2(det_vma_adjust_rb_erase, vma, mm);
+# handlers.c:521:     vmcall_2(det_vma_adjust_rb_erase, vma, mm);
 	mov	edi, 27	#,
 	call	vmcall	#
 .L132:
-# handlers.c:521: }
+# handlers.c:522: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -1740,47 +1740,47 @@ mprotect_fixup_vma_wants_writenotify:
 	push	rax	#
 	.cfi_def_cfa_offset 56
 	.cfi_offset 0, -56
-# handlers.c:528:     long file = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FileOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2908]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
-# handlers.c:529:     if (file) {
+# handlers.c:529:     long file = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FileOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3004]	# hypercall_info.OsSpecificFields.Vma.FileOffset, hypercall_info.OsSpecificFields.Vma.FileOffset
+# handlers.c:530:     if (file) {
 	cmp	QWORD PTR [rax+rdi], 0	# *_4,
 	jne	.L138	#,
-# handlers.c:533:     long mm = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2900]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
+# handlers.c:534:     long mm = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.MmOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+2996]	# hypercall_info.OsSpecificFields.Vma.MmOffset, hypercall_info.OsSpecificFields.Vma.MmOffset
 	mov	r9, QWORD PTR [rax+rdi]	# mm, *_8
-# handlers.c:534:     long mm_flags = *(long *)(mm + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2928]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
-# handlers.c:536:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
+# handlers.c:535:     long mm_flags = *(long *)(mm + hypercall_info.OsSpecificFields.Mm.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3024]	# hypercall_info.OsSpecificFields.Mm.FlagsOffset, hypercall_info.OsSpecificFields.Mm.FlagsOffset
+# handlers.c:537:     if (!(mm_flags & BIT(hypercall_info.OsSpecificFields.Mm.ProtectionBit))) {
 	mov	rdx, QWORD PTR [rax+r9]	# *_12, *_12
-	mov	eax, DWORD PTR hypercall_info[rip+2936]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
+	mov	eax, DWORD PTR hypercall_info[rip+3032]	# hypercall_info.OsSpecificFields.Mm.ProtectionBit, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	bt	rdx, rax	# *_12, hypercall_info.OsSpecificFields.Mm.ProtectionBit
 	jnc	.L138	#,
-# handlers.c:540:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
-	mov	eax, DWORD PTR hypercall_info[rip+2904]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
-# handlers.c:542:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
-	mov	esi, DWORD PTR hypercall_info[rip+2924]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
-# handlers.c:540:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+# handlers.c:541:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
+	mov	eax, DWORD PTR hypercall_info[rip+3000]	# hypercall_info.OsSpecificFields.Vma.FlagsOffset, hypercall_info.OsSpecificFields.Vma.FlagsOffset
+# handlers.c:543:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+	mov	esi, DWORD PTR hypercall_info[rip+3020]	# hypercall_info.OsSpecificFields.Vma.ProtectionBit, hypercall_info.OsSpecificFields.Vma.ProtectionBit
+# handlers.c:541:     long vm_flags = *(long *)(vma + hypercall_info.OsSpecificFields.Vma.FlagsOffset);
 	mov	rdx, QWORD PTR [rax+rdi]	# vm_flags, *_20
 	mov	rax, rdx	# _41, vm_flags
 	and	eax, 4	# _41,
-# handlers.c:542:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+# handlers.c:543:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
 	bt	rdx, rsi	# vm_flags, hypercall_info.OsSpecificFields.Vma.ProtectionBit
 	jnc	.L140	#,
-# handlers.c:542:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
+# handlers.c:543:     if (((vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && !(vm_flags & VM_EXEC))
 	test	rax, rax	# _41
 	je	.L141	#,
 	jmp	.L138	#
 .L140:
-# handlers.c:543:         || (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && (vm_flags & VM_EXEC))) {
+# handlers.c:544:         || (!(vm_flags & BIT(hypercall_info.OsSpecificFields.Vma.ProtectionBit)) && (vm_flags & VM_EXEC))) {
 	test	rax, rax	# _41
 	je	.L138	#,
 .L141:
 	mov	r8, rdi	# vma, vma
-# handlers.c:546:         vmcall_2(det_mprotect_fixup_vma_wants_writenotify, vma, mm);
+# handlers.c:547:         vmcall_2(det_mprotect_fixup_vma_wants_writenotify, vma, mm);
 	mov	edi, 25	#,
 	call	vmcall	#
 .L138:
-# handlers.c:548: }
+# handlers.c:549: }
 	pop	rax	#
 	.cfi_def_cfa_offset 48
 	pop	rdx	#
@@ -1809,13 +1809,13 @@ pre_do_rmdir:
 	push	rax	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 0, -24
-# handlers.c:554:     *skip_call=0;
+# handlers.c:555:     *skip_call=0;
 	mov	rax, QWORD PTR 24[rsp]	# skip_call, skip_call
 	mov	QWORD PTR [rax], 0	# *skip_call_2(D),
-# handlers.c:555:     *save_pathname=pathname;
+# handlers.c:556:     *save_pathname=pathname;
 	mov	rax, QWORD PTR 32[rsp]	# save_pathname, save_pathname
 	mov	QWORD PTR [rax], rsi	# *save_pathname_4(D), pathname
-# handlers.c:556: }
+# handlers.c:557: }
 	pop	rax	#
 	.cfi_def_cfa_offset 16
 	pop	rsi	#
@@ -1845,24 +1845,24 @@ do_rmdir:
 	push	rax	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 0, -48
-# handlers.c:562:     long save_rax = __read_reg("rax");
+# handlers.c:563:     long save_rax = __read_reg("rax");
 #APP
-# 562 "handlers.c" 1
+# 563 "handlers.c" 1
 	mov r10, rax	# val
 	
 # 0 "" 2
-# handlers.c:563:     vmcall_3(det_do_rmdir, current_task, save_pathname,save_rax);
+# handlers.c:564:     vmcall_3(det_do_rmdir, current_task, save_pathname,save_rax);
 #NO_APP
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 563 "handlers.c" 1
+# 564 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
 	mov	r9, QWORD PTR 56[rsp]	# __p2, save_pathname
 	mov	edi, 28	#,
 	call	vmcall	#
-# handlers.c:564: }
+# handlers.c:565: }
 	pop	rax	#
 	.cfi_def_cfa_offset 40
 	pop	rdi	#
@@ -1895,19 +1895,19 @@ pre_sys_sysfs:
 	push	rax	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 0, -40
-# handlers.c:570:     *skip_call=0;
+# handlers.c:571:     *skip_call=0;
 	mov	rax, QWORD PTR 40[rsp]	# skip_call, skip_call
 	mov	QWORD PTR [rax], 0	# *skip_call_5(D),
-# handlers.c:571:     *save_option=option;
+# handlers.c:572:     *save_option=option;
 	mov	rax, QWORD PTR 48[rsp]	# save_option, save_option
 	mov	BYTE PTR [rax], dil	# *save_option_8(D), option
-# handlers.c:572:     *save_arg1=arg1;
+# handlers.c:573:     *save_arg1=arg1;
 	mov	rax, QWORD PTR 56[rsp]	# save_arg1, save_arg1
 	mov	QWORD PTR [rax], rsi	# *save_arg1_11(D), arg1
-# handlers.c:573:     *save_arg2=arg2;
+# handlers.c:574:     *save_arg2=arg2;
 	mov	rax, QWORD PTR 64[rsp]	# save_arg2, save_arg2
 	mov	QWORD PTR [rax], rdx	# *save_arg2_14(D), arg2
-# handlers.c:574: }
+# handlers.c:575: }
 	pop	rax	#
 	.cfi_def_cfa_offset 32
 	pop	rdx	#
@@ -1947,17 +1947,17 @@ sys_sysfs:
 	push	rax	#
 	.cfi_def_cfa_offset 64
 	.cfi_offset 0, -64
-# handlers.c:580:     long x = __read_reg("rax");
+# handlers.c:581:     long x = __read_reg("rax");
 #APP
-# 580 "handlers.c" 1
+# 581 "handlers.c" 1
 	mov r12, rax	# val
 	
 # 0 "" 2
-# handlers.c:581: 	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
+# handlers.c:582: 	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
 #NO_APP
-	mov	r8d, DWORD PTR hypercall_info[rip+2976]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 581 "handlers.c" 1
+# 582 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
@@ -1966,7 +1966,7 @@ sys_sysfs:
 	mov	r11, QWORD PTR 88[rsp]	# __p4, save_arg2
 	mov	edi, 29	#,
 	call	vmcall	#
-# handlers.c:582: }
+# handlers.c:583: }
 	pop	rax	#
 	.cfi_def_cfa_offset 56
 	pop	rdi	#
@@ -1985,147 +1985,259 @@ sys_sysfs:
 	.cfi_endproc
 .LFE32:
 	.size	sys_sysfs, .-sys_sysfs
-	.globl	__asm_defines
-	.type	__asm_defines, @function
-__asm_defines:
+	.align 16
+	.globl	sys_read
+	.type	sys_read, @function
+sys_read:
 .LFB33:
 	.cfi_startproc
-# handlers.c:589:     def_detour_asm_vars(commit_creds);
+	push	r12	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	push	r11	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 11, -24
+	push	r10	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 10, -32
+	push	r9	#
+	.cfi_def_cfa_offset 40
+	.cfi_offset 9, -40
+	push	r8	#
+	.cfi_def_cfa_offset 48
+	.cfi_offset 8, -48
+	push	rdi	#
+	.cfi_def_cfa_offset 56
+	.cfi_offset 5, -56
+	push	rax	#
+	.cfi_def_cfa_offset 64
+	.cfi_offset 0, -64
+# handlers.c:589:     long save_rax = __read_reg("rax");
 #APP
 # 589 "handlers.c" 1
-	#define commit_creds_jmp 96	#
+	mov r12, rax	# val
+	
 # 0 "" 2
-# handlers.c:590:     def_detour_asm_vars(arch_jump_label_transform);
-# 590 "handlers.c" 1
-	#define arch_jump_label_transform_jmp 192	#
-# 0 "" 2
-# handlers.c:591:     def_detour_asm_vars(module_param_sysfs_setup);
-# 591 "handlers.c" 1
-	#define module_param_sysfs_setup_jmp 288	#
-# 0 "" 2
-# handlers.c:592:     def_detour_asm_vars(module_param_sysfs_remove);
-# 592 "handlers.c" 1
-	#define module_param_sysfs_remove_jmp 384	#
-# 0 "" 2
-# handlers.c:593:     def_detour_asm_vars(wake_up_new_task);
-# 593 "handlers.c" 1
-	#define wake_up_new_task_jmp 480	#
-# 0 "" 2
-# handlers.c:594:     def_detour_asm_vars(flush_old_exec);
-# 594 "handlers.c" 1
-	#define flush_old_exec_jmp 576	#
-# 0 "" 2
-# handlers.c:595:     def_detour_asm_vars(begin_new_exec);
-# 595 "handlers.c" 1
-	#define begin_new_exec_jmp 672	#
-# 0 "" 2
-# handlers.c:596:     def_detour_asm_vars(do_exit);
-# 596 "handlers.c" 1
-	#define do_exit_jmp 768	#
-# 0 "" 2
-# handlers.c:597:     def_detour_asm_vars(arch_ptrace);
-# 597 "handlers.c" 1
-	#define arch_ptrace_jmp 864	#
-# 0 "" 2
-# handlers.c:598:     def_detour_asm_vars(compat_arch_ptrace);
-# 598 "handlers.c" 1
-	#define compat_arch_ptrace_jmp 960	#
-# 0 "" 2
-# handlers.c:599:     def_detour_asm_vars(process_vm_rw_core);
-# 599 "handlers.c" 1
-	#define process_vm_rw_core_jmp 1056	#
-# 0 "" 2
-# handlers.c:600:     def_detour_asm_vars(__vma_link_rb);
-# 600 "handlers.c" 1
-	#define __vma_link_rb_jmp 1152	#
-# 0 "" 2
-# handlers.c:601:     def_detour_asm_vars(change_protection);
-# 601 "handlers.c" 1
-	#define change_protection_jmp 1248	#
-# 0 "" 2
-# handlers.c:602:     def_detour_asm_vars(vma_adjust);
-# 602 "handlers.c" 1
-	#define vma_adjust_jmp 1344	#
-# 0 "" 2
-# handlers.c:603:     def_detour_asm_vars(__vma_adjust);
-# 603 "handlers.c" 1
-	#define __vma_adjust_jmp 1440	#
-# 0 "" 2
-# handlers.c:604:     def_detour_asm_vars(vma_rb_erase);
-# 604 "handlers.c" 1
-	#define vma_rb_erase_jmp 1536	#
-# 0 "" 2
-# handlers.c:605:     def_detour_asm_vars(__vma_rb_erase);
-# 605 "handlers.c" 1
-	#define __vma_rb_erase_jmp 1632	#
-# 0 "" 2
-# handlers.c:606:     def_detour_asm_vars(expand_downwards);
-# 606 "handlers.c" 1
-	#define expand_downwards_jmp 1728	#
-# 0 "" 2
-# handlers.c:607:     def_detour_asm_vars(complete_signal);
-# 607 "handlers.c" 1
-	#define complete_signal_jmp 1824	#
-# 0 "" 2
-# handlers.c:608:     def_detour_asm_vars(text_poke);
-# 608 "handlers.c" 1
-	#define text_poke_jmp 1920	#
-# 0 "" 2
-# handlers.c:609:     def_detour_asm_vars(__text_poke);
-# 609 "handlers.c" 1
-	#define __text_poke_jmp 2016	#
-# 0 "" 2
-# handlers.c:610:     def_detour_asm_vars(ftrace_write);
-# 610 "handlers.c" 1
-	#define ftrace_write_jmp 2112	#
-# 0 "" 2
-# handlers.c:611:     def_detour_asm_vars(panic);
-# 611 "handlers.c" 1
-	#define panic_jmp 2208	#
-# 0 "" 2
-# handlers.c:612:     def_detour_asm_vars(crash_kexec);
-# 612 "handlers.c" 1
-	#define crash_kexec_jmp 2304	#
-# 0 "" 2
-# handlers.c:613:     def_detour_asm_vars(__access_remote_vm);
-# 613 "handlers.c" 1
-	#define __access_remote_vm_jmp 2400	#
-# 0 "" 2
-# handlers.c:615:     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
-# 615 "handlers.c" 1
-	#define mprotect_fixup_vma_wants_writenotify_jmp 2496	#
-# 0 "" 2
-# handlers.c:616:     def_detour_hijack_asm_vars(do_munmap, rb_erase);
-# 616 "handlers.c" 1
-	#define do_munmap_rb_erase_jmp 2592	#
-# 0 "" 2
-# handlers.c:617:     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
-# 617 "handlers.c" 1
-	#define vma_adjust_rb_erase_jmp 2688	#
-# 0 "" 2
-# handlers.c:619:     def_detour_asm_vars(do_rmdir);
-# 619 "handlers.c" 1
-	#define do_rmdir_jmp 2784	#
-# 0 "" 2
-# handlers.c:620:     def_detour_asm_vars(sys_sysfs);
-# 620 "handlers.c" 1
-	#define sys_sysfs_jmp 2880	#
-# 0 "" 2
-# handlers.c:621: }
+# handlers.c:591:     vmcall_5(det_sys_read,current_task,save_fd, save_buf, save_count,save_rax);
 #NO_APP
+	mov	r8d, DWORD PTR hypercall_info[rip+3072]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
+#APP
+# 591 "handlers.c" 1
+	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
+# 0 "" 2
+#NO_APP
+	mov	r9d, DWORD PTR 72[rsp]	# __p2, save_fd
+	mov	r10, QWORD PTR 80[rsp]	# __p3, save_buf
+	movsx	r11, DWORD PTR 88[rsp]	# __p4, save_count
+	mov	edi, 30	#,
+	call	vmcall	#
+# handlers.c:592: }
+	pop	rax	#
+	.cfi_def_cfa_offset 56
+	pop	rdi	#
+	.cfi_def_cfa_offset 48
+	pop	r8	#
+	.cfi_def_cfa_offset 40
+	pop	r9	#
+	.cfi_def_cfa_offset 32
+	pop	r10	#
+	.cfi_def_cfa_offset 24
+	pop	r11	#
+	.cfi_def_cfa_offset 16
+	pop	r12	#
+	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
 .LFE33:
+	.size	sys_read, .-sys_read
+	.align 16
+	.globl	pre_sys_read
+	.type	pre_sys_read, @function
+pre_sys_read:
+.LFB34:
+	.cfi_startproc
+	push	rdi	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 5, -16
+	push	rsi	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 4, -24
+	push	rdx	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 1, -32
+	push	rax	#
+	.cfi_def_cfa_offset 40
+	.cfi_offset 0, -40
+# handlers.c:598:     *skip_call=0;
+	mov	rax, QWORD PTR 40[rsp]	# skip_call, skip_call
+	mov	QWORD PTR [rax], 0	# *skip_call_2(D),
+# handlers.c:599:     *save_fd=fd;
+	mov	rax, QWORD PTR 48[rsp]	# save_fd, save_fd
+	mov	DWORD PTR [rax], edi	# *save_fd_4(D), fd
+# handlers.c:600:     *save_buf=buf;
+	mov	rax, QWORD PTR 56[rsp]	# save_buf, save_buf
+	mov	QWORD PTR [rax], rsi	# *save_buf_7(D), buf
+# handlers.c:601:     *save_count=count;
+	mov	rax, QWORD PTR 64[rsp]	# save_count, save_count
+	mov	DWORD PTR [rax], edx	# *save_count_10(D), count
+# handlers.c:602: }
+	pop	rax	#
+	.cfi_def_cfa_offset 32
+	pop	rdx	#
+	.cfi_def_cfa_offset 24
+	pop	rsi	#
+	.cfi_def_cfa_offset 16
+	pop	rdi	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE34:
+	.size	pre_sys_read, .-pre_sys_read
+	.globl	__asm_defines
+	.type	__asm_defines, @function
+__asm_defines:
+.LFB35:
+	.cfi_startproc
+# handlers.c:607:     def_detour_asm_vars(commit_creds);
+#APP
+# 607 "handlers.c" 1
+	#define commit_creds_jmp 96	#
+# 0 "" 2
+# handlers.c:608:     def_detour_asm_vars(arch_jump_label_transform);
+# 608 "handlers.c" 1
+	#define arch_jump_label_transform_jmp 192	#
+# 0 "" 2
+# handlers.c:609:     def_detour_asm_vars(module_param_sysfs_setup);
+# 609 "handlers.c" 1
+	#define module_param_sysfs_setup_jmp 288	#
+# 0 "" 2
+# handlers.c:610:     def_detour_asm_vars(module_param_sysfs_remove);
+# 610 "handlers.c" 1
+	#define module_param_sysfs_remove_jmp 384	#
+# 0 "" 2
+# handlers.c:611:     def_detour_asm_vars(wake_up_new_task);
+# 611 "handlers.c" 1
+	#define wake_up_new_task_jmp 480	#
+# 0 "" 2
+# handlers.c:612:     def_detour_asm_vars(flush_old_exec);
+# 612 "handlers.c" 1
+	#define flush_old_exec_jmp 576	#
+# 0 "" 2
+# handlers.c:613:     def_detour_asm_vars(begin_new_exec);
+# 613 "handlers.c" 1
+	#define begin_new_exec_jmp 672	#
+# 0 "" 2
+# handlers.c:614:     def_detour_asm_vars(do_exit);
+# 614 "handlers.c" 1
+	#define do_exit_jmp 768	#
+# 0 "" 2
+# handlers.c:615:     def_detour_asm_vars(arch_ptrace);
+# 615 "handlers.c" 1
+	#define arch_ptrace_jmp 864	#
+# 0 "" 2
+# handlers.c:616:     def_detour_asm_vars(compat_arch_ptrace);
+# 616 "handlers.c" 1
+	#define compat_arch_ptrace_jmp 960	#
+# 0 "" 2
+# handlers.c:617:     def_detour_asm_vars(process_vm_rw_core);
+# 617 "handlers.c" 1
+	#define process_vm_rw_core_jmp 1056	#
+# 0 "" 2
+# handlers.c:618:     def_detour_asm_vars(__vma_link_rb);
+# 618 "handlers.c" 1
+	#define __vma_link_rb_jmp 1152	#
+# 0 "" 2
+# handlers.c:619:     def_detour_asm_vars(change_protection);
+# 619 "handlers.c" 1
+	#define change_protection_jmp 1248	#
+# 0 "" 2
+# handlers.c:620:     def_detour_asm_vars(vma_adjust);
+# 620 "handlers.c" 1
+	#define vma_adjust_jmp 1344	#
+# 0 "" 2
+# handlers.c:621:     def_detour_asm_vars(__vma_adjust);
+# 621 "handlers.c" 1
+	#define __vma_adjust_jmp 1440	#
+# 0 "" 2
+# handlers.c:622:     def_detour_asm_vars(vma_rb_erase);
+# 622 "handlers.c" 1
+	#define vma_rb_erase_jmp 1536	#
+# 0 "" 2
+# handlers.c:623:     def_detour_asm_vars(__vma_rb_erase);
+# 623 "handlers.c" 1
+	#define __vma_rb_erase_jmp 1632	#
+# 0 "" 2
+# handlers.c:624:     def_detour_asm_vars(expand_downwards);
+# 624 "handlers.c" 1
+	#define expand_downwards_jmp 1728	#
+# 0 "" 2
+# handlers.c:625:     def_detour_asm_vars(complete_signal);
+# 625 "handlers.c" 1
+	#define complete_signal_jmp 1824	#
+# 0 "" 2
+# handlers.c:626:     def_detour_asm_vars(text_poke);
+# 626 "handlers.c" 1
+	#define text_poke_jmp 1920	#
+# 0 "" 2
+# handlers.c:627:     def_detour_asm_vars(__text_poke);
+# 627 "handlers.c" 1
+	#define __text_poke_jmp 2016	#
+# 0 "" 2
+# handlers.c:628:     def_detour_asm_vars(ftrace_write);
+# 628 "handlers.c" 1
+	#define ftrace_write_jmp 2112	#
+# 0 "" 2
+# handlers.c:629:     def_detour_asm_vars(panic);
+# 629 "handlers.c" 1
+	#define panic_jmp 2208	#
+# 0 "" 2
+# handlers.c:630:     def_detour_asm_vars(crash_kexec);
+# 630 "handlers.c" 1
+	#define crash_kexec_jmp 2304	#
+# 0 "" 2
+# handlers.c:631:     def_detour_asm_vars(__access_remote_vm);
+# 631 "handlers.c" 1
+	#define __access_remote_vm_jmp 2400	#
+# 0 "" 2
+# handlers.c:633:     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
+# 633 "handlers.c" 1
+	#define mprotect_fixup_vma_wants_writenotify_jmp 2496	#
+# 0 "" 2
+# handlers.c:634:     def_detour_hijack_asm_vars(do_munmap, rb_erase);
+# 634 "handlers.c" 1
+	#define do_munmap_rb_erase_jmp 2592	#
+# 0 "" 2
+# handlers.c:635:     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
+# 635 "handlers.c" 1
+	#define vma_adjust_rb_erase_jmp 2688	#
+# 0 "" 2
+# handlers.c:637:     def_detour_asm_vars(do_rmdir);
+# 637 "handlers.c" 1
+	#define do_rmdir_jmp 2784	#
+# 0 "" 2
+# handlers.c:638:     def_detour_asm_vars(sys_sysfs);
+# 638 "handlers.c" 1
+	#define sys_sysfs_jmp 2880	#
+# 0 "" 2
+# handlers.c:639:     def_detour_asm_vars(sys_read);
+# 639 "handlers.c" 1
+	#define sys_read_jmp 2976	#
+# 0 "" 2
+# handlers.c:640: }
+#NO_APP
+	ret
+	.cfi_endproc
+.LFE35:
 	.size	__asm_defines, .-__asm_defines
 	.globl	hypercall_info
 	.section	.detours,"aw",@progbits
 	.align 32
 	.type	hypercall_info, @object
-	.size	hypercall_info, 3000
+	.size	hypercall_info, 3096
 hypercall_info:
 # DetoursCount:
 	.zero	8
-	.quad	30
+	.quad	31
 # Detours:
 # Name:
 	.string	"commit_creds"
@@ -2456,6 +2568,17 @@ hypercall_info:
 	.quad	sys_sysfs_trampoline
 # RelocatedCode:
 	.quad	sys_sysfs_reloc
+	.zero	16
+# Name:
+	.string	"sys_read"
+	.zero	23
+# HijackName:
+	.byte	0
+	.zero	31
+# Address:
+	.quad	sys_read_trampoline
+# RelocatedCode:
+	.quad	sys_read_reloc
 	.zero	16
 	.zero	104
 	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"

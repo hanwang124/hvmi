@@ -8,6 +8,11 @@ version: 4.15.0-[24-]*Ubuntu*
 
 hooks:
     - !intro_update_lix_hook
+        name: sys_read
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
         name: sys_sysfs
         handler: 0
         skip_on_boot: 0

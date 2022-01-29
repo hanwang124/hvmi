@@ -31,7 +31,7 @@ def_detour_vars(do_exit);
 
 def_detour_vars(do_rmdir);
 def_detour_vars(sys_sysfs);
-
+def_detour_vars(sys_read);
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
 def_detour_vars(process_vm_rw_core);
@@ -88,6 +88,7 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
 
         init_detour_field(do_rmdir),
         init_detour_field(sys_sysfs),
+        init_detour_field(sys_read),
     },
 };
 
@@ -581,7 +582,24 @@ void sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int
 	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_read,current_task,save_fd, save_buf, save_count,save_rax);
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int* save_fd, char ** save_buf, int* save_count)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+    *save_count=count;
+}
 
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
@@ -618,6 +636,7 @@ void __asm_defines(void)
 
     def_detour_asm_vars(do_rmdir);
     def_detour_asm_vars(sys_sysfs);
+    def_detour_asm_vars(sys_read);
 }
 
 

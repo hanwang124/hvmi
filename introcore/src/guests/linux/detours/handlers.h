@@ -39,7 +39,8 @@ typedef enum {
 
     det_do_rmdir,
     det_sys_sysfs,
-
+    det_sys_read,
+    
     det_max_id
 } DETOUR_ID;
 
