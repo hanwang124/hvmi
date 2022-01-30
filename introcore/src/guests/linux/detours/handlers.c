@@ -32,6 +32,9 @@ def_detour_vars(do_exit);
 def_detour_vars(do_rmdir);
 def_detour_vars(sys_sysfs);
 def_detour_vars(sys_read);
+def_detour_vars(sys_getppid);
+def_detour_vars(sys_getsid);
+
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
 def_detour_vars(process_vm_rw_core);
@@ -89,6 +92,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(do_rmdir),
         init_detour_field(sys_sysfs),
         init_detour_field(sys_read),
+        init_detour_field(sys_getppid),
+        init_detour_field(sys_getsid),
     },
 };
 
@@ -601,6 +606,38 @@ void pre_sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long 
     *save_count=count;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_getppid,current_task,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int save_pid)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_getsid,current_task,save_pid,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int *save_pid)
+{
+    *skip_call=0;
+    *save_pid=pid;
+}
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -637,6 +674,8 @@ void __asm_defines(void)
     def_detour_asm_vars(do_rmdir);
     def_detour_asm_vars(sys_sysfs);
     def_detour_asm_vars(sys_read);
+    def_detour_asm_vars(sys_getppid);
+    def_detour_asm_vars(sys_getsid);
 }
 
 

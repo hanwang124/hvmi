@@ -202,3 +202,6 @@ def_tramp_fn_hijack vma_adjust      rb_erase                vma_adjust_rb_erase 
 def_tramp_ret               do_rmdir                          1   do_rmdir_jmp
 def_tramp_ret               sys_sysfs                         3   sys_sysfs_jmp
 def_tramp_ret               sys_read                          3   sys_read_jmp
+def_tramp_ret               sys_getppid                       0   sys_getppid_jmp
+def_tramp_ret               sys_getsid                        1   sys_getsid_jmp
+

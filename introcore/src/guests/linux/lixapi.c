@@ -16,7 +16,8 @@ INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
 INTSTATUS IntLixAlarmHandle(_In_ void *Detour);
 INTSTATUS IntLixReadHandle(_In_ void *Detour);
-
+INTSTATUS IntLixGetppidHandle(_In_ void *Detour);
+INTSTATUS IntLixGetsidHandle(_In_ void *Detour);
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
 ///
@@ -107,8 +108,64 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(do_rmdir,                       IntLixRmdirHandle,              DETOUR_ENABLE_ALWAYS),
     __init_detour_entry(sys_sysfs,                      IntLixSysfsHandle,              DETOUR_ENABLE_ALWAYS),
     __init_detour_entry(sys_read,                       IntLixReadHandle,              DETOUR_ENABLE_ALWAYS),
+    __init_detour_entry(sys_getppid,                       IntLixGetppidHandle,              DETOUR_ENABLE_ALWAYS),
+    __init_detour_entry(sys_getsid,                       IntLixGetsidHandle,              DETOUR_ENABLE_ALWAYS),
 
 };
+
+INTSTATUS
+IntLixGetsidHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_getsid" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    LOG("process %s [%d] getsid(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixGetppidHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_getppid" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    LOG("process %s [%d] getppid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixReadHandle(
