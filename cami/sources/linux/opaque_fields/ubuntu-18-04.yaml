@@ -7,6 +7,17 @@ version: 4.15.0-[24-]*Ubuntu*
 
 
 hooks:
+
+    - !intro_update_lix_hook
+        name: sys_geteuid
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_getuid
+        handler: 0
+        skip_on_boot: 0
+        
     - !intro_update_lix_hook
         name: sys_getsid
         handler: 0
@@ -17,20 +28,20 @@ hooks:
         handler: 0
         skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_read
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_read
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_sysfs
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_sysfs
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: do_rmdir
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: do_rmdir
+        handler: 0
+        skip_on_boot: 0
 
     - !intro_update_lix_hook
         name: run_init_process

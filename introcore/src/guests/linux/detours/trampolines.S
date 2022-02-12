@@ -204,4 +204,5 @@ def_tramp_ret               sys_sysfs                         3   sys_sysfs_jmp
 def_tramp_ret               sys_read                          3   sys_read_jmp
 def_tramp_ret               sys_getppid                       0   sys_getppid_jmp
 def_tramp_ret               sys_getsid                        1   sys_getsid_jmp
-
+def_tramp_ret               sys_getuid                        0   sys_getuid_jmp
+def_tramp_ret               sys_geteuid                       0   sys_geteuid_jmp

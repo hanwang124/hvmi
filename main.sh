@@ -1,3 +1,6 @@
+cd /home/huawei/hvmi/introcore/src/guests/linux/detours
+pwd
+make
 sudo LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/hvmid --kill
 cd /home/huawei/hvmi/build
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release ..
@@ -8,4 +11,3 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release ..
 make
 sudo make install
 sudo su -
-

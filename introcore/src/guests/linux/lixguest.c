@@ -2042,7 +2042,7 @@ IntLixGuestAllocateFill(
           gLixGuest->MmAlloc.Detour.Data.Address, gLixGuest->MmAlloc.Detour.Data.Length);
 
     gLixGuest->MmAlloc.Detour.Code.Address = pRegs->R8 + PAGE_SIZE;
-    gLixGuest->MmAlloc.Detour.Code.Length = PAGE_SIZE;
+    gLixGuest->MmAlloc.Detour.Code.Length = PAGE_SIZE * 2;
 
     TRACE("[LIXGUEST] Allocated guest virtual memory for detours code @ 0x%016llx (0x%x bytes)\n",
           gLixGuest->MmAlloc.Detour.Code.Address, gLixGuest->MmAlloc.Detour.Code.Length);
