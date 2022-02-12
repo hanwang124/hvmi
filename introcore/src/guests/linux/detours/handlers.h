@@ -44,6 +44,8 @@ typedef enum {
     det_sys_getsid,
     det_sys_getuid,
     det_sys_geteuid,
+    det_sys_shutdown,
+    det_do_sysinfo,
     
     det_max_id
 } DETOUR_ID;

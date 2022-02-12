@@ -36,6 +36,8 @@ def_detour_vars(sys_getppid);
 def_detour_vars(sys_getsid);
 def_detour_vars(sys_getuid);
 def_detour_vars(sys_geteuid);
+def_detour_vars(sys_shutdown);
+def_detour_vars(do_sysinfo);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -98,6 +100,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_getsid),
         init_detour_field(sys_getuid),
         init_detour_field(sys_geteuid),
+        init_detour_field(sys_shutdown),
+        init_detour_field(do_sysinfo),
     },
 };
 
@@ -674,6 +678,41 @@ void pre_sys_geteuid(int a,int b,int c,int d,int e,int f,long *skip_call)
 {
     *skip_call=0;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int save_a,int save_b)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_shutdown,current_task,save_a,save_b,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int *save_a,int *save_b)
+{
+    *skip_call=0;
+    *save_a=a;
+    *save_b=b;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int *save_a)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_do_sysinfo,current_task,save_a,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int **save_a)
+{
+    *skip_call=0;
+    *save_a=a;
+}
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -714,6 +753,8 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_getsid);
     def_detour_asm_vars(sys_getuid);
     def_detour_asm_vars(sys_geteuid);
+    def_detour_asm_vars(sys_shutdown);
+    def_detour_asm_vars(do_sysinfo);
 }
 
 

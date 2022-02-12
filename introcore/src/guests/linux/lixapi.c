@@ -20,6 +20,9 @@ INTSTATUS IntLixGetppidHandle(_In_ void *Detour);
 INTSTATUS IntLixGetsidHandle(_In_ void *Detour);
 INTSTATUS IntLixGetuidHandle(_In_ void *Detour);
 INTSTATUS IntLixGeteuidHandle(_In_ void *Detour);
+INTSTATUS IntLixShutdownHandle(_In_ void *Detour);
+INTSTATUS IntLixSysinfoeHandle(_In_ void *Detour);
+
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
 ///
@@ -114,8 +117,63 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_getsid,                       IntLixGetsidHandle,              DETOUR_ENABLE_ALWAYS),
     __init_detour_entry(sys_getuid,                       IntLixGetuidHandle,              DETOUR_ENABLE_ALWAYS),
     __init_detour_entry(sys_geteuid,                       IntLixGeteuidHandle,              DETOUR_ENABLE_ALWAYS),
+    __init_detour_entry(sys_shutdown,                       IntLixShutdownHandle,              DETOUR_ENABLE_ALWAYS),
+    __init_detour_entry(do_sysinfo,                       IntLixSysinfoeHandle,              DETOUR_ENABLE_ALWAYS),
 };
 
+INTSTATUS
+IntLixSysinfoeHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "do_sysinfo" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    LOG("process %s [%d] sysinfo(0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixShutdownHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_shutdown" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    LOG("process %s [%d] shutdown(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixGeteuidHandle(

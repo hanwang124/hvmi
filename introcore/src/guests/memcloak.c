@@ -24,7 +24,7 @@ typedef struct _MEMCLOAK_PAGE
     void           *Region;             ///< The parent #MEMCLOAK_REGION region.
 } MEMCLOAK_PAGE, *PMEMCLOAK_PAGE;
 
-#define MEMCLOACK_PAGE_MAX_COUNT    2   ///< The maximum number of pages that can be contained in a #MEMCLOAK_REGION.
+#define MEMCLOACK_PAGE_MAX_COUNT    4   ///< The maximum number of pages that can be contained in a #MEMCLOAK_REGION.
 
 ///
 /// @brief  A structure that describes a hidden guest memory region.
