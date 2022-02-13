@@ -9,9 +9,24 @@ version: 4.15.0-[24-]*Ubuntu*
 hooks:
 
     - !intro_update_lix_hook
-        name: do_sysinfo
+        name: sys_statfs
         handler: 0
         skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_capset
+        handler: 0
+        skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_capget
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: do_sysinfo
+    #     handler: 0
+    #     skip_on_boot: 0
         
     # - !intro_update_lix_hook
     #     name: sys_shutdown

@@ -208,3 +208,6 @@ def_tramp_ret               sys_getuid                          0   sys_getuid_j
 def_tramp_ret               sys_geteuid                         0   sys_geteuid_jmp
 def_tramp_ret               sys_shutdown                        2   sys_shutdown_jmp
 def_tramp_ret               do_sysinfo                          1   do_sysinfo_jmp
+def_tramp_ret               sys_capget                          2   sys_capget_jmp
+def_tramp_ret               sys_capset                          2   sys_capset_jmp
+def_tramp_ret               sys_statfs                          2   sys_statfs_jmp

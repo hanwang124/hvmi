@@ -38,6 +38,9 @@ def_detour_vars(sys_getuid);
 def_detour_vars(sys_geteuid);
 def_detour_vars(sys_shutdown);
 def_detour_vars(do_sysinfo);
+def_detour_vars(sys_capget);
+def_detour_vars(sys_capset);
+def_detour_vars(sys_statfs);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -102,6 +105,9 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_geteuid),
         init_detour_field(sys_shutdown),
         init_detour_field(do_sysinfo),
+        init_detour_field(sys_capget),
+        init_detour_field(sys_capset),
+        init_detour_field(sys_statfs),
     },
 };
 
@@ -713,6 +719,61 @@ void pre_do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int **
     *skip_call=0;
     *save_a=a;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_dataptr)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_capget,current_task,save_header,save_dataptr,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_dataptr)
+{
+    *skip_call=0;
+    *save_header=header;
+    *save_dataptr=dataptr;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_data)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_capset,current_task,save_header,save_data,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_data)
+{
+    *skip_call=0;
+    *save_header=header;
+    *save_data=data;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long *save_path,long *save_buf)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_statfs,current_task,save_path,save_buf,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long **save_path,long **save_buf)
+{
+    *skip_call=0;
+    *save_path=path;
+    *save_buf=buf;
+}
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -755,6 +816,9 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_geteuid);
     def_detour_asm_vars(sys_shutdown);
     def_detour_asm_vars(do_sysinfo);
+    def_detour_asm_vars(sys_capget);
+    def_detour_asm_vars(sys_capset);
+    def_detour_asm_vars(sys_statfs);
 }
 
 
