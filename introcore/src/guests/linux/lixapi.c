@@ -25,6 +25,8 @@ INTSTATUS IntLixSysinfoeHandle(_In_ void *Detour);
 INTSTATUS IntLixCapgetHandle(_In_ void *Detour);
 INTSTATUS IntLixCapsetHandle(_In_ void *Detour);
 INTSTATUS IntLixStatfsHandle(_In_ void *Detour);
+INTSTATUS IntLixFstatfsHandle(_In_ void *Detour);
+INTSTATUS IntLixSetsidHandle(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -125,7 +127,62 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_capget,                     IntLixCapgetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_capset,                     IntLixCapsetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_statfs,                     IntLixStatfsHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_fstatfs,                    IntLixFstatfsHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_setsid,                     IntLixSetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+
 };
+
+INTSTATUS
+IntLixSetsidHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_reboot" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] setsid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixFstatfsHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_fstatfs" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixStatfsHandle(

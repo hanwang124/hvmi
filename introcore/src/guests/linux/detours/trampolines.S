@@ -211,3 +211,5 @@ def_tramp_ret               do_sysinfo                          1   do_sysinfo_j
 def_tramp_ret               sys_capget                          2   sys_capget_jmp
 def_tramp_ret               sys_capset                          2   sys_capset_jmp
 def_tramp_ret               sys_statfs                          2   sys_statfs_jmp
+def_tramp_ret               sys_fstatfs                         2   sys_fstatfs_jmp
+def_tramp_ret               sys_setsid                          0   sys_setsid_jmp

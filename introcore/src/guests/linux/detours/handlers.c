@@ -41,6 +41,8 @@ def_detour_vars(do_sysinfo);
 def_detour_vars(sys_capget);
 def_detour_vars(sys_capset);
 def_detour_vars(sys_statfs);
+def_detour_vars(sys_fstatfs);
+def_detour_vars(sys_setsid);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -108,6 +110,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_capget),
         init_detour_field(sys_capset),
         init_detour_field(sys_statfs),
+        init_detour_field(sys_fstatfs),
+        init_detour_field(sys_setsid),
     },
 };
 
@@ -774,6 +778,40 @@ void pre_sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call
     *save_buf=buf;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int save_fd,long *save_buf)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_fstatfs,current_task,save_fd,save_buf,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long **save_buf)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_setsid,current_task,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -819,6 +857,8 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_capget);
     def_detour_asm_vars(sys_capset);
     def_detour_asm_vars(sys_statfs);
+    def_detour_asm_vars(sys_fstatfs);
+    def_detour_asm_vars(sys_setsid);
 }
 
 
