@@ -9,9 +9,54 @@ version: 4.15.0-[24-]*Ubuntu*
 hooks:
 
     - !intro_update_lix_hook
-        name: sys_setsid
+        name: sys_ioctl
         handler: 0
         skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_umask
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_getrlimit
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_sigprocmask
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_poll
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_ustat
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_tkill
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_tgkill
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_seccomp
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_setsid
+    #     handler: 0
+    #     skip_on_boot: 0
 
     # - !intro_update_lix_hook
     #     name: sys_fstatfs

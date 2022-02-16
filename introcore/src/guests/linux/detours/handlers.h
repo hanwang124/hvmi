@@ -51,6 +51,15 @@ typedef enum {
     det_sys_statfs,
     det_sys_fstatfs,
     det_sys_setsid,
+    det_sys_seccomp,
+    det_sys_tgkill,
+    det_sys_tkill,
+    det_sys_ustat,
+    det_sys_poll,
+    det_sys_sigprocmask,
+    det_sys_getrlimit,
+    det_sys_umask,
+    det_sys_ioctl,
     
     det_max_id
 } DETOUR_ID;

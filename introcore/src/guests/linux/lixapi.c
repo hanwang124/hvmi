@@ -27,7 +27,15 @@ INTSTATUS IntLixCapsetHandle(_In_ void *Detour);
 INTSTATUS IntLixStatfsHandle(_In_ void *Detour);
 INTSTATUS IntLixFstatfsHandle(_In_ void *Detour);
 INTSTATUS IntLixSetsidHandle(_In_ void *Detour);
-
+INTSTATUS IntLixSeccompHandle(_In_ void *Detour);
+INTSTATUS IntLixTgkillHandle(_In_ void *Detour);
+INTSTATUS IntLixTkillHandle(_In_ void *Detour);
+INTSTATUS IntLixUstatHandle(_In_ void *Detour);
+INTSTATUS IntLixPollHandle(_In_ void *Detour);
+INTSTATUS IntLixSigprocmaskHandle(_In_ void *Detour);
+INTSTATUS IntLixGetrlimitHandle(_In_ void *Detour);
+INTSTATUS IntLixUmaskHandle(_In_ void *Detour);
+INTSTATUS IntLixIoctlHandle(_In_ void *Detour);
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
 ///
@@ -129,15 +137,256 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_statfs,                     IntLixStatfsHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_fstatfs,                    IntLixFstatfsHandle,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_setsid,                     IntLixSetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-
+    __init_detour_entry(sys_seccomp,                    IntLixSeccompHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_tgkill,                     IntLixTgkillHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_tkill,                      IntLixTkillHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_ustat,                      IntLixUstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_poll,                       IntLixPollHandle,               DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sigprocmask,                IntLixSigprocmaskHandle,        DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_getrlimit,                  IntLixGetrlimitHandle,          DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_umask,                      IntLixUmaskHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_ioctl,                      IntLixIoctlHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    
 };
+
+INTSTATUS
+IntLixIoctlHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_ioctl" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] ioctl(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+INTSTATUS
+IntLixUmaskHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_umask" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] umask(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+INTSTATUS
+IntLixGetrlimitHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_getrlimit" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] getrlimit(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSigprocmaskHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sigprocmask" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixPollHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_tkill" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] poll(0x%x,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixUstatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_tkill" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] ustat(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixTkillHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_tkill" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] tkill(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixTgkillHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_tgkill" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] tgkill(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSeccompHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_seccomp" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] seccomp(%d,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixSetsidHandle(
     _In_ void *Detour
     )
 ///
-/// @brief Detour handler for "sys_reboot" function.
+/// @brief Detour handler for "sys_setsid" function.
 
 /// @param[in] Detour Unused.
 ///

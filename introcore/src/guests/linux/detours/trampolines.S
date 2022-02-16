@@ -213,3 +213,12 @@ def_tramp_ret               sys_capset                          2   sys_capset_j
 def_tramp_ret               sys_statfs                          2   sys_statfs_jmp
 def_tramp_ret               sys_fstatfs                         2   sys_fstatfs_jmp
 def_tramp_ret               sys_setsid                          0   sys_setsid_jmp
+def_tramp_ret               sys_seccomp                         3   sys_seccomp_jmp
+def_tramp_ret               sys_tgkill                          3   sys_tgkill_jmp
+def_tramp_ret               sys_tkill                           2   sys_tkill_jmp
+def_tramp_ret               sys_ustat                           2   sys_ustat_jmp
+def_tramp_ret               sys_poll                            3   sys_poll_jmp
+def_tramp_ret               sys_sigprocmask                     3   sys_sigprocmask_jmp
+def_tramp_ret               sys_getrlimit                       3   sys_getrlimit_jmp
+def_tramp_ret               sys_umask                           1   sys_umask_jmp
+def_tramp_ret               sys_ioctl                           3   sys_ioctl_jmp
