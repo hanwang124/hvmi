@@ -36,6 +36,12 @@ INTSTATUS IntLixSigprocmaskHandle(_In_ void *Detour);
 INTSTATUS IntLixGetrlimitHandle(_In_ void *Detour);
 INTSTATUS IntLixUmaskHandle(_In_ void *Detour);
 INTSTATUS IntLixIoctlHandle(_In_ void *Detour);
+INTSTATUS IntLixBrkHandle(_In_ void *Detour);
+INTSTATUS IntLixGettimeofdayHandle(_In_ void *Detour);
+INTSTATUS IntLixSetresuidHandle(_In_ void *Detour);
+INTSTATUS IntLixChdirHandle(_In_ void *Detour);
+INTSTATUS IntLixAlarmHandle(_In_ void *Detour);
+
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
 ///
@@ -123,38 +129,43 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry_hijack(do_munmap,          rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
     __init_detour_entry_hijack(vma_adjust,         rb_erase,                       IntLixVmaRemove,                INTRO_OPT_ENABLE_UM_PROTECTION),
     
-    __init_detour_entry(do_rmdir,                       IntLixRmdirHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_sysfs,                      IntLixSysfsHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_read,                       IntLixReadHandle,               DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_getppid,                    IntLixGetppidHandle,            DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_getsid,                     IntLixGetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_getuid,                     IntLixGetuidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_geteuid,                    IntLixGeteuidHandle,            DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_shutdown,                   IntLixShutdownHandle,           DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(do_sysinfo,                     IntLixSysinfoeHandle,           DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_capget,                     IntLixCapgetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_capset,                     IntLixCapsetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_statfs,                     IntLixStatfsHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_fstatfs,                    IntLixFstatfsHandle,            DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_setsid,                     IntLixSetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_seccomp,                    IntLixSeccompHandle,            DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_tgkill,                     IntLixTgkillHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_tkill,                      IntLixTkillHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_ustat,                      IntLixUstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_poll,                       IntLixPollHandle,               DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_sigprocmask,                IntLixSigprocmaskHandle,        DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_getrlimit,                  IntLixGetrlimitHandle,          DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_umask,                      IntLixUmaskHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_ioctl,                      IntLixIoctlHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(do_rmdir,                       IntLixRmdirHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sysfs,                      IntLixSysfsHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_read,                       IntLixReadHandle,               DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getppid,                    IntLixGetppidHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getsid,                     IntLixGetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getuid,                     IntLixGetuidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_geteuid,                    IntLixGeteuidHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_shutdown,                   IntLixShutdownHandle,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(do_sysinfo,                     IntLixSysinfoeHandle,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_capget,                     IntLixCapgetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_capset,                     IntLixCapsetHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_statfs,                     IntLixStatfsHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fstatfs,                    IntLixFstatfsHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setsid,                     IntLixSetsidHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_seccomp,                    IntLixSeccompHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_tgkill,                     IntLixTgkillHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_tkill,                      IntLixTkillHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_ustat,                      IntLixUstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_poll,                       IntLixPollHandle,               DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sigprocmask,                IntLixSigprocmaskHandle,        DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getrlimit,                  IntLixGetrlimitHandle,          DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_umask,                      IntLixUmaskHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_ioctl,                      IntLixIoctlHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_brk,                        IntLixBrkHandle,                DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_gettimeofday,               IntLixGettimeofdayHandle,       DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setresuid,                  IntLixSetresuidHandle,          DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_chdir,                      IntLixChdirHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_alarm,                      IntLixAlarmHandle,              DETOUR_ENABLE_ALWAYS                                    ),
     
 };
 
 INTSTATUS
-IntLixIoctlHandle(
+IntLixAlarmHandle(
     _In_ void *Detour
     )
 ///
-/// @brief Detour handler for "sys_ioctl" function.
+/// @brief Detour handler for "sys_alarm" function.
 
 /// @param[in] Detour Unused.
 ///
@@ -171,611 +182,749 @@ IntLixIoctlHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] ioctl(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
-INTSTATUS
-IntLixUmaskHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_umask" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] umask(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
-    return INT_STATUS_SUCCESS;
-}
-INTSTATUS
-IntLixGetrlimitHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_getrlimit" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] getrlimit(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] alarm(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
-INTSTATUS
-IntLixSigprocmaskHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_sigprocmask" function.
+// INTSTATUS
+// IntLixChdirHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_chdir" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     char *pathname[0x20];
+//     status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,pathname);
+//     if (!INT_SUCCESS(status))
+//     {
+//         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+//         return status;
+//     }
+//     LOG("process %s [%d] chdir(%s) = %d\n",pTask->Comm, pTask->Pid,pathname,pRegs->R10);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixPollHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_tkill" function.
+// INTSTATUS
+// IntLixSetresuidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_setresuid" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] poll(0x%x,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] setresuid(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixUstatHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_tkill" function.
+// INTSTATUS
+// IntLixGettimeofdayHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_gettimeofday" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] ustat(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] gettimeofday(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixTkillHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_tkill" function.
+// INTSTATUS
+// IntLixBrkHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_brk" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] tkill(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] brk(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixTgkillHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_tgkill" function.
+// INTSTATUS
+// IntLixIoctlHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_ioctl" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] tgkill(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] ioctl(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixSeccompHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_seccomp" function.
+// INTSTATUS
+// IntLixUmaskHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_umask" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] seccomp(%d,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] umask(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixGetrlimitHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_getrlimit" function.
 
-INTSTATUS
-IntLixSetsidHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_setsid" function.
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] getrlimit(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] setsid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixSigprocmaskHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_sigprocmask" function.
 
-INTSTATUS
-IntLixFstatfsHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_fstatfs" function.
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixPollHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_tkill" function.
 
-INTSTATUS
-IntLixStatfsHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_statfs" function.
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] poll(0x%x,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    char path[0x30];
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,path);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] statfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixUstatHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_tkill" function.
 
-INTSTATUS
-IntLixCapsetHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_capset" function.
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] ustat(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// INTSTATUS
+// IntLixTkillHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_tkill" function.
 
-    LOG("process %s [%d] capset(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] tkill(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixCapgetHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_capget" function.
+// INTSTATUS
+// IntLixTgkillHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_tgkill" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] tgkill(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-    LOG("process %s [%d] capget(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixSeccompHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_seccomp" function.
 
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] seccomp(%d,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixSysinfoeHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "do_sysinfo" function.
+// INTSTATUS
+// IntLixSetsidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_setsid" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] setsid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+//     return INT_STATUS_SUCCESS;
+// }
 
-    LOG("process %s [%d] sysinfo(0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixFstatfsHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_fstatfs" function.
 
-INTSTATUS
-IntLixShutdownHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_shutdown" function.
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// INTSTATUS
+// IntLixStatfsHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_statfs" function.
 
-    LOG("process %s [%d] shutdown(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
-    return INT_STATUS_SUCCESS;
-}
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     char path[0x30];
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,path);
+//     if (!INT_SUCCESS(status))
+//     {
+//         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+//         return status;
+//     }
+//     LOG("process %s [%d] statfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixGeteuidHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_geteuid" function.
+// INTSTATUS
+// IntLixCapsetHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_capset" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
 
-    LOG("process %s [%d] geteuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
-    return INT_STATUS_SUCCESS;
-}
+//     LOG("process %s [%d] capset(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
-INTSTATUS
-IntLixGetuidHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_getuid" function.
+// INTSTATUS
+// IntLixCapgetHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_capget" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
 
-    LOG("process %s [%d] getuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixGetsidHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_getsid" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-
-    LOG("process %s [%d] getsid(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixGetppidHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_getppid" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-
-    LOG("process %s [%d] getppid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixReadHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_read" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-
-    LOG("process %s [%d] read(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixSysfsHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_sysfs" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
-    char buf[0x20];
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    LOG("process %s [%d] sysfs(0x%x,0x%x,0x%x) = 0x%x\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
-
-    return INT_STATUS_SUCCESS;
-}
+//     LOG("process %s [%d] capget(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
 
 
-INTSTATUS
-IntLixRmdirHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "do_rmdir" function.
+// INTSTATUS
+// IntLixSysinfoeHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "do_sysinfo" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    char buf[0x20];
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
 
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
+//     LOG("process %s [%d] sysinfo(0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+//     return INT_STATUS_SUCCESS;
+// }
 
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,buf);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
+// INTSTATUS
+// IntLixShutdownHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_shutdown" function.
 
-    LOG("process %s [%d] rmdir(%s) = 0x%d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] shutdown(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixGeteuidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_geteuid" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] geteuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixGetuidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_getuid" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] getuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixGetsidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_getsid" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] getsid(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixGetppidHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_getppid" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] getppid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixReadHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_read" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     LOG("process %s [%d] read(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixSysfsHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_sysfs" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
+//     char buf[0x20];
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     LOG("process %s [%d] sysfs(0x%x,0x%x,0x%x) = 0x%x\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
+
+//     return INT_STATUS_SUCCESS;
+// }
 
 
-    return INT_STATUS_SUCCESS;
-}
+// INTSTATUS
+// IntLixRmdirHandle(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "do_rmdir" function.
+
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     char buf[0x20];
+
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+
+//     status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,buf);
+//     if (!INT_SUCCESS(status))
+//     {
+//         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+//         return status;
+//     }
+
+//     LOG("process %s [%d] rmdir(%s) = 0x%d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+
+
+//     return INT_STATUS_SUCCESS;
+// }
 
 
 

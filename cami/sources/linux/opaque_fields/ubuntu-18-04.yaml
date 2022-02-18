@@ -7,11 +7,36 @@ version: 4.15.0-[24-]*Ubuntu*
 
 
 hooks:
-
+    
     - !intro_update_lix_hook
-        name: sys_ioctl
+        name: sys_alarm
         handler: 0
-        skip_on_boot: 0
+        skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_chdir
+    #     handler: 0
+    #     skip_on_boot: 0                                                                                                                                                                                                                                                                                                                     
+
+    # - !intro_update_lix_hook
+    #     name: sys_setresuid
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_gettimeofday
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_brk
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_ioctl
+    #     handler: 0
+    #     skip_on_boot: 0
 
     # - !intro_update_lix_hook
     #     name: sys_umask
