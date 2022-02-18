@@ -1938,24 +1938,44 @@ IntLixGuestAllocateDeploy(
     }
 
     TRACE("[LIXGUEST] Deployed detours data @0x%016llx.", gLixGuest->MmAlloc.Detour.Data.Address);
+    int n = gLixGuest->MmAlloc.Detour.Code.Length / PAGE_SIZE;
+    for (int i = 0;i < n / 2; i++){
+        status = IntMemClkCloakRegion(gLixGuest->MmAlloc.Detour.Code.Address + PAGE_SIZE * 2 * i,
+                                0,
+                                PAGE_SIZE * 2,
+                                MEMCLOAK_OPT_APPLY_PATCH,
+                                NULL,
+                                gLixDetours + gLixGuest->MmAlloc.Detour.Data.Length + PAGE_SIZE * 2 * i,
+                                NULL,
+                                &gLixGuest->MmAlloc.Detour.Code.HookObject);
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntMemClkCloakRegion failed for 0x%016llx (%d bytes) with status: 0x%08x\n",
+                gLixGuest->MmAlloc.Detour.Code.Address + PAGE_SIZE * 2 * i, PAGE_SIZE * 2, status);
+            return status;
+        }
 
-    status = IntMemClkCloakRegion(gLixGuest->MmAlloc.Detour.Code.Address,
-                                  0,
-                                  gLixGuest->MmAlloc.Detour.Code.Length,
-                                  MEMCLOAK_OPT_APPLY_PATCH,
-                                  NULL,
-                                  gLixDetours + gLixGuest->MmAlloc.Detour.Data.Length,
-                                  NULL,
-                                  &gLixGuest->MmAlloc.Detour.Code.HookObject);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] IntMemClkCloakRegion failed for 0x%016llx (%d bytes) with status: 0x%08x\n",
-              gLixGuest->MmAlloc.Detour.Code.Address, gLixGuest->MmAlloc.Detour.Code.Length, status);
-        return status;
+        TRACE("[LIXGUEST] Deployed detours code @0x%016llx.", gLixGuest->MmAlloc.Detour.Code.Address);
     }
+    if (n % 2 == 1){
+        status = IntMemClkCloakRegion(gLixGuest->MmAlloc.Detour.Code.Address + PAGE_SIZE * (n - 1),
+                                    0,
+                                    PAGE_SIZE,
+                                    MEMCLOAK_OPT_APPLY_PATCH,
+                                    NULL,
+                                    gLixDetours + gLixGuest->MmAlloc.Detour.Data.Length + PAGE_SIZE * (n - 1),
+                                    NULL,
+                                    &gLixGuest->MmAlloc.Detour.Code.HookObject);
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntMemClkCloakRegion failed for 0x%016llx (%d bytes) with status: 0x%08x\n",
+                gLixGuest->MmAlloc.Detour.Code.Address + PAGE_SIZE * (n - 1), PAGE_SIZE, status);
+            return status;
+        }
 
-    TRACE("[LIXGUEST] Deployed detours code @0x%016llx.", gLixGuest->MmAlloc.Detour.Code.Address);
-
+        TRACE("[LIXGUEST] Deployed detours code @0x%016llx.", gLixGuest->MmAlloc.Detour.Code.Address);
+    }
+    
     return INT_STATUS_SUCCESS;
 }
 
@@ -2042,14 +2062,14 @@ IntLixGuestAllocateFill(
           gLixGuest->MmAlloc.Detour.Data.Address, gLixGuest->MmAlloc.Detour.Data.Length);
 
     gLixGuest->MmAlloc.Detour.Code.Address = pRegs->R8 + PAGE_SIZE * 2;
-    gLixGuest->MmAlloc.Detour.Code.Length = PAGE_SIZE * 2;
+    gLixGuest->MmAlloc.Detour.Code.Length = PAGE_SIZE * 3;
 
     TRACE("[LIXGUEST] Allocated guest virtual memory for detours code @ 0x%016llx (0x%x bytes)\n",
           gLixGuest->MmAlloc.Detour.Code.Address, gLixGuest->MmAlloc.Detour.Code.Length);
 
     gLixGuest->MmAlloc.Detour.Initialized = TRUE;
 
-    gLixGuest->MmAlloc.Agent.Address = pRegs->R8 + PAGE_SIZE * 4;
+    gLixGuest->MmAlloc.Agent.Address = pRegs->R8 + PAGE_SIZE * 5;
     gLixGuest->MmAlloc.Agent.Length = PAGE_SIZE;
     TRACE("[LIXGUEST] Allocated guest virtual memory for agent code @ 0x%016llx (0x%x bytes)\n",
           gLixGuest->MmAlloc.Agent.Address, gLixGuest->MmAlloc.Agent.Length);

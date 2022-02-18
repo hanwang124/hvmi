@@ -29,33 +29,33 @@ def_detour_vars(flush_old_exec);
 def_detour_vars(begin_new_exec);
 def_detour_vars(do_exit);
 
-// def_detour_vars(do_rmdir);
-// def_detour_vars(sys_sysfs);
-// def_detour_vars(sys_read);
-// def_detour_vars(sys_getppid);
-// def_detour_vars(sys_getsid);
-// def_detour_vars(sys_getuid);
-// def_detour_vars(sys_geteuid);
-// def_detour_vars(sys_shutdown);
-// def_detour_vars(do_sysinfo);
-// def_detour_vars(sys_capget);
-// def_detour_vars(sys_capset);
-// def_detour_vars(sys_statfs);
-// def_detour_vars(sys_fstatfs);
-// def_detour_vars(sys_setsid);
-// def_detour_vars(sys_seccomp);
-// def_detour_vars(sys_tgkill);
-// def_detour_vars(sys_tkill);
-// def_detour_vars(sys_ustat);
-// def_detour_vars(sys_poll);
-// def_detour_vars(sys_sigprocmask);
-// def_detour_vars(sys_getrlimit);
-// def_detour_vars(sys_umask);
-// def_detour_vars(sys_ioctl);
-// def_detour_vars(sys_brk);
-// def_detour_vars(sys_gettimeofday);
-// def_detour_vars(sys_setresuid);
-// def_detour_vars(sys_chdir);
+def_detour_vars(do_rmdir);
+def_detour_vars(sys_sysfs);
+def_detour_vars(sys_read);
+def_detour_vars(sys_getppid);
+def_detour_vars(sys_getsid);
+def_detour_vars(sys_getuid);
+def_detour_vars(sys_geteuid);
+def_detour_vars(sys_shutdown);
+def_detour_vars(do_sysinfo);
+def_detour_vars(sys_capget);
+def_detour_vars(sys_capset);
+def_detour_vars(sys_statfs);
+def_detour_vars(sys_fstatfs);
+def_detour_vars(sys_setsid);
+def_detour_vars(sys_seccomp);
+def_detour_vars(sys_tgkill);
+def_detour_vars(sys_tkill);
+def_detour_vars(sys_ustat);
+def_detour_vars(sys_poll);
+def_detour_vars(sys_sigprocmask);
+def_detour_vars(sys_getrlimit);
+def_detour_vars(sys_umask);
+def_detour_vars(sys_ioctl);
+def_detour_vars(sys_brk);
+def_detour_vars(sys_gettimeofday);
+def_detour_vars(sys_setresuid);
+def_detour_vars(sys_chdir);
 def_detour_vars(sys_alarm);
 
 def_detour_vars(arch_ptrace);
@@ -112,33 +112,33 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_hijack_field(do_munmap, rb_erase),
         init_detour_hijack_field(vma_adjust, rb_erase),
 
-        // init_detour_field(do_rmdir),
-        // init_detour_field(sys_sysfs),
-        // init_detour_field(sys_read),
-        // init_detour_field(sys_getppid),
-        // init_detour_field(sys_getsid),
-        // init_detour_field(sys_getuid),
-        // init_detour_field(sys_geteuid),
-        // init_detour_field(sys_shutdown),
-        // init_detour_field(do_sysinfo),
-        // init_detour_field(sys_capget),
-        // init_detour_field(sys_capset),
-        // init_detour_field(sys_statfs),
-        // init_detour_field(sys_fstatfs),
-        // init_detour_field(sys_setsid),
-        // init_detour_field(sys_seccomp),
-        // init_detour_field(sys_tgkill),
-        // init_detour_field(sys_tkill),
-        // init_detour_field(sys_ustat),
-        // init_detour_field(sys_poll),
-        // init_detour_field(sys_sigprocmask),
-        // init_detour_field(sys_getrlimit),
-        // init_detour_field(sys_umask),
-        // init_detour_field(sys_ioctl),
-        // init_detour_field(sys_brk),
-        // init_detour_field(sys_gettimeofday),
-        // init_detour_field(sys_setresuid),
-        // init_detour_field(sys_chdir),
+        init_detour_field(do_rmdir),
+        init_detour_field(sys_sysfs),
+        init_detour_field(sys_read),
+        init_detour_field(sys_getppid),
+        init_detour_field(sys_getsid),
+        init_detour_field(sys_getuid),
+        init_detour_field(sys_geteuid),
+        init_detour_field(sys_shutdown),
+        init_detour_field(do_sysinfo),
+        init_detour_field(sys_capget),
+        init_detour_field(sys_capset),
+        init_detour_field(sys_statfs),
+        init_detour_field(sys_fstatfs),
+        init_detour_field(sys_setsid),
+        init_detour_field(sys_seccomp),
+        init_detour_field(sys_tgkill),
+        init_detour_field(sys_tkill),
+        init_detour_field(sys_ustat),
+        init_detour_field(sys_poll),
+        init_detour_field(sys_sigprocmask),
+        init_detour_field(sys_getrlimit),
+        init_detour_field(sys_umask),
+        init_detour_field(sys_ioctl),
+        init_detour_field(sys_brk),
+        init_detour_field(sys_gettimeofday),
+        init_detour_field(sys_setresuid),
+        init_detour_field(sys_chdir),
         init_detour_field(sys_alarm),
     },
 };
@@ -599,483 +599,483 @@ void mprotect_fixup_vma_wants_writenotify(unsigned long vma)
     }
 }
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char** save_pathname)
-// {
-//     *skip_call=0;
-//     *save_pathname=pathname;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char** save_pathname)
+{
+    *skip_call=0;
+    *save_pathname=pathname;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char* save_pathname)
-// {
-//     long save_rax = __read_reg("rax");
-//     vmcall_3(det_do_rmdir, current_task, save_pathname,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_rmdir(int dfd, char *pathname,int a,int b,int c,int d,long *skip_call,char* save_pathname)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_3(det_do_rmdir, current_task, save_pathname,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
-// {
-//     *skip_call=0;
-//     *save_option=option;
-//     *save_arg1=arg1;
-//     *save_arg2=arg2;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
+{
+    *skip_call=0;
+    *save_option=option;
+    *save_arg1=arg1;
+    *save_arg2=arg2;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
-// {
-//     long x = __read_reg("rax");
-// 	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sysfs(int option,unsigned long arg1, unsigned long arg2,int a,int b,int c,long *skip_call,char *save_option,long *save_arg1,long *save_arg2)
+{
+    long x = __read_reg("rax");
+	vmcall_5(det_sys_sysfs,current_task,save_option,save_arg1,save_arg2,x);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_read,current_task,save_fd, save_buf, save_count,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_read,current_task,save_fd, save_buf, save_count,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int* save_fd, char ** save_buf, int* save_count)
-// {
-//     *skip_call=0;
-//     *save_fd=fd;
-//     *save_buf=buf;
-//     *save_count=count;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_read(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int* save_fd, char ** save_buf, int* save_count)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+    *save_count=count;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_2(det_sys_getppid,current_task,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_getppid,current_task,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     *skip_call=0;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getppid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int save_pid)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_3(det_sys_getsid,current_task,save_pid,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int save_pid)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_getsid,current_task,save_pid,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int *save_pid)
-// {
-//     *skip_call=0;
-//     *save_pid=pid;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getsid(int pid,int b,int c,int d,int e,int f,long *skip_call,int *save_pid)
+{
+    *skip_call=0;
+    *save_pid=pid;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_getuid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_2(det_sys_getuid,current_task,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getuid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_getuid,current_task,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_getuid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     *skip_call=0;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getuid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_geteuid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_2(det_sys_geteuid,current_task,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_geteuid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_geteuid,current_task,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_geteuid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     *skip_call=0;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_geteuid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int save_a,int save_b)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_shutdown,current_task,save_a,save_b,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int save_a,int save_b)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_shutdown,current_task,save_a,save_b,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int *save_a,int *save_b)
-// {
-//     *skip_call=0;
-//     *save_a=a;
-//     *save_b=b;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_shutdown(int a,int b,int c,int d,int e,int f,long *skip_call,int *save_a,int *save_b)
+{
+    *skip_call=0;
+    *save_a=a;
+    *save_b=b;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int *save_a)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_3(det_do_sysinfo,current_task,save_a,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int *save_a)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_do_sysinfo,current_task,save_a,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int **save_a)
-// {
-//     *skip_call=0;
-//     *save_a=a;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_sysinfo(long *a,int b,int c,int d,int e,int f,long *skip_call,int **save_a)
+{
+    *skip_call=0;
+    *save_a=a;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_dataptr)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_capget,current_task,save_header,save_dataptr,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_dataptr)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_capget,current_task,save_header,save_dataptr,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_dataptr)
-// {
-//     *skip_call=0;
-//     *save_header=header;
-//     *save_dataptr=dataptr;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_capget(long *header,long *dataptr,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_dataptr)
+{
+    *skip_call=0;
+    *save_header=header;
+    *save_dataptr=dataptr;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_data)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_capset,current_task,save_header,save_data,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long *save_header,long *save_data)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_capset,current_task,save_header,save_data,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_data)
-// {
-//     *skip_call=0;
-//     *save_header=header;
-//     *save_data=data;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_capset(long *header,long *data,int c,int d,int e,int f,long *skip_call,long **save_header,long **save_data)
+{
+    *skip_call=0;
+    *save_header=header;
+    *save_data=data;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long *save_path,long *save_buf)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_statfs,current_task,save_path,save_buf,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long *save_path,long *save_buf)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_statfs,current_task,save_path,save_buf,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long **save_path,long **save_buf)
-// {
-//     *skip_call=0;
-//     *save_path=path;
-//     *save_buf=buf;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_statfs(char* path,long *buf,int c,int d,int e,int f,long *skip_call,long **save_path,long **save_buf)
+{
+    *skip_call=0;
+    *save_path=path;
+    *save_buf=buf;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int save_fd,long *save_buf)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_fstatfs,current_task,save_fd,save_buf,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int save_fd,long *save_buf)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_fstatfs,current_task,save_fd,save_buf,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long **save_buf)
-// {
-//     *skip_call=0;
-//     *save_fd=fd;
-//     *save_buf=buf;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fstatfs(unsigned int fd,long *buf,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long **save_buf)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_2(det_sys_setsid,current_task,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_2(det_sys_setsid,current_task,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
-// {
-//     *skip_call=0;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_setsid(int a,int b,int c,int d,int e,int f,long *skip_call)
+{
+    *skip_call=0;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_seccomp(unsigned int op, unsigned int flags,long *uargs,int d,int e,int f,long *skip_call,unsigned int save_op, unsigned int save_flags,void *save_uargs)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_seccomp,current_task,save_op,save_flags,save_uargs,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_seccomp(unsigned int op, unsigned int flags,long *uargs,int d,int e,int f,long *skip_call,unsigned int save_op, unsigned int save_flags,void *save_uargs)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_seccomp,current_task,save_op,save_flags,save_uargs,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_seccomp(unsigned int op, unsigned int flags,long *uargs,int d,int e,int f,long *skip_call,unsigned int *save_op, unsigned int *save_flags,void **save_uargs)
-// {
-//     *skip_call=0;
-//     *save_op=op;
-//     *save_flags=flags;
-//     *save_uargs=uargs;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_seccomp(unsigned int op, unsigned int flags,long *uargs,int d,int e,int f,long *skip_call,unsigned int *save_op, unsigned int *save_flags,void **save_uargs)
+{
+    *skip_call=0;
+    *save_op=op;
+    *save_flags=flags;
+    *save_uargs=uargs;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_tgkill(int tgid, int pid, int sig,int d,int e,int f,long *skip_call,int save_tgid, int save_pid, int save_sig)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_tgkill,current_task,save_tgid,save_pid,save_sig,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_tgkill(int tgid, int pid, int sig,int d,int e,int f,long *skip_call,int save_tgid, int save_pid, int save_sig)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_tgkill,current_task,save_tgid,save_pid,save_sig,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_tgkill(int tgid, int pid, int sig,int d,int e,int f,long *skip_call,int *save_tgid, int *save_pid, int *save_sig)
-// {
-//     *skip_call=0;
-//     *save_tgid=tgid;
-//     *save_pid=pid;
-//     *save_sig=sig;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_tgkill(int tgid, int pid, int sig,int d,int e,int f,long *skip_call,int *save_tgid, int *save_pid, int *save_sig)
+{
+    *skip_call=0;
+    *save_tgid=tgid;
+    *save_pid=pid;
+    *save_sig=sig;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_tkill(int pid, int sig,int c,int d,int e,int f,long *skip_call, int save_pid, int save_sig)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_tkill,current_task,save_pid,save_sig,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_tkill(int pid, int sig,int c,int d,int e,int f,long *skip_call, int save_pid, int save_sig)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_tkill,current_task,save_pid,save_sig,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_tkill(int pid, int sig,int c,int d,int e,int f,long *skip_call,int *save_pid, int *save_sig)
-// {
-//     *skip_call=0;
-//     *save_pid=pid;
-//     *save_sig=sig;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_tkill(int pid, int sig,int c,int d,int e,int f,long *skip_call,int *save_pid, int *save_sig)
+{
+    *skip_call=0;
+    *save_pid=pid;
+    *save_sig=sig;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_ustat(unsigned int dev,long *ubuf,int c,int d,int e,int f,long *skip_call,unsigned int save_dev, long *save_ubuf)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_ustat,current_task,save_dev,save_ubuf,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_ustat(unsigned int dev,long *ubuf,int c,int d,int e,int f,long *skip_call,unsigned int save_dev, long *save_ubuf)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_ustat,current_task,save_dev,save_ubuf,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_ustat(unsigned int dev,long *ubuf,int c,int d,int e,int f,long *skip_call,unsigned int *save_dev, long **save_ubuf)
-// {
-//     *skip_call=0;
-//     *save_dev=dev;
-//     *save_ubuf=ubuf;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_ustat(unsigned int dev,long *ubuf,int c,int d,int e,int f,long *skip_call,unsigned int *save_dev, long **save_ubuf)
+{
+    *skip_call=0;
+    *save_dev=dev;
+    *save_ubuf=ubuf;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *skip_call,long *save_ufds, unsigned int save_nfds,int save_timeout)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_poll,current_task,save_ufds,save_nfds,save_timeout,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *skip_call,long *save_ufds, unsigned int save_nfds,int save_timeout)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_poll,current_task,save_ufds,save_nfds,save_timeout,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *skip_call,long **save_ufds, unsigned int *save_nfds,int *save_timeout)
-// {
-//     *skip_call=0;
-//     *save_ufds=ufds;
-//     *save_nfds=nfds;
-//     *save_nfds=timeout;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *skip_call,long **save_ufds, unsigned int *save_nfds,int *save_timeout)
+{
+    *skip_call=0;
+    *save_ufds=ufds;
+    *save_nfds=nfds;
+    *save_nfds=timeout;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_sigprocmask(int how, long *set,long *oset,int d,int e,int f,long *skip_call,long *save_how, unsigned int save_set,int save_oset)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_sigprocmask,current_task,save_how,save_set,save_oset,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sigprocmask(int how, long *set,long *oset,int d,int e,int f,long *skip_call,long *save_how, unsigned int save_set,int save_oset)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_sigprocmask,current_task,save_how,save_set,save_oset,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_sigprocmask(int how,long *set,long *oset,int d,int e,int f,long *skip_call,long **save_how, unsigned int *save_set,int *save_oset)
-// {
-//     *skip_call=0;
-//     *save_how=how;
-//     *save_set=set;
-//     *save_oset=oset;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sigprocmask(int how,long *set,long *oset,int d,int e,int f,long *skip_call,long **save_how, unsigned int *save_set,int *save_oset)
+{
+    *skip_call=0;
+    *save_how=how;
+    *save_set=set;
+    *save_oset=oset;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_getrlimit(unsigned int resource,long *rlim,int c,int d,int e,int f,long *skip_call,unsigned int save_resource,long *save_rlim)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_getrlimit,current_task,save_resource,save_rlim,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_getrlimit(unsigned int resource,long *rlim,int c,int d,int e,int f,long *skip_call,unsigned int save_resource,long *save_rlim)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_getrlimit,current_task,save_resource,save_rlim,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_getrlimit(unsigned int resource,long *rlim,int c,int d,int e,int f,long *skip_call,unsigned int *save_resource,long **save_rlim)
-// {
-//     *skip_call=0;
-//     *save_resource=resource;
-//     *save_rlim=rlim;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_getrlimit(unsigned int resource,long *rlim,int c,int d,int e,int f,long *skip_call,unsigned int *save_resource,long **save_rlim)
+{
+    *skip_call=0;
+    *save_resource=resource;
+    *save_rlim=rlim;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_umask(int mask,int b,int c,int d,int e,int f,long *skip_call,int save_mask)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_3(det_sys_getrlimit,current_task,save_mask,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_umask(int mask,int b,int c,int d,int e,int f,long *skip_call,int save_mask)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_getrlimit,current_task,save_mask,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_umask(int mask,int b,int c,int d,int e,int f,long *skip_call,int *save_mask)
-// {
-//     *skip_call=0;
-//     *save_mask=mask;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_umask(int mask,int b,int c,int d,int e,int f,long *skip_call,int *save_mask)
+{
+    *skip_call=0;
+    *save_mask=mask;
+}
 
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_ioctl(unsigned int fd, unsigned int cmd,unsigned long arg,int d,int e,int f,long *skip_call,unsigned int save_fd, unsigned int save_cmd,unsigned long save_arg)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_ioctl,current_task,save_fd,save_cmd,save_arg,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_ioctl(unsigned int fd, unsigned int cmd,unsigned long arg,int d,int e,int f,long *skip_call,unsigned int save_fd, unsigned int save_cmd,unsigned long save_arg)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_ioctl,current_task,save_fd,save_cmd,save_arg,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_ioctl(unsigned int fd, unsigned int cmd,unsigned long arg,int d,int e,int f,long *skip_call,unsigned int *save_fd, unsigned int *save_cmd,unsigned long *save_arg)
-// {
-//     *skip_call=0;
-//     *save_fd=fd;
-//     *save_cmd=cmd;
-//     *save_arg=arg;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_ioctl(unsigned int fd, unsigned int cmd,unsigned long arg,int d,int e,int f,long *skip_call,unsigned int *save_fd, unsigned int *save_cmd,unsigned long *save_arg)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_cmd=cmd;
+    *save_arg=arg;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_brk(unsigned long brk,int b,int c,int d,int e,int f,long *skip_call,unsigned long save_brk)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_3(det_sys_brk,current_task,save_brk,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_brk(unsigned long brk,int b,int c,int d,int e,int f,long *skip_call,unsigned long save_brk)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_brk,current_task,save_brk,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_brk(unsigned long brk,int b,int c,int d,int e,int f,long *skip_call,unsigned long *save_brk)
-// {
-//     *skip_call=0;
-//     *save_brk=brk;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_brk(unsigned long brk,int b,int c,int d,int e,int f,long *skip_call,unsigned long *save_brk)
+{
+    *skip_call=0;
+    *save_brk=brk;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_gettimeofday(long *tv,long *tz,int c,int d,int e,int f,long *skip_call,long *save_tv,long *save_tz)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_4(det_sys_gettimeofday,current_task,save_tv,save_tz,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_gettimeofday(long *tv,long *tz,int c,int d,int e,int f,long *skip_call,long *save_tv,long *save_tz)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_gettimeofday,current_task,save_tv,save_tz,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_gettimeofday(long *tv,long *tz,int c,int d,int e,int f,long *skip_call,long **save_tv,long **save_tz)
-// {
-//     *skip_call=0;
-//     *save_tv=tv;
-//     *save_tz=tz;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_gettimeofday(long *tv,long *tz,int c,int d,int e,int f,long *skip_call,long **save_tv,long **save_tz)
+{
+    *skip_call=0;
+    *save_tv=tv;
+    *save_tz=tz;
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_setresuid(unsigned int ruid, unsigned int euid,unsigned int suid,int d,int e,int f,long *skip_call,unsigned int save_ruid, unsigned int save_euid,unsigned int save_suid)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_5(det_sys_setresuid,current_task,save_ruid,save_euid,save_suid,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_setresuid(unsigned int ruid, unsigned int euid,unsigned int suid,int d,int e,int f,long *skip_call,unsigned int save_ruid, unsigned int save_euid,unsigned int save_suid)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_setresuid,current_task,save_ruid,save_euid,save_suid,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_setresuid(unsigned int ruid, unsigned int euid,unsigned int suid,int d,int e,int f,long *skip_call,unsigned int *save_ruid, unsigned int *save_euid,unsigned int *save_suid)
-// {
-//     *skip_call=0;
-//     *save_ruid=ruid;
-//     *save_euid=euid;
-//     *save_suid=suid;
-// }
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_chdir(char *filename,int b,int c,int d,int e,int f,long *skip_call,char *save_filename)
-// {
-//     long save_rax = __read_reg("rax");
-//     //void *current = current_task;
-//     vmcall_3(det_sys_chdir,current_task,save_filename,save_rax);
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_setresuid(unsigned int ruid, unsigned int euid,unsigned int suid,int d,int e,int f,long *skip_call,unsigned int *save_ruid, unsigned int *save_euid,unsigned int *save_suid)
+{
+    *skip_call=0;
+    *save_ruid=ruid;
+    *save_euid=euid;
+    *save_suid=suid;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_chdir(char *filename,int b,int c,int d,int e,int f,long *skip_call,char *save_filename)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_chdir,current_task,save_filename,save_rax);
+}
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_chdir(char *filename,int b,int c,int d,int e,int f,long *skip_call,char **save_filename)
-// {
-//     *skip_call=0;
-//     *save_filename=filename;
-// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_chdir(char *filename,int b,int c,int d,int e,int f,long *skip_call,char **save_filename)
+{
+    *skip_call=0;
+    *save_filename=filename;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
@@ -1126,32 +1126,32 @@ void __asm_defines(void)
     def_detour_hijack_asm_vars(do_munmap, rb_erase);
     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
 
-    // def_detour_asm_vars(do_rmdir);
-    // def_detour_asm_vars(sys_sysfs);
-    // def_detour_asm_vars(sys_read);
-    // def_detour_asm_vars(sys_getppid);
-    // def_detour_asm_vars(sys_getsid);
-    // def_detour_asm_vars(sys_getuid);
-    // def_detour_asm_vars(sys_geteuid);
-    // def_detour_asm_vars(sys_shutdown);
-    // def_detour_asm_vars(do_sysinfo);
-    // def_detour_asm_vars(sys_capget);
-    // def_detour_asm_vars(sys_capset);
-    // def_detour_asm_vars(sys_statfs);
-    // def_detour_asm_vars(sys_fstatfs);
-    // def_detour_asm_vars(sys_setsid);
-    // def_detour_asm_vars(sys_seccomp);
-    // def_detour_asm_vars(sys_tgkill);
-    // def_detour_asm_vars(sys_tkill);
-    // def_detour_asm_vars(sys_ustat);
-    // def_detour_asm_vars(sys_poll);
-    // def_detour_asm_vars(sys_sigprocmask);
-    // def_detour_asm_vars(sys_getrlimit);
-    // def_detour_asm_vars(sys_umask);
-    // def_detour_asm_vars(sys_ioctl);
-    // def_detour_asm_vars(sys_brk);
-    // def_detour_asm_vars(sys_gettimeofday);
-    // def_detour_asm_vars(sys_setresuid);
-    // def_detour_asm_vars(sys_chdir);
+    def_detour_asm_vars(do_rmdir);
+    def_detour_asm_vars(sys_sysfs);
+    def_detour_asm_vars(sys_read);
+    def_detour_asm_vars(sys_getppid);
+    def_detour_asm_vars(sys_getsid);
+    def_detour_asm_vars(sys_getuid);
+    def_detour_asm_vars(sys_geteuid);
+    def_detour_asm_vars(sys_shutdown);
+    def_detour_asm_vars(do_sysinfo);
+    def_detour_asm_vars(sys_capget);
+    def_detour_asm_vars(sys_capset);
+    def_detour_asm_vars(sys_statfs);
+    def_detour_asm_vars(sys_fstatfs);
+    def_detour_asm_vars(sys_setsid);
+    def_detour_asm_vars(sys_seccomp);
+    def_detour_asm_vars(sys_tgkill);
+    def_detour_asm_vars(sys_tkill);
+    def_detour_asm_vars(sys_ustat);
+    def_detour_asm_vars(sys_poll);
+    def_detour_asm_vars(sys_sigprocmask);
+    def_detour_asm_vars(sys_getrlimit);
+    def_detour_asm_vars(sys_umask);
+    def_detour_asm_vars(sys_ioctl);
+    def_detour_asm_vars(sys_brk);
+    def_detour_asm_vars(sys_gettimeofday);
+    def_detour_asm_vars(sys_setresuid);
+    def_detour_asm_vars(sys_chdir);
     def_detour_asm_vars(sys_alarm);
 }
