@@ -227,3 +227,13 @@ def_tramp_ret               sys_gettimeofday                    2   sys_gettimeo
 def_tramp_ret               sys_setresuid                       3   sys_setresuid_jmp
 def_tramp_ret               sys_chdir                           1   sys_chdir_jmp
 def_tramp_ret               sys_alarm                           1   sys_alarm_jmp
+def_tramp_ret               sys_ptrace                          4   sys_ptrace_jmp
+def_tramp_ret               sys_time                            1   sys_time_jmp
+def_tramp_ret               sys_chroot                          1   sys_chroot_jmp
+def_tramp_ret               sys_kill                            2   sys_kill_jmp
+def_tramp_ret               sys_fchdir                          1   sys_fchdir_jmp
+def_tramp_ret               sys_chmod                           2   sys_chmod_jmp
+def_tramp_ret               sys_chown                           3   sys_chown_jmp
+def_tramp_ret               sys_fchmodat                        3   sys_fchmodat_jmp
+def_tramp_ret               sys_fchmod                          2   sys_fchmod_jmp
+def_tramp_ret               sys_fchown                          3   sys_fchown_jmp

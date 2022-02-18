@@ -7,11 +7,61 @@ version: 4.15.0-[24-]*Ubuntu*
 
 
 hooks:
-    
+
     - !intro_update_lix_hook
-        name: sys_alarm
+        name: sys_fchown
         handler: 0
         skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_fchmod
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_fchmodat
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_chown
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_chmod
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_fchdir
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_kill
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_chroot
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_time
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_ptrace
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_alarm
+    #     handler: 0
+    #     skip_on_boot: 0 
 
     # - !intro_update_lix_hook
     #     name: sys_chdir

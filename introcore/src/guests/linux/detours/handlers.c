@@ -57,6 +57,16 @@ def_detour_vars(sys_gettimeofday);
 def_detour_vars(sys_setresuid);
 def_detour_vars(sys_chdir);
 def_detour_vars(sys_alarm);
+def_detour_vars(sys_ptrace);
+def_detour_vars(sys_time);
+def_detour_vars(sys_chroot);
+def_detour_vars(sys_kill);
+def_detour_vars(sys_fchdir);
+def_detour_vars(sys_chmod);
+def_detour_vars(sys_chown);
+def_detour_vars(sys_fchmodat);
+def_detour_vars(sys_fchmod);
+def_detour_vars(sys_fchown);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -140,6 +150,16 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_setresuid),
         init_detour_field(sys_chdir),
         init_detour_field(sys_alarm),
+        init_detour_field(sys_ptrace),
+        init_detour_field(sys_time),
+        init_detour_field(sys_chroot),
+        init_detour_field(sys_kill),
+        init_detour_field(sys_fchdir),
+        init_detour_field(sys_chmod),
+        init_detour_field(sys_chown),
+        init_detour_field(sys_fchmodat),
+        init_detour_field(sys_fchmod),
+        init_detour_field(sys_fchown),
     },
 };
 
@@ -1093,6 +1113,186 @@ void pre_sys_alarm(unsigned int seconds,int b,int c,int d,int e,int f,long *skip
     *skip_call=0;
     *save_seconds=seconds;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_ptrace(long request, long pid, unsigned long addr,unsigned long data,int e,int f,long *skip_call,long save_request, long save_pid, unsigned long save_addr,unsigned long save_data)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_6(det_sys_ptrace,current_task,save_request,save_pid,save_addr,save_data,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_ptrace(long request, long pid, unsigned long addr,unsigned long data,int e,int f,long *skip_call,long *save_request, long *save_pid, unsigned long *save_addr,unsigned long *save_data)
+{
+    *skip_call=0;
+    *save_request=request;
+    *save_pid=pid;
+    *save_addr=addr;
+    *save_data=data;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_time(long *tloc,int b,int c,int d,int e,int f,long *skip_call,long *save_tloc)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_time,current_task,save_tloc,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_time(long *tloc,int b,int c,int d,int e,int f,long *skip_call,long **save_tloc)
+{
+    *skip_call=0;
+    *save_tloc=tloc;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_chroot(char *filename,int b,int c,int d,int e,int f,long *skip_call,char *save_filename)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_chroot,current_task,save_filename,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_chroot(char *filename,int b,int c,int d,int e,int f,long *skip_call,char **save_filename)
+{
+    *skip_call=0;
+    *save_filename=filename;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_kill(long pid, int sig,int c,int d,int e,int f,long *skip_call,long save_pid, int save_sig)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_kill,current_task,save_pid,save_sig,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_kill(long pid, int sig,int c,int d,int e,int f,long *skip_call,long *save_pid, int *save_sig)
+{
+    *skip_call=0;
+    *save_pid=pid;
+    *save_sig=sig;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fchdir(unsigned int fd, int b,int c,int d,int e,int f,long *skip_call,unsigned int save_fd)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_fchdir,current_task,save_fd,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fchdir(unsigned int fd, int b,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd)
+{
+    *skip_call=0;
+    *save_fd=fd;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_chmod(char *filename,long mode,int c,int d,int e,int f,long *skip_call,char *save_filename,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_chmod,current_task,save_filename,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_chmod(char *filename,long mode,int c,int d,int e,int f,long *skip_call,char **save_filename,long *save_mode)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_chown(char *filename,unsigned int user,unsigned int group,int d,int e,int f,long *skip_call,char *save_filename,unsigned int save_user,unsigned int save_group)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_chown,current_task,save_filename,save_user,save_group,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_chown(char *filename,unsigned int user,unsigned int group,int d,int e,int f,long *skip_call,char **save_filename,unsigned int *save_user,unsigned int *save_group)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_user=user;
+    *save_group=group;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fchmodat(int dfd,char * filename,long mode,int d,int e,int f,long *skip_call,int save_dfd,char *save_filename,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_fchmodat,current_task,save_dfd,save_filename,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fchmodat(int dfd,char * filename,long mode,int d,int e,int f,long *skip_call,int *save_dfd,char **save_filename,long *save_mode)
+{
+    *skip_call=0;
+    *save_dfd=dfd;
+    *save_filename=filename;
+    *save_mode=mode;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fchmod(unsigned int fd,long mode,int c,int d,int e,int f,long *skip_call,unsigned int save_fd,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_fchmod,current_task,save_fd,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fchmod(unsigned int fd,long mode,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long *save_mode)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fchown(unsigned int fd,unsigned int user,unsigned int group,int d,int e,int f,long *skip_call,unsigned int save_fd,unsigned int save_user,unsigned int save_group)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_fchown,current_task,save_fd,save_user,save_group,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fchown(unsigned int fd,unsigned int user,unsigned int group,int d,int e,int f,long *skip_call,unsigned int *save_fd,unsigned int *save_user,unsigned int *save_group)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_user=user;
+    *save_group=group;
+}
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -1154,4 +1354,14 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_setresuid);
     def_detour_asm_vars(sys_chdir);
     def_detour_asm_vars(sys_alarm);
+    def_detour_asm_vars(sys_ptrace);
+    def_detour_asm_vars(sys_time);
+    def_detour_asm_vars(sys_chroot);
+    def_detour_asm_vars(sys_kill);
+    def_detour_asm_vars(sys_fchdir);
+    def_detour_asm_vars(sys_chmod);
+    def_detour_asm_vars(sys_chown);
+    def_detour_asm_vars(sys_fchmodat);
+    def_detour_asm_vars(sys_fchmod);
+    def_detour_asm_vars(sys_fchown);
 }

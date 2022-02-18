@@ -65,6 +65,16 @@ typedef enum {
     det_sys_setresuid,
     det_sys_chdir,
     det_sys_alarm,
+    det_sys_ptrace,
+    det_sys_time,
+    det_sys_chroot,
+    det_sys_kill,
+    det_sys_fchdir,
+    det_sys_chmod,
+    det_sys_chown,
+    det_sys_fchmodat,
+    det_sys_fchmod,
+    det_sys_fchown,
     
     det_max_id
 } DETOUR_ID;

@@ -150,6 +150,30 @@
     vmcall(id);                                 \
 })
 
+#define vmcall_7(id, p1, p2, p3, p4, p5, p6,p7)    \
+({                                              \
+    __vmcall_param_1(p1);                       \
+    __vmcall_param_2(p2);                       \
+    __vmcall_param_3(p3);                       \
+    __vmcall_param_4(p4);                       \
+    __vmcall_param_5(p5);                       \
+    __vmcall_param_6(p6);                       \
+    __vmcall_param_7(p7);                       \
+    vmcall(id);                                 \
+})
+
+#define vmcall_8(id, p1, p2, p3, p4, p5, p6,p7,p8)    \
+({                                              \
+    __vmcall_param_1(p1);                       \
+    __vmcall_param_2(p2);                       \
+    __vmcall_param_3(p3);                       \
+    __vmcall_param_4(p4);                       \
+    __vmcall_param_5(p5);                       \
+    __vmcall_param_6(p6);                       \
+    __vmcall_param_7(p7);                       \
+    __vmcall_param_8(p8);                       \
+    vmcall(id);                                 \
+})
 #define __read_reg(reg) ({                               \
     unsigned long long val;                              \
     asm volatile("mov %0, " reg "\n\t" : "=r" (val));    \
