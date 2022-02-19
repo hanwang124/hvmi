@@ -51,6 +51,20 @@ INTSTATUS IntLixChownHandle(_In_ void *Detour);
 INTSTATUS IntLixFchmodatHandle(_In_ void *Detour);
 INTSTATUS IntLixFchmodHandle(_In_ void *Detour);
 INTSTATUS IntLixFchownHandle(_In_ void *Detour);
+INTSTATUS IntLixFchownatHandle(_In_ void *Detour);
+INTSTATUS IntLixRenameHandle(_In_ void *Detour);
+INTSTATUS IntLixRenameat2Handle(_In_ void *Detour);
+INTSTATUS IntLixRenameatHandle(_In_ void *Detour);
+INTSTATUS IntLixMkdirHandle(_In_ void *Detour);
+INTSTATUS IntLixCreatHandle(_In_ void *Detour);
+INTSTATUS IntLixOpenatHandle(_In_ void *Detour);
+INTSTATUS IntLixLinkHandle(_In_ void *Detour);
+INTSTATUS IntLixUnlinkHandle(_In_ void *Detour);
+INTSTATUS IntLixUnlinkatHandle(_In_ void *Detour);
+INTSTATUS IntLixLinkatHandle(_In_ void *Detour);
+INTSTATUS IntLixSymlinkHandle(_In_ void *Detour);
+INTSTATUS IntLixSymlinkatHandle(_In_ void *Detour);
+INTSTATUS IntLixAccessHandle(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -177,8 +191,534 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_fchmodat,                   IntLixFchmodatHandle,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_fchmod,                     IntLixFchmodHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_fchown,                     IntLixFchownHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_fchownat,                   IntLixFchownatHandle,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_rename,                     IntLixRenameHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_renameat2,                  IntLixRenameat2Handle,          DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_renameat,                   IntLixRenameatHandle,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_mkdir,                      IntLixMkdirHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_creat,                      IntLixCreatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_openat,                     IntLixOpenatHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_link,                       IntLixLinkHandle,               DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_unlink,                     IntLixUnlinkHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_unlinkat,                   IntLixUnlinkatHandle,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_linkat,                     IntLixLinkatHandle,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_symlink,                    IntLixSymlinkHandle,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_symlinkat,                  IntLixSymlinkatHandle,          DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_access,                     IntLixAccessHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     
 };
+
+INTSTATUS
+IntLixAccessHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_access" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    LOG("process %s [%d] access(%s,0%o) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSymlinkatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_symlinkat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    char newname[0x40];
+    status =IntVirtMemFetchString(pRegs->R11,0x40,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R11, status);
+        return status;
+    }
+    LOG("process %s [%d] symlinkat(%s,%d,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,pRegs->R10,newname,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+
+INTSTATUS
+IntLixSymlinkHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_symlink" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    char newname[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    LOG("process %s [%d] symlink(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixLinkatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_linkat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x20];
+    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    char newname[0x20];
+    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
+        return status;
+    }
+    LOG("process %s [%d] linkat(%d,%s,%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13,pRegs->R14);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixUnlinkatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_unlinkat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, pathname);
+        return status;
+    }
+    LOG("process %s [%d] unlinkat(%d,%s,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixUnlinkHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_unlink" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, pathname);
+        return status;
+    }
+    LOG("process %s [%d] unlink(%s) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixLinkHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_link" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    char newname[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    LOG("process %s [%d] link(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixOpenatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_openat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    LOG("process %s [%d] openat(%d,%s,%d,0%o) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixCreatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_creat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    LOG("process %s [%d] creat(%s,%d) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixMkdirHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_mkdir" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    LOG("process %s [%d] mkdir(%s,0%o) = %d\n",pTask->Comm, pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixRenameatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_renameat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x20];
+    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    char newname[0x20];
+    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
+        return status;
+    }
+    LOG("process %s [%d] renameat(%d,%s,%d,%s) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixRenameat2Handle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_renameat2" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x20];
+    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    char newname[0x20];
+    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
+        return status;
+    }
+    LOG("process %s [%d] renameat2(%d,%s,%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13,pRegs->R14);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixRenameHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_rename" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char oldname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    char newname[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    LOG("process %s [%d] rename(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixFchownatHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_fchownat" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    char filename[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,filename);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        return status;
+    }
+    LOG("process %s [%d] fchownat(%d,%s,%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,filename,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixFchownHandle(
@@ -228,7 +768,7 @@ IntLixFchmodHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fchmod(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] fchmod(%d,0%o) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -254,14 +794,14 @@ IntLixFchmodatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *filename[0x20];
-    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,filename);
+    char filename[0x40];
+    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,filename);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
         return status;
     }
-    LOG("process %s [%d] fchmodat(%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,filename,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] fchmodat(%d,%s,0%o) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,filename,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -287,8 +827,8 @@ IntLixChownHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *filename[0x20];
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,filename);
+    char *filename[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,filename);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
@@ -320,14 +860,14 @@ IntLixChmodHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *filename[0x20];
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,filename);
+    char filename[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,filename);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
         return status;
     }
-    LOG("process %s [%d] chmod(%s,%d) = %d\n",pTask->Comm, pTask->Pid,filename,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] chmod(%s,0%o) = %d\n",pTask->Comm, pTask->Pid,filename,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -405,8 +945,8 @@ IntLixChrootHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *pathname[0x20];
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,pathname);
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
@@ -516,8 +1056,8 @@ IntLixChdirHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *pathname[0x20];
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,pathname);
+    char pathname[0x40];
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
@@ -913,7 +1453,7 @@ IntLixStatfsHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,path);
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,path);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
@@ -1184,7 +1724,6 @@ IntLixSysfsHandle(
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
-    char buf[0x20];
     if (NULL == pTask)
     {
         ERROR("[ERROR] No task on for exec!\n");
@@ -1211,7 +1750,7 @@ IntLixRmdirHandle(
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    char buf[0x20];
+    char buf[0x40];
 
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
@@ -1221,7 +1760,7 @@ IntLixRmdirHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
 
-    status =IntVirtMemFetchString(pRegs->R9,0x20,pRegs->Cr3,buf);
+    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,buf);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);

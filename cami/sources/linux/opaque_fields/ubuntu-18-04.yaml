@@ -9,9 +9,79 @@ version: 4.15.0-[24-]*Ubuntu*
 hooks:
 
     - !intro_update_lix_hook
-        name: sys_fchown
+        name: sys_access
         handler: 0
-        skip_on_boot: 0 
+        skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_symlinkat
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_symlink
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_linkat
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_unlinkat
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_unlink
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_link
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_openat
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_creat
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_mkdir
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_renameat
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_renameat2
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_rename
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_fchownat
+    #     handler: 0
+    #     skip_on_boot: 0 
+
+    # - !intro_update_lix_hook
+    #     name: sys_fchown
+    #     handler: 0
+    #     skip_on_boot: 0 
 
     # - !intro_update_lix_hook
     #     name: sys_fchmod

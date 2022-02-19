@@ -237,3 +237,17 @@ def_tramp_ret               sys_chown                           3   sys_chown_jm
 def_tramp_ret               sys_fchmodat                        3   sys_fchmodat_jmp
 def_tramp_ret               sys_fchmod                          2   sys_fchmod_jmp
 def_tramp_ret               sys_fchown                          3   sys_fchown_jmp
+def_tramp_ret               sys_fchownat                        5   sys_fchownat_jmp
+def_tramp_ret               sys_rename                          2   sys_rename_jmp
+def_tramp_ret               sys_renameat2                       5   sys_renameat2_jmp
+def_tramp_ret               sys_renameat                        4   sys_renameat_jmp
+def_tramp_ret               sys_mkdir                           2   sys_mkdir_jmp
+def_tramp_ret               sys_creat                           2   sys_creat_jmp
+def_tramp_ret               sys_openat                          4   sys_openat_jmp
+def_tramp_ret               sys_link                            2   sys_link_jmp
+def_tramp_ret               sys_unlink                          1   sys_unlink_jmp
+def_tramp_ret               sys_unlinkat                        3   sys_unlinkat_jmp
+def_tramp_ret               sys_linkat                          5   sys_linkat_jmp
+def_tramp_ret               sys_symlink                         2   sys_symlink_jmp
+def_tramp_ret               sys_symlinkat                       3   sys_symlinkat_jmp
+def_tramp_ret               sys_access                          2   sys_access_jmp

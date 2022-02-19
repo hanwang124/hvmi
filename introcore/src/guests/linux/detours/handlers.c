@@ -67,6 +67,20 @@ def_detour_vars(sys_chown);
 def_detour_vars(sys_fchmodat);
 def_detour_vars(sys_fchmod);
 def_detour_vars(sys_fchown);
+def_detour_vars(sys_fchownat);
+def_detour_vars(sys_rename);
+def_detour_vars(sys_renameat2);
+def_detour_vars(sys_renameat);
+def_detour_vars(sys_mkdir);
+def_detour_vars(sys_creat);
+def_detour_vars(sys_openat);
+def_detour_vars(sys_link);
+def_detour_vars(sys_unlink);
+def_detour_vars(sys_unlinkat);
+def_detour_vars(sys_linkat);
+def_detour_vars(sys_symlink);
+def_detour_vars(sys_symlinkat);
+def_detour_vars(sys_access);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -160,6 +174,20 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_fchmodat),
         init_detour_field(sys_fchmod),
         init_detour_field(sys_fchown),
+        init_detour_field(sys_fchownat),
+        init_detour_field(sys_rename),
+        init_detour_field(sys_renameat2),
+        init_detour_field(sys_renameat),
+        init_detour_field(sys_mkdir),
+        init_detour_field(sys_creat),
+        init_detour_field(sys_openat),
+        init_detour_field(sys_link),
+        init_detour_field(sys_unlink),
+        init_detour_field(sys_unlinkat),
+        init_detour_field(sys_linkat),
+        init_detour_field(sys_symlink),
+        init_detour_field(sys_symlinkat),
+        init_detour_field(sys_access),
     },
 };
 
@@ -1293,6 +1321,272 @@ void pre_sys_fchown(unsigned int fd,unsigned int user,unsigned int group,int d,i
     *save_user=user;
     *save_group=group;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_fchownat(int dfd,char *filename,unsigned int user,unsigned int group, int flag,int f,long *skip_call,int save_dfd,char *save_filename,unsigned int save_user,unsigned int save_group, int save_flag)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_7(det_sys_fchownat,current_task,save_dfd,save_filename,save_user,save_group,save_flag,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_fchownat(int dfd,char *filename,unsigned int user,unsigned int group, int flag,int f,long *skip_call,int *save_dfd,char **save_filename,unsigned int *save_user,unsigned int *save_group, int *save_flag)
+{
+    *skip_call=0;
+    *save_dfd=dfd;
+    *save_filename=filename;
+    *save_user=user;
+    *save_group=group;
+    *save_flag=flag;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_rename(char *oldname,char *newname,int c,int d,int e,int f,long *skip_call,char *save_oldname,char *save_newname)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_rename,current_task,save_oldname,save_newname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_rename(char *oldname,char *newname,int c,int d,int e,int f,long *skip_call,char **save_oldname,char **save_newname)
+{
+    *skip_call=0;
+    *save_oldname=oldname;
+    *save_newname=newname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_renameat2(int olddfd,char *oldname,int newdfd,char *newname,unsigned int flags,int f,long skip_call,int save_olddfd,char *save_oldname,int save_newdfd,char *save_newname,unsigned int save_flags)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_7(det_sys_renameat2,current_task,save_olddfd,save_oldname,save_newdfd,save_newname,save_flags,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_renameat2(int olddfd,char *oldname,int newdfd,char *newname,unsigned int flags,int f,long *skip_call,int *save_olddfd,char **save_oldname,int *save_newdfd,char **save_newname,unsigned int *save_flags)
+{
+    *skip_call=0;
+    *save_olddfd=olddfd;
+    *save_oldname=oldname;
+    *save_newdfd=newdfd;
+    *save_newname=newname;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_renameat(int olddfd,char *oldname,int newdfd,char *newname,int e,int f,long skip_call,int save_olddfd,char *save_oldname,int save_newdfd,char *save_newname)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_6(det_sys_renameat,current_task,save_olddfd,save_oldname,save_newdfd,save_newname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_renameat(int olddfd,char *oldname,int newdfd,char *newname,int e,int f,long *skip_call,int *save_olddfd,char **save_oldname,int *save_newdfd,char **save_newname)
+{
+    *skip_call=0;
+    *save_olddfd=olddfd;
+    *save_oldname=oldname;
+    *save_newdfd=newdfd;
+    *save_newname=newname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_mkdir(char *pathname,long mode,int c,int d,int e,int f,long skip_call,char *save_pathname,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_mkdir,current_task,save_pathname,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_mkdir(char *pathname,long mode,int c,int d,int e,int f,long *skip_call,char **save_pathname,long *save_mode)
+{
+    *skip_call=0;
+    *save_pathname=pathname;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_creat(char *pathname,long mode,int c,int d,int e,int f,long skip_call,char *save_pathname,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_creat,current_task,save_pathname,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_creat(char *pathname,long mode,int c,int d,int e,int f,long *skip_call,char **save_pathname,long *save_mode)
+{
+    *skip_call=0;
+    *save_pathname=pathname;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_openat(int dfd,char *filename,int flags,long mode,int e,int f,long skip_call,int save_dfd,char *save_filename,int save_flags,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_6(det_sys_openat,current_task,save_dfd,save_filename,save_flags,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_openat(int dfd,char *filename,int flags,long mode,int e,int f,long *skip_call,int *save_dfd,char **save_filename,int *save_flags,long *save_mode)
+{
+    *skip_call=0;
+    *save_dfd=dfd;
+    *save_filename=filename;
+    *save_flags=flags;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_link(char *oldname,char *newname,int c,int d,int e,int f,long skip_call,char *save_oldname,char *save_newname)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_link,current_task,save_oldname,save_newname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_link(char *oldname,char *newname,int c,int d,int e,int f,long *skip_call,char **save_oldname,char **save_newname)
+{
+    *skip_call=0;
+    *save_oldname=oldname;
+    *save_newname=newname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_unlink(char *pathname,int b,int c,int d,int e,int f,long skip_call,char *save_pathname)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_3(det_sys_unlink,current_task,save_pathname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_unlink(char *pathname,int b,int c,int d,int e,int f,long *skip_call,char **save_pathname)
+{
+    *skip_call=0;
+    *save_pathname=pathname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_unlinkat(int dfd,char *pathname,int flag,int d,int e,int f,long skip_call,int save_dfd,char *save_pathname,int save_flag)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_unlinkat,current_task,save_dfd,save_pathname,save_flag,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_unlinkat(int dfd,char *pathname,int flag,int d,int e,int f,long *skip_call,int *save_dfd,char **save_pathname,int *save_flag)
+{
+    *skip_call=0;
+    *save_dfd=dfd;
+    *save_pathname=pathname;
+    *save_flag=flag;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_linkat(int olddfd,char *oldname,int newdfd,char *newname,unsigned int flags,int f,long skip_call,int save_olddfd,char *save_oldname,int save_newdfd,char *save_newname,unsigned int save_flags)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_7(det_sys_linkat,current_task,save_olddfd,save_oldname,save_newdfd,save_newname,save_flags,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_linkat(int olddfd,char *oldname,int newdfd,char *newname,unsigned int flags,int f,long *skip_call,int *save_olddfd,char **save_oldname,int *save_newdfd,char **save_newname,unsigned int *save_flags)
+{
+    *skip_call=0;
+    *save_olddfd=olddfd;
+    *save_oldname=oldname;
+    *save_newdfd=newdfd;
+    *save_newname=newname;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_symlinkat(char *oldname,int newdfd,char *newname,int d,int e,int f,long skip_call,char *save_oldname,int save_newdfd,char *save_newname)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_5(det_sys_symlinkat,current_task,save_oldname,save_newdfd,save_newname,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_symlinkat(char *oldname,int newdfd,char *newname,int d,int e,int f,long *skip_call,char **save_oldname,int *save_newdfd,char **save_newname)
+{
+    *skip_call=0;
+    *save_oldname=oldname;
+    *save_newdfd=newdfd;
+    *save_newname=newname;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_symlink(char *old,char *new,int c,int d,int e,int f,long skip_call,char *save_old,char *save_new)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_symlink,current_task,save_old,save_new,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_symlink(char *old,char *new,int c,int d,int e,int f,long *skip_call,char **save_old,char **save_new)
+{
+    *skip_call=0;
+    *save_old=old;
+    *save_new=new;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_access(char *filename,long mode,int c,int d,int e,int f,long skip_call,char *save_filename,long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    //void *current = current_task;
+    vmcall_4(det_sys_access,current_task,save_filename,save_mode,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_access(char *filename,long mode,int c,int d,int e,int f,long *skip_call,char **save_filename,long *save_mode)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_mode=mode;
+}
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -1364,4 +1658,18 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_fchmodat);
     def_detour_asm_vars(sys_fchmod);
     def_detour_asm_vars(sys_fchown);
+    def_detour_asm_vars(sys_fchownat);
+    def_detour_asm_vars(sys_rename);
+    def_detour_asm_vars(sys_renameat2);
+    def_detour_asm_vars(sys_renameat);
+    def_detour_asm_vars(sys_mkdir);
+    def_detour_asm_vars(sys_creat);
+    def_detour_asm_vars(sys_openat);
+    def_detour_asm_vars(sys_link);
+    def_detour_asm_vars(sys_unlink);
+    def_detour_asm_vars(sys_unlinkat);
+    def_detour_asm_vars(sys_linkat);
+    def_detour_asm_vars(sys_symlink);
+    def_detour_asm_vars(sys_symlinkat);
+    def_detour_asm_vars(sys_access);
 }

@@ -75,6 +75,20 @@ typedef enum {
     det_sys_fchmodat,
     det_sys_fchmod,
     det_sys_fchown,
+    det_sys_fchownat,
+    det_sys_rename,
+    det_sys_renameat2,
+    det_sys_renameat,
+    det_sys_mkdir,
+    det_sys_creat,
+    det_sys_openat,
+    det_sys_link,
+    det_sys_unlink,
+    det_sys_unlinkat,
+    det_sys_linkat,
+    det_sys_symlink,
+    det_sys_symlinkat,
+    det_sys_access,
     
     det_max_id
 } DETOUR_ID;
