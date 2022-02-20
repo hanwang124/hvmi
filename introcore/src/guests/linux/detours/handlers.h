@@ -89,7 +89,26 @@ typedef enum {
     det_sys_symlink,
     det_sys_symlinkat,
     det_sys_access,
-    
+    det_sys_fstat,
+    det_sys_stat,
+    det_sys_lstat,
+    det_sys_execve,
+    det_sys_execveat,
+    det_sys_newfstatat,
+    det_sys_pwrite64,
+    det_sys_pread64,
+    det_sys_mmap_pgoff,
+    det_sys_prctl,
+    det_do_sigaction,
+    det_sys_select,
+    det_sys_clock_gettime,
+    det_sys_perf_event_open,
+    det_sys_newuname,
+    det_sys_reboot,
+    det_sys_init_module,
+    det_sys_delete_module,
+    det_sys_finit_module,
+
     det_max_id
 } DETOUR_ID;
 

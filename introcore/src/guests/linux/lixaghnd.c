@@ -18,7 +18,7 @@ LIX_AGENT_INIT_ARGS gLixAgentArgsInit =
 {
     .Allocate =
     {
-        .ModuleLength  = PAGE_SIZE * 7,
+        .ModuleLength  = PAGE_SIZE * 9,
         .PerCpuLength  = 0x0,
     },
 };
