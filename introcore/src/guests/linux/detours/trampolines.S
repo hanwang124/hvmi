@@ -270,3 +270,5 @@ def_tramp_ret               sys_reboot                          4   sys_reboot_j
 def_tramp_ret               sys_init_module                     3   sys_init_module_jmp
 def_tramp_ret               sys_finit_module                    3   sys_finit_module_jmp
 def_tramp_ret               sys_delete_module                   2   sys_delete_module_jmp
+def_tramp_ret               sys_write                           3   sys_write_jmp
+def_tramp_ret               do_sys_open                         3   do_sys_open_jmp

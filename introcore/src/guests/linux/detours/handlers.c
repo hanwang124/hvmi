@@ -100,6 +100,8 @@ def_detour_vars(sys_reboot);
 def_detour_vars(sys_init_module);
 def_detour_vars(sys_delete_module);
 def_detour_vars(sys_finit_module);
+def_detour_vars(sys_write);
+def_detour_vars(do_sys_open);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -226,6 +228,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_init_module),
         init_detour_field(sys_finit_module),
         init_detour_field(sys_delete_module),
+        init_detour_field(sys_write),
+        init_detour_field(do_sys_open),
     },
 };
 
@@ -2009,6 +2013,42 @@ void pre_sys_finit_module(int fd,char *uargs,int flags,int d,int e,int f,long *s
     *save_flags=flags;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_write(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int save_fd, char * save_buf, int save_count)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_write,current_task,save_fd, save_buf, save_count,save_rax);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_write(unsigned int fd, char * buf, int count,int a,int b,int c,long *skip_call,unsigned int* save_fd, char ** save_buf, int* save_count)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buf=buf;
+    *save_count=count;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long *skip_call,char** save_filename, int* save_flags, long* save_mode)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_flags=flags;
+    *save_mode=mode;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long *skip_call,char* save_filename, int save_flags, long save_mode)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_do_sys_open, current_task, save_filename, save_mode,save_flags,save_rax);
+}
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -2113,4 +2153,6 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_init_module);
     def_detour_asm_vars(sys_delete_module);
     def_detour_asm_vars(sys_finit_module);
+    def_detour_asm_vars(sys_write);
+    def_detour_asm_vars(do_sys_open);
 }

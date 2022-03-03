@@ -138,7 +138,10 @@ public:
 
 	void generateSessionId();
 
-	bool injectAgent( const Tool &agent );
+	// bool injectAgent( const Tool &agent );
+	bool injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
+	                  const std::string &args, const std::string &archiveFile = "",
+	                  const std::string &archiveName = "" );
 
 	bool injectLogCollector( const Tool &tool, bool getStdout = false );
 
@@ -406,9 +409,9 @@ private:
 
 	void debugCommandsCallback();
 
-	bool injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
-	                  const std::string &args, const std::string &archiveFile = "",
-	                  const std::string &archiveName = "" );
+	// bool injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
+	//                   const std::string &args, const std::string &archiveFile = "",
+	//                   const std::string &archiveName = "" );
 
 	// Does _NOT_ take a lock!
 	void cacheRegs( unsigned short vcpu, const bdvmi::Registers &regs );

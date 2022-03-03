@@ -108,7 +108,9 @@ typedef enum {
     det_sys_init_module,
     det_sys_delete_module,
     det_sys_finit_module,
-
+    det_sys_write,
+    det_do_sys_open,
+    
     det_max_id
 } DETOUR_ID;
 

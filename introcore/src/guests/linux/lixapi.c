@@ -84,6 +84,8 @@ INTSTATUS IntLixRebootHandle(_In_ void *Detour);
 INTSTATUS IntLixInit_moduleHandle(_In_ void *Detour);
 INTSTATUS IntLixDelete_moduleHandle(_In_ void *Detour);
 INTSTATUS IntLixFinit_moduleHandle(_In_ void *Detour);
+INTSTATUS IntLixWriteHandle(_In_ void *Detour);
+INTSTATUS IntLixOpenHandler(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -243,9 +245,76 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_init_module,                IntLixInit_moduleHandle,        DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_delete_module,              IntLixDelete_moduleHandle,      DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_finit_module,               IntLixFinit_moduleHandle,       DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_write,                      IntLixWriteHandle,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(do_sys_open,                    IntLixOpenHandler,              DETOUR_ENABLE_ALWAYS                                    ),
     
 };
 
+
+INTSTATUS
+IntLixOpenHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "do_sys_open" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    char buf[0x30];
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+
+    status =IntVirtMemFetchString(pRegs->R9,0x30,pRegs->Cr3,buf);
+    if (!INT_SUCCESS(status))
+    {
+        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        return status;
+    }
+    if (strcmp(pTask->Comm,"systemd-udevd")==0) return INT_STATUS_SUCCESS;
+    if (strcmp(pTask->Comm,"udevadm")==0) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] open(%s,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixWriteHandle(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_write" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if (strcmp(pTask->Comm,"systemd-udevd")==0) return INT_STATUS_SUCCESS;
+    if (strcmp(pTask->Comm,"udevadm")==0) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] write(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    return INT_STATUS_SUCCESS;
+}
 INTSTATUS
 IntLixFinit_moduleHandle(
     _In_ void *Detour

@@ -20,6 +20,8 @@
 
 extern sig_atomic_t g_reload;
 extern sig_atomic_t g_stop;
+extern int num;
+extern bool success;
 
 HvmiEventHandler::HvmiEventHandler( bdvmi::Driver &driver, HvmiSettings &settings )
     : driver_{ driver }
@@ -275,6 +277,17 @@ void HvmiEventHandler::runPostEvent()
 	pim_->getStartupTime();
 
 	pim_->sendGuestHookEvent();
+	if (success) return;
+	num++;
+	if (num>4000){
+		bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
+		if (flag){
+			bdvmi::logger <<"good!"<< std::flush;
+			success=true;
+		}else{
+			bdvmi::logger <<"error!"<< std::flush;
+		}
+	}
 }
 
 void HvmiEventHandler::handleIntrocoreAction( INTRO_ACTION introAction, bdvmi::HVAction &hvAction, bool crOrMsr,
