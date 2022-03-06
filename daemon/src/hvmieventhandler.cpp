@@ -20,8 +20,12 @@
 
 extern sig_atomic_t g_reload;
 extern sig_atomic_t g_stop;
-extern int num;
-extern bool success;
+extern time_t startinject;
+time_t endinject;
+time_t startlog;
+time_t endlog;
+extern bool successinject;
+extern bool successlog;
 
 HvmiEventHandler::HvmiEventHandler( bdvmi::Driver &driver, HvmiSettings &settings )
     : driver_{ driver }
@@ -277,15 +281,43 @@ void HvmiEventHandler::runPostEvent()
 	pim_->getStartupTime();
 
 	pim_->sendGuestHookEvent();
-	if (success) return;
-	num++;
-	if (num>4000){
-		bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
-		if (flag){
-			bdvmi::logger <<"good!"<< std::flush;
-			success=true;
-		}else{
-			bdvmi::logger <<"error!"<< std::flush;
+	if (!successinject)
+	{
+		time(&endinject);
+		if (difftime(endinject,startinject)>45)
+		{
+			bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
+			if (flag)
+			{
+				time(&startlog);
+				bdvmi::logger <<"goodinject!"<< std::flush;
+				successinject=true;
+			}else
+			{
+				bdvmi::logger <<"errorinject!"<< std::flush;
+			}
+		}
+	}else {
+		if (!successlog){
+			time(&endlog);
+			if (difftime(endlog,startlog)>20)
+			{
+				Tool tool;
+				tool.toolId_ = "hvmi";
+				tool.toolName_ = "logcollector";
+				tool.logs_.logFile_ = "/var/log/anth.log";
+				tool.logs_.deleteLogFiles_ = false;
+				ActiveAgentManager activeAgentManager(pim_,tool);
+				bool flag = pim_->injectLogCollector(tool);
+				if (flag)
+				{
+					bdvmi::logger <<"goodlog!"<< std::flush;
+					successlog=true;
+				}else
+				{
+					bdvmi::logger <<"errorlog!"<< std::flush;
+				}
+			}
 		}
 	}
 }

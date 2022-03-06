@@ -274,15 +274,13 @@ IntLixOpenHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     status =IntVirtMemFetchString(pRegs->R9,0x30,pRegs->Cr3,buf);
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
         return status;
     }
-    if (strcmp(pTask->Comm,"systemd-udevd")==0) return INT_STATUS_SUCCESS;
-    if (strcmp(pTask->Comm,"udevadm")==0) return INT_STATUS_SUCCESS;
     LOG("process %s [%d] open(%s,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
@@ -310,8 +308,7 @@ IntLixWriteHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if (strcmp(pTask->Comm,"systemd-udevd")==0) return INT_STATUS_SUCCESS;
-    if (strcmp(pTask->Comm,"udevadm")==0) return INT_STATUS_SUCCESS;
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     LOG("process %s [%d] write(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }

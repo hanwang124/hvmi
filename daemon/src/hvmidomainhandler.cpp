@@ -34,8 +34,9 @@ sig_atomic_t             g_reload    = 0;
 sig_atomic_t             g_introInit = 0;
 extern sig_atomic_t      g_stop;
 extern IntrocoreManager *g_guestHandle;
-bool success;
-int num;
+time_t startinject;
+bool successinject;
+bool successlog;
 namespace {
 
 struct sigaction aoact, soact;
@@ -333,8 +334,9 @@ bool HvmiDomainHandler::licensed( const std::string & /* uuid */ ) const
 
 bool HvmiDomainHandler::hookDomain( const std::string &uuid, const std::string &name )
 {
-	num=0;
-	success=false;
+	time(&startinject);
+	successinject=false;
+	successlog=false;
 	struct sigaction act {
 	};
 
