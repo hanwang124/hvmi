@@ -102,6 +102,21 @@ def_detour_vars(sys_delete_module);
 def_detour_vars(sys_finit_module);
 def_detour_vars(sys_write);
 def_detour_vars(do_sys_open);
+def_detour_vars(sys_accept);
+def_detour_vars(sys_accept4);
+def_detour_vars(sys_bind);
+def_detour_vars(sys_connect);
+def_detour_vars(sys_sendto);
+def_detour_vars(sys_sendmsg);
+def_detour_vars(sys_recvmsg);
+def_detour_vars(sys_recvfrom);
+def_detour_vars(sys_close);
+def_detour_vars(sys_dup);
+def_detour_vars(sys_dup2);
+def_detour_vars(sys_dup3);
+def_detour_vars(sys_waitid);
+def_detour_vars(sys_wait4);
+def_detour_vars(sys_sched_rr_get_interval);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -230,6 +245,21 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_delete_module),
         init_detour_field(sys_write),
         init_detour_field(do_sys_open),
+        init_detour_field(sys_accept),
+        init_detour_field(sys_accept4),
+        init_detour_field(sys_bind),
+        init_detour_field(sys_connect),
+        init_detour_field(sys_sendto),
+        init_detour_field(sys_sendmsg),
+        init_detour_field(sys_recvfrom),
+        init_detour_field(sys_recvmsg),
+        init_detour_field(sys_close),
+        init_detour_field(sys_dup),
+        init_detour_field(sys_dup2),
+        init_detour_field(sys_dup3),
+        init_detour_field(sys_wait4),
+        init_detour_field(sys_waitid),
+        init_detour_field(sys_sched_rr_get_interval),
     },
 };
 
@@ -2049,6 +2079,305 @@ void do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long 
     vmcall_5(det_do_sys_open, current_task, save_filename, save_mode,save_flags,save_rax);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_accept(int fd,long *upeer_sockaddr,int *upeer_addrlen,int d,int e,int f,long *skip_call,int *save_fd,long **save_upeer_sockaddr,int **save_upeer_addrlen)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_upeer_sockaddr=upeer_sockaddr;
+    *save_upeer_addrlen=upeer_addrlen;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_accept(int fd,long *upeer_sockaddr,int *upeer_addrlen,int d,int e,int f,long *skip_call,int save_fd,long *save_upeer_sockaddr,int *save_upeer_addrlen)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_accept, current_task, save_fd,save_upeer_sockaddr,save_upeer_addrlen,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_accept4(int fd,long *upeer_sockaddr,int *upeer_addrlen,int flags,int e,int f,long *skip_call,int *save_fd,long **save_upeer_sockaddr,int **save_upeer_addrlen,int *save_flags)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_upeer_sockaddr=upeer_sockaddr;
+    *save_upeer_addrlen=upeer_addrlen;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_accept4(int fd,long *upeer_sockaddr,int *upeer_addrlen,int flags,int e,int f,long *skip_call,int save_fd,long *save_upeer_sockaddr,int *save_upeer_addrlen,int save_flags)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_6(det_sys_accept4, current_task, save_fd,save_upeer_sockaddr,save_upeer_addrlen,save_flags,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_bind(int fd,long *umyaddr,int addrlen,int d,int e,int f,long *skip_call,int *save_fd,long **save_umyaddr,int *save_addrlen)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_umyaddr=umyaddr;
+    *save_addrlen=addrlen;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_bind(int fd,long *umyaddr,int addrlen,int d,int e,int f,long *skip_call,int save_fd,long *save_umyaddr,int save_addrlen)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_bind, current_task, save_fd,save_umyaddr,save_addrlen,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_connect(int fd,long *uservaddr,int addrlen,int d,int e,int f,long *skip_call,int *save_fd,long **save_uservaddr,int *save_addrlen)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_uservaddr=uservaddr;
+    *save_addrlen=addrlen;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_connect(int fd,long *uservaddr,int addrlen,int d,int e,int f,long *skip_call,int save_fd,long *save_uservaddr,int save_addrlen)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_connect, current_task, save_fd,save_uservaddr,save_addrlen,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sendto(int fd,void *buff,unsigned long len,unsigned int flags,long *addr,
+                    int addr_len,long *skip_call,int *save_fd,void **save_buff,unsigned long *save_len,unsigned int *save_flags,long **save_addr,
+                    int *save_addr_len)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_buff=buff;
+    *save_len=len;
+    *save_flags=flags;
+    *save_addr=addr;
+    *save_addr_len=addr_len;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sendto(int fd,void *buff,unsigned long len,unsigned int flags,long *addr,
+                    int addr_len,long *skip_call,int save_fd,void *save_buff,unsigned long save_len,unsigned int save_flags,long *save_addr,
+                    int save_addr_len)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_8(det_sys_sendto, current_task, save_fd,save_buff,save_len,save_flags,save_addr,save_addr_len,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sendmsg(int fd,long *msg, unsigned flags,int d,int e,int f,long *skip_call,
+                    int *save_fd,long **save_msg, unsigned *save_flags)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_msg=msg;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sendmsg(int fd,long *msg, unsigned flags,int d,int e,int f,long *skip_call,
+                    int save_fd,long *save_msg, unsigned save_flags)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_sendmsg, current_task, save_fd,save_msg,save_flags,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_recvfrom(int fd,void *ubuf,unsigned long size,unsigned int flags,long *addr,
+                    int addr_len,long *skip_call,int *save_fd,void **save_ubuf,unsigned long *save_size,unsigned int *save_flags,long **save_addr,
+                    int **save_addr_len)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_ubuf=ubuf;
+    *save_size=size;
+    *save_flags=flags;
+    *save_addr=addr;
+    *save_addr_len=addr_len;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_recvfrom(int fd,void *ubuf,unsigned long size,unsigned int flags,long *addr,
+                    int addr_len,long *skip_call,int save_fd,void *save_ubuf,unsigned long save_size,unsigned int save_flags,long *save_addr,
+                    int *save_addr_len)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_8(det_sys_recvfrom, current_task, save_fd,save_ubuf,save_size,save_flags,save_addr,save_addr_len,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_recvmsg(int fd,long *msg, unsigned flags,int d,int e,int f,long *skip_call,
+                    int *save_fd,long **save_msg, unsigned *save_flags)
+{
+    *skip_call=0;
+    *save_fd=fd;
+    *save_msg=msg;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_recvmsg(int fd,long *msg, unsigned flags,int d,int e,int f,long *skip_call,
+                    int save_fd,long *save_msg, unsigned save_flags)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_recvmsg, current_task, save_fd,save_msg,save_flags,save_rax);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_close(unsigned int fd,int b,int c,int d,int e,int f,long *skip_call,
+                    unsigned int *save_fd)
+{
+    *skip_call=0;
+    *save_fd=fd;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_close(unsigned int fd,int b,int c,int d,int e,int f,long *skip_call,
+                    unsigned int save_fd)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_3(det_sys_close, current_task, save_fd,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_dup(unsigned int fildes,int b,int c,int d,int e,int f,long *skip_call,
+                    unsigned int *save_fildes)
+{
+    *skip_call=0;
+    *save_fildes=fildes;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_dup(unsigned int fildes,int b,int c,int d,int e,int f,long *skip_call,
+                    unsigned int save_fildes)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_3(det_sys_dup, current_task, save_fildes,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_dup2(unsigned int oldfd, unsigned int newfd,int c,int d,int e,int f,long *skip_call,
+                    unsigned int *save_oldfd, unsigned int *save_newfd)
+{
+    *skip_call=0;
+    *save_oldfd=oldfd;
+    *save_newfd=save_newfd;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_dup2(unsigned int oldfd, unsigned int newfd,int c,int d,int e,int f,long *skip_call,
+                    unsigned int save_oldfd, unsigned int save_newfd)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_4(det_sys_dup2, current_task, save_oldfd,save_newfd,save_rax);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_dup3(unsigned int oldfd, unsigned int newfd,int flags,int d,int e,int f,long *skip_call,
+                    unsigned int *save_oldfd, unsigned int *save_newfd,int *save_flags)
+{
+    *skip_call=0;
+    *save_oldfd=oldfd;
+    *save_newfd=save_newfd;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_dup3(unsigned int oldfd, unsigned int newfd,int c,int d,int e,int f,long *skip_call,
+                    unsigned int save_oldfd, unsigned int save_newfd,int save_flags)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_dup2, current_task, save_oldfd,save_newfd,save_flags,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_wait4(unsigned int pid, int *stat_addr,int options,long *ru,int e,int f,long *skip_call,
+                    unsigned int *save_pid, int **save_stat_addr,int *save_options,long **save_ru)
+{
+    *skip_call=0;
+    *save_pid=pid;
+    *save_stat_addr=stat_addr;
+    *save_options=options;
+    *save_ru=ru;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_wait4(unsigned int pid, int *stat_addr,int options,long *ru,int e,int f,long *skip_call,
+                    unsigned int save_pid, int *save_stat_addr,int save_options,long *save_ru)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_6(det_sys_dup2, current_task, save_pid,save_stat_addr,save_options,save_ru,save_rax);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_waitid(int which,unsigned int pid,long *infop,int options,long *ru,int f,long *skip_call,
+                    int *save_which,unsigned int *save_pid,long **save_infop,int *save_options,long **save_ru)
+{
+    *skip_call=0;
+    *save_which=which;
+    *save_pid=pid;
+    *save_infop=infop;
+    *save_options=options;
+    *save_ru=ru;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_waitid(int which,unsigned int pid,long *infop,int options,long *ru,int f,long *skip_call,
+                    int save_which,unsigned int save_pid,long *save_infop,int save_options,long *save_ru)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_7(det_sys_waitid, current_task, save_which,save_pid,save_infop,save_options,save_ru,save_rax);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_sched_rr_get_interval(unsigned int pid,long *interval,int c,int d,int e,int f,long *skip_call,
+                    unsigned int *save_pid,long **save_interval)
+{
+    *skip_call=0;
+    *save_pid=pid;
+    *save_interval=interval;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_sched_rr_get_interval(unsigned int pid,long *interval,int c,int d,int e,int f,long *skip_call,
+                    unsigned int save_pid,long *save_interval)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_4(det_sys_sched_rr_get_interval, current_task, save_pid,save_interval,save_rax);
+}
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -2155,4 +2484,19 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_finit_module);
     def_detour_asm_vars(sys_write);
     def_detour_asm_vars(do_sys_open);
+    def_detour_asm_vars(sys_accept);
+    def_detour_asm_vars(sys_accept4);
+    def_detour_asm_vars(sys_bind);
+    def_detour_asm_vars(sys_connect);
+    def_detour_asm_vars(sys_sendto);
+    def_detour_asm_vars(sys_sendmsg);
+    def_detour_asm_vars(sys_recvmsg);
+    def_detour_asm_vars(sys_recvfrom);
+    def_detour_asm_vars(sys_close);
+    def_detour_asm_vars(sys_dup);
+    def_detour_asm_vars(sys_dup2);
+    def_detour_asm_vars(sys_dup3);
+    def_detour_asm_vars(sys_waitid);
+    def_detour_asm_vars(sys_wait4);
+    def_detour_asm_vars(sys_sched_rr_get_interval);
 }

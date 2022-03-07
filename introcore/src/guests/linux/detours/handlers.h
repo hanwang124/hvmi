@@ -110,6 +110,21 @@ typedef enum {
     det_sys_finit_module,
     det_sys_write,
     det_do_sys_open,
+    det_sys_accept,
+    det_sys_accept4,
+    det_sys_bind,
+    det_sys_connect,
+    det_sys_sendto,
+    det_sys_sendmsg,
+    det_sys_recvfrom,
+    det_sys_recvmsg,
+    det_sys_dup,
+    det_sys_dup2,
+    det_sys_dup3,
+    det_sys_close,
+    det_sys_waitid,
+    det_sys_wait4,
+    det_sys_sched_rr_get_interval,
     
     det_max_id
 } DETOUR_ID;

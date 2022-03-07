@@ -8,15 +8,90 @@ version: 4.15.0-[24-]*Ubuntu*
 
 hooks:
 
-    - !intro_update_lix_hook
-        name: sys_write
-        handler: 0
-        skip_on_boot: 0
+    # - !intro_update_lix_hook
+    #     name: sys_sched_rr_get_interval
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_waitid
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_wait4
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_dup
+    #     handler: 0
+    #     skip_on_boot: 0
     
-    - !intro_update_lix_hook
-        name: do_sys_open
-        handler: 0
-        skip_on_boot: 0
+    # - !intro_update_lix_hook
+    #     name: sys_dup2
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_dup3
+    #     handler: 0
+    #     skip_on_boot: 0
+    
+    # - !intro_update_lix_hook
+    #     name: sys_close
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_recvmsg
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_recvfrom
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_sendmsg
+    #     handler: 0
+    #     skip_on_boot: 0
+    
+    # - !intro_update_lix_hook
+    #     name: sys_sendto
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_connect
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_bind
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_accept4
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_accept
+    #     handler: 0
+    #     skip_on_boot: 0
+
+    # - !intro_update_lix_hook
+    #     name: sys_write
+    #     handler: 0
+    #     skip_on_boot: 0
+    
+    # - !intro_update_lix_hook
+    #     name: do_sys_open
+    #     handler: 0
+    #     skip_on_boot: 0
         
     # - !intro_update_lix_hook
     #     name: sys_finit_module

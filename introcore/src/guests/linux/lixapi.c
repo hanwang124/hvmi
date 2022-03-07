@@ -86,6 +86,21 @@ INTSTATUS IntLixDelete_moduleHandle(_In_ void *Detour);
 INTSTATUS IntLixFinit_moduleHandle(_In_ void *Detour);
 INTSTATUS IntLixWriteHandle(_In_ void *Detour);
 INTSTATUS IntLixOpenHandler(_In_ void *Detour);
+INTSTATUS IntLixAcceptHandler(_In_ void *Detour);
+INTSTATUS IntLixAccept4Handler(_In_ void *Detour);
+INTSTATUS IntLixBindHandler(_In_ void *Detour);
+INTSTATUS IntLixConnectHandler(_In_ void *Detour);
+INTSTATUS IntLixSendtoHandler(_In_ void *Detour);
+INTSTATUS IntLixSendmsgHandler(_In_ void *Detour);
+INTSTATUS IntLixRecvfromHandler(_In_ void *Detour);
+INTSTATUS IntLixRecvmsgHandler(_In_ void *Detour);
+INTSTATUS IntLixCloseHandler(_In_ void *Detour);
+INTSTATUS IntLixDupHandler(_In_ void *Detour);
+INTSTATUS IntLixDup2Handler(_In_ void *Detour);
+INTSTATUS IntLixDup3Handler(_In_ void *Detour);
+INTSTATUS IntLixWaitidHandler(_In_ void *Detour);
+INTSTATUS IntLixWait4Handler(_In_ void *Detour);
+INTSTATUS IntLixSched_rr_get_intervalHandler(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -247,9 +262,426 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_finit_module,               IntLixFinit_moduleHandle,       DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_write,                      IntLixWriteHandle,              DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(do_sys_open,                    IntLixOpenHandler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_accept,                     IntLixAcceptHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_accept4,                    IntLixAccept4Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_bind,                       IntLixBindHandler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_connect,                    IntLixConnectHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sendto,                     IntLixSendtoHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sendmsg,                    IntLixSendmsgHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_recvfrom,                   IntLixRecvfromHandler,          DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_recvmsg,                    IntLixRecvmsgHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_close,                      IntLixCloseHandler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_dup,                        IntLixDupHandler,               DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_dup2,                       IntLixDup2Handler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_dup3,                       IntLixDup3Handler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_waitid,                     IntLixWaitidHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_wait4,                      IntLixWait4Handler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sched_rr_get_interval,      IntLixSched_rr_get_intervalHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     
 };
+INTSTATUS
+IntLixSched_rr_get_intervalHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_waitid" function.
 
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] Sched_rr_get_intervalHandler(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixWaitidHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_waitid" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] waitid(%d,%d,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixWait4Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_wait4" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] wait4(%d,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixDup3Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_dup3" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] dup3(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixDup2Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_dup2" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] dup2(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixDupHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_dup" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] dup(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixCloseHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_close" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] close(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixRecvmsgHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_recvmsg" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixRecvfromHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_recvfrom" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSendmsgHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sendmsg" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+INTSTATUS
+IntLixSendtoHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sendto" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] sendto(%d,0x%x,%d,%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixConnectHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_connect" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] connect(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixBindHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_bind" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] bind(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixAccept4Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_accept4" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] accept4(%d,0x%x,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixAcceptHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_accept" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    LOG("process %s [%d] accept(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixOpenHandler(
