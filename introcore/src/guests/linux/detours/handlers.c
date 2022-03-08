@@ -1784,6 +1784,7 @@ __default_fn_attr
 void sys_pwrite64(unsigned int fd,char *buf,unsigned int count,long long pos,int e,int f,
             long skip_call,unsigned int save_fd,char *save_buf,unsigned int save_count,long long save_pos)
 {
+    
     long save_rax = __read_reg("rax");
     //void *current = current_task;
     vmcall_6(det_sys_pwrite64,current_task,save_fd,save_buf,save_count,save_pos,save_rax);

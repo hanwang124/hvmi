@@ -335,8 +335,8 @@ bool HvmiDomainHandler::licensed( const std::string & /* uuid */ ) const
 bool HvmiDomainHandler::hookDomain( const std::string &uuid, const std::string &name )
 {
 	time(&startinject);
-	successinject=false;
-	successlog=false;
+	successinject = false;
+	successlog = false;
 	struct sigaction act {
 	};
 

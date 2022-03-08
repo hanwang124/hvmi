@@ -11,6 +11,7 @@
 #include "guests.h"
 #include "crc32.h"
 #include "lixksym.h"
+#include "lixfiles.h"
 
 INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
@@ -742,8 +743,37 @@ IntLixWriteHandle(
     }
     if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     LOG("process %s [%d] write(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    // QWORD files = 0;
+    // status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    // if (!INT_SUCCESS(status))
+    // {
+    //     ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+    //     return status;
+    // }
+    // QWORD fd_array = 0;
+    // status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    // if (!INT_SUCCESS(status))
+    // {
+    //     ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+    //     return status;
+    // }
+    // char *path = NULL;
+    // DWORD pathLen = 0;
+    // if (IS_KERNEL_POINTER_LIX(fd_array)){
+    //     status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    //     if (!INT_SUCCESS(status))
+    //     {
+    //         ERROR("[ERROR] IntLixFileGetPath failed for %llx: %08x\n", fd_array, status);
+    //         LOG("process %s [%d] write(0x%llx,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //         return INT_STATUS_SUCCESS;
+    //     }else{
+    //         LOG("process1 %s [%d] write(%s,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+    //         return INT_STATUS_SUCCESS;
+    //     }
+    // }
     return INT_STATUS_SUCCESS;
 }
+
 INTSTATUS
 IntLixFinit_moduleHandle(
     _In_ void *Detour

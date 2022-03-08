@@ -281,45 +281,45 @@ void HvmiEventHandler::runPostEvent()
 	pim_->getStartupTime();
 
 	pim_->sendGuestHookEvent();
-	// if (!successinject)
-	// {
-	// 	time(&endinject);
-	// 	if (difftime(endinject,startinject)>45)
-	// 	{
-	// 		bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
-	// 		if (flag)
-	// 		{
-	// 			time(&startlog);
-	// 			bdvmi::logger <<"goodinject!"<< std::flush;
-	// 			successinject=true;
-	// 		}else
-	// 		{
-	// 			bdvmi::logger <<"errorinject!"<< std::flush;
-	// 		}
-	// 	}
-	// }else {
-		// if (!successlog){
-		// 	time(&endlog);
-		// 	if (difftime(endlog,startinject)>80)
-		// 	{
-		// 		Tool tool;
-		// 		tool.toolId_ = "hvmi";
-		// 		tool.toolName_ = "logCollector";
-		// 		tool.logs_.logFile_ = "/var/log/anth.log";
-		// 		tool.logs_.deleteLogFiles_ = false;
-		// 		pim_->setTaskAgent(tool);
-		// 		bool flag = pim_->injectLogCollector(tool,false);
-		// 		if (flag)
-		// 		{
-		// 			bdvmi::logger <<"goodlog!"<< std::flush;
-		// 			successlog=true;
-		// 		}else
-		// 		{
-		// 			bdvmi::logger <<"errorlog!"<< std::flush;
-		// 		}
-		// 	}
-		// }
-	// }
+	if (!successinject)
+	{
+		time(&endinject);
+		if (difftime(endinject,startinject)>45)
+		{
+			bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
+			if (flag)
+			{
+				time(&startlog);
+				bdvmi::logger <<"goodinject!"<< std::flush;
+				successinject=true;
+			}else
+			{
+				bdvmi::logger <<"errorinject!"<< std::flush;
+			}
+		}
+	}else {
+		if (!successlog){
+			time(&endlog);
+			if (difftime(endlog,startlog)>20)
+			{
+				Tool tool;
+				tool.toolId_ = "hvmi";
+				tool.toolName_ = "logCollector";
+				tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
+				tool.logs_.deleteLogFiles_ = false;
+				pim_->setTaskAgent(tool);
+				bool flag = pim_->injectLogCollector(tool,false);
+				if (flag)
+				{
+					successlog=true;
+					bdvmi::logger <<"goodlog!"<< std::flush;
+				}else
+				{
+					bdvmi::logger <<"errorlog!"<< std::flush;
+				}
+			}
+		}
+	}
 }
 
 void HvmiEventHandler::handleIntrocoreAction( INTRO_ACTION introAction, bdvmi::HVAction &hvAction, bool crOrMsr,
