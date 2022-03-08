@@ -2367,27 +2367,29 @@ _initialize_and_prot:
 
     if (IntLixTaskMustLog(pTask, pTask->Protected != 0))
     {
-        if (!pTask->IsThread)
-        {
-            LOG("[%s]%s %s (%s), (%d/%d, %llx, %llx) [from %s%s %s (%d, %16llx)]\n",
-                pTask->Exec ? "EXEC" : "FORK",
-                pTask->Protected ? "[PROT]" : "",
-                pTask->ProcName,
-                pTask->Comm,
-                pTask->Pid, pTask->Tgid,
-                pTask->Cr3, pTask->Gva,
-                pActualParent->IsThread ? "Thread" : "Process",
-                pActualParent->KernelMode ? "(KM)" : "",
-                pActualParent->ProcName,
-                pActualParent->Pid, pActualParent->Gva);
-        }
-        else
-        {
-            LOG("[THREAD]%s %s, (%d/%d, %llx, %llx)\n",
-                pTask->Protected ? "[PROT]" : "",
-                pTask->Comm,
-                pTask->Pid, pTask->Tgid,
-                pTask->Cr3, pTask->Gva);
+        if (pTask->AgentTag!=NULL){
+            if (!pTask->IsThread)
+            {
+                LOG("[%s]%s %s (%s), (%d/%d, %llx, %llx) [from %s%s %s (%d, %16llx)]\n",
+                    pTask->Exec ? "EXEC" : "FORK",
+                    pTask->Protected ? "[PROT]" : "",
+                    pTask->ProcName,
+                    pTask->Comm,
+                    pTask->Pid, pTask->Tgid,
+                    pTask->Cr3, pTask->Gva,
+                    pActualParent->IsThread ? "Thread" : "Process",
+                    pActualParent->KernelMode ? "(KM)" : "",
+                    pActualParent->ProcName,
+                    pActualParent->Pid, pActualParent->Gva);
+            }
+            else
+            {
+                LOG("[THREAD]%s %s, (%d/%d, %llx, %llx)\n",
+                    pTask->Protected ? "[PROT]" : "",
+                    pTask->Comm,
+                    pTask->Pid, pTask->Tgid,
+                    pTask->Cr3, pTask->Gva);
+            }
         }
     }
 
@@ -2563,9 +2565,11 @@ IntLixTaskDestroy(
 
     if (IntLixTaskMustLog(Task, wasProtected))
     {
-        LOG("[EXIT] %s %s (%d, %llx, %llx), crashed: %d, signal: %d\n",
-            Task->IsThread ? "Thread" : "Process", Task->ProcName, Task->Pid,
-            Task->Cr3, Task->Gva, crashed, signal);
+        if (Task->AgentTag!=NULL){
+            LOG("[EXIT] %s %s (%d, %llx, %llx), crashed: %d, signal: %d\n",
+                Task->IsThread ? "Thread" : "Process", Task->ProcName, Task->Pid,
+                Task->Cr3, Task->Gva, crashed, signal);
+        }
     }
 
     if (!Task->IsThread)
@@ -3102,22 +3106,24 @@ _action_not_allowed:
 
     if (IntLixTaskMustLog(pTask, pTask->Protected != 0))
     {
-        if (pTask->Interpreter != NULL)
-        {
-            LOG("[EXEC] %s %s (%d, %llx, %llx) exec to %s (interp: %s)\n",
-                pOldTask->IsThread ? "Thread" : "Process", pOldTask->Comm, pTask->Pid, pTask->Cr3, pTask->Gva,
-                pTask->ProcName, pTask->Interpreter);
-        }
-        else
-        {
-            LOG("[EXEC] %s %s (%d, %llx, %llx) exec to %s\n",
-                pOldTask->IsThread ? "Thread" : "Process", pOldTask->Comm, pTask->Pid, pTask->Cr3,
-                pTask->Gva, pTask->ProcName);
-        }
+        if (pTask->AgentTag!=NULL){
+            if (pTask->Interpreter != NULL)
+            {
+                LOG("[EXEC] %s %s (%d, %llx, %llx) exec to %s (interp: %s)\n",
+                    pOldTask->IsThread ? "Thread" : "Process", pOldTask->Comm, pTask->Pid, pTask->Cr3, pTask->Gva,
+                    pTask->ProcName, pTask->Interpreter);
+            }
+            else
+            {
+                LOG("[EXEC] %s %s (%d, %llx, %llx) exec to %s\n",
+                    pOldTask->IsThread ? "Thread" : "Process", pOldTask->Comm, pTask->Pid, pTask->Cr3,
+                    pTask->Gva, pTask->ProcName);
+            }
 
-        if (pTask->CmdLine)
-        {
-            LOG("[EXEC] Task '%s' has command line '%s'\n", pTask->ProcName, pTask->CmdLine);
+            if (pTask->CmdLine)
+            {
+                LOG("[EXEC] Task '%s' has command line '%s'\n", pTask->ProcName, pTask->CmdLine);
+            }
         }
     }
 

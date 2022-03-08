@@ -284,7 +284,7 @@ void HvmiEventHandler::runPostEvent()
 	if (!successinject)
 	{
 		time(&endinject);
-		if (difftime(endinject,startinject)>45)
+		if (difftime(endinject,startinject)>65)
 		{
 			bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
 			if (flag)
