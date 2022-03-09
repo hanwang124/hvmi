@@ -12,6 +12,9 @@
 #include "crc32.h"
 #include "lixksym.h"
 #include "lixfiles.h"
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <stdio.h>
 
 INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
@@ -571,8 +574,30 @@ IntLixSendtoHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] sendto(%d,0x%x,%d,%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
-
+    DWORD RetLength = 0;
+    BYTE buf1[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R13,0x10,pRegs->Cr3,buf1,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf1, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_LOCAL)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_UNSPEC)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_AX25)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_IPX)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_NETLINK)
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+        else
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -598,8 +623,31 @@ IntLixConnectHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] connect(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_LOCAL)
+            LOG("process %s [%d] connect(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_UNSPEC)
+            LOG("process %s [%d] connect(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_AX25)
+            LOG("process %s [%d] connect(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_IPX)
+            LOG("process %s [%d] connect(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_NETLINK)
+            LOG("process %s [%d] connect(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else
+            LOG("process %s [%d] connect(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -625,8 +673,31 @@ IntLixBindHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] bind(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_LOCAL)
+            LOG("process %s [%d] bind(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_UNSPEC)
+            LOG("process %s [%d] bind(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_AX25)
+            LOG("process %s [%d] bind(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_IPX)
+            LOG("process %s [%d] bind(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_NETLINK)
+            LOG("process %s [%d] bind(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else
+            LOG("process %s [%d] bind(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -652,8 +723,31 @@ IntLixAccept4Handler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] accept4(%d,0x%x,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
-
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_LOCAL)
+            LOG("process %s [%d] accept4(%d,family:AF_LOCAL ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_UNSPEC)
+            LOG("process %s [%d] accept4(%d,family:AF_UNSPEC ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_AX25)
+            LOG("process %s [%d] accept4(%d,family:AF_AX25 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_IPX)
+            LOG("process %s [%d] accept4(%d,family:AF_IPX ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else if (sin.sin_family==AF_NETLINK)
+            LOG("process %s [%d] accept4(%d,family:AF_NETLINK ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+        else 
+            LOG("process %s [%d] accept4(%d,family:%d ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -679,7 +773,31 @@ IntLixAcceptHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] accept(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_LOCAL)
+            LOG("process %s [%d] accept(%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_UNSPEC)
+            LOG("process %s [%d] accept(%d,family:AF_UNSPEC ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_AX25)
+            LOG("process %s [%d] accept(%d,family:AF_AX25 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_IPX)
+            LOG("process %s [%d] accept(%d,family:AF_IPX ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else if (sin.sin_family==AF_NETLINK)
+            LOG("process %s [%d] accept(%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+        else 
+            LOG("process %s [%d] accept(%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+    }
 
     return INT_STATUS_SUCCESS;
 }
@@ -712,6 +830,7 @@ IntLixOpenHandler(
     if (!INT_SUCCESS(status))
     {
         WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
+        LOG("process %s [%d] open(0x%x,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         return status;
     }
     LOG("process %s [%d] open(%s,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);

@@ -308,7 +308,7 @@ void HvmiEventHandler::runPostEvent()
 				tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
 				tool.logs_.deleteLogFiles_ = false;
 				pim_->setTaskAgent(tool);
-				bool flag = pim_->injectLogCollector(tool,false);
+				bool flag = pim_->injectLogCollector(tool);
 				if (flag)
 				{
 					successlog=true;
