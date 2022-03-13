@@ -84,8 +84,6 @@ def_detour_vars(sys_access);
 def_detour_vars(sys_fstat);
 def_detour_vars(sys_stat);
 def_detour_vars(sys_lstat);
-def_detour_vars(sys_execve);
-def_detour_vars(sys_execveat);
 def_detour_vars(sys_newfstatat);
 def_detour_vars(sys_pwrite64);
 def_detour_vars(sys_pread64);
@@ -227,8 +225,6 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_fstat),
         init_detour_field(sys_stat),
         init_detour_field(sys_lstat),
-        init_detour_field(sys_execve),
-        init_detour_field(sys_execveat),
         init_detour_field(sys_newfstatat),
         init_detour_field(sys_pwrite64),
         init_detour_field(sys_pread64),
@@ -1716,49 +1712,6 @@ void pre_sys_lstat(char *filename,long *statbuf,int c,int d,int e,int f,long *sk
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void sys_execve(char *filename,char **argv,char **envp,int d,int e,int f,long skip_call,char *save_filename,char **save_argv,char **save_envp)
-{
-    long save_rax = __read_reg("rax");
-    //void *current = current_task;
-    vmcall_5(det_sys_execve,current_task,save_filename,save_argv,save_envp,save_rax);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-__default_fn_attr
-void pre_sys_execve(char *filename,char **argv,char **envp,int d,int e,int f,
-            long *skip_call,char **save_filename,char ***save_argv,char ***save_envp)
-{
-    *skip_call=0;
-    *save_filename=filename;
-    *save_argv=argv;
-    *save_envp=envp;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-__default_fn_attr
-void sys_execveat(int dfd,char *filename,char **argv,char **envp,int flags,int f,
-            long skip_call,int save_dfd,char *save_filename,char **save_argv,char **save_envp,int save_flags)
-{
-    long save_rax = __read_reg("rax");
-    //void *current = current_task;
-    vmcall_7(det_sys_execveat,current_task,save_dfd,save_filename,save_argv,save_envp,save_flags,save_rax);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-__default_fn_attr
-void pre_sys_execveat(int dfd,char *filename,char **argv,char **envp,int flags,int f,
-            long *skip_call,int *save_dfd,char **save_filename,char ***save_argv,char ***save_envp,int *save_flags)
-{
-    *skip_call=0;
-    *save_dfd=dfd;
-    *save_filename=filename;
-    *save_argv=argv;
-    *save_envp=envp;
-    *save_flags=flags;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-__default_fn_attr
 void sys_newfstatat(int dfd,char *filename,long *statbuf,int flag,int e,int f,
             long skip_call,int save_dfd,char *save_filename,long *save_statbuf,int save_flag)
 {
@@ -2077,7 +2030,7 @@ __default_fn_attr
 void do_sys_open(int dfd, char* filename, int flags, long mode,int a,int b,long *skip_call,char* save_filename, int save_flags, long save_mode)
 {
     long save_rax = __read_reg("rax");
-    vmcall_5(det_do_sys_open, current_task, save_filename, save_mode,save_flags,save_rax);
+    vmcall_5(det_do_sys_open, current_task, save_filename, save_flags,save_mode,save_rax);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2467,8 +2420,6 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_fstat);
     def_detour_asm_vars(sys_stat);
     def_detour_asm_vars(sys_lstat);
-    def_detour_asm_vars(sys_execve);
-    def_detour_asm_vars(sys_execveat);
     def_detour_asm_vars(sys_newfstatat);
     def_detour_asm_vars(sys_pwrite64);
     def_detour_asm_vars(sys_pread64);

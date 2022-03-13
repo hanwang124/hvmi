@@ -254,8 +254,6 @@ def_tramp_ret               sys_access                          2   sys_access_j
 def_tramp_ret               sys_fstat                           2   sys_fstat_jmp
 def_tramp_ret               sys_stat                            2   sys_stat_jmp
 def_tramp_ret               sys_lstat                           2   sys_lstat_jmp
-def_tramp_ret               sys_execve                          3   sys_execve_jmp
-def_tramp_ret               sys_execveat                        5   sys_execveat_jmp
 def_tramp_ret               sys_newfstatat                      4   sys_newfstatat_jmp
 def_tramp_ret               sys_pwrite64                        4   sys_pwrite64_jmp
 def_tramp_ret               sys_pread64                         4   sys_pread64_jmp

@@ -15,6 +15,10 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <stdio.h>
+#include <sys/sysinfo.h>
+#include <sys/statfs.h>
+#include <sys/time.h>
+#include <linux/utsname.h>
 
 INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
@@ -72,8 +76,6 @@ INTSTATUS IntLixAccessHandle(_In_ void *Detour);
 INTSTATUS IntLixFstatHandle(_In_ void *Detour);
 INTSTATUS IntLixStatHandle(_In_ void *Detour);
 INTSTATUS IntLixLstatHandle(_In_ void *Detour);
-INTSTATUS IntLixExecveHandle(_In_ void *Detour);
-INTSTATUS IntLixExecveatHandle(_In_ void *Detour);
 INTSTATUS IntLixNewfstatatHandle(_In_ void *Detour);
 INTSTATUS IntLixPwrite64Handle(_In_ void *Detour);
 INTSTATUS IntLixPread64Handle(_In_ void *Detour);
@@ -248,8 +250,6 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_fstat,                      IntLixFstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_stat,                       IntLixStatHandle,               DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_lstat,                      IntLixLstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_execve,                     IntLixExecveHandle,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_execveat,                   IntLixExecveatHandle,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_newfstatat,                 IntLixNewfstatatHandle,         DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_pwrite64,                   IntLixPwrite64Handle,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_pread64,                    IntLixPread64Handle,            DETOUR_ENABLE_ALWAYS                                    ),
@@ -288,7 +288,7 @@ IntLixSched_rr_get_intervalHandler(
     _In_ void *Detour
     )
 ///
-/// @brief Detour handler for "sys_waitid" function.
+/// @brief Detour handler for "sys_sched_rr_get_interval" function.
 
 /// @param[in] Detour Unused.
 ///
@@ -305,7 +305,8 @@ IntLixSched_rr_get_intervalHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] Sched_rr_get_intervalHandler(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] Sched_rr_get_intervalHandler(%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -332,7 +333,8 @@ IntLixWaitidHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] waitid(%d,%d,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] waitid(%d,%u,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
 
     return INT_STATUS_SUCCESS;
 }
@@ -359,7 +361,8 @@ IntLixWait4Handler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] wait4(%d,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] wait4(%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
 
     return INT_STATUS_SUCCESS;
 }
@@ -386,7 +389,42 @@ IntLixDup3Handler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] dup3(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R10 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path1 = NULL;
+    pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path1, &pathLen);
+    LOG("process %s [%d] dup3(%s,%s,%d) = %d\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -413,7 +451,42 @@ IntLixDup2Handler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] dup2(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R10 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path1 = NULL;
+    pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path1, &pathLen);
+    LOG("process %s [%d] dup2(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -440,7 +513,25 @@ IntLixDupHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] dup(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    LOG("process %s [%d] dup(%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
 
     return INT_STATUS_SUCCESS;
 }
@@ -467,8 +558,29 @@ IntLixCloseHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] close(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
-
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (INT_SUCCESS(status)){
+        LOG("process %s [%d] close(%s) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
+    }else {
+        LOG("process %s [%d] close(%lu) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -494,7 +606,8 @@ IntLixRecvmsgHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] recvmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -521,8 +634,31 @@ IntLixRecvfromHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
-
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf1[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R13,0x10,pRegs->Cr3,buf1,&RetLength);
+    struct sockaddr_in sin;
+    memcpy(&sin, &buf1, sizeof(sin));
+    if (INT_SUCCESS(status))
+    {
+        if (sin.sin_family==AF_INET)
+            LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        else if (sin.sin_family==AF_INET6)
+            LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_UNSPEC ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_AX25 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_IPX ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else
+        //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -548,6 +684,7 @@ IntLixSendmsgHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     LOG("process %s [%d] sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
@@ -574,6 +711,7 @@ IntLixSendtoHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     DWORD RetLength = 0;
     BYTE buf1[0x10] = {0};
     status =IntVirtMemRead(pRegs->R13,0x10,pRegs->Cr3,buf1,&RetLength);
@@ -582,21 +720,21 @@ IntLixSendtoHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else if (sin.sin_family==AF_LOCAL)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else if (sin.sin_family==AF_UNSPEC)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else if (sin.sin_family==AF_AX25)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else if (sin.sin_family==AF_IPX)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else if (sin.sin_family==AF_NETLINK)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
-        else
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_UNSPEC ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_AX25 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_IPX ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        // else
+        //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -623,7 +761,7 @@ IntLixConnectHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
@@ -632,21 +770,21 @@ IntLixConnectHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_LOCAL)
-            LOG("process %s [%d] connect(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_UNSPEC)
-            LOG("process %s [%d] connect(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_AX25)
-            LOG("process %s [%d] connect(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_IPX)
-            LOG("process %s [%d] connect(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_NETLINK)
-            LOG("process %s [%d] connect(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else
-            LOG("process %s [%d] connect(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] connect(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] connect(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] connect(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] connect(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] connect(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else
+        //     LOG("process %s [%d] connect(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -673,7 +811,7 @@ IntLixBindHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
@@ -682,21 +820,21 @@ IntLixBindHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_LOCAL)
-            LOG("process %s [%d] bind(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_UNSPEC)
-            LOG("process %s [%d] bind(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_AX25)
-            LOG("process %s [%d] bind(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_IPX)
-            LOG("process %s [%d] bind(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_NETLINK)
-            LOG("process %s [%d] bind(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else
-            LOG("process %s [%d] bind(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] bind(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] bind(%d,family:AF_UNSPEC ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] bind(%d,family:AF_AX25 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] bind(%d,family:AF_IPX ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] bind(%d,family:AF_NETLINK ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else
+        //     LOG("process %s [%d] bind(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -723,7 +861,7 @@ IntLixAccept4Handler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
@@ -732,21 +870,21 @@ IntLixAccept4Handler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+            LOG("process %s [%d] accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else if (sin.sin_family==AF_LOCAL)
-            LOG("process %s [%d] accept4(%d,family:AF_LOCAL ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else if (sin.sin_family==AF_UNSPEC)
-            LOG("process %s [%d] accept4(%d,family:AF_UNSPEC ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else if (sin.sin_family==AF_AX25)
-            LOG("process %s [%d] accept4(%d,family:AF_AX25 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else if (sin.sin_family==AF_IPX)
-            LOG("process %s [%d] accept4(%d,family:AF_IPX ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else if (sin.sin_family==AF_NETLINK)
-            LOG("process %s [%d] accept4(%d,family:AF_NETLINK ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
-        else 
-            LOG("process %s [%d] accept4(%d,family:%d ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12,pRegs->R13);
+            LOG("process %s [%d] accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] accept4(%d,family:AF_LOCAL ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] accept4(%d,family:AF_UNSPEC ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] accept4(%d,family:AF_AX25 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] accept4(%d,family:AF_IPX ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] accept4(%d,family:AF_NETLINK ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        // else 
+        //     LOG("process %s [%d] accept4(%d,family:%d ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -773,7 +911,7 @@ IntLixAcceptHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
@@ -782,21 +920,21 @@ IntLixAcceptHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_LOCAL)
-            LOG("process %s [%d] accept(%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_UNSPEC)
-            LOG("process %s [%d] accept(%d,family:AF_UNSPEC ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_AX25)
-            LOG("process %s [%d] accept(%d,family:AF_AX25 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_IPX)
-            LOG("process %s [%d] accept(%d,family:AF_IPX ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else if (sin.sin_family==AF_NETLINK)
-            LOG("process %s [%d] accept(%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
-        else 
-            LOG("process %s [%d] accept(%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),sin.sin_port,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_LOCAL)
+        //     LOG("process %s [%d] accept(%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_UNSPEC)
+        //     LOG("process %s [%d] accept(%d,family:AF_UNSPEC ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_AX25)
+        //     LOG("process %s [%d] accept(%d,family:AF_AX25 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_IPX)
+        //     LOG("process %s [%d] accept(%d,family:AF_IPX ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else if (sin.sin_family==AF_NETLINK)
+        //     LOG("process %s [%d] accept(%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        // else 
+        //     LOG("process %s [%d] accept(%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
     }
 
     return INT_STATUS_SUCCESS;
@@ -817,7 +955,6 @@ IntLixOpenHandler(
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    char buf[0x30];
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(pRegs->R8);
     if (NULL == pTask)
@@ -825,15 +962,11 @@ IntLixOpenHandler(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
-    status =IntVirtMemFetchString(pRegs->R9,0x30,pRegs->Cr3,buf);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        LOG("process %s [%d] open(0x%x,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-        return status;
-    }
-    LOG("process %s [%d] open(%s,0%o,0x%llx) = %d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] open(%s,%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -860,7 +993,13 @@ IntLixWriteHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] write(%lu,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    }
     QWORD files = 0;
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
@@ -878,22 +1017,19 @@ IntLixWriteHandle(
     char *path = NULL;
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
-    BYTE buf[0x33] = {0};
-    DWORD RetLength = 0;
-    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if (!INT_SUCCESS(status))
     {
         if (!INT_SUCCESS(status1)){
-            LOG("process %s [%d] write(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] write(%lu,0x%llx,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         }else{
-            LOG("process %s [%d] write(%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] write(%lu,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
         }
         ERROR("[ERROR] IntLixFileGetPath failed for %llx: %08x\n", fd_array, status);
     }else{
         if (!INT_SUCCESS(status1)){
-            LOG("process %s [%d] write(%s,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] write(%s,0x%llx,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
         }else{
-            LOG("process %s [%d] write(%s,,%s,%d) = %d\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] write(%s,,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
         }
     }
     return INT_STATUS_SUCCESS;
@@ -921,14 +1057,35 @@ IntLixFinit_moduleHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char uargs[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,uargs);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] finit_module(%d,%s,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,uargs,pRegs->R11,pRegs->R12);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] finit_module(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    else
+        LOG("process %s [%d] finit_module(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -955,14 +1112,11 @@ IntLixDelete_moduleHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char name_user[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,name_user);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] delete_module(%s,%d) = %d\n",pTask->Comm,pTask->Pid,name_user,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] delete_module(%s,%u) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -988,14 +1142,11 @@ IntLixInit_moduleHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char uargs[0x40];
-    status =IntVirtMemFetchString(pRegs->R11,0x40,pRegs->Cr3,uargs);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R11, status);
-        return status;
-    }
-    LOG("process %s [%d] init_module(0x%x,%d,%s) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,uargs,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] init_module(0x%x,%lu,%s) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1021,7 +1172,7 @@ IntLixRebootHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] reboot(%d,%d,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("process %s [%d] reboot(%d,%d,%u,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1047,7 +1198,13 @@ IntLixNewunameHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] uname(0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x186] = {0};
+    status =IntVirtMemRead(pRegs->R9,0x186,pRegs->Cr3,buf,&RetLength);
+    struct new_utsname sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    LOG("process %s [%d] uname(sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s) = %ld\n",pTask->Comm,pTask->Pid,sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1073,7 +1230,8 @@ IntLixPerf_event_openHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] perf_event_open(0x%x,%d,%d,%d,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] perf_event_open(0x%x,%u,%d,%d,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1099,7 +1257,13 @@ IntLixClock_gettimeHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] clock_gettime(%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
+    struct timespec sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    LOG("process %s [%d] clock_gettime(%d,tv_sec:%lu tv_nsec:%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,sin.tv_sec,sin.tv_nsec,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1125,7 +1289,8 @@ IntLixSelectHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] select(%d,0x%x,0x%x,0x%x,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] select(%d,0x%x,0x%x,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1151,7 +1316,8 @@ IntLixSigactionHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] sigaction(%d,0x%x,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] sigaction(%d,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1177,7 +1343,8 @@ IntLixPrctlHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] prctl(%d,%d,%d,%d,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] prctl(%d,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1204,7 +1371,33 @@ IntLixMmap_pgoffHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] mmap_pgoff(%d,%d,%d,%d,%d,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R13<0){
+        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R13 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    else
+        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1230,14 +1423,35 @@ IntLixPread64Handle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    else
+        LOG("process %s [%d] pread64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1263,14 +1477,35 @@ IntLixPwrite64Handle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    else 
+        LOG("process %s [%d] pwrite64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1296,80 +1531,35 @@ IntLixNewfstatatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] newfstatat(%d,%s,0x%x,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixExecveatHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_execveat" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] execveat(%d,%s,0x%x,0x%x,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
-IntLixExecveHandle(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_execve" function.
-
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] execve(%s,0x%x,0x%x) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    else
+        LOG("process %s [%d] newfstatat(%s,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1395,14 +1585,11 @@ IntLixLstatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] lstat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] lstat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1428,14 +1615,11 @@ IntLixStatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] stat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] stat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1461,7 +1645,32 @@ IntLixFstatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fstat(%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    else 
+        LOG("process %s [%d] fstat(%s,0x%x) = %ld\n",pTask->Comm,pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1487,14 +1696,11 @@ IntLixAccessHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] access(%s,0%o) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] access(%s,0%o) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1520,21 +1726,13 @@ IntLixSymlinkatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    char newname[0x40];
-    status =IntVirtMemFetchString(pRegs->R11,0x40,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R11, status);
-        return status;
-    }
-    LOG("process %s [%d] symlinkat(%s,%d,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,pRegs->R10,newname,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] symlinkat(%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,buf2,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1561,21 +1759,13 @@ IntLixSymlinkHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    char newname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    LOG("process %s [%d] symlink(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] symlink(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1601,21 +1791,13 @@ IntLixLinkatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x20];
-    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    char newname[0x20];
-    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
-        return status;
-    }
-    LOG("process %s [%d] linkat(%d,%s,%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] linkat(%d,%s,%d,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1641,14 +1823,31 @@ IntLixUnlinkatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, pathname);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] unlinkat(%d,%s,%d) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] unlinkat(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    else 
+        LOG("process %s [%d] unlinkat(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1674,14 +1873,11 @@ IntLixUnlinkHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, pathname);
-        return status;
-    }
-    LOG("process %s [%d] unlink(%s) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    LOG("process %s [%d] unlink(%s) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1707,21 +1903,13 @@ IntLixLinkHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    char newname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    LOG("process %s [%d] link(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] link(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1747,14 +1935,35 @@ IntLixOpenatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,pathname);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] openat(%d,%s,%d,0%o) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,pathname,pRegs->R11,pRegs->R12,pRegs->R13);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    else
+        LOG("process %s [%d] openat(%s,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1780,14 +1989,11 @@ IntLixCreatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] creat(%s,%d) = %d\n",pTask->Comm,pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    LOG("process %s [%d] creat(%s,%d) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1813,14 +2019,11 @@ IntLixMkdirHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] mkdir(%s,0%o) = %d\n",pTask->Comm, pTask->Pid,pathname,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    LOG("process %s [%d] mkdir(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1846,21 +2049,13 @@ IntLixRenameatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x20];
-    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    char newname[0x20];
-    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
-        return status;
-    }
-    LOG("process %s [%d] renameat(%d,%s,%d,%s) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] renameat(%d,%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1886,21 +2081,13 @@ IntLixRenameat2Handle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x20];
-    status =IntVirtMemFetchString(pRegs->R10,0x20,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    char newname[0x20];
-    status =IntVirtMemFetchString(pRegs->R12,0x20,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R12, status);
-        return status;
-    }
-    LOG("process %s [%d] renameat2(%d,%s,%d,%s,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,oldname,pRegs->R11,newname,pRegs->R13,pRegs->R14);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] renameat2(%d,%s,%d,%s,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1926,21 +2113,13 @@ IntLixRenameHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char oldname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,oldname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    char newname[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,newname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
-        return status;
-    }
-    LOG("process %s [%d] rename(%s,%s) = %d\n",pTask->Comm, pTask->Pid,oldname,newname,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf1[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
+    BYTE buf2[0x33] = {0};
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
+    LOG("process %s [%d] rename(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1966,14 +2145,35 @@ IntLixFchownatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char filename[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,filename);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] fchownat(%d,%s,%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,filename,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    else 
+        LOG("process %s [%d] fchownat(%s,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1999,7 +2199,32 @@ IntLixFchownHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fchown(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    else
+        LOG("process %s [%d] fchown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2025,7 +2250,32 @@ IntLixFchmodHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fchmod(%d,0%o) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    else
+        LOG("process %s [%d] fchmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2051,14 +2301,35 @@ IntLixFchmodatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char filename[0x40];
-    status =IntVirtMemFetchString(pRegs->R10,0x40,pRegs->Cr3,filename);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R10, status);
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
-    LOG("process %s [%d] fchmodat(%d,%s,0%o) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,filename,pRegs->R11,pRegs->R12);
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    else
+        LOG("process %s [%d] fchmodat(%s,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2084,14 +2355,11 @@ IntLixChownHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char *filename[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,filename);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] chown(%s,%d,%d) = %d\n",pTask->Comm, pTask->Pid,filename,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] chown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2117,14 +2385,11 @@ IntLixChmodHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char filename[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,filename);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] chmod(%s,0%o) = %d\n",pTask->Comm, pTask->Pid,filename,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] chmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2150,7 +2415,32 @@ IntLixFchdirHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fchdir(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    else
+        LOG("process %s [%d] fchdir(%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2176,7 +2466,8 @@ IntLixKillHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] kill(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] kill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2202,14 +2493,11 @@ IntLixChrootHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] chroot(%s) = %d\n",pTask->Comm, pTask->Pid,pathname,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] chroot(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2235,7 +2523,8 @@ IntLixTimeHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] time(0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] time(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2261,7 +2550,8 @@ IntLixPtraceHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] ptrace(%d,%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] ptrace(%ld,%ld,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2287,7 +2577,8 @@ IntLixAlarmHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] alarm(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] alarm(%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2313,14 +2604,11 @@ IntLixChdirHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    char pathname[0x40];
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,pathname);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] chdir(%s) = %d\n",pTask->Comm, pTask->Pid,pathname,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] chdir(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2346,7 +2634,8 @@ IntLixSetresuidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] setresuid(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] setresuid(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2372,7 +2661,16 @@ IntLixGettimeofdayHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] gettimeofday(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x10] = {0};
+    status =IntVirtMemRead(pRegs->R9,0x10,pRegs->Cr3,buf,&RetLength);
+    struct timeval sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    status =IntVirtMemRead(pRegs->R10,0x8,pRegs->Cr3,buf,&RetLength);
+    struct timezone sin1;
+    memcpy(&sin, &buf, sizeof(sin1));
+    LOG("process %s [%d] gettimeofday(time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d) = %ld\n",pTask->Comm, pTask->Pid,sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2398,7 +2696,8 @@ IntLixBrkHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] brk(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] brk(%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2424,7 +2723,8 @@ IntLixIoctlHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] ioctl(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] ioctl(%u,%u,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2450,7 +2750,8 @@ IntLixUmaskHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] umask(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] umask(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 INTSTATUS
@@ -2475,7 +2776,8 @@ IntLixGetrlimitHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] getrlimit(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] getrlimit(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2501,7 +2803,8 @@ IntLixSigprocmaskHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2527,7 +2830,8 @@ IntLixPollHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] poll(0x%x,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] poll(0x%x,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2553,7 +2857,8 @@ IntLixUstatHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] ustat(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] ustat(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2579,7 +2884,8 @@ IntLixTkillHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] tkill(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] tkill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2605,7 +2911,8 @@ IntLixTgkillHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] tgkill(%d,%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] tgkill(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2631,7 +2938,11 @@ IntLixSeccompHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] seccomp(%d,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] seccomp(%u,%u,%s) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2657,7 +2968,8 @@ IntLixSetsidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] setsid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] setsid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2683,7 +2995,32 @@ IntLixFstatfsHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    else
+        LOG("process %s [%d] fstatfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2699,7 +3036,7 @@ IntLixStatfsHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
-    INTSTATUS status;
+    INTSTATUS status,status1;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
     UNREFERENCED_PARAMETER(Detour);
@@ -2710,13 +3047,11 @@ IntLixStatfsHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,path);
-    if (!INT_SUCCESS(status))
-    {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
-    }
-    LOG("process %s [%d] statfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("process %s [%d] statfs(%s,0x%x) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2742,8 +3077,8 @@ IntLixCapsetHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] capset(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] capset(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2769,8 +3104,8 @@ IntLixCapgetHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] capget(0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] capget(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2797,8 +3132,13 @@ IntLixSysinfoeHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] sysinfo(0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    DWORD RetLength = 0;
+    BYTE buf[0x70] = {0};
+    status =IntVirtMemRead(pRegs->R9,0x70,pRegs->Cr3,buf,&RetLength);
+    struct sysinfo sin;
+    memcpy(&sin, &buf, sizeof(sin));
+    LOG("process %s [%d] sysinfo(uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s) = %ld\n",pTask->Comm, pTask->Pid,sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2824,8 +3164,51 @@ IntLixShutdownHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] shutdown(%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    if ((int)pRegs->R9<0){
+        if (SHUT_RD==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else if (SHUT_WR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else if (SHUT_RDWR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else LOG("process %s [%d] shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status)){
+        if (SHUT_RD==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else if (SHUT_WR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else if (SHUT_RDWR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else LOG("process %s [%d] shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    }else{
+        if (SHUT_RD==pRegs->R10)
+            LOG("process %s [%d] shutdown(%s,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+        else if (SHUT_WR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%s,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+        else if (SHUT_RDWR==pRegs->R10)
+            LOG("process %s [%d] shutdown(%s,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+        else LOG("process %s [%d] shutdown(%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+    }
     return INT_STATUS_SUCCESS;
 }
 
@@ -2851,8 +3234,8 @@ IntLixGeteuidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] geteuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] geteuid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2878,8 +3261,8 @@ IntLixGetuidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] getuid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] getuid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2905,8 +3288,8 @@ IntLixGetsidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] getsid(%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] getsid(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2932,8 +3315,8 @@ IntLixGetppidHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] getppid() = %d\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] getppid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2949,7 +3332,7 @@ IntLixReadHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
-    INTSTATUS status;
+    INTSTATUS status,status1;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
     UNREFERENCED_PARAMETER(Detour);
@@ -2959,8 +3342,35 @@ IntLixReadHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    LOG("process %s [%d] read(%d,0x%llx,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    if ((int)pRegs->R9<0){
+        LOG("process %s [%d] read(%d,%s,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        return INT_STATUS_SUCCESS;
+    }
+    QWORD files = 0;
+    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return status;
+    }
+    QWORD fd_array = 0;
+    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+        return status;
+    }
+    char *path = NULL;
+    DWORD pathLen = 0;
+    status = IntLixFileGetPath(fd_array, &path, &pathLen);
+    if (!INT_SUCCESS(status))
+        LOG("process %s [%d] read(%d,%s,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    else
+        LOG("process %s [%d] read(%s,%s,%lu) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2986,7 +3396,8 @@ IntLixSysfsHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-    LOG("process %s [%d] sysfs(0x%x,0x%x,0x%x) = 0x%x\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("process %s [%d] sysfs(%d,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -3007,7 +3418,6 @@ IntLixRmdirHandle(
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    char buf[0x40];
 
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(gVcpu->Regs.R8);
@@ -3016,16 +3426,16 @@ IntLixRmdirHandle(
         ERROR("[ERROR] No task on for exec!\n");
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
-
-    status =IntVirtMemFetchString(pRegs->R9,0x40,pRegs->Cr3,buf);
+    //if(NULL == pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
     if (!INT_SUCCESS(status))
     {
-        WARNING("[WARNING] IntVirtMemFetchString failed for %llx: 0x%x\n", pRegs->R9, status);
-        return status;
+        LOG("process %s [%d] rmdir(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    }else {
+        LOG("process %s [%d] rmdir(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     }
-
-    LOG("process %s [%d] rmdir(%s) = 0x%d\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
-
 
     return INT_STATUS_SUCCESS;
 }

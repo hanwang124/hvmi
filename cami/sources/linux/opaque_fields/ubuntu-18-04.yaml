@@ -8,445 +8,435 @@ version: 4.15.0-[24-]*Ubuntu*
 
 hooks:
 
-    # - !intro_update_lix_hook
-    #     name: sys_sched_rr_get_interval
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_sched_rr_get_interval
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_waitid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_waitid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_wait4
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_wait4
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_dup
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_dup
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: sys_dup2
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_dup2
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_dup3
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_dup3
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: sys_close
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_close
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_recvmsg
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_recvmsg
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_recvfrom
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_recvfrom
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_sendmsg
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_sendmsg
+        handler: 0
+        skip_on_boot: 0
     
     - !intro_update_lix_hook
         name: sys_sendto
         handler: 0
         skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_connect
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_connect
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_bind
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_bind
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_accept4
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_accept4
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_accept
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_accept
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_write
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_write
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: do_sys_open
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: do_sys_open
+        handler: 0
+        skip_on_boot: 0
         
-    # - !intro_update_lix_hook
-    #     name: sys_finit_module
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_finit_module
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_delete_module
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_delete_module
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_init_module
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_init_module
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_reboot
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_reboot
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_newuname
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_newuname
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_perf_event_open
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_perf_event_open
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_clock_gettime
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_clock_gettime
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: do_sigaction
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: do_sigaction
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: sys_select
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_select
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_prctl
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_prctl
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_mmap_pgoff
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_mmap_pgoff
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_pread64
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_pread64
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_pwrite64
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_pwrite64
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_newfstatat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_newfstatat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_execveat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_lstat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_execve
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_stat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_stat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_fstat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_stat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_access
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_fstat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_symlinkat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_access
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_symlink
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_symlinkat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_linkat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_symlink
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_unlinkat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_linkat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_unlink
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_unlinkat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_link
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_unlink
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook #error
+        name: sys_openat
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_link
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_creat
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_openat
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_mkdir
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_creat
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_renameat
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_mkdir
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_renameat2
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_renameat
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_rename
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_renameat2
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_fchownat
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_rename
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_fchown
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_fchownat
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_fchmod
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_fchown
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_fchmodat
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_fchmod
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_chown
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_fchmodat
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_chmod
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_chown
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_fchdir
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_chmod
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_kill
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_fchdir
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_chroot
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_kill
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_time
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_chroot
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_ptrace
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_time
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_alarm
+        handler: 0
+        skip_on_boot: 0 
 
-    # - !intro_update_lix_hook
-    #     name: sys_ptrace
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_chdir
+        handler: 0
+        skip_on_boot: 0                                                                                                                                                                                                                                                                                                                     
 
-    # - !intro_update_lix_hook
-    #     name: sys_alarm
-    #     handler: 0
-    #     skip_on_boot: 0 
+    - !intro_update_lix_hook
+        name: sys_setresuid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_chdir
-    #     handler: 0
-    #     skip_on_boot: 0                                                                                                                                                                                                                                                                                                                     
+    - !intro_update_lix_hook
+        name: sys_gettimeofday
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_setresuid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_brk
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_gettimeofday
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_ioctl
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_brk
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_umask
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_ioctl
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_getrlimit
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_umask
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_sigprocmask
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_getrlimit
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_poll
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_sigprocmask
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_ustat
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_poll
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_tkill
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_ustat
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_tgkill
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_tkill
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_seccomp
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_tgkill
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_setsid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_seccomp
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_fstatfs
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_setsid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_statfs
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_fstatfs
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_capset
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_statfs
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_capget
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_capset
-    #     handler: 0
-    #     skip_on_boot: 0
-
-    # - !intro_update_lix_hook
-    #     name: sys_capget
-    #     handler: 0
-    #     skip_on_boot: 0
-
-    # - !intro_update_lix_hook
-    #     name: do_sysinfo
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: do_sysinfo
+        handler: 0
+        skip_on_boot: 0
         
-    # - !intro_update_lix_hook
-    #     name: sys_shutdown
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_shutdown
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_geteuid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_geteuid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_getuid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_getuid
+        handler: 0
+        skip_on_boot: 0
         
-    # - !intro_update_lix_hook
-    #     name: sys_getsid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_getsid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_getppid
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_getppid
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_read
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_read
+        handler: 0
+        skip_on_boot: 0
 
-    # - !intro_update_lix_hook
-    #     name: sys_sysfs
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: sys_sysfs
+        handler: 0
+        skip_on_boot: 0
     
-    # - !intro_update_lix_hook
-    #     name: do_rmdir
-    #     handler: 0
-    #     skip_on_boot: 0
+    - !intro_update_lix_hook
+        name: do_rmdir
+        handler: 0
+        skip_on_boot: 0
 
     - !intro_update_lix_hook
         name: run_init_process

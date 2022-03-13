@@ -92,8 +92,6 @@ typedef enum {
     det_sys_fstat,
     det_sys_stat,
     det_sys_lstat,
-    det_sys_execve,
-    det_sys_execveat,
     det_sys_newfstatat,
     det_sys_pwrite64,
     det_sys_pread64,
