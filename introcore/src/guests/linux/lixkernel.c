@@ -272,7 +272,7 @@ _instrument_kernel:
 
                 if (instrux.Length == 3 && instrux.Instruction == ND_INS_NOP)
                 {
-                    LOG("[SWAPGS] RIP %llx in function %s\n", fRip - instrux.Length, symName);
+                    // LOG("[SWAPGS] RIP %llx in function %s\n", fRip - instrux.Length, symName);
 
                     status = IntKernVirtMemRead(fRip,
                                                 sizeof(gPatchedSwapgs[gTotalPatchedSwapgs].OriginalBytes),
@@ -396,7 +396,7 @@ _restore_patched:
             continue;
         }
 
-        LOG("[SWAPGS] Restore at RIP %llx\n", gPatchedSwapgs[i].LfenceRip);
+        // LOG("[SWAPGS] Restore at RIP %llx\n", gPatchedSwapgs[i].LfenceRip);
 
         status = IntKernVirtMemWrite(gPatchedSwapgs[i].LfenceRip,
                                      sizeof(gPatchedSwapgs[i].OriginalBytes),

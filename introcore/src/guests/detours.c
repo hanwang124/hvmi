@@ -1042,8 +1042,8 @@ IntDetSetLixHook(
 
     gDetours.LixDetourTable[FnDetour->Id] = pDetour;
 
-    LOG("[DETOUR] %llx: handler @ %llx (%s)\n",
-        pDetour->FunctionAddress, pDetour->HandlerAddress, FnDetour->FunctionName);
+    // LOG("[DETOUR] %llx: handler @ %llx (%s)\n",
+    //     pDetour->FunctionAddress, pDetour->HandlerAddress, FnDetour->FunctionName);
 
     status = INT_STATUS_SUCCESS;
 
@@ -1899,42 +1899,42 @@ IntDetDumpDetours(
 /// @brief  Prints all the detours in the #gDetours list of detours.
 ///
 {
-    LOG("[DBGINTRO] Introspection detours:\n");
+    // LOG("[DBGINTRO] Introspection detours:\n");
 
-    for_each_detour(pDetour)
-    {
-        char *pFnName = NULL;
-        if (gGuest.OSType == introGuestLinux)
-        {
-            if (pDetour->LixFnDetour != NULL)
-            {
-                pFnName = pDetour->LixFnDetour->FunctionName;
-            }
-            else if (pDetour->Descriptor != NULL)
-            {
-                pFnName = pDetour->Descriptor->FunctionName;
-            }
-        }
-        else if (gGuest.OSType == introGuestWindows)
-        {
-            pFnName = pDetour->Descriptor != NULL ? pDetour->Descriptor->FunctionName : NULL;
-        }
+    // for_each_detour(pDetour)
+    // {
+    //     char *pFnName = NULL;
+    //     if (gGuest.OSType == introGuestLinux)
+    //     {
+    //         if (pDetour->LixFnDetour != NULL)
+    //         {
+    //             pFnName = pDetour->LixFnDetour->FunctionName;
+    //         }
+    //         else if (pDetour->Descriptor != NULL)
+    //         {
+    //             pFnName = pDetour->Descriptor->FunctionName;
+    //         }
+    //     }
+    //     else if (gGuest.OSType == introGuestWindows)
+    //     {
+    //         pFnName = pDetour->Descriptor != NULL ? pDetour->Descriptor->FunctionName : NULL;
+    //     }
 
-        LOG(" ## %-32s Hits: %12llu, RIP: %llx, Tag: %02d, Handler RIP: %llx (+ %02x), Hooked RIP: %llx\n",
-            pFnName != NULL ? pFnName : "unknown",
-            pDetour->HitCount,
-            pDetour->HypercallAddress,
-            pDetour->Tag,
-            pDetour->HandlerAddress,
-            pDetour->HandlerSize,
-            pDetour->FunctionAddress);
+    //     LOG(" ## %-32s Hits: %12llu, RIP: %llx, Tag: %02d, Handler RIP: %llx (+ %02x), Hooked RIP: %llx\n",
+    //         pFnName != NULL ? pFnName : "unknown",
+    //         pDetour->HitCount,
+    //         pDetour->HypercallAddress,
+    //         pDetour->Tag,
+    //         pDetour->HandlerAddress,
+    //         pDetour->HandlerSize,
+    //         pDetour->FunctionAddress);
 
-        if (gGuest.OSType == introGuestWindows && pDetour->ModuleBase != gGuest.KernelVa)
-        {
-            LOG("        Module: %llx\n",
-                pDetour->ModuleBase);
-        }
-    }
+    //     if (gGuest.OSType == introGuestWindows && pDetour->ModuleBase != gGuest.KernelVa)
+    //     {
+    //         LOG("        Module: %llx\n",
+    //             pDetour->ModuleBase);
+    //     }
+    // }
 }
 
 

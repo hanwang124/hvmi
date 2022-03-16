@@ -130,8 +130,8 @@ IntThrSafeIsStackPtrInIntro(
 
             if (!!(Options & THS_CHECK_DETOURS) && IntDetIsPtrInHandler(stackValue, ptrStackValue, &detTag))
             {
-                WARNING("[SAFENESS] Stack value @ %016llx (= %016llx) points inside detour %d\n",
-                        stackPtr + i, stackValue, detTag);
+                // WARNING("[SAFENESS] Stack value @ %016llx (= %016llx) points inside detour %d\n",
+                //         stackPtr + i, stackValue, detTag);
                 IntVirtMemUnmap(&pStack);
                 return TRUE;
             }
@@ -538,7 +538,7 @@ IntThrSafeLixInspectWaitingThread(
 
     if (taskFlags & (PF_EXITPIDONE | PF_EXITING))
     {
-        LOG("[SAFENESS] Ignoring task %llx which is dying: %08x\n", TaskStruct, taskFlags);
+        // LOG("[SAFENESS] Ignoring task %llx which is dying: %08x\n", TaskStruct, taskFlags);
         return INT_STATUS_NOT_NEEDED_HINT;
     }
 
@@ -724,7 +724,7 @@ IntThrSafeLixInspectRunningThreadOnCpu(
         return INT_STATUS_NOT_NEEDED_HINT;
     }
 
-    LOG("[SAFENESS] CPU %u has current stack = 0x%016llx and RSP = 0x%016llx\n", Cpu, currentStack, Regs->Rsp);
+    // LOG("[SAFENESS] CPU %u has current stack = 0x%016llx and RSP = 0x%016llx\n", Cpu, currentStack, Regs->Rsp);
 
     if (Regs->Rsp < currentStack)
     {
@@ -754,7 +754,7 @@ IntThrSafeLixInspectRunningThreadOnCpu(
             continue;
         }
 
-        LOG("[SAFENESS] Will check stack %016llx with RIP %016llx on CPU %u\n", ptr, Regs->Rip, Cpu);
+        // LOG("[SAFENESS] Will check stack %016llx with RIP %016llx on CPU %u\n", ptr, Regs->Rip, Cpu);
 
         if (!!(Options & THS_CHECK_ONLY))
         {

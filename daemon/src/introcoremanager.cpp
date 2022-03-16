@@ -2493,29 +2493,29 @@ INTSTATUS IntrocoreManager::IntIntroEventNotify( void *GuestHandle, DWORD EventC
 		}
 
 		case introEventProcessEvent: {
-			PEVENT_PROCESS_EVENT Info = ( PEVENT_PROCESS_EVENT )Parameters;
+			// PEVENT_PROCESS_EVENT Info = ( PEVENT_PROCESS_EVENT )Parameters;
 
-			std::string procUUID   = computeEventUUID( Info->Child );
-			std::string parentUUID = computeEventUUID( Info->Parent );
+			// std::string procUUID   = computeEventUUID( Info->Child );
+			// std::string parentUUID = computeEventUUID( Info->Parent );
 
-			if ( localSettings.logUnprotectedProcesses_ || Info->Protected ) {
-				char *buf = nullptr;
+			// if ( localSettings.logUnprotectedProcesses_ || Info->Protected ) {
+			// 	char *buf = nullptr;
 
-				int err = asprintf(
-				    &buf,
-				    "BDINT [process event]: created = %u, protected = %u, crashed = %u,"
-				    " image name = %s, parent image name = %s, pid = %u, parent pid = %u, cr3 ="
-				    " 0x%llx, parent cr3 = 0x%llx, uuid = %s, origin_uuid = %s, cmdline = '%s'",
-				    Info->Created, Info->Protected, Info->Crashed, Info->Child.ImageName,
-				    Info->Parent.ImageName, Info->Child.Pid, Info->Parent.Pid, Info->Child.Cr3,
-				    Info->Parent.Cr3, procUUID.c_str(), parentUUID.c_str(), Info->Child.CmdLine );
+			// 	int err = asprintf(
+			// 	    &buf,
+			// 	    "BDINT [process event]: created = %u, protected = %u, crashed = %u,"
+			// 	    " image name = %s, parent image name = %s, pid = %u, parent pid = %u, cr3 ="
+			// 	    " 0x%llx, parent cr3 = 0x%llx, uuid = %s, origin_uuid = %s, cmdline = '%s'",
+			// 	    Info->Created, Info->Protected, Info->Crashed, Info->Child.ImageName,
+			// 	    Info->Parent.ImageName, Info->Child.Pid, Info->Parent.Pid, Info->Child.Cr3,
+			// 	    Info->Parent.Cr3, procUUID.c_str(), parentUUID.c_str(), Info->Child.CmdLine );
 
-				if ( err > 0 && buf ) {
-					std::unique_ptr<char, cfreeFunc> pb( buf, std::free );
+			// 	if ( err > 0 && buf ) {
+			// 		std::unique_ptr<char, cfreeFunc> pb( buf, std::free );
 
-					bdvmi::logger << bdvmi::WARNING << buf << std::flush;
-				}
-			}
+			// 		bdvmi::logger << bdvmi::WARNING << buf << std::flush;
+			// 	}
+			// }
 			break;
 		}
 
@@ -2544,31 +2544,31 @@ INTSTATUS IntrocoreManager::IntIntroEventNotify( void *GuestHandle, DWORD EventC
 		}
 
 		case introEventModuleEvent: {
-			PEVENT_MODULE_EVENT Info = ( PEVENT_MODULE_EVENT )Parameters;
+			// PEVENT_MODULE_EVENT Info = ( PEVENT_MODULE_EVENT )Parameters;
 
-			std::string moduleName = utf16ToUtf8( Info->Module.Name );
-			std::string originUUID = computeEventUUID( Info->CurrentProcess );
-			std::string moduleUUID = computeEventUUID( Info->Module );
+			// std::string moduleName = utf16ToUtf8( Info->Module.Name );
+			// std::string originUUID = computeEventUUID( Info->CurrentProcess );
+			// std::string moduleUUID = computeEventUUID( Info->Module );
 
-			if ( Info->Loaded && !pim->violationAgentsPending_ && Info->Protected )
-				pim->lastEvent_.processUUID = moduleUUID;
+			// if ( Info->Loaded && !pim->violationAgentsPending_ && Info->Protected )
+			// 	pim->lastEvent_.processUUID = moduleUUID;
 
-			char *buf = nullptr;
+			// char *buf = nullptr;
 
-			int err = asprintf(
-			    &buf,
-			    "BDINT [module event]: loaded = %u, protected = %u, module name = %s,"
-			    " base = 0x%llx, size = %u, timestamp = %u, image name = %s, pid = %u, cr3 = 0x%llx,"
-			    " uuid = %s, origin_uuid = %s",
-			    Info->Loaded, Info->Protected, moduleName.c_str(), Info->Module.Base, Info->Module.Size,
-			    Info->Module.TimeDateStamp, Info->CurrentProcess.ImageName, Info->CurrentProcess.Pid,
-			    Info->CurrentProcess.Cr3, moduleUUID.c_str(), originUUID.c_str() );
+			// int err = asprintf(
+			//     &buf,
+			//     "BDINT [module event]: loaded = %u, protected = %u, module name = %s,"
+			//     " base = 0x%llx, size = %u, timestamp = %u, image name = %s, pid = %u, cr3 = 0x%llx,"
+			//     " uuid = %s, origin_uuid = %s",
+			//     Info->Loaded, Info->Protected, moduleName.c_str(), Info->Module.Base, Info->Module.Size,
+			//     Info->Module.TimeDateStamp, Info->CurrentProcess.ImageName, Info->CurrentProcess.Pid,
+			//     Info->CurrentProcess.Cr3, moduleUUID.c_str(), originUUID.c_str() );
 
-			if ( err > 0 && buf ) {
-				std::unique_ptr<char, cfreeFunc> pb( buf, std::free );
+			// if ( err > 0 && buf ) {
+			// 	std::unique_ptr<char, cfreeFunc> pb( buf, std::free );
 
-				bdvmi::logger << bdvmi::WARNING << buf << std::flush;
-			}
+			// 	bdvmi::logger << bdvmi::WARNING << buf << std::flush;
+			// }
 			break;
 		}
 

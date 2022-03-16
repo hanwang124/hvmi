@@ -104,99 +104,99 @@ IntDumpBuffer(
 
 #define IS_ASCII(x) ((x) >= 0x20 && (x) < 0x7f)
 
-    if (LogHeader)
-    {
-        LOG("[DUMPER] Dumping buffer from GVA %016llx with size %d\n", Gva, Length);
-    }
+    // if (LogHeader)
+    // {
+    //     LOG("[DUMPER] Dumping buffer from GVA %016llx with size %d\n", Gva, Length);
+    // }
 
-    for (size_t i = 0; i < Length; i += (size_t)RowLength * ElementLength)
-    {
-        char *l = line;
-        int ret, rem = sizeof(line);
-        char rest[sizeof(QWORD)];
+    // for (size_t i = 0; i < Length; i += (size_t)RowLength * ElementLength)
+    // {
+    //     char *l = line;
+    //     int ret, rem = sizeof(line);
+    //     char rest[sizeof(QWORD)];
 
-        ret = snprintf(l, sizeof(line), "%016llx:", Gva + i);
-        if (ret < 0 || ret >= rem)
-        {
-            ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
-            break;
-        }
+    //     ret = snprintf(l, sizeof(line), "%016llx:", Gva + i);
+    //     if (ret < 0 || ret >= rem)
+    //     {
+    //         ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
+    //         break;
+    //     }
 
-        rem -= ret;
-        l += ret;
+    //     rem -= ret;
+    //     l += ret;
 
-        for (size_t j = 0; j < (size_t)RowLength * ElementLength; j += ElementLength)
-        {
-            BOOLEAN over = (i + j + ElementLength) > Length;
+    //     for (size_t j = 0; j < (size_t)RowLength * ElementLength; j += ElementLength)
+    //     {
+    //         BOOLEAN over = (i + j + ElementLength) > Length;
 
-            if (ElementLength != 1 && over)
-            {
-                memset(rest, 'x', sizeof(rest));
+    //         if (ElementLength != 1 && over)
+    //         {
+    //             memset(rest, 'x', sizeof(rest));
 
-                if (i + j < Length)
-                {
-                    memcpy(rest, buf + i + j, (i + j + ElementLength) - Length);
-                }
-            }
+    //             if (i + j < Length)
+    //             {
+    //                 memcpy(rest, buf + i + j, (i + j + ElementLength) - Length);
+    //             }
+    //         }
 
-            switch (ElementLength)
-            {
-            case 1:
-                ret = snprintf(l, rem, " %02x",
-                               over ? 'x' : buf[i + j]);
-                break;
-            case 2:
-                ret = snprintf(l, rem, " %04x",
-                               over ? * (WORD *)rest : * (const WORD *)(buf + i + j));
-                break;
-            case 4:
-                ret = snprintf(l, rem, " %08x",
-                               over ? * (DWORD *)rest : * (const DWORD *)(buf + i + j));
-                break;
-            case 8:
-                ret = snprintf(l, rem, " %016llx",
-                               over ? * (QWORD *)rest : * (const QWORD *)(buf + i + j));
-                break;
-            }
+    //         switch (ElementLength)
+    //         {
+    //         case 1:
+    //             ret = snprintf(l, rem, " %02x",
+    //                            over ? 'x' : buf[i + j]);
+    //             break;
+    //         case 2:
+    //             ret = snprintf(l, rem, " %04x",
+    //                            over ? * (WORD *)rest : * (const WORD *)(buf + i + j));
+    //             break;
+    //         case 4:
+    //             ret = snprintf(l, rem, " %08x",
+    //                            over ? * (DWORD *)rest : * (const DWORD *)(buf + i + j));
+    //             break;
+    //         case 8:
+    //             ret = snprintf(l, rem, " %016llx",
+    //                            over ? * (QWORD *)rest : * (const QWORD *)(buf + i + j));
+    //             break;
+    //         }
 
-            if (ret < 0 || ret >= rem)
-            {
-                ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
-                break;
-            }
+    //         if (ret < 0 || ret >= rem)
+    //         {
+    //             ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
+    //             break;
+    //         }
 
-            rem -= ret;
-            l += ret;
-        }
+    //         rem -= ret;
+    //         l += ret;
+    //     }
 
-        if (DumpAscii)
-        {
-            ret = snprintf(l, rem, " ");
-            if (ret < 0 || ret >= rem)
-            {
-                ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
-                break;
-            }
+    //     if (DumpAscii)
+    //     {
+    //         ret = snprintf(l, rem, " ");
+    //         if (ret < 0 || ret >= rem)
+    //         {
+    //             ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
+    //             break;
+    //         }
 
-            rem -= ret;
-            l += ret;
+    //         rem -= ret;
+    //         l += ret;
 
-            for (size_t j = 0; j < (size_t)RowLength * ElementLength; j++)
-            {
-                ret = snprintf(l, rem, "%c", (i + j >= Length) ? 'x' : IS_ASCII(buf[i + j]) ? buf[i + j] : '.');
-                if (ret < 0 || ret >= rem)
-                {
-                    ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
-                    break;
-                }
+    //         for (size_t j = 0; j < (size_t)RowLength * ElementLength; j++)
+    //         {
+    //             ret = snprintf(l, rem, "%c", (i + j >= Length) ? 'x' : IS_ASCII(buf[i + j]) ? buf[i + j] : '.');
+    //             if (ret < 0 || ret >= rem)
+    //             {
+    //                 ERROR("[ERROR] snprintf error: %d, size %d\n", ret, rem);
+    //                 break;
+    //             }
 
-                rem -= ret;
-                l += ret;
-            }
-        }
+    //             rem -= ret;
+    //             l += ret;
+    //         }
+    //     }
 
-        LOG("%s\n", line);
-    }
+    //     LOG("%s\n", line);
+    // }
 }
 
 

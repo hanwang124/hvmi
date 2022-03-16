@@ -284,7 +284,7 @@ void HvmiEventHandler::runPostEvent()
 	if (!successinject)
 	{
 		time(&endinject);
-		if (difftime(endinject,startinject)>65)
+		if (difftime(endinject,startinject)>60)
 		{
 			bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
 			if (flag)
@@ -300,7 +300,7 @@ void HvmiEventHandler::runPostEvent()
 	}else {
 		if (!successlog){
 			time(&endlog);
-			if (difftime(endlog,startlog)>20)
+			if (difftime(endlog,startlog)>15)
 			{
 				Tool tool;
 				tool.toolId_ = "hvmi";

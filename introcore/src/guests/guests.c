@@ -1249,7 +1249,7 @@ IntGuestDisableIntro(
 
     if (!IntGuestIsSafeToDisable())
     {
-        LOG("[INFO] It's not safe to unload yet!\n");
+        // LOG("[INFO] It's not safe to unload yet!\n");
 
         status = INT_STATUS_CANNOT_UNLOAD;
         goto resume_and_exit;
