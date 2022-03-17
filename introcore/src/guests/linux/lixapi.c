@@ -1029,7 +1029,7 @@ IntLixWriteHandle(
         if (!INT_SUCCESS(status1)){
             LOG("process %s [%d] write(%s,0x%llx,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
         }else{
-            LOG("process %s [%d] write(%s,,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] write(%s,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
         }
     }
     return INT_STATUS_SUCCESS;
