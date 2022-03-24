@@ -203,8 +203,8 @@ IntLixDrvActivateProtection(
     Driver->Protected = TRUE;
     Driver->ProtectionFlag = INTRO_OPT_PROT_KM_LX_MODULES;
 
-    TRACE("[INFO] Driver %s successfully hooked. GVA: 0x%llx Size: 0x%x\n",
-          (char *)Driver->Name, Driver->Lix.CoreLayout.Base, Driver->Lix.CoreLayout.RoSize);
+    // TRACE("[INFO] Driver %s successfully hooked. GVA: 0x%llx Size: 0x%x\n",
+    //       (char *)Driver->Name, Driver->Lix.CoreLayout.Base, Driver->Lix.CoreLayout.RoSize);
 
     return INT_STATUS_SUCCESS;
 }
@@ -800,15 +800,15 @@ IntLixDrvCreateFromAddress(
         pDriver->Lix.Initialized = TRUE;
     }
 
-    TRACE("[MODULE] Loaded 0x%016llx @ 0x%016llx: %s\n", pDriver->ObjectGva, pDriver->BaseVa, (char *)pDriver->Name);
-    TRACE("---> EP: 0x%016llx, Size: %llx, TextSize: %x, RoSize: %x\n",
-          pDriver->EntryPoint, pDriver->Size, pDriver->Lix.CoreLayout.TextSize, pDriver->Lix.CoreLayout.RoSize);
+    // TRACE("[MODULE] Loaded 0x%016llx @ 0x%016llx: %s\n", pDriver->ObjectGva, pDriver->BaseVa, (char *)pDriver->Name);
+    // TRACE("---> EP: 0x%016llx, Size: %llx, TextSize: %x, RoSize: %x\n",
+    //       pDriver->EntryPoint, pDriver->Size, pDriver->Lix.CoreLayout.TextSize, pDriver->Lix.CoreLayout.RoSize);
 
     if (!StaticDetected && pDriver->Lix.InitLayout.Base != 0 && pDriver->Lix.InitLayout.Size != 0)
     {
-        TRACE("---> Init: 0x%016llx, Size: %x, TextSize: %x, RoSize: %x\n",
-              pDriver->Lix.InitLayout.Base, pDriver->Lix.InitLayout.Size,
-              pDriver->Lix.InitLayout.TextSize, pDriver->Lix.InitLayout.RoSize);
+        // TRACE("---> Init: 0x%016llx, Size: %x, TextSize: %x, RoSize: %x\n",
+        //       pDriver->Lix.InitLayout.Base, pDriver->Lix.InitLayout.Size,
+        //       pDriver->Lix.InitLayout.TextSize, pDriver->Lix.InitLayout.RoSize);
     }
 
     InsertTailList(&gKernelDrivers, &pDriver->Link);

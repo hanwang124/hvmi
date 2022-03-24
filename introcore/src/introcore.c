@@ -223,6 +223,7 @@ IntInit(
     GlueInterface->GetExceptionsVersion             = IntGetExceptionsVersion;
     GlueInterface->GetGuestInfo                     = IntGetGuestInfo;
     GlueInterface->InjectProcessAgent               = IntInjectProcessAgentInGuest;
+    GlueInterface->InjectRunCommand1                = IntInjectRunCommand12;
     GlueInterface->InjectFileAgent                  = IntInjectFileAgentInGuest;
     GlueInterface->SetIntroAbortStatus              = IntAbortEnableIntro;
     GlueInterface->AddExceptionFromAlert            = IntAddExceptionFromAlert;

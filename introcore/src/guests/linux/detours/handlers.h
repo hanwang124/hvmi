@@ -123,6 +123,8 @@ typedef enum {
     det_sys_waitid,
     det_sys_wait4,
     det_sys_sched_rr_get_interval,
+    det_sys_execve,
+    det_sys_execveat,
     
     det_max_id
 } DETOUR_ID;

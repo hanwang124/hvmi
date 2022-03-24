@@ -286,37 +286,49 @@ void HvmiEventHandler::runPostEvent()
 		time(&endinject);
 		if (difftime(endinject,startinject)>60)
 		{
-			bool flag = pim_->injectAgent("/home/huawei/Desktop/main","main",INTRO_AGENT_TAG_CUSTOM_TOOL,"");
+			bool flag = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
 			if (flag)
 			{
 				time(&startlog);
-				bdvmi::logger <<"goodinject!"<< std::flush;
+				bdvmi::logger <<"goodinjectfile!"<< std::flush;
 				successinject=true;
 			}else
 			{
-				bdvmi::logger <<"errorinject!"<< std::flush;
+				bdvmi::logger <<"errorinjectfile!"<< std::flush;
 			}
 		}
-	}else {
+	}
+	else {
 		if (!successlog){
 			time(&endlog);
-			if (difftime(endlog,startlog)>15)
+			if (difftime(endlog,startlog)>3)
 			{
-				Tool tool;
-				tool.toolId_ = "hvmi";
-				tool.toolName_ = "logCollector";
-				tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
-				tool.logs_.deleteLogFiles_ = false;
-				pim_->setTaskAgent(tool);
-				bool flag = pim_->injectLogCollector(tool);
-				if (flag)
+				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
+				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
+				bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /main>/home/huawei/output.txt");
+				if (flag1&&flag2&&flag3)
 				{
+					bdvmi::logger <<"goodinjectcmd!"<< std::flush;
 					successlog=true;
-					bdvmi::logger <<"goodlog!"<< std::flush;
 				}else
 				{
-					bdvmi::logger <<"errorlog!"<< std::flush;
+					bdvmi::logger <<"errorinjectcmd!"<< std::flush;
 				}
+				// Tool tool;
+				// tool.toolId_ = "hvmi";
+				// tool.toolName_ = "logCollector";
+				// tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
+				// tool.logs_.deleteLogFiles_ = false;
+				// pim_->setTaskAgent(tool);
+				// bool flag = pim_->injectLogCollector(tool);
+				// if (flag)
+				// {
+				// 	successlog=true;
+				// 	bdvmi::logger <<"goodlog!"<< std::flush;
+				// }else
+				// {
+				// 	bdvmi::logger <<"errorlog!"<< std::flush;
+				// }
 			}
 		}
 	}

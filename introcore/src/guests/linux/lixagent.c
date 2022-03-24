@@ -1049,7 +1049,15 @@ IntLixAgentThreadInject(
             }
         }
     }
-
+    if (pAgent->TagEx==INTRO_AGENT_TAG_CMD){
+        char command[0x20] = "main";
+        status = IntLixAgentNameCreate(command, pAgent->TagEx, pAgent->Agid, &pName);
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+            goto _exit;
+        }
+    }
     InsertTailList(&gLixAgentState.PendingAgents, &pAgent->Link);
 
     TRACE("[AGENT] Linux agent allocated and initialized!\n");

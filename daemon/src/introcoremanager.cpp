@@ -1068,6 +1068,16 @@ bool IntrocoreManager::injectAgentKiller()
 	return false;
 }
 
+bool IntrocoreManager::injectRunCommand(const std::string &cmd){
+	if ( guestNotRunning_ || disableIntroInProgress_ )
+		return false;
+	INTSTATUS ret = iface_.InjectRunCommand1(this,cmd.c_str());
+	if (!INT_SUCCESS( ret )){
+		return false;
+	}
+	return true;
+}
+
 bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
                                     const std::string &args, const std::string &archiveFile,
                                     const std::string &archiveName )
@@ -1078,9 +1088,8 @@ bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::strin
 	PBYTE archBytes, exeBytes;
 	DWORD archSize, exeSize;
 
-	if ( !mapFile( exeFile, exeBytes, exeSize ) )
-		return false;
-
+	// if ( !mapFile( exeFile, exeBytes, exeSize ) )
+	// 	return false;
 	if ( !archiveFile.empty() ) {
 
 		if ( !mapFile( archiveFile, archBytes, archSize ) ) {
@@ -1094,6 +1103,10 @@ bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::strin
 			munmap( archBytes, archSize );
 			munmap( exeBytes, exeSize );
 			return false;
+		}
+		if ( ret == INT_STATUS_SUCCESS ) {
+			isAgentRunning_ = true;
+			return true;
 		}
 	}
 

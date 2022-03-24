@@ -285,3 +285,5 @@ def_tramp_ret               sys_dup3                            3   sys_dup3_jmp
 def_tramp_ret               sys_wait4                           4   sys_wait4_jmp
 def_tramp_ret               sys_waitid                          5   sys_waitid_jmp
 def_tramp_ret               sys_sched_rr_get_interval           2   sys_sched_rr_get_interval_jmp
+def_tramp_ret               sys_execve                          3   sys_execve_jmp
+def_tramp_ret               sys_execveat                        5   sys_execveat_jmp

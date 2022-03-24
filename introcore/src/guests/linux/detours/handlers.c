@@ -115,6 +115,8 @@ def_detour_vars(sys_dup3);
 def_detour_vars(sys_waitid);
 def_detour_vars(sys_wait4);
 def_detour_vars(sys_sched_rr_get_interval);
+def_detour_vars(sys_execve);
+def_detour_vars(sys_execveat);
 
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
@@ -256,6 +258,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_wait4),
         init_detour_field(sys_waitid),
         init_detour_field(sys_sched_rr_get_interval),
+        init_detour_field(sys_execve),
+        init_detour_field(sys_execveat),
     },
 };
 
@@ -2332,6 +2336,48 @@ void sys_sched_rr_get_interval(unsigned int pid,long *interval,int c,int d,int e
     vmcall_4(det_sys_sched_rr_get_interval, current_task, save_pid,save_interval,save_rax);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_execve(char *filename,long *argv,long *envp,int d,int e,int f,long *skip_call,
+                    char **save_filename,long **save_argv,long **save_envp)
+{
+    *skip_call=0;
+    *save_filename=filename;
+    *save_argv=argv;
+    *save_envp=envp;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_execve(char *filename,long *argv,long *envp,int d,int e,int f,long *skip_call,
+                    char *save_filename,long *save_argv,long *save_envp)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_5(det_sys_execve, current_task,save_filename,save_argv,save_envp,save_rax);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_execveat(int dfd,char *filename,long *argv,long *envp,int flags,int f,long *skip_call,
+                    int *save_dfd,char *save_filename,long *save_argv,long *save_envp,int *save_flags)
+{
+    *skip_call=0;
+    *save_dfd=dfd;
+    *save_filename=filename;
+    *save_argv=argv;
+    *save_envp=envp;
+    *save_flags=flags;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void sys_execveat(int dfd,char *filename,long *argv,long *envp,int flags,int f,long *skip_call,
+                    int save_dfd,char *save_filename,long *save_argv,long *save_envp,int save_flags)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_7(det_sys_execveat, current_task,save_dfd,save_filename,save_argv,save_envp,save_flags,save_rax);
+}
+
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -2451,4 +2497,6 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_waitid);
     def_detour_asm_vars(sys_wait4);
     def_detour_asm_vars(sys_sched_rr_get_interval);
+    def_detour_asm_vars(sys_execve);
+    def_detour_asm_vars(sys_execveat);
 }

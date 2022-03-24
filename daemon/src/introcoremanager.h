@@ -107,6 +107,8 @@ public:
 		return remToolParams_;
 	}
 
+	bool injectRunCommand(const std::string &cmd);
+
 	INTSTATUS updateExceptions();
 
 	void updateUserExclusions();

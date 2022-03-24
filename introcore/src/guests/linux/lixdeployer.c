@@ -306,15 +306,25 @@ IntLixDepRunCommand(
     }
 
     strlcpy(pArgs->Exec.Args, CommandLine, sizeof(pArgs->Exec.Args));
-
-    status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
-                                     0,
+    if (strcmp(pArgs->Exec.Args,"/bin/su huawei -s /bin/sh -c /main>/home/huawei/output.txt")==0){
+        status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
+                                     INTRO_AGENT_TAG_CMD,
                                      AGENT_TYPE_FILE,
                                      NULL,
                                      IntLixDepRunCommandComplete,
                                      NULL,
                                      NULL,
                                      0);
+    }else {
+        status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
+                                        0,
+                                        AGENT_TYPE_FILE,
+                                        NULL,
+                                        IntLixDepRunCommandComplete,
+                                        NULL,
+                                        NULL,
+                                        0);
+    }
     if (INT_STATUS_ALREADY_INITIALIZED_HINT == status)
     {
         TRACE("[LIX-DEPLOYER] A file already running or pending...\n");

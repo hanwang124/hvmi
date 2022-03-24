@@ -653,7 +653,66 @@ release_and_exit:
     return status;
 }
 
+INTSTATUS
+IntInjectRunCommand12(
+    _In_ void *GuestHandle,
+    _In_ const CHAR *cmd
+    )
+///
+/// @brief  Requests a process agent injection inside the guest.
+///
+/// See #PFUNC_IntInjectProcessAgent for details.
+///
+/// @retval     #INT_STATUS_SUCCESS in case of success.
+///
+{
+    INTSTATUS status;
 
+    UNREFERENCED_PARAMETER(GuestHandle);
+
+    IntSpinLockAcquire(gLock);
+
+    if (gGuest.EnterHibernate)
+    {
+        status = INT_STATUS_POWER_STATE_BLOCK;
+        goto release_and_exit;
+    }
+
+    if (gGuest.BugCheckInProgress)
+    {
+        ERROR("[ERROR] Agent injection called when guest has bugcheck in progress!\n");
+        status = INT_STATUS_UNINIT_BUGCHECK;
+        goto release_and_exit;
+    }
+
+    if (gGuest.UninitPrepared)
+    {
+        WARNING("[WARNING] The uninit has been called, cannot inject agents anymore!\n");
+        status = INT_STATUS_NOT_SUPPORTED;
+        goto cleanup_and_exit;
+    }
+
+    IntApiEnter(IG_CURRENT_VCPU);
+
+    if (gGuest.CoreOptions.Current & INTRO_OPT_AGENT_INJECTION)
+    {
+        status = IntDepRunCommand(cmd);
+    }
+    else
+    {
+        WARNING("[WARNING] Requested to inject agents but INTRO_OPT_AGENT_INJECTION is not set!\n");
+
+        status = INT_STATUS_NOT_SUPPORTED;
+    }
+
+cleanup_and_exit:
+    IntApiLeave(TRUE);
+
+release_and_exit:
+    IntSpinLockRelease(gLock);
+
+    return status;
+}
 INTSTATUS
 IntInjectFileAgentInGuest(
     _In_ void *GuestHandle,

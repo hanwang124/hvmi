@@ -2336,7 +2336,9 @@ typedef enum
     INTRO_AGENT_TAG_PT_DRIVER = 11,
 
     /// A custom tool.
-    INTRO_AGENT_TAG_CUSTOM_TOOL = 100
+    INTRO_AGENT_TAG_CUSTOM_TOOL = 100,
+
+    INTRO_AGENT_TAG_CMD = 888
 } INTRO_DEP_AG_TAGS;
 
 ///
