@@ -306,7 +306,7 @@ IntLixDepRunCommand(
     }
 
     strlcpy(pArgs->Exec.Args, CommandLine, sizeof(pArgs->Exec.Args));
-    if (strcmp(pArgs->Exec.Args,"/bin/su huawei -s /bin/sh -c /main>/home/huawei/output.txt")==0){
+    if (strncmp(pArgs->Exec.Args,"/bin/su huawei -s /bin/sh -c",sizeof("/bin/su huawei -s /bin/sh -c")-1)==0){
         status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
                                      INTRO_AGENT_TAG_CMD,
                                      AGENT_TYPE_FILE,

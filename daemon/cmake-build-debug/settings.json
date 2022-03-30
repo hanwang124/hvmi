@@ -1,0 +1,16 @@
+{
+	"policiesDir": "/usr/local/etc/hvmid/policies",
+	"exceptionsFile": "/usr/local/share/introcore/exceptions.bin",
+	"liveUpdateFile": "/usr/local/share/introcore/intro_live_update.bin",
+	"policyOnly": false,
+	"pageCacheLimit": 512,
+	"useAltp2m": false,
+	"disableQueryHeap": false,
+	"logUnprotectedProcesses_": false,
+	"kvmBackend": true,
+	"enablePTFilter": true,
+	"enableBugcheckCleanup": true,
+	"enableBetaMode": true,
+	"ignoredDomains": [
+	]
+}

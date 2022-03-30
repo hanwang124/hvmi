@@ -2336,11 +2336,12 @@ typedef enum
     INTRO_AGENT_TAG_PT_DRIVER = 11,
 
     /// A custom tool.
-    INTRO_AGENT_TAG_CUSTOM_TOOL = 100,
-
-    INTRO_AGENT_TAG_CMD = 888
+    INTRO_AGENT_TAG_CUSTOM_TOOL = 100
+    // DWORD d`not define to enum
+    // INTRO_AGENT_TAG_CMD = 888
 } INTRO_DEP_AG_TAGS;
 
+#define INTRO_AGENT_TAG_CMD 888
 ///
 /// @brief  Event structure for agent injection and termination.
 ///

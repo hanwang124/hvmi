@@ -286,7 +286,7 @@ void HvmiEventHandler::runPostEvent()
 		time(&endinject);
 		if (difftime(endinject,startinject)>60)
 		{
-			bool flag = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
+			bool flag = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","huaweiSandbox01");
 			if (flag)
 			{
 				time(&startlog);
@@ -303,9 +303,9 @@ void HvmiEventHandler::runPostEvent()
 			time(&endlog);
 			if (difftime(endlog,startlog)>3)
 			{
-				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
-				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
-				bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /main>/home/huawei/output.txt");
+				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /huaweiSandbox01");
+				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /huaweiSandbox01");
+				bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /huaweiSandbox01>/home/huawei/output.txt");
 				if (flag1&&flag2&&flag3)
 				{
 					bdvmi::logger <<"goodinjectcmd!"<< std::flush;

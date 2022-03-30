@@ -7,7 +7,7 @@
 	"useAltp2m": false,
 	"disableQueryHeap": false,
 	"logUnprotectedProcesses_": false,
-	"kvmBackend": false,
+	"kvmBackend": true,
 	"enablePTFilter": true,
 	"enableBugcheckCleanup": true,
 	"enableBetaMode": true,

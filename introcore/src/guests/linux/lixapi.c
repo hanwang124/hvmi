@@ -348,7 +348,7 @@ IntLixExecveatHandler(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] execveat(%s,%s,0x%x,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,path1,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-execveat](%s,%s,0x%x,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,path1,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
 
     return INT_STATUS_SUCCESS;
 }
@@ -378,7 +378,7 @@ IntLixExecveHandler(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] execve(%s,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-execve](%s,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -405,7 +405,7 @@ IntLixSched_rr_get_intervalHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] Sched_rr_get_intervalHandler(%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-Sched_rr_get_intervalHandler](%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -433,7 +433,7 @@ IntLixWaitidHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] waitid(%d,%u,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    LOG("process %s [%d] [SYSCALL-waitid](%d,%u,0x%x,%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
 
     return INT_STATUS_SUCCESS;
 }
@@ -461,7 +461,7 @@ IntLixWait4Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] wait4(%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-wait4](%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
 
     return INT_STATUS_SUCCESS;
 }
@@ -528,7 +528,7 @@ IntLixDup3Handler(
     char *path1 = NULL;
     pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path1, &pathLen);
-    LOG("process %s [%d] dup3(%s,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-dup3](%s,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -590,7 +590,7 @@ IntLixDup2Handler(
     char *path1 = NULL;
     pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path1, &pathLen);
-    LOG("process %s [%d] dup2(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-dup2](%s,%s) = %ld\n",pTask->Comm, pTask->Pid,path,path1,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -640,7 +640,7 @@ IntLixDupHandler(
     char *path = NULL;
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
-    LOG("process %s [%d] dup(%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-dup](%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
 
     return INT_STATUS_SUCCESS;
 }
@@ -686,9 +686,9 @@ IntLixCloseHandler(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (INT_SUCCESS(status)){
-        LOG("process %s [%d] close(%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-close](%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
     }else {
-        LOG("process %s [%d] close(%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-close](%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -716,7 +716,7 @@ IntLixRecvmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] recvmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-recvmsg](%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -752,9 +752,9 @@ IntLixRecvfromHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] [SYSCALL-recvfrom](%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] [SYSCALL-recvfrom](%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] recvfrom(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -794,7 +794,7 @@ IntLixSendmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-sendmsg](%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -829,9 +829,9 @@ IntLixSendtoHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] [SYSCALL-sendto](%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+            LOG("process %s [%d] [SYSCALL-sendto](%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] sendto(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -879,9 +879,9 @@ IntLixConnectHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-connect](%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-connect](%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] connect(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -929,9 +929,9 @@ IntLixBindHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-bind](%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-bind](%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] bind(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -979,9 +979,9 @@ IntLixAccept4Handler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+            LOG("process %s [%d] [SYSCALL-accept4](%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+            LOG("process %s [%d] [SYSCALL-accept4](%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] accept4(%d,family:AF_LOCAL ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -1029,9 +1029,9 @@ IntLixAcceptHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d] accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-accept](%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d] accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+            LOG("process %s [%d] [SYSCALL-accept](%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d] accept(%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -1075,7 +1075,7 @@ IntLixOpenHandler(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] open(%s,%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-open](%s,%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -1108,7 +1108,7 @@ IntLixWriteHandle(
     // DWORD RetLength = 0;
     // status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-write](%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1130,9 +1130,9 @@ IntLixWriteHandle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
     {
-        LOG("process %s [%d] write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-write](%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }else{
-        LOG("process %s [%d] write(%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-write](%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -1164,7 +1164,7 @@ IntLixFinit_moduleHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pread64](%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1185,9 +1185,9 @@ IntLixFinit_moduleHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] finit_module(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-finit_module](%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d] finit_module(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-finit_module](%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1218,7 +1218,7 @@ IntLixDelete_moduleHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] delete_module(%s,%u) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-delete_module](%s,%u) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1248,7 +1248,7 @@ IntLixInit_moduleHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] init_module(0x%x,%lu,%s) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-init_module](0x%x,%lu,%s) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1275,7 +1275,7 @@ IntLixRebootHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] reboot(%d,%d,%u,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("process %s [%d] [SYSCALL-reboot](%d,%d,%u,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1307,7 +1307,7 @@ IntLixNewunameHandle(
     status =IntVirtMemRead(pRegs->R9,0x186,pRegs->Cr3,buf,&RetLength);
     struct new_utsname sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d] uname(sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s) = %ld\n",pTask->Comm,pTask->Pid,sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-uname](sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s) = %ld\n",pTask->Comm,pTask->Pid,sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1334,7 +1334,7 @@ IntLixPerf_event_openHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] perf_event_open(0x%x,%u,%d,%d,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-perf_event_open](0x%x,%u,%d,%d,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1366,7 +1366,7 @@ IntLixClock_gettimeHandle(
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
     struct timespec sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d] clock_gettime(%d,tv_sec:%lu tv_nsec:%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,sin.tv_sec,sin.tv_nsec,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-clock_gettime](%d,tv_sec:%lu tv_nsec:%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,sin.tv_sec,sin.tv_nsec,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1393,7 +1393,7 @@ IntLixSelectHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] select(%d,0x%x,0x%x,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-select](%d,0x%x,0x%x,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1420,7 +1420,7 @@ IntLixSigactionHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] sigaction(%d,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-sigaction](%d,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1447,7 +1447,7 @@ IntLixPrctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] prctl(%d,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-prctl](%d,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1476,14 +1476,14 @@ IntLixMmap_pgoffHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R13<0){
-        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("process %s [%d] [SYSCALL-mmap_pgoff](%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("process %s [%d] [SYSCALL-mmap_pgoff](%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
         ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
         return status;
     }
@@ -1498,9 +1498,9 @@ IntLixMmap_pgoffHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("process %s [%d] [SYSCALL-mmap_pgoff](%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
     else
-        LOG("process %s [%d] mmap_pgoff(%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
+        LOG("process %s [%d] [SYSCALL-mmap_pgoff](%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1531,7 +1531,7 @@ IntLixPread64Handle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pread64](%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1552,9 +1552,9 @@ IntLixPread64Handle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pread64](%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d] pread64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pread64](%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1585,7 +1585,7 @@ IntLixPwrite64Handle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pwrite64](%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1606,9 +1606,9 @@ IntLixPwrite64Handle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pwrite64](%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else 
-        LOG("process %s [%d] pwrite64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-pwrite64](%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1639,7 +1639,7 @@ IntLixNewfstatatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-newfstatat](%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1660,9 +1660,9 @@ IntLixNewfstatatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-newfstatat](%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d] newfstatat(%s,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-newfstatat](%s,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1692,7 +1692,7 @@ IntLixLstatHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] lstat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-lstat](%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1722,7 +1722,7 @@ IntLixStatHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] stat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-stat](%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1771,9 +1771,9 @@ IntLixFstatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fstat](%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     else 
-        LOG("process %s [%d] fstat(%s,0x%x) = %ld\n",pTask->Comm,pTask->Pid,path,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fstat](%s,0x%x) = %ld\n",pTask->Comm,pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1803,7 +1803,7 @@ IntLixAccessHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] access(%s,0%o) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-access](%s,0%o) = %ld\n",pTask->Comm,pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1835,7 +1835,7 @@ IntLixSymlinkatHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] symlinkat(%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,buf2,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-symlinkat](%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,buf2,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1868,7 +1868,7 @@ IntLixSymlinkHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] symlink(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-symlink](%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1900,7 +1900,7 @@ IntLixLinkatHandle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] linkat(%d,%s,%d,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-linkat](%d,%s,%d,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1948,9 +1948,9 @@ IntLixUnlinkatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] unlinkat(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-unlinkat](%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else 
-        LOG("process %s [%d] unlinkat(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-unlinkat](%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1980,7 +1980,7 @@ IntLixUnlinkHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d] unlink(%s) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-unlink](%s) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2012,7 +2012,7 @@ IntLixLinkHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] link(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-link](%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2043,7 +2043,7 @@ IntLixOpenatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-openat](%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2064,9 +2064,9 @@ IntLixOpenatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-openat](%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d] openat(%s,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("process %s [%d] [SYSCALL-openat](%s,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2096,7 +2096,7 @@ IntLixCreatHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d] creat(%s,%d) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-creat](%s,%d) = %ld\n",pTask->Comm,pTask->Pid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2126,7 +2126,7 @@ IntLixMkdirHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d] mkdir(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-mkdir](%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2158,7 +2158,7 @@ IntLixRenameatHandle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] renameat(%d,%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13);
+    LOG("process %s [%d] [SYSCALL-renameat](%d,%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2190,7 +2190,7 @@ IntLixRenameat2Handle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] renameat2(%d,%s,%d,%s,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
+    LOG("process %s [%d] [SYSCALL-renameat2](%d,%s,%d,%s,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2222,7 +2222,7 @@ IntLixRenameHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d] rename(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-rename](%s,%s) = %ld\n",pTask->Comm, pTask->Pid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2253,7 +2253,7 @@ IntLixFchownatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+        LOG("process %s [%d] [SYSCALL-fchownat](%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2274,9 +2274,9 @@ IntLixFchownatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+        LOG("process %s [%d] [SYSCALL-fchownat](%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     else 
-        LOG("process %s [%d] fchownat(%s,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+        LOG("process %s [%d] [SYSCALL-fchownat](%s,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2304,7 +2304,7 @@ IntLixFchownHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchown](%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2325,9 +2325,9 @@ IntLixFchownHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchown](%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d] fchown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchown](%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2355,7 +2355,7 @@ IntLixFchmodHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fchmod](%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2376,9 +2376,9 @@ IntLixFchmodHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fchmod](%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     else
-        LOG("process %s [%d] fchmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fchmod](%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2409,7 +2409,7 @@ IntLixFchmodatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchmodat](%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2430,9 +2430,9 @@ IntLixFchmodatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchmodat](%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d] fchmodat(%s,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-fchmodat](%s,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2462,7 +2462,7 @@ IntLixChownHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] chown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-chown](%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2492,7 +2492,7 @@ IntLixChmodHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] chmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-chmod](%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2520,7 +2520,7 @@ IntLixFchdirHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-fchdir](%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2541,9 +2541,9 @@ IntLixFchdirHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-fchdir](%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     else
-        LOG("process %s [%d] fchdir(%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-fchdir](%s) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2570,7 +2570,7 @@ IntLixKillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] kill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-kill](%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2600,7 +2600,7 @@ IntLixChrootHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] chroot(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-chroot](%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2627,7 +2627,7 @@ IntLixTimeHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] time(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-time](0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2654,7 +2654,7 @@ IntLixPtraceHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] ptrace(%ld,%ld,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("process %s [%d] [SYSCALL-ptrace](%ld,%ld,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2681,7 +2681,7 @@ IntLixAlarmHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] alarm(%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-alarm](%u) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2711,7 +2711,7 @@ IntLixChdirHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] chdir(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-chdir](%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2738,7 +2738,7 @@ IntLixSetresuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] setresuid(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-setresuid](%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2773,7 +2773,7 @@ IntLixGettimeofdayHandle(
     status =IntVirtMemRead(pRegs->R10,0x8,pRegs->Cr3,buf,&RetLength);
     struct timezone sin1;
     memcpy(&sin, &buf, sizeof(sin1));
-    LOG("process %s [%d] gettimeofday(time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d) = %ld\n",pTask->Comm, pTask->Pid,sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-gettimeofday](time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d) = %ld\n",pTask->Comm, pTask->Pid,sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2800,7 +2800,7 @@ IntLixBrkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] brk(%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-brk](%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2827,7 +2827,7 @@ IntLixIoctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] ioctl(%u,%u,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-ioctl](%u,%u,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2854,7 +2854,7 @@ IntLixUmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] umask(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-umask](%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 INTSTATUS
@@ -2880,7 +2880,7 @@ IntLixGetrlimitHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] getrlimit(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-getrlimit](%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2907,7 +2907,7 @@ IntLixSigprocmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] sigprocmask(%d,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-sigprocmask](%d,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2934,7 +2934,7 @@ IntLixPollHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] poll(0x%x,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-poll](0x%x,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2961,7 +2961,7 @@ IntLixUstatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] ustat(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-ustat](%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2988,7 +2988,7 @@ IntLixTkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] tkill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-tkill](%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3015,7 +3015,7 @@ IntLixTgkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] tgkill(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-tgkill](%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3045,7 +3045,7 @@ IntLixSeccompHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] seccomp(%u,%u,%s) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-seccomp](%u,%u,%s) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3072,7 +3072,7 @@ IntLixSetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] setsid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    LOG("process %s [%d] [SYSCALL-setsid]() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3100,7 +3100,7 @@ IntLixFstatfsHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fstatfs](%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3121,9 +3121,9 @@ IntLixFstatfsHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fstatfs](%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     else
-        LOG("process %s [%d] fstatfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+        LOG("process %s [%d] [SYSCALL-fstatfs](%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3154,7 +3154,7 @@ IntLixStatfsHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d] statfs(%s,0x%x) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-statfs](%s,0x%x) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3181,7 +3181,7 @@ IntLixCapsetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] capset(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-capset](0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3208,7 +3208,7 @@ IntLixCapgetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] capget(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("process %s [%d] [SYSCALL-capget](0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3241,7 +3241,7 @@ IntLixSysinfoeHandle(
     status =IntVirtMemRead(pRegs->R9,0x70,pRegs->Cr3,buf,&RetLength);
     struct sysinfo sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d] sysinfo(uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s) = %ld\n",pTask->Comm, pTask->Pid,sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-sysinfo](uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s) = %ld\n",pTask->Comm, pTask->Pid,sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3270,12 +3270,12 @@ IntLixShutdownHandle(
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
-        else LOG("process %s [%d] shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else LOG("process %s [%d] [SYSCALL-shutdown](%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3297,20 +3297,20 @@ IntLixShutdownHandle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status)){
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
-        else LOG("process %s [%d] shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R11);
+        else LOG("process %s [%d] [SYSCALL-shutdown](%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11);
     }else{
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d] shutdown(%s,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%s,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%s,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%s,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d] shutdown(%s,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
-        else LOG("process %s [%d] shutdown(%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
+            LOG("process %s [%d] [SYSCALL-shutdown](%s,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R11);
+        else LOG("process %s [%d] [SYSCALL-shutdown](%s,%d) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -3338,7 +3338,7 @@ IntLixGeteuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] geteuid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    LOG("process %s [%d] [SYSCALL-geteuid]() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3365,7 +3365,7 @@ IntLixGetuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] getuid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    LOG("process %s [%d] [SYSCALL-getuid]() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3392,7 +3392,7 @@ IntLixGetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] getsid(%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+    LOG("process %s [%d] [SYSCALL-getsid](%d) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3419,7 +3419,7 @@ IntLixGetppidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] getppid() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
+    LOG("process %s [%d] [SYSCALL-getppid]() = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3450,7 +3450,7 @@ IntLixReadHandle(
     // DWORD RetLength = 0;
     // status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d] read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-read](%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3471,9 +3471,9 @@ IntLixReadHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d] read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-read](%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d] read(%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("process %s [%d] [SYSCALL-read](%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3500,7 +3500,7 @@ IntLixSysfsHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d] sysfs(%d,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("process %s [%d] [SYSCALL-sysfs](%d,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -3535,9 +3535,9 @@ IntLixRmdirHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
     if (!INT_SUCCESS(status))
     {
-        LOG("process %s [%d] rmdir(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-rmdir](0x%x) = %ld\n",pTask->Comm, pTask->Pid,pRegs->R9,pRegs->R10);
     }else {
-        LOG("process %s [%d] rmdir(%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
+        LOG("process %s [%d] [SYSCALL-rmdir](%s) = %ld\n",pTask->Comm, pTask->Pid,buf,pRegs->R10);
     }
 
     return INT_STATUS_SUCCESS;

@@ -1,0 +1,1418 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "/home/huawei/hvmi/bin/x64/Debug/libintrocore.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"INSTALL",
+			"target_link_libraries",
+			"target_compile_options",
+			"target_compile_definitions",
+			"target_include_directories",
+			"set_target_properties",
+			"target_sources",
+			"include"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"introcore/sources.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 137,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 362,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 316,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 152,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 220,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 184,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 139,
+				"parent" : 0
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 322,
+				"parent" : 0
+			},
+			{
+				"command" : 8,
+				"file" : 0,
+				"line" : 318,
+				"parent" : 0
+			},
+			{
+				"file" : 1,
+				"parent" : 9
+			},
+			{
+				"command" : 7,
+				"file" : 1,
+				"line" : 134,
+				"parent" : 10
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -D__FILENAME__=__FILE__ -g -O2 -fPIC"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wformat-security"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wstrict-overflow=2"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-unused-function"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-multichar"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-incompatible-pointer-types"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Werror=format-security"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Werror=implicit-function-declaration"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-pipe"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fpic"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fwrapv"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fstack-protector-strong"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fno-omit-frame-pointer"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-ffunction-sections"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fdata-sections"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-g3"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-gdwarf-4"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-grecord-gcc-switches"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-march=nehalem"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wcast-qual"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wshift-overflow=2"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wnull-dereference"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wduplicated-cond"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wlogical-op"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wvla"
+				},
+				{
+					"fragment" : "-std=gnu11"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 6,
+					"define" : "CFG_DISABLE_HIRES_COUNTERS=1"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "DEBUG"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_BRANCH=\"amber\""
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_BUILDNUMBER=189"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_CHANGESET=\"19942b8\""
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_MAJOR=1"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_MINOR=133"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "INTRO_VERSION_REVISION=0"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "USER_MODE"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "_GNU_SOURCE"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "_LIB"
+				},
+				{
+					"define" : "introcore_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/introcore/agents"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/introcore/src/guests/linux/detours"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/include/public"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/introcore"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/introcore/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/huawei/hvmi/bddisasm/inc"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					8
+				],
+				"standard" : "11"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				99,
+				100,
+				101,
+				102,
+				103,
+				104,
+				105,
+				106,
+				107,
+				108,
+				109,
+				110,
+				111,
+				112,
+				113,
+				114,
+				115,
+				116,
+				117,
+				118,
+				119,
+				120,
+				121,
+				122,
+				123,
+				124,
+				125,
+				126
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "bddisasm::@26977246c78947a86d88"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "bdshemu::@26977246c78947a86d88"
+		}
+	],
+	"id" : "introcore::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "/usr/local/lib"
+			},
+			{
+				"backtrace" : 2,
+				"path" : "/usr/local/lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-shared -fpic -Wl,-fpic -Wl,--fatal-warnings -Wl,--warn-common -Wl,--no-undefined -Wl,-version-script=\"/home/huawei/hvmi/introcore/version\" -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now -Wl,--build-id",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,::::::::::::::",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "bddisasm/libbddisasm.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "bddisasm/libbdshemu.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "bddisasm/libbddisasm.a",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "introcore",
+	"nameOnDisk" : "libintrocore.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				99,
+				100,
+				101,
+				102,
+				103,
+				104,
+				105,
+				106,
+				107,
+				108,
+				109,
+				110,
+				111,
+				112,
+				113,
+				114,
+				115,
+				116,
+				117,
+				118,
+				119,
+				120,
+				121,
+				122,
+				123,
+				124,
+				125,
+				126
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				11
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/debugger.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/decoder.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/dumper.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/glue.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/introcore.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/introcpu.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/introcrt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/kernvm.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/patsig.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/stats.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/structs.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"path" : "introcore/src/guests/agents",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/alerts.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/callbacks.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/cr_protection.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/detours.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/drivers.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/dtr_protection.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/guests.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/integrity.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/introapi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/intronet.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/memcloak.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/msr_protection.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/scan_engines.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/shellcode.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/slack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/swapmem.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/thread_safeness.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/udlist.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/unpacker.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/vasmonitor.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/visibility.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/agents/agent.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/agents/deployer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/agents/loader.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/agents/handlers/hnd_loggather.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/agents/handlers/hnd_remediation.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/cache/gpacache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/cache/icache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/alert_exceptions.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/codeblocks.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/exceptions.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/exceptions_kern.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/exceptions_user.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/exceptions_krnusr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/exceptions/serializers.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_gpa.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_gva.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_object.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_ptm.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_pts.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/mem/hook_ptwh.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/reg/hook_cr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/reg/hook_dtr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/reg/hook_msr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/hooks/reg/hook_xcr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/instrument/memtables.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/instrument/ptfilter.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/instrument/rtlpvirtualunwind.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/instrument/swapgs.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/instrument/vecore.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixagent.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixagent_ondemand.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixaghnd.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixapi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixcmdline.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixcrash.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixcred.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixdeployer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixfastread.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixfiles.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixguest.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixidt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixkernel.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixksym.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixmm.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixmodule.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixnet.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixprocess.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixstack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/linux/lixvdso.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/update/update_exceptions.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/update/update_guests.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winagent.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/windeployer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winguest.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winguest_supported.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winnet.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winpe.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/winhkhnd.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winapi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winbugcheck.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/windrv_protected.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/windriver.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/windrvobj.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winhal.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winidt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/wininfinityhook.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winintobj.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winobj.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winpfn.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winpool.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winpower.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winselfmap.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winsud.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winvad.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/wintoken.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/kernel/winsecdesc.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/wincmdline.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/windpi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winprocess.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winprocesshp.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winstack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winthread.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winumcache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winumcrash.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winumdoubleagent.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winummodule.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winummoduleblock.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winumpath.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/guests/windows/user/winuser_checks.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/utils/bitmask.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/utils/crc32.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/utils/rbtree.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 11,
+			"compileGroupIndex" : 0,
+			"path" : "introcore/src/utils/utils.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

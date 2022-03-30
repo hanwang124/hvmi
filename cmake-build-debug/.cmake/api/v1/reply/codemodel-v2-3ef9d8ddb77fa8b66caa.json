@@ -1,0 +1,139 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-6b71e4329d161910167a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"build" : "bddisasm",
+					"jsonFile" : "directory-bddisasm-Debug-0e5acbe9be2b677d72c8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "bddisasm",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "introcore",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "bddisasm",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "bddisasm::@26977246c78947a86d88",
+					"jsonFile" : "target-bddisasm-Debug-b5237247ed8861f9d2c0.json",
+					"name" : "bddisasm",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "bdshemu::@26977246c78947a86d88",
+					"jsonFile" : "target-bdshemu-Debug-0b16323ce5efbef7d952.json",
+					"name" : "bdshemu",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cami::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cami-Debug-8855f8a4c0b1d885b186.json",
+					"name" : "cami",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "exceptions::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-exceptions-Debug-3504a484162b10892cef.json",
+					"name" : "exceptions",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "introcore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-introcore-Debug-cb30e0d5541bb2d2f557.json",
+					"name" : "introcore",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "package::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-package-Debug-dfa5423eb15deef4b414.json",
+					"name" : "package",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/huawei/hvmi/cmake-build-debug",
+		"source" : "/home/huawei/hvmi"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

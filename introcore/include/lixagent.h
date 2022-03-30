@@ -7,6 +7,7 @@
 
 #include "aghcall.h"
 #include "agent.h"
+#include "winguest.h"
 
 #define LIX_AGENT_MAX_FUNCTIONS         256
 
@@ -473,6 +474,62 @@ IntLixAgentSendEvent(
     _In_ AGENT_EVENT_TYPE Event,
     _In_ DWORD AgentTag,
     _In_ DWORD ErrorCode
+    );
+
+
+
+///
+/// @brief The global agents state.
+///
+typedef struct _LIX_AGENT_STATE
+{
+    LIST_HEAD   PendingAgents;          ///< List of agents waiting to be injected.
+    LIST_HEAD   AgentNames;             ///< List of agent names.
+
+    LIX_AGENT   *ActiveAgent;           ///< The active agent at any given moment. This is the one.
+
+    DWORD       CompletingAgentsCount;  ///< Number of agents that are yet to complete execution.
+    DWORD       CurrentId;              ///< Used to generate unique agent IDs.
+
+    BOOLEAN     SafeToInjectProcess;    ///< Will be true the moment it's safe to inject agents (the OS has booted).
+    BOOLEAN     Initialized;            ///< True if the agents state has been initialized.
+} LIX_AGENT_STATE;
+
+
+
+///
+/// @brief Describes the name of an injected process agent.
+///
+/// Whenever a named agent is injected, we allocate such an entry.
+/// Whenever a process is created, we check if its name matches the name of an injected agent; if it does, it will
+/// be flagged as being an agent. Therefore, it is advisable to use complicated names for the agents, in order
+/// to avoid having regular processes marked as agents.
+///
+typedef struct _LIX_AGENT_NAME
+{
+    LIST_ENTRY Link;                ///< List entry element.
+
+    LIX_AGENT_TAG AgentTag;         ///< Agent tag.
+    DWORD Agid;                     ///< Agent ID.
+
+    char Name[IMAGE_BASE_NAME_LEN]; ///< Image base name.
+    size_t Length;                  ///< Name length.
+
+    DWORD RefCount;                 ///< Number of times this name has been used by agents.
+} LIX_AGENT_NAME;
+
+
+INTSTATUS
+IntLixAgentNameCreate(
+    _In_ const char *Name,
+    _In_ DWORD Tag,
+    _In_ DWORD Agid,
+    _Out_ LIX_AGENT_NAME **AgentName
+    );
+
+DWORD
+IntLixAgentGetId(
+    void
     );
 
 #endif // !_LIX_AGENT_H_

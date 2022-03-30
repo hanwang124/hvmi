@@ -1,0 +1,125 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 362,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 368,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 448,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 456,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/lib",
+			"paths" : 
+			[
+				"/home/huawei/hvmi/bin/x64/Debug/libintrocore.so.1.133.0",
+				"/home/huawei/hvmi/bin/x64/Debug/libintrocore.so.1"
+			],
+			"targetId" : "introcore::@6890427a1f51a3e7e1df",
+			"targetIndex" : 4,
+			"targetInstallNamelink" : "skip",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/lib",
+			"paths" : 
+			[
+				"/home/huawei/hvmi/bin/x64/Debug/libintrocore.so"
+			],
+			"targetId" : "introcore::@6890427a1f51a3e7e1df",
+			"targetIndex" : 4,
+			"targetInstallNamelink" : "only",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/include/hvmi",
+			"paths" : 
+			[
+				"include/public/env.h",
+				"include/public/glueiface.h",
+				"include/public/hvmi.h",
+				"include/public/intro_sal.h",
+				"include/public/intro_types.h",
+				"include/public/introstatus.h",
+				"include/public/upperiface.h",
+				"include/public/vecommon.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/lib/pkgconfig",
+			"paths" : 
+			[
+				"libintrocore.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/introcore",
+			"paths" : 
+			[
+				"cmake-build-debug/exceptions.bin"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/introcore",
+			"paths" : 
+			[
+				"cmake-build-debug/intro_live_update.bin"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	}
+}

@@ -15,6 +15,7 @@
 #include "kernvm.h"
 #include "lixksym.h"
 #include "lixcmdline.h"
+#include "lixagent.h"
 
 #define LIX_MM_PROT_MASK                BIT(63) ///< The bit used to mark a memory space as protected.
 
@@ -1409,22 +1410,29 @@ IntLixTaskActivateProtection(
     // anything, so the threads/forks should inherit the parent's protection.
     if (Task->Exec)
     {
-        const LIX_PROTECTED_PROCESS *pProt = IntLixTaskShouldProtect(Task);
-
-        if (NULL != pProt)
+        // 什么也不做
+        if(Parent && Parent->AgentTag == INTRO_AGENT_TAG_CMD)
         {
-            Task->Protection.Mask = pProt->Protection.Current;
-            Task->Protection.Beta = pProt->Protection.Beta;
-            Task->Protection.Feedback = pProt->Protection.Feedback;
-            Task->Context = pProt->Context;
-        }
-        else
-        {
-            Task->Protection.Mask = 0;
-            Task->Context = 0;
-        }
+            TRACE("[INTRO_AGENT_TAG_CMD] INTRO_AGENT_TAG_CMD = %d %d!\n",INTRO_AGENT_TAG_CMD,Parent->AgentTag);
+        }else{
+            const LIX_PROTECTED_PROCESS *pProt = IntLixTaskShouldProtect(Task);
 
-        Task->RootProtectionMask = Task->Protection.Mask;
+            if (NULL != pProt)
+            {
+                Task->Protection.Mask = pProt->Protection.Current;
+                Task->Protection.Beta = pProt->Protection.Beta;
+                Task->Protection.Feedback = pProt->Protection.Feedback;
+                Task->Context = pProt->Context;
+            }
+            else
+            {
+                Task->Protection.Mask = 0;
+                Task->Context = 0;
+            }
+
+            Task->RootProtectionMask = Task->Protection.Mask;
+        }
+        
     }
     else if (Parent)
     {
@@ -2982,6 +2990,23 @@ IntLixTaskHandleExec(
     // Keep the old protection mask in order to validate the process creation rights
     oldProtectionMask = pOldTask->Protection.Mask;
 
+    // 暂时移到前面
+    pTask = HpAllocWithTag(sizeof(LIX_TASK_OBJECT), IC_TAG_POBJ);
+    if (NULL == pTask)
+    {
+        return INT_STATUS_INSUFFICIENT_RESOURCES;
+    }
+    // 如果是父进程代理进程，我们需要继承保护选项，否则无法继续监控
+    if(pOldTask && pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
+    {
+        pTask->Protection.Mask = pOldTask->RootProtectionMask;
+        pTask->Protection.Beta = pOldTask->Protection.Beta;
+        pTask->Protection.Feedback = pOldTask->Protection.Feedback;
+
+        pTask->RootProtectionMask = pOldTask->RootProtectionMask;
+        pTask->Context = pOldTask->Context;
+    }
+
     // It's certain that the CR3 will change, so disable the protection (doing a full cleanup).
     // It will be activated again after we get the new CR3 (if it's still a protected process)
     IntLixTaskDeactivateProtection(pOldTask);
@@ -2989,11 +3014,7 @@ IntLixTaskHandleExec(
     // no point in keeping it anymore
     pOldTask->IsPreviousAgent = FALSE;
 
-    pTask = HpAllocWithTag(sizeof(LIX_TASK_OBJECT), IC_TAG_POBJ);
-    if (NULL == pTask)
-    {
-        return INT_STATUS_INSUFFICIENT_RESOURCES;
-    }
+
 
     status = IntLixTaskCreateFromBinprm(pOldTask, binprm, dPathResult, pTask);
     if (!INT_SUCCESS(status))
@@ -3073,7 +3094,13 @@ _action_not_allowed:
 
     // Now it's safe to reactivate the protection. The new CR3 is in place.
     // We also don't depend on the parent anymore.
-    status = IntLixTaskActivateProtection(pTask, NULL);
+    if(pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
+    {
+        status = IntLixTaskActivateProtection(pTask, pOldTask);
+    }else{
+        status = IntLixTaskActivateProtection(pTask, NULL);
+    }
+    
     if (!INT_SUCCESS(status))
     {
         ERROR("[ERROR] IntLixTaskActivateProtection failed for %s: 0x%08x\n", pTask->Comm, status);
@@ -3130,7 +3157,16 @@ _action_not_allowed:
         // If it didn't change the name, then we must leave it marked as agent (and don't decrement!)
         if ((oldLen != newLen) || (0 != memcmp(pOldTask->Comm, pTask->Comm, oldLen)))
         {
-            // pTask->AgentTag = pOldTask->AgentTag;
+            if (pTask->AgentTag == INTRO_AGENT_TAG_CMD)
+            {
+                LIX_AGENT_NAME *pName = NULL;
+                status = IntLixAgentNameCreate(pTask->Comm, pTask->AgentTag, IntLixAgentGetId(), &pName);
+                if (!INT_SUCCESS(status))
+                {
+                    ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+                }
+            }
+            // pTask->AgentTag = pOldTask->AgentTag;调换顺序
             pTask->AgentTag = IntLixAgentDecProcRef(pOldTask->Comm, &lastAgent);
         }
     }

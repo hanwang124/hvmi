@@ -1,0 +1,283 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "bddisasm/libbdshemu.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"add_compile_options",
+			"target_compile_options",
+			"target_include_directories",
+			"set_target_properties"
+		],
+		"files" : 
+		[
+			"bddisasm/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 155,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 171,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 181,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 173,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 175,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 167,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 161,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -D__FILENAME__=__FILE__ -g -O2 -fPIC"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fdiagnostics-color"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-unknown-pragmas"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wshadow"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wformat-security"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wstrict-overflow=2"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wstrict-prototypes"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wwrite-strings"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Winit-self"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-unused-function"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-multichar"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-incompatible-pointer-types"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-discarded-qualifiers"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wnull-dereference"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wduplicated-cond"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Werror=format-security"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Werror=implicit-function-declaration"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-pipe"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fwrapv"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fno-strict-aliasing"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fstack-protector-strong"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fno-omit-frame-pointer"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-ffunction-sections"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fdata-sections"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-g3"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-gdwarf-4"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-grecord-gcc-switches"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-march=westmere"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-maes"
+				},
+				{
+					"fragment" : "-std=gnu11"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 7,
+					"path" : "/home/huawei/hvmi/bddisasm/bddisasm/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/huawei/hvmi/bddisasm/inc"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					8
+				],
+				"standard" : "11"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "bddisasm::@26977246c78947a86d88"
+		}
+	],
+	"id" : "bdshemu::@26977246c78947a86d88",
+	"name" : "bdshemu",
+	"nameOnDisk" : "libbdshemu.a",
+	"paths" : 
+	{
+		"build" : "bddisasm",
+		"source" : "bddisasm"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "bddisasm/bdshemu/bdshemu.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "bddisasm/inc/bdshemu.h",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}
