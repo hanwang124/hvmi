@@ -1868,7 +1868,8 @@ IntLixAgentIncProcRef(
         if (0 == strncmp(Name, pName->Name, length))
         {
             pName->RefCount++;
-
+            // debug
+            LOG("[AGENT_INC]%s %d, \n",Name ,pName->RefCount);
             return pName->AgentTag;
         }
     }
@@ -1914,6 +1915,8 @@ IntLixAgentDecProcRef(
             if (pName->RefCount > 0)
             {
                 --pName->RefCount;
+                // debug
+                LOG("[AGENT_DEC]%s %d, \n",Name ,pName->RefCount);
             }
             else
             {
@@ -1922,6 +1925,9 @@ IntLixAgentDecProcRef(
 
             if (pName->RefCount == 0)
             {
+                // debug
+                LOG("[AGENT_DEC_REMOVE]%s %d, \n",Name ,pName->RefCount-1);
+                
                 IntLixAgentNameRemove(pName);
                 *Removed = TRUE;
                 // 如果我们注入的代理都退出了

@@ -1398,7 +1398,10 @@ IntLixTaskActivateProtection(
 
     if (Task->Interpreter)
     {
-        return INT_STATUS_NOT_NEEDED_HINT;
+        if(!(Parent && Parent->AgentTag == INTRO_AGENT_TAG_CMD))
+        {
+            return INT_STATUS_NOT_NEEDED_HINT;
+        }
     }
 
     if (!(gGuest.CoreOptions.Current & INTRO_OPT_PROT_UM_MISC_PROCS))
@@ -1432,7 +1435,7 @@ IntLixTaskActivateProtection(
 
             Task->RootProtectionMask = Task->Protection.Mask;
         }
-        
+
     }
     else if (Parent)
     {
@@ -2401,6 +2404,23 @@ _initialize_and_prot:
 
     if (pActualParent->AgentTag)
     {
+        // 这里comm可能会改变
+        size_t oldLen = strlen_s(pActualParent->Comm, sizeof(pActualParent->Comm));
+        size_t newLen = strlen_s(pTask->Comm, sizeof(pTask->Comm));
+
+        // If it changed the name, then we need to decrement the old agent refcount
+        // If it didn't change the name, then we must leave it marked as agent (and don't decrement!)
+        if ((oldLen != newLen) || (0 != memcmp(pActualParent->Comm, pTask->Comm, oldLen)))
+        {
+            LIX_AGENT_NAME *pName = NULL;
+            status = IntLixAgentNameCreate(pTask->Comm, pActualParent->AgentTag, IntLixAgentGetId(), &pName);
+            // IntLixAgentIncProcRef(pTask->Comm);// 不用增加这一行，我们手动创建代理时引用计数为0
+            if (!INT_SUCCESS(status))
+            {
+                ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+            }
+        }
+
         // Mark this one as agent too
         pTask->AgentTag = IntLixAgentIncProcRef(pTask->Comm);
     }
@@ -3000,6 +3020,7 @@ IntLixTaskHandleExec(
     if(pOldTask && pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
     {
         pTask->Protection.Mask = pOldTask->RootProtectionMask;
+        //pTask->Protection.Mask = pOldTask->Protection.Mask;
         pTask->Protection.Beta = pOldTask->Protection.Beta;
         pTask->Protection.Feedback = pOldTask->Protection.Feedback;
 
@@ -3097,10 +3118,11 @@ _action_not_allowed:
     if(pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
     {
         status = IntLixTaskActivateProtection(pTask, pOldTask);
+        TRACE("[INTRO_AGENT_TAG_CMD] INTRO_AGENT_TAG_CMD = %d %d!\n",INTRO_AGENT_TAG_CMD,pOldTask->AgentTag);
     }else{
         status = IntLixTaskActivateProtection(pTask, NULL);
     }
-    
+
     if (!INT_SUCCESS(status))
     {
         ERROR("[ERROR] IntLixTaskActivateProtection failed for %s: 0x%08x\n", pTask->Comm, status);
@@ -3161,6 +3183,7 @@ _action_not_allowed:
             {
                 LIX_AGENT_NAME *pName = NULL;
                 status = IntLixAgentNameCreate(pTask->Comm, pTask->AgentTag, IntLixAgentGetId(), &pName);
+                IntLixAgentIncProcRef(pTask->Comm);// 需要增加这一行，我们手动创建代理时引用计数为0，应该为1
                 if (!INT_SUCCESS(status))
                 {
                     ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
