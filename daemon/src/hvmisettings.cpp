@@ -463,6 +463,9 @@ bool HvmiSettings::parsePolicyJson( const std::string &contents )
 					if ( !!monOpt["preventChildCreation"] &&
 					     monOpt["preventChildCreation"].asBool() )
 						flags |= PROC_OPT_PROT_PREVENT_CHILD_CREATION;
+						
+					if ( !!monOpt["scanCommandline"] && monOpt["scanCommandline"].asBool() )
+                        flags |= PROC_OPT_PROT_SCAN_CMD_LINE;
 
 					if ( !!monOpt["doubleAgentPrevention"] )
 						doubleAgentPrevention = monOpt["doubleAgentPrevention"].asBool();

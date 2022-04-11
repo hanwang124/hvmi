@@ -34,37 +34,6 @@ IntLixAgentCreateThreadCompletion(
 /// be flagged as being an agent. Therefore, it is advisable to use complicated names for the agents, in order
 /// to avoid having regular processes marked as agents.
 ///
-typedef struct _LIX_AGENT_NAME
-{
-    LIST_ENTRY Link;                ///< List entry element.
-
-    LIX_AGENT_TAG AgentTag;         ///< Agent tag.
-    DWORD Agid;                     ///< Agent ID.
-
-    char Name[IMAGE_BASE_NAME_LEN]; ///< Image base name.
-    size_t Length;                  ///< Name length.
-
-    DWORD RefCount;                 ///< Number of times this name has been used by agents.
-} LIX_AGENT_NAME;
-
-
-///
-/// @brief The global agents state.
-///
-typedef struct _LIX_AGENT_STATE
-{
-    LIST_HEAD   PendingAgents;          ///< List of agents waiting to be injected.
-    LIST_HEAD   AgentNames;             ///< List of agent names.
-
-    LIX_AGENT   *ActiveAgent;           ///< The active agent at any given moment. This is the one.
-
-    DWORD       CompletingAgentsCount;  ///< Number of agents that are yet to complete execution.
-    DWORD       CurrentId;              ///< Used to generate unique agent IDs.
-
-    BOOLEAN     SafeToInjectProcess;    ///< Will be true the moment it's safe to inject agents (the OS has booted).
-    BOOLEAN     Initialized;            ///< True if the agents state has been initialized.
-} LIX_AGENT_STATE;
-
 
 static LIX_AGENT_STATE gLixAgentState =
 {
@@ -227,7 +196,7 @@ IntLixAgentNameIsRunning(
 }
 
 
-static INTSTATUS
+INTSTATUS
 IntLixAgentNameCreate(
     _In_ const char *Name,
     _In_ DWORD Tag,
@@ -708,7 +677,7 @@ IntLixAgentAllocate(
 }
 
 
-__forceinline static DWORD
+DWORD
 IntLixAgentGetId(
     void
     )
@@ -1958,6 +1927,18 @@ IntLixAgentDecProcRef(
             {
                 IntLixAgentNameRemove(pName);
                 *Removed = TRUE;
+                int cmdAgentCount = 0;
+                list_for_each (gLixAgentState.AgentNames, LIX_AGENT_NAME, pName1)
+                {
+                    if(pName1->AgentTag == INTRO_AGENT_TAG_CMD)
+                    {
+                        cmdAgentCount++;
+                    }
+                }
+                if(cmdAgentCount==0)
+                {
+                    LOG("[AGENT-TERMINATED] All agent have been terminated!");
+                }
             }
 
             return tag;

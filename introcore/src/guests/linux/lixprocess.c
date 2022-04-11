@@ -15,6 +15,7 @@
 #include "kernvm.h"
 #include "lixksym.h"
 #include "lixcmdline.h"
+#include "lixagent.h"
 
 #define LIX_MM_PROT_MASK                BIT(63) ///< The bit used to mark a memory space as protected.
 
@@ -1397,7 +1398,10 @@ IntLixTaskActivateProtection(
 
     if (Task->Interpreter)
     {
-        return INT_STATUS_NOT_NEEDED_HINT;
+        if(!(Parent && Parent->AgentTag == INTRO_AGENT_TAG_CMD))
+        {
+            return INT_STATUS_NOT_NEEDED_HINT;
+        }
     }
 
     if (!(gGuest.CoreOptions.Current & INTRO_OPT_PROT_UM_MISC_PROCS))
@@ -1409,22 +1413,29 @@ IntLixTaskActivateProtection(
     // anything, so the threads/forks should inherit the parent's protection.
     if (Task->Exec)
     {
-        const LIX_PROTECTED_PROCESS *pProt = IntLixTaskShouldProtect(Task);
-
-        if (NULL != pProt)
+        // 什么也不做
+        if(Parent && Parent->AgentTag == INTRO_AGENT_TAG_CMD)
         {
-            Task->Protection.Mask = pProt->Protection.Current;
-            Task->Protection.Beta = pProt->Protection.Beta;
-            Task->Protection.Feedback = pProt->Protection.Feedback;
-            Task->Context = pProt->Context;
-        }
-        else
-        {
-            Task->Protection.Mask = 0;
-            Task->Context = 0;
+            TRACE("[INTRO_AGENT_TAG_CMD] INTRO_AGENT_TAG_CMD = %d %d!\n",INTRO_AGENT_TAG_CMD,Parent->AgentTag);
+        }else{
+            const LIX_PROTECTED_PROCESS *pProt = IntLixTaskShouldProtect(Task);
+
+            if (NULL != pProt)
+            {
+                Task->Protection.Mask = pProt->Protection.Current;
+                Task->Protection.Beta = pProt->Protection.Beta;
+                Task->Protection.Feedback = pProt->Protection.Feedback;
+                Task->Context = pProt->Context;
+            }
+            else
+            {
+                Task->Protection.Mask = 0;
+                Task->Context = 0;
+            }
+
+            Task->RootProtectionMask = Task->Protection.Mask;
         }
 
-        Task->RootProtectionMask = Task->Protection.Mask;
     }
     else if (Parent)
     {
@@ -2393,6 +2404,21 @@ _initialize_and_prot:
 
     if (pActualParent->AgentTag)
     {
+        size_t oldLen = strlen_s(pActualParent->Comm, sizeof(pActualParent->Comm));
+        size_t newLen = strlen_s(pTask->Comm, sizeof(pTask->Comm));
+
+        // If it changed the name, then we need to decrement the old agent refcount
+        // If it didn't change the name, then we must leave it marked as agent (and don't decrement!)
+        if ((oldLen != newLen) || (0 != memcmp(pActualParent->Comm, pTask->Comm, oldLen)))
+        {
+            LIX_AGENT_NAME *pName = NULL;
+            status = IntLixAgentNameCreate(pTask->Comm, pActualParent->AgentTag, IntLixAgentGetId(), &pName);
+            // IntLixAgentIncProcRef(pTask->Comm);// 不用增加这一行，我们手动创建代理时引用计数为0
+            if (!INT_SUCCESS(status))
+            {
+                ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+            }
+        }
         // Mark this one as agent too
         pTask->AgentTag = IntLixAgentIncProcRef(pTask->Comm);
     }
@@ -2981,7 +3007,21 @@ IntLixTaskHandleExec(
 
     // Keep the old protection mask in order to validate the process creation rights
     oldProtectionMask = pOldTask->Protection.Mask;
+    pTask = HpAllocWithTag(sizeof(LIX_TASK_OBJECT), IC_TAG_POBJ);
+    if (NULL == pTask)
+    {
+        return INT_STATUS_INSUFFICIENT_RESOURCES;
+    }
+    // 如果是父进程代理进程，我们需要继承保护选项，否则无法继续监控
+    if(pOldTask && pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
+    {
+        pTask->Protection.Mask = pOldTask->RootProtectionMask;
+        pTask->Protection.Beta = pOldTask->Protection.Beta;
+        pTask->Protection.Feedback = pOldTask->Protection.Feedback;
 
+        pTask->RootProtectionMask = pOldTask->RootProtectionMask;
+        pTask->Context = pOldTask->Context;
+    }
     // It's certain that the CR3 will change, so disable the protection (doing a full cleanup).
     // It will be activated again after we get the new CR3 (if it's still a protected process)
     IntLixTaskDeactivateProtection(pOldTask);
@@ -2989,11 +3029,7 @@ IntLixTaskHandleExec(
     // no point in keeping it anymore
     pOldTask->IsPreviousAgent = FALSE;
 
-    pTask = HpAllocWithTag(sizeof(LIX_TASK_OBJECT), IC_TAG_POBJ);
-    if (NULL == pTask)
-    {
-        return INT_STATUS_INSUFFICIENT_RESOURCES;
-    }
+    
 
     status = IntLixTaskCreateFromBinprm(pOldTask, binprm, dPathResult, pTask);
     if (!INT_SUCCESS(status))
@@ -3073,7 +3109,13 @@ _action_not_allowed:
 
     // Now it's safe to reactivate the protection. The new CR3 is in place.
     // We also don't depend on the parent anymore.
-    status = IntLixTaskActivateProtection(pTask, NULL);
+    if(pOldTask->AgentTag == INTRO_AGENT_TAG_CMD)
+    {
+        status = IntLixTaskActivateProtection(pTask, pOldTask);
+    }else{
+        status = IntLixTaskActivateProtection(pTask, NULL);
+    }
+
     if (!INT_SUCCESS(status))
     {
         ERROR("[ERROR] IntLixTaskActivateProtection failed for %s: 0x%08x\n", pTask->Comm, status);
@@ -3130,6 +3172,16 @@ _action_not_allowed:
         // If it didn't change the name, then we must leave it marked as agent (and don't decrement!)
         if ((oldLen != newLen) || (0 != memcmp(pOldTask->Comm, pTask->Comm, oldLen)))
         {
+            if (pTask->AgentTag == INTRO_AGENT_TAG_CMD)
+            {
+                LIX_AGENT_NAME *pName = NULL;
+                status = IntLixAgentNameCreate(pTask->Comm, pTask->AgentTag, IntLixAgentGetId(), &pName);
+                 IntLixAgentIncProcRef(pTask->Comm);// 需要增加这一行，我们手动创建代理时引用计数为0，应该为1
+                if (!INT_SUCCESS(status))
+                {
+                    ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+                }
+            }
             // pTask->AgentTag = pOldTask->AgentTag;
             pTask->AgentTag = IntLixAgentDecProcRef(pOldTask->Comm, &lastAgent);
         }

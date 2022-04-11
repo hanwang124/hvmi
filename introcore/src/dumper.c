@@ -656,9 +656,9 @@ IntDumpCode(
 
     i = insCount = 0;
 
-    LOG("First 256 instructions:\n");
+    LOG("First 64 instructions:\n");
 
-    while ((Offset + i < PAGE_SIZE) && (insCount++ < 256))
+    while ((Offset + i < PAGE_SIZE) && (insCount++ < 64))
     {
         status = IntDecDecodeInstructionFromBuffer(Page + Offset + i, PAGE_SIZE - Offset - i, CsType, &instrux);
         if (!INT_SUCCESS(status))
@@ -675,16 +675,16 @@ IntDumpCode(
         }
     }
 
-    LOG("Raw page dump:\n");
+    // LOG("Raw page dump:\n");
 
-    for (i = 0; i < PAGE_SIZE / 16; i++)
-    {
-        LOG("%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
-            Page[i * 16 + 0x0], Page[i * 16 + 0x1], Page[i * 16 + 0x2], Page[i * 16 + 0x3],
-            Page[i * 16 + 0x4], Page[i * 16 + 0x5], Page[i * 16 + 0x6], Page[i * 16 + 0x7],
-            Page[i * 16 + 0x8], Page[i * 16 + 0x9], Page[i * 16 + 0xA], Page[i * 16 + 0xB],
-            Page[i * 16 + 0xC], Page[i * 16 + 0xD], Page[i * 16 + 0xE], Page[i * 16 + 0xF]);
-    }
+    // for (i = 0; i < PAGE_SIZE / 16; i++)
+    // {
+    //     LOG("%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
+    //         Page[i * 16 + 0x0], Page[i * 16 + 0x1], Page[i * 16 + 0x2], Page[i * 16 + 0x3],
+    //         Page[i * 16 + 0x4], Page[i * 16 + 0x5], Page[i * 16 + 0x6], Page[i * 16 + 0x7],
+    //         Page[i * 16 + 0x8], Page[i * 16 + 0x9], Page[i * 16 + 0xA], Page[i * 16 + 0xB],
+    //         Page[i * 16 + 0xC], Page[i * 16 + 0xD], Page[i * 16 + 0xE], Page[i * 16 + 0xF]);
+    // }
 }
 
 

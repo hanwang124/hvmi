@@ -305,7 +305,7 @@ void HvmiEventHandler::runPostEvent()
 			{
 				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
 				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
-				bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /main>/home/huawei/output.txt");
+				bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
 				if (flag1&&flag2&&flag3)
 				{
 					bdvmi::logger <<"goodinjectcmd!"<< std::flush;
