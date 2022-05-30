@@ -283,13 +283,13 @@ void HvmiEventHandler::runPostEvent()
 	pim_->sendGuestHookEvent();
 	if (!successinject)
 	{
-		time(&endinject);
-		if (difftime(endinject,startinject)>60)
+		//time(&endinject);
+		if (pim_->isIntroActivate())
 		{
 			bool flag = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","huaweiSandbox01");
 			if (flag)
 			{
-				time(&startlog);
+				//time(&startlog);
 				bdvmi::logger <<"goodinjectfile!"<< std::flush;
 				successinject=true;
 			}else
@@ -300,36 +300,36 @@ void HvmiEventHandler::runPostEvent()
 	}
 	else {
 		if (!successlog){
-			time(&endlog);
-			if (difftime(endlog,startlog)>3)
-			{
-				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /huaweiSandbox01");
-				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /huaweiSandbox01");
-				bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /huaweiSandbox01>/home/huawei/output.txt");
-				if (flag1&&flag2&&flag3)
-				{
-					bdvmi::logger <<"goodinjectcmd!"<< std::flush;
-					successlog=true;
-				}else
-				{
-					bdvmi::logger <<"errorinjectcmd!"<< std::flush;
-				}
-				// Tool tool;
-				// tool.toolId_ = "hvmi";
-				// tool.toolName_ = "logCollector";
-				// tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
-				// tool.logs_.deleteLogFiles_ = false;
-				// pim_->setTaskAgent(tool);
-				// bool flag = pim_->injectLogCollector(tool);
-				// if (flag)
-				// {
-				// 	successlog=true;
-				// 	bdvmi::logger <<"goodlog!"<< std::flush;
-				// }else
-				// {
-				// 	bdvmi::logger <<"errorlog!"<< std::flush;
-				// }
-			}
+
+            bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /huaweiSandbox01");
+            bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /huaweiSandbox01");
+            bool flag3 = pim_->injectRunCommand("/bin/su root -s /bin/sh -c /huaweiSandbox01>/home/huawei/output.txt");
+            // bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c '/reptile/reptile_cmd root'");
+            // bool flag3 = pim_->injectRunCommand("/bin/su huawei -s /bin/sh -c /bin/ls");
+            if (flag1&&flag2&&flag3)
+            {
+                bdvmi::logger <<"goodinjectcmd!"<< std::flush;
+                successlog=true;
+            }else
+            {
+                bdvmi::logger <<"errorinjectcmd!"<< std::flush;
+            }
+            // Tool tool;
+            // tool.toolId_ = "hvmi";
+            // tool.toolName_ = "logCollector";
+            // tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
+            // tool.logs_.deleteLogFiles_ = false;
+            // pim_->setTaskAgent(tool);
+            // bool flag = pim_->injectLogCollector(tool);
+            // if (flag)
+            // {
+            // 	successlog=true;
+            // 	bdvmi::logger <<"goodlog!"<< std::flush;
+            // }else
+            // {
+            // 	bdvmi::logger <<"errorlog!"<< std::flush;
+            // }
+
 		}
 	}
 }

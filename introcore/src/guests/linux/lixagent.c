@@ -1023,6 +1023,14 @@ IntLixAgentThreadInject(
             ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
             goto _exit;
         }
+
+        // char command_test_rootkit[0x20] = "reptile_cmd";
+        // status = IntLixAgentNameCreate(command_test_rootkit, pAgent->TagEx, pAgent->Agid, &pName);// 这里agid一样应该也没关系，agid只是当代理出问题是删除用的
+        // if (!INT_SUCCESS(status))
+        // {
+        //     ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+        //     goto _exit;
+        // }
     }
     InsertTailList(&gLixAgentState.PendingAgents, &pAgent->Link);
 

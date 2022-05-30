@@ -37,7 +37,9 @@
 					"scanCommandline": true
 				},
 				"processes": [
-					"huaweiSandbox01"
+					"huaweiSandbox01",
+					"reptile_cmd",
+					"reptile"
 				],
 				"ruleName": "Sandbox"
 			}

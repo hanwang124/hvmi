@@ -1252,6 +1252,10 @@ _send_notification:
 
         // Block by default.
         *Action = introGuestNotAllowed;
+        if(pTask->AgentTag == INTRO_AGENT_TAG_CMD)
+        {
+            *Action = introGuestAllowed;
+        }
     }
 
     IntPolicyProcForceBetaIfNeeded(PROC_OPT_PROT_EXPLOIT, pTask, Action);

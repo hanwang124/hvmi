@@ -1,0 +1,47 @@
+-- Logs begin at Thu 2022-01-27 22:32:06 CST. --
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Error getting file size for /home/huawei/code/tmp/main (No such file or directory)
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] errorinjectfile!
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Error getting file size for /home/huawei/code/tmp/main (No such file or directory)
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] errorinjectfile!
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Error getting file size for /home/huawei/code/tmp/main (No such file or directory)
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] errorinjectfile!
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Error getting file size for /home/huawei/code/tmp/main (No such file or directory)
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] errorinjectfile!
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Error getting file size for /home/huawei/code/tmp/main (No such file or directory)
+5月 24 11:19:13 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] errorinjectfile!
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Done waiting for domains
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 76 [DEPLOYER] Injecting agent file 'huaweiSandbox01'
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 259 [LIX-DEPLOYER] File 'huaweiSandbox01' scheduled for injection ...
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] goodinjectfile!
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Signal session over with guest status: connected
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/chown huawei:huawei /huaweiSandbox01' scheduled for execution...
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/chmod 700 /huaweiSandbox01' scheduled for execution...
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/su root -s /bin/sh -c /huaweiSandbox01>/home/huawei/output.txt' scheduled for execution...
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] goodinjectcmd!
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 38 [DEPLOYER] Injecting agent process 'bdGgZaxR' command line '(null)'
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1473 [DYNOPT] Change core options from 7ff7e33ffffff to 0
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1187 [SAFENESS] We have a Active agent with tag 3!
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '3' (0) start execution on VCPU 0 at RIP ffffffffc06bf052 ...
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2114 [DEPLOYER] Agent with tag 0 has just been injected, error: 0x00000000.
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 19 [LIX-DEPLOYER] Agent with tag 0 has just been initialized, error: 0x00000000.
+5月 24 11:19:17 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1453 [LIX-AGENT] Agent-thread with tag '4' (0) completed ...
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1246 [INFO] Ignore safeness!
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 227 [STATS] Introspection stats (totaling 25869 events):
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270               Vmcall:        25538 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270          CrViolation:            1 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270                Timer:            5 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270                 Int3:           13 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270         DeleteRegion:           61 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270            DeleteGva:         4932 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 270           HookCommit:            7 times
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1194 [ERROR] There should be no memcloaks remaining... Got one on ffffffffc06b9000, 5400a000, 8192!
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1194 [ERROR] There should be no memcloaks remaining... Got one on ffffffffc06bb000, 5400a000, 8192!
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain status: unhooked
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore shutdown complete
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Events to wait for 3
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Events to wait for 2
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Events to wait for 1
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Events to wait for 0
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8935]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Unmap all
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Parked
+5月 24 11:19:56 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Hypervisor Memory Introspection Daemon shutdown complete

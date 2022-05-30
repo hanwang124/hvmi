@@ -1,0 +1,5 @@
+cd /home/ubuntu18041/Reptile
+make install
+/reptile/reptile_cmd root
+/reptile/reptile_cmd show
+/reptile/reptile_cmd hide

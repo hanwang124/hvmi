@@ -1,0 +1,36 @@
+-- Logs begin at Thu 2022-01-27 22:32:06 CST. --
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2200] [SYSCALL-read](/1709/cmdline,0x11d82a,1494) = 0
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2200] [SYSCALL-dup3]((null),/null,0) = 0
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2200] [SYSCALL-open](/proc/1711/cmdline,557056,00) = 4
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2200] [SYSCALL-openat](-100,/proc/1711/cmdline,524288,00) = 4
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2200] [SYSCALL-read](/1711/cmdline,0x120000,512) = 53
+5月 24 10:52:03 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2200] [SYSCALL-read](/1711/cmdline,0x122035,1483) = 0
+5月 24 10:52:07 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Connection closed (reboot/poweroff?)
+5月 24 10:52:07 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6740]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore shutdown complete
+5月 24 10:52:07 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6731]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Connection closed (32) Broken pipe
+5月 24 10:52:07 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6731]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain finished
+5月 24 10:52:15 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6731]: Done waiting for domains
+5月 24 10:52:15 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6731]: Hypervisor Memory Introspection Daemon shutdown complete
+5月 24 10:52:16 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Hypervisor Memory Introspection Daemon starting
+5月 24 10:52:16 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Loading default policy file /usr/local/etc/hvmid/policies/default.json
+5月 24 10:52:16 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Hardware concurrency: 4
+5月 24 10:52:16 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Registering handlers
+5月 24 10:52:16 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Waiting for domains to be started
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Found domain: 'ubuntu18.04.1'
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6767]: Loading policy file /usr/local/etc/hvmid/policies/434f3a4c-58c2-4085-9db9-2ef66c4e3a7b.json
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Setting page cache limit to 512 mappings
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] The hypervisor backend has chosen a page cache limit of 512 mappings
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Guest start time: 1648435625
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore init complete
+5月 24 10:52:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Loading live update file /usr/local/share/introcore/intro_live_update.bin
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No #VE support!
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No VMFUNC support!
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] DTR events supported
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Successfully loaded exceptions file: /usr/local/share/introcore/exceptions.bin, version: 2.2.0
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain name: 'ubuntu18.04.1'
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Waiting for events
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Adding protection for process: huaweiSandbox01 with flags: 0x40001dfc
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2155, cr3 = 0x0, cmdline = ''
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2156, cr3 = 0x0, cmdline = ''
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2158, cr3 = 0x0, cmdline = ''
+5月 24 10:52:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6776]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2160, cr3 = 0x0, cmdline = ''

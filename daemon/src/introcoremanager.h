@@ -206,6 +206,8 @@ public:
 
 	void sendGuestHookEvent();
 
+    bool isIntroActivate();
+
 private: // GLUE_IFACE callbacks
 	static INTSTATUS IntOpenGuest( PCHAR GuestName, DWORD Flags, void *OpenParam, void **GuestHandle );
 
@@ -433,6 +435,8 @@ private:
 
 	// This is used by a scan engine to indicate that a scan request has completed
 	static void engineScanComplete( void *ctx, void *param, const char *detection, const char *enginesVersion );
+
+
 
 private:
 	GLUE_IFACE           iface_{};

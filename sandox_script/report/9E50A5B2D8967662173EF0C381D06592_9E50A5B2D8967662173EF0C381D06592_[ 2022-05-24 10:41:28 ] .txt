@@ -1,0 +1,318 @@
+-- Logs begin at Thu 2022-01-27 22:32:06 CST. --
+5月 24 00:36:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4869]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Signal session over with guest status: disconnected
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4869]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain status: unhooked
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4869]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore shutdown complete
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4869]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Unmap all
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4869]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Close the socket
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4851]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Parked
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4851]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Connection closed (32) Broken pipe
+5月 24 00:36:31 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4851]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain finished
+5月 24 00:36:33 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4851]: Done waiting for domains
+5月 24 00:36:33 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[4851]: Hypervisor Memory Introspection Daemon shutdown complete
+5月 24 10:41:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Hypervisor Memory Introspection Daemon starting
+5月 24 10:41:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Loading default policy file /usr/local/etc/hvmid/policies/default.json
+5月 24 10:41:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Hardware concurrency: 4
+5月 24 10:41:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Registering handlers
+5月 24 10:41:30 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Waiting for domains to be started
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Handshake authCookie: ''
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: [ecd03599-e1fe-4115-b708-a441828b43b8] Handshake authCookie: ''
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Found domain: 'ubuntu18.04.1'
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6336]: Loading policy file /usr/local/etc/hvmid/policies/434f3a4c-58c2-4085-9db9-2ef66c4e3a7b.json
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Setting page cache limit to 512 mappings
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] The hypervisor backend has chosen a page cache limit of 512 mappings
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Guest start time: 1648435625
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 250 IntroCore initialised: version 1.133.0, build 00191, changeset 38ffadd, built on Apr 13 2022 15:05:43 from branch hanwang
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore init complete
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore about to be initialized with options 0x7ff7eb3ffffff: km_nt km_hal km_hal_heap_exec km_hal_int_ctrl km_ssdt km_idt km_hdt km_sys_cr3 km_token km_nt_drivers km_av_drivers km_xen_drivers km_drvobj km_cr4 km_msr_syscall km_idtr km_self_map_entry km_gdtr kvm_logger_ctx km_nt_eat_reads um_misc_procs um_sys_procs evt_process evt_module evt_os_crash evt_process_crash agent_injection full_path_protection bugcheck_cleanup in_guest_pt_filter
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Loading live update file /usr/local/share/introcore/intro_live_update.bin
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 135 [INTRO-INIT] Will use options: 0x0007ff7eb3ffffff
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1685 [INFO] Loaded cami version 1.4 build 0
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No #VE support!
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No VMFUNC support!
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] DTR events supported
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 835 [INTRO-INIT] CPU/HV support: #VE: no, VMFUNC: no, SPP: no, DTR events: yes
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 958 [WARNING] Both INTRO_OPT_IN_GUEST_PT_FILTER and INTRO_OPT_VE are set, will ignore INTRO_OPT_VE, because #VE is NOT initialized!
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain status: new
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1309 [UPDATE] Requested to update the intro exceptions...
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1467 [UPDATE] Updated exceptions to version 2.2.0
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Successfully loaded exceptions file: /usr/local/share/introcore/exceptions.bin, version: 2.2.0
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore hook timed at 0.0896146 seconds
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain name: 'ubuntu18.04.1'
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Waiting for events
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 651 [INTRO-INIT] Will try 0 time to static init the guest on CPU 00 with EFER 0x00000d01 and 4-level paging mode...
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 664 [INTRO-INIT] CPU 00: CR0 = 80050033, CR3 = 000000005400a003, CR4 = 003606f0, RIP = ffffffff9127b29a
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 678 [INTRO-INIT] Identified OS type Linux
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1163 [LIXGUEST] KPTI active: 1
+5月 24 10:41:38 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 271 [LIXGUEST] Linux version complete: Linux version 4.15.0-29-generic (buildd@lgw01-amd64-057) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #31-Ubuntu SMP Tue Jul 17 15:39:52 UTC 2018 (Ubuntu 4.15.0-29.31-generic 4.15.18)
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 559 [CAMI] Will set new core options!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1468 [WARNING] Both INTRO_OPT_IN_GUEST_PT_FILTER and INTRO_OPT_VE are set, will ignore INTRO_OPT_VE, because #VE is NOT initialized!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1473 [DYNOPT] Change core options from 7ff7e33ffffff to 7ff7e33ffffff
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 581 [CAMI] Will set new shemu options!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 526 [CAMI] New force off options: 0x0000000000000008
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 582 [OFFSETS] 'current' gs offset: 0x15c00
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 792 [OFFSETS] mm_struct->exe_file offset: 0x3a0
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 712 [OFFSETS] 'thread_struct' offset (task_struct): 0x1280
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1997 [LIX-AGENT] Linux agent state initialized.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Adding protection for process: huaweiSandbox01 with flags: 0x40001dfc
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 4483 [PROT] Process huaweiSandbox01 / huaweiSandbox01 protected with 40001dfc
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '1' (0) start execution on VCPU 0 at RIP ffffffff9120042e ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 357 [MODULE] Found the 'modules' list at 0xffffffff926e9a30
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3769 [LIXAPI] Ensuring no thread will return into our hooks!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 185 [SWAPGS] 'native_swapgs' already detoured!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff9126bbe6 (POP       rbp) in function native_swapgs
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff9126c691 (SYSRET) in function end_pv_cpu_ops_wbinvd
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff9126c698 (MOV       eax, edi) in function end_pv_cpu_ops_usergs_sysret64
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c00000 (SYSRET) in function native_usergs_sysret64
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c0001a (MOV       qword ptr gs:[0x14fa0], rsp) in function entry_SYSCALL_64
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c00155 (SYSRET) in function syscall_return_via_sysret
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c01741 (JMP       0xffffffff91c0177b) in function paranoid_exit
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c018b1 (CLD) in function nmi
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c01a26 (POP       r15) in function nmi_swapgs
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c01b10 (MOV       r8d, esp) in function entry_SYSCALL_compat
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91c01bfc (SYSRET) in function sysret32_from_system_call
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffff91e01ffc (MOV       qword ptr [rel 0xffffffff91dfe1f8], rsp) in function entry_SYSCALL_64_trampoline
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 76 [DEPLOYER] Injecting agent file 'huaweiSandbox01'
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 259 [LIX-DEPLOYER] File 'huaweiSandbox01' scheduled for injection ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] goodinjectfile!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/chown huawei:huawei /huaweiSandbox01' scheduled for execution...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/chmod 700 /huaweiSandbox01' scheduled for execution...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 340 [LIX-DEPLOYER] Command line '/bin/su root -s /bin/sh -c /huaweiSandbox01>/home/huawei/output.txt' scheduled for execution...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] goodinjectcmd!
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '3' (0) start execution on VCPU 0 at RIP ffffffffc06bf052 ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2114 [DEPLOYER] Agent with tag 0 has just been injected, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 19 [LIX-DEPLOYER] Agent with tag 0 has just been initialized, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1453 [LIX-AGENT] Agent-thread with tag '4' (0) completed ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2155, cr3 = 0x0, cmdline = ''
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '3' (0) start execution on VCPU 0 at RIP ffffffffc06bf052 ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2114 [DEPLOYER] Agent with tag 0 has just been injected, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 32 [LIX-DEPLOYER] Agent with tag 0 has just been initialized, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1453 [LIX-AGENT] Agent-thread with tag '6' (0) completed ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2157, cr3 = 0x0, cmdline = ''
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '3' (0) start execution on VCPU 0 at RIP ffffffffc06bf052 ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2114 [DEPLOYER] Agent with tag 0 has just been injected, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 32 [LIX-DEPLOYER] Agent with tag 0 has just been initialized, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1453 [LIX-AGENT] Agent-thread with tag '6' (0) completed ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2159, cr3 = 0x0, cmdline = ''
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1257 [LIX-AGENT] Agent with tag '3' (888) start execution on VCPU 0 at RIP ffffffffc06bf052 ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2114 [DEPLOYER] Agent with tag 888 has just been injected, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 32 [LIX-DEPLOYER] Agent with tag 888 has just been initialized, error: 0x00000000.
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1453 [LIX-AGENT] Agent-thread with tag '6' (888) completed ...
+5月 24 10:41:39 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2165, cr3 = 0x0, cmdline = ''
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 113 [LIX-CMDLINE] Scan request for task 'huaweiSandbox01' with PID 2192 using command line '/huaweiSandbox01' (16)
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 118 [ERROR] IntNotifyEngines failed with status: 0xe1000508
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3147 [ERROR] IntLixCmdLineInspect failed with status: 0e1000508
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3164 [EXEC] Process sh (2192, 13b84000, ffff9099d381ad80) exec to /huaweiSandbox01
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3169 [EXEC] Task '/huaweiSandbox01' has command line '/huaweiSandbox01'
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1880 [AGENT_INC]huaweiSandbox01 1,
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 381 process huaweiSandbox01 [2192] [SYSCALL-execve](,0x62908b90,0x62908bc8) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/self/exe,32768,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,2857027,3,34,4294967295,0) = 140490199601152
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1503 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](140490199601152,2856643,3,18,/huaweiSandbox01,0) = 140490199601152
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](4194304,6393856,0,50,4294967295,0) = 4194304
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](4194304,2511799,7,50,4294967295,0) = 4194304
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](6709248,2684079,3,50,4294967295,614) = 6709248
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](9396224,1051424,3,50,4294967295,1270) = 9396224
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](10448896,139032,3,50,4294967295,0) = 10448896
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1503 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,4096,1,2,/huaweiSandbox01,0) = 140490199597056
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,262144,3,34,4294967295,0) = 140490202198016
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](824633720832,67108864,0,34,4294967295,0) = 824633720832
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](824633720832,67108864,3,50,4294967295,0) = 824633720832
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,33554432,3,34,4294967295,0) = 140490166042624
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,2162688,3,34,4294967295,0) = 140490200035328
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,65536,3,34,4294967295,0) = 140490199969792
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,65536,3,34,4294967295,0) = 140490199904256
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](1,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](1,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](2,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](2,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](3,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](3,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](4,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](4,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](5,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](5,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](6,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](6,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](7,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](7,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](8,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](8,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](10,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](10,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](11,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](11,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](12,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](12,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](13,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](13,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](14,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](14,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](15,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](15,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](16,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](16,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](17,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](17,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](23,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](23,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](24,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](24,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](25,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](25,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](26,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](26,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](27,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](27,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](28,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](28,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](29,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](29,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](30,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](30,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](31,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](31,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](32,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](33,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](34,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](34,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](35,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](35,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](36,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](36,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](37,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](37,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](38,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](38,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](39,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](39,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](40,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](40,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](41,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](41,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](42,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](42,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](43,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](43,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](44,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](44,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](45,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](45,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](46,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](46,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](47,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](47,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](48,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](48,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](49,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](49,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](50,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](50,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](51,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](51,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](52,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](52,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](53,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](53,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](54,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](54,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](55,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](55,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](56,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](56,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](57,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](57,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](58,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](58,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](59,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](59,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](60,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](60,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](61,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](61,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](62,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](62,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](63,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](63,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](64,0x0,0x81b3bef0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1423 process huaweiSandbox01 [2192] [SYSCALL-sigaction](64,0x81b3bed0,0x0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2401 [THREAD][PROT] huaweiSandbox01, (2193/2192, 13b84000, ffff9099d38196c0)
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1880 [AGENT_INC]huaweiSandbox01 2,
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2401 [THREAD][PROT] huaweiSandbox01, (2194/2192, 13b84000, ffff9099d381db00)
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1880 [AGENT_INC]huaweiSandbox01 3,
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1479 process huaweiSandbox01 [2192] [SYSCALL-mmap_pgoff](0,262144,3,34,4294967295,0) = 140490199642112
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/sys/net/core/somaxconn,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/sys/net/core/somaxconn,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/sys/net/core/somaxconn,0x76000,65536) = 4
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/sys/net/core/somaxconn,0x76004,65532) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1/cmdline,0xf4000,512) = 18
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1/cmdline,0xf6012,1518) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/10/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/10/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/10/cmdline,0xf4200,512) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1000/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1000/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1000/cmdline,0xf4400,512) = 60
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1000/cmdline,0xf663c,1476) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1004/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1004/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1004/cmdline,0xf4600,512) = 35
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1004/cmdline,0xf6c23,1501) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1005/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1005/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1005/cmdline,0xf4800,512) = 28
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1005/cmdline,0xf721c,1508) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1016/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1016/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1016/cmdline,0xf4a00,512) = 34
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1016/cmdline,0xf7822,1502) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1019/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1019/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1019/cmdline,0xf4c00,512) = 25
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1019/cmdline,0xf8019,1511) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1022/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1022/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1022/cmdline,0xf4e00,512) = 37
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1022/cmdline,0xf8625,1499) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1024/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1024/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1024/cmdline,0xf5000,512) = 26
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1024/cmdline,0xf8c1a,1510) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1035/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1035/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1035/cmdline,0xf5200,512) = 45
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1035/cmdline,0xf922d,1491) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1036/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1036/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1036/cmdline,0xf5400,512) = 32
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1036/cmdline,0xf9820,1504) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1039/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1039/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1039/cmdline,0xf5600,512) = 32
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1039/cmdline,0xfa020,1504) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1043/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1043/cmdline,524288,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1043/cmdline,0xf5800,512) = 49
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 3476 process huaweiSandbox01 [2192] [SYSCALL-read](/1043/cmdline,0xfa631,1487) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 531 process huaweiSandbox01 [2192] [SYSCALL-dup3]((null),(null),0) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1078 process huaweiSandbox01 [2192] [SYSCALL-open](/proc/1045/cmdline,557056,00) = 0
+5月 24 10:41:42 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[6348]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 2046 process huaweiSandbox01 [2192] [SYSCALL-openat](-100,/proc/1045/cmdline,524288,00) = 0
+5月 24 10

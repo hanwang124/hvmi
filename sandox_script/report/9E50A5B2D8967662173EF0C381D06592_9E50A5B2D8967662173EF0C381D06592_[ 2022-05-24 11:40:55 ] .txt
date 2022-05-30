@@ -1,0 +1,11 @@
+-- Logs begin at Thu 2022-01-27 22:32:06 CST. --
+5月 24 11:40:21 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10678]: Done waiting for domains
+5月 24 11:40:22 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10678]: Hypervisor Memory Introspection Daemon shutdown complete
+5月 24 11:40:45 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Hypervisor Memory Introspection Daemon starting
+5月 24 11:40:45 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Loading default policy file /usr/local/etc/hvmid/policies/default.json
+5月 24 11:40:45 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Hardware concurrency: 4
+5月 24 11:40:45 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Registering handlers
+5月 24 11:40:45 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Waiting for domains to be started
+5月 24 11:40:46 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: [ecd03599-e1fe-4115-b708-a441828b43b8] Handshake authCookie: ''
+5月 24 11:40:55 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Done waiting for domains
+5月 24 11:40:55 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[10847]: Hypervisor Memory Introspection Daemon shutdown complete

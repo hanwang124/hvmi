@@ -1,0 +1,4 @@
+#!/bin/bash
+ls -al
+whoami
+ping 8.8.8.8

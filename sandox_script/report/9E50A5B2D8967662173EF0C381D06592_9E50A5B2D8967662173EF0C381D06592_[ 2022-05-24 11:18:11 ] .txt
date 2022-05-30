@@ -1,0 +1,40 @@
+-- Logs begin at Thu 2022-01-27 22:32:06 CST. --
+5月 24 11:14:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2150, cr3 = 0x0, cmdline = ''
+5月 24 11:14:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2152, cr3 = 0x0, cmdline = ''
+5月 24 11:14:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2158, cr3 = 0x0, cmdline = ''
+5月 24 11:14:18 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] BDINT [process exception]: exception code = 0x0, rip = 0x0, continuable = 0, process name = kthreadd, pid = 2161, cr3 = 0x0, cmdline = ''
+5月 24 11:14:24 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Connection closed (reboot/poweroff?)
+5月 24 11:14:24 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8665]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore shutdown complete
+5月 24 11:14:24 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8656]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Connection closed (32) Broken pipe
+5月 24 11:14:24 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8656]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain finished
+5月 24 11:14:26 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8656]: Done waiting for domains
+5月 24 11:14:27 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8656]: Hypervisor Memory Introspection Daemon shutdown complete
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Hypervisor Memory Introspection Daemon starting
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Loading default policy file /usr/local/etc/hvmid/policies/default.json
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Hardware concurrency: 4
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Registering handlers
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Waiting for domains to be started
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Handshake authCookie: ''
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Found domain: 'ubuntu18.04.1'
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8850]: Loading policy file /usr/local/etc/hvmid/policies/434f3a4c-58c2-4085-9db9-2ef66c4e3a7b.json
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Setting page cache limit to 512 mappings
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] The hypervisor backend has chosen a page cache limit of 512 mappings
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Guest start time: 1648435625
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 250 IntroCore initialised: version 1.133.0, build 00191, changeset 38ffadd, built on Apr 13 2022 15:05:43 from branch hanwang
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore init complete
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore about to be initialized with options 0x7ff7eb3ffffff: km_nt km_hal km_hal_heap_exec km_hal_int_ctrl km_ssdt km_idt km_hdt km_sys_cr3 km_token km_nt_drivers km_av_drivers km_xen_drivers km_drvobj km_cr4 km_msr_syscall km_idtr km_self_map_entry km_gdtr kvm_logger_ctx km_nt_eat_reads um_misc_procs um_sys_procs evt_process evt_module evt_os_crash evt_process_crash agent_injection full_path_protection bugcheck_cleanup in_guest_pt_filter
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Loading live update file /usr/local/share/introcore/intro_live_update.bin
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 135 [INTRO-INIT] Will use options: 0x0007ff7eb3ffffff
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1685 [INFO] Loaded cami version 1.4 build 0
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No #VE support!
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] No VMFUNC support!
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] DTR events supported
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 835 [INTRO-INIT] CPU/HV support: #VE: no, VMFUNC: no, SPP: no, DTR events: yes
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 958 [WARNING] Both INTRO_OPT_IN_GUEST_PT_FILTER and INTRO_OPT_VE are set, will ignore INTRO_OPT_VE, because #VE is NOT initialized!
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain status: new
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1309 [UPDATE] Requested to update the intro exceptions...
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] compiler_depend.ts : 1467 [UPDATE] Updated exceptions to version 2.2.0
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Successfully loaded exceptions file: /usr/local/share/introcore/exceptions.bin, version: 2.2.0
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Introcore hook timed at 0.00611732 seconds
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Domain name: 'ubuntu18.04.1'
+5月 24 11:18:19 huawei-Standard-PC-i440FX-PIIX-1996 hvmid[8855]: [434f3a4c-58c2-4085-9db9-2ef66c4e3a7b] Waiting for events

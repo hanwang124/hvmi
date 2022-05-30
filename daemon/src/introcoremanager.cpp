@@ -3352,6 +3352,11 @@ bool IntrocoreManager::startTimer()
 	return true;
 }
 
+bool IntrocoreManager::isIntroActivate()
+{
+    return introActivated_;
+}
+
 void IntrocoreManager::notifySessionOver( bdvmi::GuestState guestState )
 {
 	guestNotRunning_ = ( guestState == bdvmi::POST_SHUTDOWN );
