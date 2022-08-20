@@ -9,6 +9,46 @@ version: 4.15.0-[24-]*Ubuntu*
 hooks:
 
     - !intro_update_lix_hook
+        name: sys_getcwd
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_setgid16
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_oldumount
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_gettid
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_getpid
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_sendmmsg
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_sched_yield
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
+        name: sys_setuid16
+        handler: 0
+        skip_on_boot: 0
+
+    - !intro_update_lix_hook
         name: sys_execveat
         handler: 0
         skip_on_boot: 0
@@ -43,10 +83,10 @@ hooks:
         handler: 0
         skip_on_boot: 0
 
-    - !intro_update_lix_hook
-        name: sys_dup3
-        handler: 0
-        skip_on_boot: 0
+    # - !intro_update_lix_hook
+    #     name: sys_dup3
+    #     handler: 0
+    #     skip_on_boot: 0
     
     - !intro_update_lix_hook
         name: sys_close
@@ -179,7 +219,7 @@ hooks:
         skip_on_boot: 0
 
     - !intro_update_lix_hook
-        name: sys_stat
+        name: sys_newstat
         handler: 0
         skip_on_boot: 0
 

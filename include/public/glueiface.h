@@ -1775,10 +1775,15 @@ typedef INTSTATUS
 ///             to another power state.
 ///
 typedef INTSTATUS
-(*PFUNC_IntInjectRunCommand1)(
+(*PFUNC_IntInjectRunCommand)(
     _In_ void *GuestHandle,
     _In_ const CHAR *cmd
     );
+typedef INTSTATUS
+(*PFUNC_IntGetState)(
+    _In_ void *GuestHandle
+    );
+
 typedef INTSTATUS
 (*PFUNC_IntGetCurrentInstructionLength)(
     _In_ void *GuestHandle,
@@ -2201,7 +2206,8 @@ typedef struct _GLUE_IFACE
     PFUNC_IntGetGuestInfo                       GetGuestInfo;
     PFUNC_IntInjectProcessAgent                 InjectProcessAgent;
     PFUNC_IntInjectFileAgent                    InjectFileAgent;
-    PFUNC_IntInjectRunCommand1                  InjectRunCommand1;
+    PFUNC_IntInjectRunCommand                   InjectRunCommand;
+    PFUNC_IntGetState                           GetState;
     PFUNC_IntSetIntroAbortStatus                SetIntroAbortStatus;
     PFUNC_IntAddExceptionFromAlert              AddExceptionFromAlert;
     PFUNC_IntRemoveException                    RemoveException;

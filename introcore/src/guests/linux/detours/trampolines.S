@@ -252,7 +252,7 @@ def_tramp_ret               sys_symlink                         2   sys_symlink_
 def_tramp_ret               sys_symlinkat                       3   sys_symlinkat_jmp
 def_tramp_ret               sys_access                          2   sys_access_jmp
 def_tramp_ret               sys_fstat                           2   sys_fstat_jmp
-def_tramp_ret               sys_stat                            2   sys_stat_jmp
+def_tramp_ret               sys_newstat                            2   sys_newstat_jmp
 def_tramp_ret               sys_lstat                           2   sys_lstat_jmp
 def_tramp_ret               sys_newfstatat                      4   sys_newfstatat_jmp
 def_tramp_ret               sys_pwrite64                        4   sys_pwrite64_jmp
@@ -281,9 +281,16 @@ def_tramp_ret               sys_recvmsg                         3   sys_recvmsg_
 def_tramp_ret               sys_close                           1   sys_close_jmp
 def_tramp_ret               sys_dup                             1   sys_dup_jmp
 def_tramp_ret               sys_dup2                            2   sys_dup2_jmp
-def_tramp_ret               sys_dup3                            3   sys_dup3_jmp
 def_tramp_ret               sys_wait4                           4   sys_wait4_jmp
 def_tramp_ret               sys_waitid                          5   sys_waitid_jmp
 def_tramp_ret               sys_sched_rr_get_interval           2   sys_sched_rr_get_interval_jmp
 def_tramp_ret               sys_execve                          3   sys_execve_jmp
 def_tramp_ret               sys_execveat                        5   sys_execveat_jmp
+def_tramp_ret               sys_setuid16                        1   sys_setuid16_jmp
+def_tramp_ret               sys_sched_yield                     0   sys_sched_yield_jmp
+def_tramp_ret               sys_sendmmsg                        4   sys_sendmmsg_jmp
+def_tramp_ret               sys_getpid                          0   sys_getpid_jmp
+def_tramp_ret               sys_gettid                          0   sys_gettid_jmp
+def_tramp_ret               sys_oldumount                       1   sys_oldumount_jmp
+def_tramp_ret               sys_setgid16                        1   sys_setgid16_jmp
+def_tramp_ret               sys_getcwd                          2   sys_getcwd_jmp

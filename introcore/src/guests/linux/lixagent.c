@@ -963,24 +963,19 @@ IntLixAgentThreadInject(
         WARNING("[WARNING] Tried to create an agent but the agent state not initialized.");
         return INT_STATUS_NOT_INITIALIZED;
     }
-
     if (!gLixGuest->MmAlloc.Agent.Initialized)
     {
         return INT_STATUS_NOT_INITIALIZED;
     }
-
-
     if (!gLixAgentState.SafeToInjectProcess)
     {
         WARNING("[WARNING] Tried to create an agent but the agent state not initialized.");
         return INT_STATUS_NOT_INITIALIZED;
     }
-
     if (Name != NULL && IntLixAgentNameIsRunning(Name))
     {
         return INT_STATUS_ALREADY_INITIALIZED;
     }
-
     status = IntLixAgentCreate(lixAgTagCreateThread,
                                TagEx,
                                IntLixAgentCreateThreadHypercall,

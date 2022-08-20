@@ -144,7 +144,8 @@ public:
 	bool injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
 	                  const std::string &args, const std::string &archiveFile = "",
 	                  const std::string &archiveName = "" );
-
+	bool getState();
+	bool isIntroActive();
 	bool injectLogCollector( const Tool &tool, bool getStdout = false );
 
 	void setAbortStatus( bool enable );

@@ -19,6 +19,8 @@
 #include <sys/statfs.h>
 #include <sys/time.h>
 #include <linux/utsname.h>
+#include <linux/sched.h>
+#include "lixstack.h"
 
 INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
@@ -103,12 +105,129 @@ INTSTATUS IntLixRecvmsgHandler(_In_ void *Detour);
 INTSTATUS IntLixCloseHandler(_In_ void *Detour);
 INTSTATUS IntLixDupHandler(_In_ void *Detour);
 INTSTATUS IntLixDup2Handler(_In_ void *Detour);
-INTSTATUS IntLixDup3Handler(_In_ void *Detour);
+// INTSTATUS IntLixDup3Handler(_In_ void *Detour);
 INTSTATUS IntLixWaitidHandler(_In_ void *Detour);
 INTSTATUS IntLixWait4Handler(_In_ void *Detour);
 INTSTATUS IntLixSched_rr_get_intervalHandler(_In_ void *Detour);
 INTSTATUS IntLixExecveHandler(_In_ void *Detour);
 INTSTATUS IntLixExecveatHandler(_In_ void *Detour);
+INTSTATUS IntLixSetuid16Handler(_In_ void *Detour);
+INTSTATUS IntLixSched_yieldHandler(_In_ void *Detour);
+INTSTATUS IntLixSendmmsgHandler(_In_ void *Detour);
+INTSTATUS IntLixGetpidHandler(_In_ void *Detour);
+INTSTATUS IntLixGettidHandler(_In_ void *Detour);
+INTSTATUS IntLixOldumountHandler(_In_ void *Detour);
+INTSTATUS IntLixSetgid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_getgid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_timesHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mountHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getcwdHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_faccessatHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_flistxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_readlinkatHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getpgidHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_flockHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_readvHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_writevHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_readlinkHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getpeernameHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_recvHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_utimeHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_lseekHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_listenHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_socketHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_vforkHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sendHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_setpgidHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_setgroups16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_nanosleepHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_semctlHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mlockallHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_inotify_initHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_fallocateHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_unshareHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_msyncHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getresuid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_add_keyHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_lsetxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_setreuid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_getpgrpHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_get_priority_maxHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_pselect6Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_setresgid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_signalfdHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mprotectHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_getschedulerHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_fcntlHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sigaltstackHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_semopHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_llistxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_epoll_pwaitHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mlockHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_pipe2Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_semgetHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_epoll_waitHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_keyctlHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getrandomHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_open_by_handle_atHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_munmapHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_set_robust_listHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_setpriorityHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_lgetxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_name_to_handle_atHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getsocknameHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getrusageHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getgroups16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_prlimit64Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_memfd_createHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_signalfd4Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_adjtimexHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getsockoptHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_personalityHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_setschedulerHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_getparamHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_clock_nanosleepHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_get_priority_minHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_sched_setaffinityHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_remap_file_pagesHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_removexattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getresgid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_setsockoptHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getdentsHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_io_destroyHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_clock_getresHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_shmctlHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_setregid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_setitimerHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_utimensatHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_inotify_add_watchHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_msgrcvHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_epoll_createHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_getegid16Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_socketpairHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_rt_sigactionHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_epoll_create1Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_fsetxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_ppollHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_get_mempolicyHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_rt_sigsuspendHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_llseekHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_old_readdirHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_shmgetHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mremapHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_inotify_rm_watchHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_madviseHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_msggetHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_epoll_ctlHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_fgetxattrHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_mknodHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_shmatHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_eventfd2Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_getpriorityHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_inotify_init1Handler(_In_ void *Detour);
+INTSTATUS IntLixsys_io_setupHandler(_In_ void *Detour);
+INTSTATUS IntLixsys_ioprio_getHandler(_In_ void *Detour);
+INTSTATUS IntLixGetcwdHandler(_In_ void *Detour);
 
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
@@ -250,7 +369,7 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_symlinkat,                  IntLixSymlinkatHandle,          DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_access,                     IntLixAccessHandle,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_fstat,                      IntLixFstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_stat,                       IntLixStatHandle,               DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_newstat,                    IntLixStatHandle,               DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_lstat,                      IntLixLstatHandle,              DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_newfstatat,                 IntLixNewfstatatHandle,         DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_pwrite64,                   IntLixPwrite64Handle,           DETOUR_ENABLE_ALWAYS                                    ),
@@ -279,14 +398,2419 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_close,                      IntLixCloseHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_dup,                        IntLixDupHandler,               DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_dup2,                       IntLixDup2Handler,              DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_dup3,                       IntLixDup3Handler,              DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_dup3,                       IntLixDup3Handler,              DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_waitid,                     IntLixWaitidHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_wait4,                      IntLixWait4Handler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_sched_rr_get_interval,      IntLixSched_rr_get_intervalHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_execve,                     IntLixExecveHandler,             DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_execveat,                   IntLixExecveatHandler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_execveat,                   IntLixExecveatHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_setuid16,                   IntLixSetuid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sched_yield,                IntLixSched_yieldHandler,        DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_sendmmsg,                   IntLixSendmmsgHandler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_getpid,                     IntLixGetpidHandler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_gettid,                     IntLixGettidHandler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_oldumount,                  IntLixOldumountHandler,             DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_setgid16,                   IntLixSetgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_getcwd,                     IntLixGetcwdHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     
+    // __init_detour_entry(sys_getgid16,                   IntLixsys_getgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_times,                   IntLixsys_timesHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mount,                   IntLixsys_mountHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getcwd,                   IntLixsys_getcwdHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_flistxattr,                   IntLixsys_flistxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_readlinkat,                   IntLixsys_readlinkatHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getpgid,                   IntLixsys_getpgidHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_flock,                   IntLixsys_flockHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_readv,                   IntLixsys_readvHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_writev,                   IntLixsys_writevHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_readlink,                   IntLixsys_readlinkHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getpeername,                   IntLixsys_getpeernameHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_recv,                   IntLixsys_recvHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_faccessat,                   IntLixsys_faccessatHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_utime,                   IntLixsys_utimeHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_lseek,                   IntLixsys_lseekHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_listen,                   IntLixsys_listenHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_socket,                   IntLixsys_socketHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_vfork,                   IntLixsys_vforkHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_send,                   IntLixsys_sendHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setpgid,                   IntLixsys_setpgidHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setgroups16,                   IntLixsys_setgroups16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_nanosleep,                   IntLixsys_nanosleepHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_semctl,                   IntLixsys_semctlHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mlockall,                   IntLixsys_mlockallHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_inotify_init,                   IntLixsys_inotify_initHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fallocate,                   IntLixsys_fallocateHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_unshare,                   IntLixsys_unshareHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_msync,                   IntLixsys_msyncHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getresuid16,                   IntLixsys_getresuid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_add_key,                   IntLixsys_add_keyHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_lsetxattr,                   IntLixsys_lsetxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setreuid16,                   IntLixsys_setreuid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getpgrp,                   IntLixsys_getpgrpHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_get_priority_max,                   IntLixsys_sched_get_priority_maxHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_pselect6,                   IntLixsys_pselect6Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setresgid16,                   IntLixsys_setresgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_signalfd,                   IntLixsys_signalfdHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mprotect,                   IntLixsys_mprotectHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_getscheduler,                   IntLixsys_sched_getschedulerHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fcntl,                   IntLixsys_fcntlHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sigaltstack,                   IntLixsys_sigaltstackHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_semop,                   IntLixsys_semopHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_llistxattr,                   IntLixsys_llistxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_epoll_pwait,                   IntLixsys_epoll_pwaitHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mlock,                   IntLixsys_mlockHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_pipe2,                   IntLixsys_pipe2Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_semget,                   IntLixsys_semgetHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_epoll_wait,                   IntLixsys_epoll_waitHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_keyctl,                   IntLixsys_keyctlHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getrandom,                   IntLixsys_getrandomHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_open_by_handle_at,                   IntLixsys_open_by_handle_atHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_munmap,                   IntLixsys_munmapHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_set_robust_list,                   IntLixsys_set_robust_listHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setpriority,                   IntLixsys_setpriorityHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_lgetxattr,                   IntLixsys_lgetxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_name_to_handle_at,                   IntLixsys_name_to_handle_atHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getsockname,                   IntLixsys_getsocknameHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getrusage,                   IntLixsys_getrusageHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getgroups16,                   IntLixsys_getgroups16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_prlimit64,                   IntLixsys_prlimit64Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_memfd_create,                   IntLixsys_memfd_createHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_signalfd4,                   IntLixsys_signalfd4Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_adjtimex,                   IntLixsys_adjtimexHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getsockopt,                   IntLixsys_getsockoptHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_personality,                   IntLixsys_personalityHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_setscheduler,                   IntLixsys_sched_setschedulerHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_getparam,                   IntLixsys_sched_getparamHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_clock_nanosleep,                   IntLixsys_clock_nanosleepHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_get_priority_min,                   IntLixsys_sched_get_priority_minHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_sched_setaffinity,                   IntLixsys_sched_setaffinityHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_remap_file_pages,                   IntLixsys_remap_file_pagesHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_removexattr,                   IntLixsys_removexattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getresgid16,                   IntLixsys_getresgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setsockopt,                   IntLixsys_setsockoptHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getdents,                   IntLixsys_getdentsHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_io_destroy,                   IntLixsys_io_destroyHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_clock_getres,                   IntLixsys_clock_getresHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_shmctl,                   IntLixsys_shmctlHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setregid16,                   IntLixsys_setregid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_setitimer,                   IntLixsys_setitimerHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_utimensat,                   IntLixsys_utimensatHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_inotify_add_watch,                   IntLixsys_inotify_add_watchHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_msgrcv,                   IntLixsys_msgrcvHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_epoll_create,                   IntLixsys_epoll_createHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getegid16,                   IntLixsys_getegid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_socketpair,                   IntLixsys_socketpairHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_rt_sigaction,                   IntLixsys_rt_sigactionHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_epoll_create1,                   IntLixsys_epoll_create1Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fsetxattr,                   IntLixsys_fsetxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_ppoll,                   IntLixsys_ppollHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_get_mempolicy,                   IntLixsys_get_mempolicyHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_rt_sigsuspend,                   IntLixsys_rt_sigsuspendHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_llseek,                   IntLixsys_llseekHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_old_readdir,                   IntLixsys_old_readdirHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_shmget,                   IntLixsys_shmgetHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mremap,                   IntLixsys_mremapHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_inotify_rm_watch,                   IntLixsys_inotify_rm_watchHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_madvise,                   IntLixsys_madviseHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_msgget,                   IntLixsys_msggetHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_epoll_ctl,                   IntLixsys_epoll_ctlHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fgetxattr,                   IntLixsys_fgetxattrHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_mknod,                   IntLixsys_mknodHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_shmat,                   IntLixsys_shmatHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_eventfd2,                   IntLixsys_eventfd2Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_getpriority,                   IntLixsys_getpriorityHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_inotify_init1,                   IntLixsys_inotify_init1Handler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_io_setup,                   IntLixsys_io_setupHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_ioprio_get,                   IntLixsys_ioprio_getHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+
 };
+// INTSTATUS
+// IntLixsys_getgid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getgid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_timesHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_times()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mountHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mount()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getcwdHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getcwd()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_readlinkatHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_readlinkat()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getpgidHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getpgid()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_flockHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_flock()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_readvHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_readv()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_writevHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_writev()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_readlinkHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_readlink()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getpeernameHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getpeername()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_recvHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_recv()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_faccessatHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_faccessat()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_flistxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_flistxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_utimeHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_utime()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_lseekHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_lseek()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_listenHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_listen()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_socketHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_socket()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_vforkHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_vfork()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sendHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_send()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setpgidHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setpgid()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setgroups16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setgroups16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_nanosleepHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_nanosleep()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_semctlHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_semctl()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mlockallHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mlockall()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_inotify_initHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_inotify_init()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_fallocateHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_fallocate()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_unshareHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_unshare()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_msyncHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_msync()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getresuid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getresuid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_add_keyHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_add_key()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_lsetxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_lsetxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setreuid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setreuid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_getpgrpHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getpgrp()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_get_priority_maxHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_get_priority_max()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_pselect6Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_pselect6()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setresgid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setresgid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_signalfdHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_signalfd()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mprotectHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mprotect()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_getschedulerHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_getscheduler()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_fcntlHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_fcntl()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sigaltstackHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sigaltstack()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_semopHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_semop()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_llistxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_llistxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_epoll_pwaitHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_epoll_pwait()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mlockHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mlock()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_pipe2Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_pipe2()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_semgetHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_semget()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_epoll_waitHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_epoll_wait()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_keyctlHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_keyctl()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getrandomHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getrandom()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_open_by_handle_atHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_open_by_handle_at()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_munmapHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_munmap()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_set_robust_listHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_set_robust_list()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setpriorityHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setpriority()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_lgetxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_lgetxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_name_to_handle_atHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_name_to_handle_at()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getsocknameHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getsockname()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getrusageHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getrusage()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getgroups16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getgroups16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_prlimit64Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_prlimit64()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_memfd_createHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_memfd_create()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_signalfd4Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_signalfd4()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_adjtimexHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_adjtimex()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getsockoptHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getsockopt()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_personalityHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_personality()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_setschedulerHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_setscheduler()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_getparamHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_getparam()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_clock_nanosleepHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_clock_nanosleep()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_get_priority_minHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_get_priority_min()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_sched_setaffinityHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_sched_setaffinity()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_remap_file_pagesHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_remap_file_pages()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_removexattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_removexattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getresgid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getresgid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setsockoptHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setsockopt()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getdentsHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getdents()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_io_destroyHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_io_destroy()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_clock_getresHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_clock_getres()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_shmctlHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_shmctl()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setregid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setregid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_setitimerHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_setitimer()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_utimensatHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_utimensat()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_inotify_add_watchHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_inotify_add_watch()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_msgrcvHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_msgrcv()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_epoll_createHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_epoll_create()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getegid16Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getegid16()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+// INTSTATUS
+// IntLixsys_socketpairHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_socketpair()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_rt_sigactionHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_rt_sigaction()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_epoll_create1Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_epoll_create1()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_fsetxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_fsetxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_ppollHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_ppoll()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_get_mempolicyHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_get_mempolicy()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_rt_sigsuspendHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_rt_sigsuspend()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_llseekHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_llseek()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_old_readdirHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_old_readdir()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_shmgetHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_shmget()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mremapHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mremap()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_inotify_rm_watchHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_inotify_rm_watch()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_madviseHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_madvise()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_msggetHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_msgget()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_epoll_ctlHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_epoll_ctl()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_fgetxattrHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_fgetxattr()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_mknodHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_mknod()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_shmatHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_shmat()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_eventfd2Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_eventfd2()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_getpriorityHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_getpriority()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_inotify_init1Handler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_inotify_init1()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_io_setupHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_io_setup()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+// INTSTATUS
+// IntLixsys_ioprio_getHandler(
+//     _In_ void *Detour
+//     )
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     LOG("process %s [%d,%d] sys_ioprio_get()\n",pTask->Comm, pTask->Pid,pTask->Tgid);
+//     return INT_STATUS_SUCCESS;
+// }
+
+INTSTATUS
+IntLixSetgid16Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_setgid16" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    // LOG("[open] arg:(%s,%d,0%o),execname:%s,procName:%s,path:%s,%s,pid:%d,tgid:%d,return:%d,cmdline:%s\n",buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Path->Name,pTask->Path->Path,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    LOG("[setgid16] arg:(%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_setgid16(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixOldumountHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_oldumount" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    LOG("[oldumount] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_oldumount(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixGettidHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_gettid" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("[gettid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_gettid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixGetpidHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_getpid" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("[getpid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_getpid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSendmmsgHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sendmmsg" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("[sendmmsg] arg:(%d,0x%x,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sendmmsg(%d,0x%x,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,,pRegs->R13);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSched_yieldHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_sched_yield" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("[sched_yield] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sched_yield() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixSetuid16Handler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_setuid16" function.
+
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("[setuid16] arg:(%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_setuid16(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R10);
+
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixExecveatHandler(
@@ -348,7 +2872,9 @@ IntLixExecveatHandler(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_execveat(%s,%s,0x%x,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path1,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[execveat] arg:(%s,%s,0x%x,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path1,buf,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_execveat() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R14);
 
     return INT_STATUS_SUCCESS;
 }
@@ -375,10 +2901,12 @@ IntLixExecveHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    BYTE buf[0x33] = {0};
-    DWORD RetLength = 0;
-    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_execve(%s,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    BYTE buf[0x11] = {0};
+    // DWORD RetLength = 0;
+    // status =IntVirtMemFetchString(pRegs->R10,0x10,pRegs->Cr3,buf);
+    LOG("[execve] arg:(%s,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_execve() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -405,7 +2933,9 @@ IntLixSched_rr_get_intervalHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_Sched_rr_get_intervalHandler(%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[Sched_rr_get_intervalHandler] arg:(%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_Sched_rr_get_intervalHandler() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -433,7 +2963,9 @@ IntLixWaitidHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_waitid(%d,%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    LOG("[waitid] arg:(%d,%u,0x%x,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_waitid(%d,%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
 
     return INT_STATUS_SUCCESS;
 }
@@ -461,77 +2993,84 @@ IntLixWait4Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_wait4(%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[wait4] arg:(%u,0x%x,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_wait4(%u,0x%x,%d,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
 
     return INT_STATUS_SUCCESS;
 }
 
-INTSTATUS
-IntLixDup3Handler(
-    _In_ void *Detour
-    )
-///
-/// @brief Detour handler for "sys_dup3" function.
+// INTSTATUS
+// IntLixDup3Handler(
+//     _In_ void *Detour
+//     )
+// ///
+// /// @brief Detour handler for "sys_dup3" function.
 
-/// @param[in] Detour Unused.
-///
-/// @return INT_STATUS_SUCCESS on success.
-///
-{
-    INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
-    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
-    UNREFERENCED_PARAMETER(Detour);
-    pTask = IntLixTaskFindByGva(pRegs->R8);
-    if (NULL == pTask)
-    {
-        ERROR("[ERROR] No task on for exec!\n");
-        return INT_STATUS_INVALID_INTERNAL_STATE;
-    }
-    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    if ((int)pRegs->R9<0||(int)pRegs->R10<0){
-        LOG("process %s [%d,%d] sys_dup3(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+// /// @param[in] Detour Unused.
+// ///
+// /// @return INT_STATUS_SUCCESS on success.
+// ///
+// {
+//     INTSTATUS status;
+//     LIX_TASK_OBJECT *pTask;
+//     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+//     UNREFERENCED_PARAMETER(Detour);
+//     pTask = IntLixTaskFindByGva(pRegs->R8);
+//     if (NULL == pTask)
+//     {
+//         ERROR("[ERROR] No task on for exec!\n");
+//         return INT_STATUS_INVALID_INTERNAL_STATE;
+//     }
+//     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+//     if ((int)pRegs->R9<0||(int)pRegs->R10<0){
+//         LOG("[dup3] arg:(%d,%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+//         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+//         // LOG("process %s [%d,%d] sys_dup3(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
-        return INT_STATUS_SUCCESS;
-    }
-    QWORD files = 0;
-    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
-        return status;
-    }
-    QWORD fd_array = 0;
-    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
-        return status;
-    }
-    char *path = NULL;
-    DWORD pathLen = 0;
-    status = IntLixFileGetPath(fd_array, &path, &pathLen);
-    files = 0;
-    status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
-        return status;
-    }
-    fd_array = 0;
-    status = IntKernVirtMemFetchQword(files + 160 + pRegs->R10 * 8, &fd_array);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
-        return status;
-    }
-    char *path1 = NULL;
-    pathLen = 0;
-    status = IntLixFileGetPath(fd_array, &path1, &pathLen);
-    LOG("process %s [%d,%d] sys_dup3(%s,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,path1,pRegs->R11,pRegs->R12);
+//         return INT_STATUS_SUCCESS;
+//     }
+//     QWORD files = 0;
+//     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+//     if (!INT_SUCCESS(status))
+//     {
+//         ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+//         return status;
+//     }
+//     QWORD fd_array = 0;
+//     status = IntKernVirtMemFetchQword(files + 160 + pRegs->R9 * 8, &fd_array);
+//     if (!INT_SUCCESS(status))
+//     {
+//         ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+//         return status;
+//     }
+//     char *path = NULL;
+//     DWORD pathLen = 0;
+//     status = IntLixFileGetPath(fd_array, &path, &pathLen);
+//     files = 0;
+//     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
+//     if (!INT_SUCCESS(status))
+//     {
+//         ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+//         return status;
+//     }
+//     fd_array = 0;
+//     status = IntKernVirtMemFetchQword(files + 160 + pRegs->R10 * 8, &fd_array);
+//     if (!INT_SUCCESS(status))
+//     {
+//         ERROR("[ERROR] Failed reading the fd_array: 0x%08x\n", status);
+//         return status;
+//     }
+//     char *path1 = NULL;
+//     pathLen = 0;
+//     status = IntLixFileGetPath(fd_array, &path1, &pathLen);
+//     LOG("[dup3] arg:(%s,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+//         path,path1,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+//     // LOG("process %s [%d,%d] sys_dup3(%s,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,path1,pRegs->R11,pRegs->R12);
 
-    return INT_STATUS_SUCCESS;
-}
+//     return INT_STATUS_SUCCESS;
+// }
 
 INTSTATUS
 IntLixDup2Handler(
@@ -557,7 +3096,9 @@ IntLixDup2Handler(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0||(int)pRegs->R10<0){
-        LOG("process %s [%d,%d] sys_dup2(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[dup2] arg:(%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_dup2(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
 
         return INT_STATUS_SUCCESS;
     }
@@ -595,7 +3136,9 @@ IntLixDup2Handler(
     char *path1 = NULL;
     pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path1, &pathLen);
-    LOG("process %s [%d,%d] sys_dup2(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,path1,pRegs->R11);
+    LOG("[dup2] arg:(%s,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,path1,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_dup2(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,path1,pRegs->R11);
 
     return INT_STATUS_SUCCESS;
 }
@@ -624,7 +3167,9 @@ IntLixDupHandler(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_dup(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+        LOG("[dup] arg:(%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_dup(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
 
         return INT_STATUS_SUCCESS;
     }
@@ -645,7 +3190,9 @@ IntLixDupHandler(
     char *path = NULL;
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
-    LOG("process %s [%d,%d] sys_dup(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
+    LOG("[dup] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_dup(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
 
     return INT_STATUS_SUCCESS;
 }
@@ -691,9 +3238,13 @@ IntLixCloseHandler(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (INT_SUCCESS(status)){
-        LOG("process %s [%d,%d] sys_close(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
+        LOG("[close] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_close(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
     }else {
-        LOG("process %s [%d,%d] sys_close(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+        LOG("[close] arg:(%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_close(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -721,7 +3272,9 @@ IntLixRecvmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_recvmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[recvmsg] arg:(%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_recvmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -757,9 +3310,13 @@ IntLixRecvfromHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        LOG("[recvfrom] arg:(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        LOG("[recvfrom] arg:(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -773,7 +3330,10 @@ IntLixRecvfromHandler(
         // else
         //     LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
     }else{
-        LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("[recvfrom] arg:(%d,0x%x,%d,%d,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_recvfrom(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -801,7 +3361,9 @@ IntLixSendmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[sendmsg] arg:(%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sendmsg(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -836,9 +3398,13 @@ IntLixSendtoHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        LOG("[sendto] arg:(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
+        LOG("[sendto] arg:(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -852,7 +3418,10 @@ IntLixSendtoHandler(
         // else
         //     LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R14,pRegs->R15);
     }else{
-        LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("[sendto] arg:(%d,0x%x,%d,%d,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_sendto(%d,0x%x,%d,%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -888,9 +3457,15 @@ IntLixConnectHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[connect] arg:(%d,family:AF_INET ip:%s port:%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_connect(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[connect] arg:(%d,family:AF_INET6 ip:%s port:%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_connect(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_connect(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -904,7 +3479,10 @@ IntLixConnectHandler(
         // else
         //     LOG("process %s [%d,%d] sys_connect(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
     }else{
-        LOG("process %s [%d,%d] sys_connect(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[connect] arg:(%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_connect(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -940,9 +3518,15 @@ IntLixBindHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[bind] arg:(%d,family:AF_INET ip:%s port:%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_bind(%d,family:AF_INET ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[bind] arg:(%d,family:AF_INET6 ip:%s port:%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_bind(%d,family:AF_INET6 ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_bind(%d,family:AF_LOCAL ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -956,7 +3540,10 @@ IntLixBindHandler(
         // else
         //     LOG("process %s [%d,%d] sys_bind(%d,family:%d ip:%s port:%d,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
     }else{
-        LOG("process %s [%d,%d] sys_bind(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[bind] arg:(%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_bind(%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -992,9 +3579,15 @@ IntLixAccept4Handler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[accept4] arg:(%d,family:AF_INET ip:%s port:%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_accept4(%d,family:AF_INET ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[accept4] arg:(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_accept4(%d,family:AF_INET6 ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_accept4(%d,family:AF_LOCAL ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -1008,7 +3601,10 @@ IntLixAccept4Handler(
         // else 
         //     LOG("process %s [%d,%d] sys_accept4(%d,family:%d ip:%s port:%d,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12,pRegs->R13);
     }else{
-        LOG("process %s [%d,%d] sys_accept4(%d,0x%x,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[accept4] arg:(%d,0x%x,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_accept4(%d,0x%x,0x%x,%d) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -1044,9 +3640,15 @@ IntLixAcceptHandler(
     if (INT_SUCCESS(status))
     {
         if (sin.sin_family==AF_INET)
-            LOG("process %s [%d,%d] sys_accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[accept] arg:(%d,family:AF_INET ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_accept(%d,family:AF_INET ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         else if (sin.sin_family==AF_INET6)
-            LOG("process %s [%d,%d] sys_accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
+        LOG("[accept] arg:(%d,family:AF_INET6 ip:%s port:%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+            // LOG("process %s [%d,%d] sys_accept(%d,family:AF_INET6 ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_LOCAL)
         //     LOG("process %s [%d,%d] sys_accept(%d,family:AF_LOCAL ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else if (sin.sin_family==AF_UNSPEC)
@@ -1059,13 +3661,48 @@ IntLixAcceptHandler(
         //     LOG("process %s [%d,%d] sys_accept(%d,family:AF_NETLINK ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
         // else 
         //     LOG("process %s [%d,%d] sys_accept(%d,family:%d ip:%s port:%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,sin.sin_family,inet_ntoa(sin.sin_addr),ntohs(sin.sin_port),pRegs->R11,pRegs->R12);
-    }else{
-        LOG("process %s [%d,%d] sys_accept(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    }else{\
+    LOG("[accept] arg:(%d,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%d,cmdline:%s\n",pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_accept(%d,0x%x,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }
 
     return INT_STATUS_SUCCESS;
 }
+INTSTATUS
+IntLixGetcwdHandler(
+    _In_ void *Detour
+    )
+///
+/// @brief Detour handler for "sys_getcwd" function.
 
+/// @param[in] Detour Unused.
+///
+/// @return INT_STATUS_SUCCESS on success.
+///
+{
+    INTSTATUS status;
+    LIX_TASK_OBJECT *pTask,*fpTask;
+    IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
+    UNREFERENCED_PARAMETER(Detour);
+    pTask = IntLixTaskFindByGva(pRegs->R8);
+    
+    if (NULL == pTask)
+    {
+        ERROR("[ERROR] No task on for exec!\n");
+        return INT_STATUS_INVALID_INTERNAL_STATE;
+    }
+    if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
+    // pTask->Path->Path
+    LOG("[getcwd] arg:(%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%d,cmdline:%s\n",buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // fpTask = IntLixTaskFindByGva(pTask->R8);
+    // LOG("process %s procName=%s [ppid=%d,pid=%d,tgid=%d] cmdline=%s sys_open(%s,%d,0%o) = %ld\n",pTask->Comm, pTask->ProcName,pTask->Pid,pTask->Tgid,pTask->CmdLine,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    // IntLixStackDumpUmStackTrace(pTask);
+    return INT_STATUS_SUCCESS;
+}
 INTSTATUS
 IntLixOpenHandler(
     _In_ void *Detour
@@ -1079,10 +3716,11 @@ IntLixOpenHandler(
 ///
 {
     INTSTATUS status;
-    LIX_TASK_OBJECT *pTask;
+    LIX_TASK_OBJECT *pTask,*fpTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(pRegs->R8);
+    
     if (NULL == pTask)
     {
         ERROR("[ERROR] No task on for exec!\n");
@@ -1092,8 +3730,10 @@ IntLixOpenHandler(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_open(%s,%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
-
+    LOG("[open] arg:(%s,%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // fpTask = IntLixTaskFindByGva(pTask->R8);
+    // LOG("process %s procName=%s [ppid=%d,pid=%d,tgid=%d] cmdline=%s sys_open(%s,%d,0%o) = %ld\n",pTask->Comm, pTask->ProcName,pTask->Pid,pTask->Tgid,pTask->CmdLine,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1121,11 +3761,15 @@ IntLixWriteHandle(
     }
     // LOG("%d\n",pTask->AgentTag);
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    // BYTE buf[0x33] = {0};
-    // DWORD RetLength = 0;
-    // status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[write] arg:(%lu,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        // IntLixStackDumpUmStackTrace(pTask);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1147,10 +3791,17 @@ IntLixWriteHandle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
     {
-        LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[write] arg:(%lu,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }else{
-        LOG("process %s [%d,%d] sys_write(%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[write] arg:(%s,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_write(%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     }
+    // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1181,7 +3832,10 @@ IntLixFinit_moduleHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[finit_module] arg:(%d,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_finit_module(%d,%s,%d) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1202,9 +3856,15 @@ IntLixFinit_moduleHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_finit_module(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    LOG("[finit_module] arg:(%d,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_finit_module(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d,%d] sys_finit_module(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
+    LOG("[finit_module] arg:(%s,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        
+        // LOG("process %s [%d,%d] sys_finit_module(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1235,7 +3895,10 @@ IntLixDelete_moduleHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_delete_module(%s,%u) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[delete_module] arg:(%s,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+     
+    // LOG("process %s [%d,%d] sys_delete_module(%s,%u) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1265,7 +3928,10 @@ IntLixInit_moduleHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_init_module(0x%x,%lu,%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
+    LOG("[init_module] arg:(0x%x,%lu,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+     
+    // LOG("process %s [%d,%d] sys_init_module(0x%x,%lu,%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1292,7 +3958,10 @@ IntLixRebootHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_reboot(%d,%d,%u,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[reboot] arg:(%d,%d,%u,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_reboot(%d,%d,%u,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1324,7 +3993,10 @@ IntLixNewunameHandle(
     status =IntVirtMemRead(pRegs->R9,0x186,pRegs->Cr3,buf,&RetLength);
     struct new_utsname sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d,%d] sys_uname(sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pRegs->R10);
+    LOG("[uname] arg:(sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_uname(sysname:%s nodename:%s release:%s version:%s machine:%s domainname:%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,sin.sysname,sin.nodename,sin.release,sin.version,sin.machine,sin.domainname,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1351,7 +4023,10 @@ IntLixPerf_event_openHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_perf_event_open(0x%x,%u,%d,%d,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[perf_event_open] arg:(0x%x,%u,%d,%d,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_perf_event_open(0x%x,%u,%d,%d,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1383,7 +4058,10 @@ IntLixClock_gettimeHandle(
     status =IntVirtMemRead(pRegs->R10,0x10,pRegs->Cr3,buf,&RetLength);
     struct timespec sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d,%d] sys_clock_gettime(%d,tv_sec:%lu tv_nsec:%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,sin.tv_sec,sin.tv_nsec,pRegs->R11);
+    LOG("[clock_gettime] arg:(%d,tv_sec:%lu tv_nsec:%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,sin.tv_sec,sin.tv_nsec,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_clock_gettime(%d,tv_sec:%lu tv_nsec:%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,sin.tv_sec,sin.tv_nsec,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1410,7 +4088,10 @@ IntLixSelectHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_select(%d,0x%x,0x%x,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[select] arg:(%d,0x%x,0x%x,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_select(%d,0x%x,0x%x,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1437,7 +4118,10 @@ IntLixSigactionHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_sigaction(%d,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[sigaction] arg:(%d,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_sigaction(%d,0x%x,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1464,7 +4148,10 @@ IntLixPrctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_prctl(%d,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[prctl] arg:(%d,%lu,%lu,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_prctl(%d,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1493,16 +4180,22 @@ IntLixMmap_pgoffHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R13<0){
-        LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
-        ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
-        return status;
+        LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+        // ERROR("[ERROR] Failed reading the files struct: 0x%08x\n", status);
+        return INT_STATUS_SUCCESS;
     }
     QWORD fd_array = 0;
     status = IntKernVirtMemFetchQword(files + 160 + pRegs->R13 * 8, &fd_array);
@@ -1515,9 +4208,15 @@ IntLixMmap_pgoffHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
+    LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
     else
-        LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
+    LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%s,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1548,7 +4247,10 @@ IntLixPread64Handle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[pread64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1569,9 +4271,15 @@ IntLixPread64Handle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[pread64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d,%d] sys_pread64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[pread64] arg:(%s,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pread64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1602,7 +4310,10 @@ IntLixPwrite64Handle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[pwrite64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1623,9 +4334,15 @@ IntLixPwrite64Handle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[pwrite64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else 
-        LOG("process %s [%d,%d] sys_pwrite64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[pwrite64] arg:(%s,%s,%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_pwrite64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1656,7 +4373,10 @@ IntLixNewfstatatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[newfstatat] arg:(%d,%s,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1677,9 +4397,15 @@ IntLixNewfstatatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[newfstatat] arg:(%d,%s,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_newfstatat(%d,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d,%d] sys_newfstatat(%s,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[newfstatat] arg:(%s,%s,0x%x,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_newfstatat(%s,%s,0x%x,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1709,7 +4435,10 @@ IntLixLstatHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_lstat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[lstat] arg:(%s,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_lstat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1739,7 +4468,10 @@ IntLixStatHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_stat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[stat] arg:(%s,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_stat(%s,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1766,7 +4498,10 @@ IntLixFstatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[fstat] arg:(%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1788,9 +4523,15 @@ IntLixFstatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[fstat] arg:(%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fstat(%d,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     else 
-        LOG("process %s [%d,%d] sys_fstat(%s,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
+    LOG("[fstat] arg:(%s,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fstat(%s,0x%x) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1820,7 +4561,10 @@ IntLixAccessHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_access(%s,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[access] arg:(%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_access(%s,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1852,7 +4596,10 @@ IntLixSymlinkatHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_symlinkat(%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,pRegs->R10,buf2,pRegs->R12);
+    LOG("[symlinkat] arg:(%s,%d,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,pRegs->R10,buf2,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_symlinkat(%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,pRegs->R10,buf2,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1885,7 +4632,10 @@ IntLixSymlinkHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_symlink(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
+    LOG("[symlink] arg:(%s,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,buf2,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_symlink(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1917,7 +4667,10 @@ IntLixLinkatHandle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_linkat(%d,%s,%d,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
+    LOG("[linkat] arg:(%d,%s,%d,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_linkat(%d,%s,%d,%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1965,9 +4718,15 @@ IntLixUnlinkatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_unlinkat(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    LOG("[unlinkat] arg:(%d,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_unlinkat(%d,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else 
-        LOG("process %s [%d,%d] sys_unlinkat(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
+    LOG("[unlinkat] arg:(%d,%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_unlinkat(%s,%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1997,7 +4756,10 @@ IntLixUnlinkHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d,%d] sys_unlink(%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf1,pRegs->R10);
+    LOG("[unlink] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_unlink(%s) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf1,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2029,7 +4791,10 @@ IntLixLinkHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_link(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
+    LOG("[link] arg:(%s,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,buf2,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_link(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2060,7 +4825,10 @@ IntLixOpenatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+        LOG("[openat] arg:(%d,%s,%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2081,9 +4849,15 @@ IntLixOpenatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[openat] arg:(%d,%s,%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_openat(%d,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
-        LOG("process %s [%d,%d] sys_openat(%s,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[openat] arg:(%s,%s,%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_openat(%s,%s,%d,0%o) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2113,7 +4887,10 @@ IntLixCreatHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d,%d] sys_creat(%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf1,pRegs->R10,pRegs->R11);
+    LOG("[creat] arg:(%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_creat(%s,%d) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2143,7 +4920,10 @@ IntLixMkdirHandle(
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
-    LOG("process %s [%d,%d] sys_mkdir(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,pRegs->R10,pRegs->R11);
+    LOG("[mkdir] arg:(%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_mkdir(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2175,7 +4955,10 @@ IntLixRenameatHandle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_renameat(%d,%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13);
+    LOG("[renameat] arg:(%d,%s,%d,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf1,pRegs->R11,buf2,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_renameat(%d,%s,%d,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2207,7 +4990,10 @@ IntLixRenameat2Handle(
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R12,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_renameat2(%d,%s,%d,%s,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
+    LOG("[renameat2] arg:(%d,%s,%d,%s,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_renameat2(%d,%s,%d,%s,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf1,pRegs->R11,buf2,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2239,7 +5025,10 @@ IntLixRenameHandle(
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf1,&RetLength);
     BYTE buf2[0x33] = {0};
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf2,&RetLength);
-    LOG("process %s [%d,%d] sys_rename(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
+    LOG("[rename] arg:(%s,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       buf1,buf2,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    
+    // LOG("process %s [%d,%d] sys_rename(%s,%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf1,buf2,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2270,7 +5059,10 @@ IntLixFchownatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+        LOG("[fchownat] arg:(%d,%s,%u,%u,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2291,9 +5083,15 @@ IntLixFchownatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[fchownat] arg:(%d,%s,%u,%u,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fchownat(%d,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     else 
-        LOG("process %s [%d,%d] sys_fchownat(%s,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
+    LOG("[fchownat] arg:(%s,%s,%u,%u,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine);
+    
+        // LOG("process %s [%d,%d] sys_fchownat(%s,%s,%u,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2321,7 +5119,9 @@ IntLixFchownHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[fchown] arg:(%d,%u,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2342,9 +5142,13 @@ IntLixFchownHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[fchown] arg:(%d,%u,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchown(%d,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d,%d] sys_fchown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[fchown] arg:(%s,%u,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2372,7 +5176,10 @@ IntLixFchmodHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[fchmod] arg:(%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2393,9 +5200,15 @@ IntLixFchmodHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[fchmod] arg:(%d,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmod(%d,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     else
-        LOG("process %s [%d,%d] sys_fchmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
+    LOG("[fchmod] arg:(%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2426,7 +5239,10 @@ IntLixFchmodatHandle(
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+        LOG("[fchmodat] arg:(%d,%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2447,9 +5263,15 @@ IntLixFchmodatHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
+    LOG("[fchmodat] arg:(%d,%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmodat(%d,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d,%d] sys_fchmodat(%s,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
+    LOG("[fchmodat] arg:(%s,%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+       path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+     
+        // LOG("process %s [%d,%d] sys_fchmodat(%s,%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2479,7 +5301,9 @@ IntLixChownHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_chown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[chown] arg:(%s,%u,%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_chown(%s,%u,%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2509,7 +5333,9 @@ IntLixChmodHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_chmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[chmod] arg:(%s,0%o),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_chmod(%s,0%o) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2537,7 +5363,9 @@ IntLixFchdirHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+        LOG("[fchdir] arg:(%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2558,9 +5386,13 @@ IntLixFchdirHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[fchdir] arg:(%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchdir(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     else
-        LOG("process %s [%d,%d] sys_fchdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
+    LOG("[fchdir] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fchdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2587,7 +5419,9 @@ IntLixKillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_kill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[kill] arg:(%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_kill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2617,7 +5451,9 @@ IntLixChrootHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_chroot(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
+    LOG("[chroot] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_chroot(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2644,7 +5480,9 @@ IntLixTimeHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_time(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[time] arg:(0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_time(0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2671,7 +5509,9 @@ IntLixPtraceHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_ptrace(%ld,%ld,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
+    LOG("[ptrace] arg:(%ld,%ld,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_ptrace(%ld,%ld,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2698,7 +5538,9 @@ IntLixAlarmHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_alarm(%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[alarm] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_alarm(%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2728,7 +5570,9 @@ IntLixChdirHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_chdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
+    LOG("[chdir] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_chdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2755,7 +5599,9 @@ IntLixSetresuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_setresuid(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[setresuid] arg:(%d,%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_setresuid(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2790,7 +5636,10 @@ IntLixGettimeofdayHandle(
     status =IntVirtMemRead(pRegs->R10,0x8,pRegs->Cr3,buf,&RetLength);
     struct timezone sin1;
     memcpy(&sin, &buf, sizeof(sin1));
-    LOG("process %s [%d,%d] sys_gettimeofday(time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pRegs->R11);
+
+    LOG("[gettimeofday] arg:(time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_gettimeofday(time_t:%ld suseconds_t:%ld,tz_minuteswest:%d tz_dsttime:%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,sin.tv_sec,sin.tv_usec,sin1.tz_minuteswest,sin1.tz_dsttime,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2817,7 +5666,9 @@ IntLixBrkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_brk(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[brk] arg:(%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_brk(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2844,7 +5695,9 @@ IntLixIoctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_ioctl(%u,%u,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[ioctl] arg:(%u,%u,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_ioctl(%u,%u,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2871,7 +5724,9 @@ IntLixUmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_umask(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[umask] arg:(%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_umask(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 INTSTATUS
@@ -2897,7 +5752,9 @@ IntLixGetrlimitHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_getrlimit(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[getrlimit] arg:(%u,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_getrlimit(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2924,7 +5781,9 @@ IntLixSigprocmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_sigprocmask(%d,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[sigprocmask] arg:(%d,0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sigprocmask(%d,0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2951,7 +5810,9 @@ IntLixPollHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_poll(0x%x,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[poll] arg:(0x%x,%u,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_poll(0x%x,%u,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -2978,7 +5839,9 @@ IntLixUstatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_ustat(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[ustat] arg:(%u,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_ustat(%u,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3005,7 +5868,9 @@ IntLixTkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_tkill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[tkill] arg:(%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_tkill(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3032,7 +5897,9 @@ IntLixTgkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_tgkill(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[tgkill] arg:(%d,%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_tgkill(%d,%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3062,7 +5929,9 @@ IntLixSeccompHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R11,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_seccomp(%u,%u,%s) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
+    LOG("[seccomp] arg:(%u,%u,%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_seccomp(%u,%u,%s) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,buf,pRegs->R12);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3089,7 +5958,9 @@ IntLixSetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_setsid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    LOG("[setsid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_setsid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3117,7 +5988,9 @@ IntLixFstatfsHandle(
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[fstatfs] arg:(%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3138,9 +6011,13 @@ IntLixFstatfsHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[fstatfs] arg:(%d,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fstatfs(%d,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     else
-        LOG("process %s [%d,%d] sys_fstatfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
+    LOG("[fstatfs] arg:(%s,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_fstatfs(%s,0x%x) = %d\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3171,7 +6048,9 @@ IntLixStatfsHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_statfs(%s,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
+    LOG("[statfs] arg:(%s,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_statfs(%s,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3198,7 +6077,9 @@ IntLixCapsetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_capset(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[capset] arg:(0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_capset(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3225,7 +6106,9 @@ IntLixCapgetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_capget(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+    LOG("[capget] arg:(0x%x,0x%x),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_capget(0x%x,0x%x) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3258,7 +6141,9 @@ IntLixSysinfoeHandle(
     status =IntVirtMemRead(pRegs->R9,0x70,pRegs->Cr3,buf,&RetLength);
     struct sysinfo sin;
     memcpy(&sin, &buf, sizeof(sin));
-    LOG("process %s [%d,%d] sys_sysinfo(uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pRegs->R10);
+    LOG("[sysinfo] arg:(uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sysinfo(uptime:%ld loads[0]:%lu loads[1]:%lu loads[2]:%lu totalram:%lu freeram:%lu sharedram:%lu bufferram:%lu totalswap:%lu freeswap:%lu procs:%u pad:%lu totalhigh:%lu freehigh:%lu mem_unit:%u _f:%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,sin.uptime,sin.loads[0],sin.loads[1],sin.loads[2],sin.totalram,sin.freeram,sin.sharedram,sin.bufferram,sin.totalswap,sin.freeswap,sin.procs,sin.pad,sin.totalhigh,sin.freehigh,sin.mem_unit,sin._f,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3287,12 +6172,21 @@ IntLixShutdownHandle(
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
     if ((int)pRegs->R9<0){
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_RD),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_WR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
-        else LOG("process %s [%d,%d] sys_shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_RDWR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        else 
+        LOG("[shutdown] arg:(%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3314,20 +6208,39 @@ IntLixShutdownHandle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status)){
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_RD),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_WR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
-        else LOG("process %s [%d,%d] sys_shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
+        LOG("[shutdown] arg:(%d,SHUT_RDWR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%d,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R11);
+        else 
+        LOG("[shutdown] arg:(%d,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_shutdown(%d,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11);
     }else{
         if (SHUT_RD==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
+        LOG("[shutdown] arg:(%s,SHUT_RD),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_RD) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
         else if (SHUT_WR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
+        LOG("[shutdown] arg:(%s,SHUT_WR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_WR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
         else if (SHUT_RDWR==pRegs->R10)
-            LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
-        else LOG("process %s [%d,%d] sys_shutdown(%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
+        LOG("[shutdown] arg:(%s,SHUT_RDWR),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+            // LOG("process %s [%d,%d] sys_shutdown(%s,SHUT_RDWR) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R11);
+            
+        else 
+        LOG("[shutdown] arg:(%s,%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,pRegs->R10,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_shutdown(%s,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11);
     }
     return INT_STATUS_SUCCESS;
 }
@@ -3355,7 +6268,9 @@ IntLixGeteuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_geteuid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    LOG("[geteuid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_geteuid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3382,7 +6297,9 @@ IntLixGetuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_getuid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    LOG("[getuid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_getuid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3409,7 +6326,9 @@ IntLixGetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_getsid(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
+    LOG("[getsid] arg:(%d),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_getsid(%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3436,7 +6355,9 @@ IntLixGetppidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_getppid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
+    LOG("[getppid] arg:(),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_getppid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3463,11 +6384,14 @@ IntLixReadHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    // BYTE buf[0x33] = {0};
-    // DWORD RetLength = 0;
-    // status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    BYTE buf[0x33] = {0};
+    DWORD RetLength = 0;
+    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
     if ((int)pRegs->R9<0){
-        LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+        // IntLixStackDumpUmStackTrace(pTask);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -3488,9 +6412,14 @@ IntLixReadHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-        LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     else
-        LOG("process %s [%d,%d] sys_read(%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[read] arg:(%s,%s,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+        // LOG("process %s [%d,%d] sys_read(%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
+    // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
 }
 
@@ -3517,7 +6446,9 @@ IntLixSysfsHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("process %s [%d,%d] sys_sysfs(%d,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
+    LOG("[sysfs] arg:(%d,%lu,%lu),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        pRegs->R9, pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_sysfs(%d,%lu,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9, pRegs->R10,pRegs->R11,pRegs->R12);
 
     return INT_STATUS_SUCCESS;
 }
@@ -3550,7 +6481,9 @@ IntLixRmdirHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R9,0x32,pRegs->Cr3,buf,&RetLength);
-    LOG("process %s [%d,%d] sys_rmdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
+    LOG("[rmdir] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+        buf,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
+    // LOG("process %s [%d,%d] sys_rmdir(%s) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,buf,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
 

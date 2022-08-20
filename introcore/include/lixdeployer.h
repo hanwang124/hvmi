@@ -6,7 +6,6 @@
 #define _LIX_DEPLOYER_H_
 
 #include "introtypes.h"
-
 INTSTATUS
 IntLixDepInjectFile(
     _In_ BYTE *Content,

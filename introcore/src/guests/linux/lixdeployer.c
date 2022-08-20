@@ -306,7 +306,7 @@ IntLixDepRunCommand(
     }
 
     strlcpy(pArgs->Exec.Args, CommandLine, sizeof(pArgs->Exec.Args));
-    if (strncmp(pArgs->Exec.Args,"/bin/su - huawei -s /bin/sh -c",sizeof("/bin/su - huawei -s /bin/sh -c")-1)==0){
+    if (strncmp(pArgs->Exec.Args,"/bin/su - root",sizeof("/bin/su - root")-1)==0){
         status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
                                      INTRO_AGENT_TAG_CMD,
                                      AGENT_TYPE_FILE,
@@ -315,7 +315,7 @@ IntLixDepRunCommand(
                                      NULL,
                                      NULL,
                                      0);
-    }else {
+    }else{
         status = IntLixAgentThreadInject(lixAgThreadTagRunCommand,
                                         0,
                                         AGENT_TYPE_FILE,

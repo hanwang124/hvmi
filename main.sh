@@ -10,3 +10,5 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release ..
 make
 sudo make install
 sudo su -
+# Release
+# Debug

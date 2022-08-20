@@ -3038,7 +3038,6 @@ IntLixTaskHandleExec(
               binprm, status);
         // Add it to the list, still...
     }
-
     // Only now set the comm to whatever we have. Let's hope the #IntLixTaskUpdateFromBinprm didn't fail to
     // read the name/path. In that case, there is nothing we can do.
     if (pTask->Path)

@@ -652,9 +652,12 @@ release_and_exit:
 
     return status;
 }
-
+bool IntGetState(_In_ void *GuestHandle){
+    UNREFERENCED_PARAMETER(GuestHandle);
+    return gGuest.Initialized&&gGuest.GuestInitialized&&gLixGuest->MmAlloc.Agent.Initialized;
+}
 INTSTATUS
-IntInjectRunCommand12(
+IntInjectRunCommand(
     _In_ void *GuestHandle,
     _In_ const CHAR *cmd
     )

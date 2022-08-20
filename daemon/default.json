@@ -5,7 +5,7 @@
 	},
 	"kernelSpaceMemoryIntrospection": {
 		"actions": {
-			"primaryAction": 2,
+			"primaryAction": 1,
 			"remediationAction": 5
 		},
 		"enabled": true,
@@ -25,7 +25,7 @@
 		"rules": [
 			{
 				"actions": {
-					"primaryAction": 2,
+					"primaryAction": 1,
 					"remediationAction": 5
 				},
 				"monitoringOptions": {

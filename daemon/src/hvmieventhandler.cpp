@@ -281,31 +281,39 @@ void HvmiEventHandler::runPostEvent()
 	pim_->getStartupTime();
 
 	pim_->sendGuestHookEvent();
-	if (!successinject)
+
+	if (successinject==false&&pim_->isIntroActive())
 	{
-		time(&endinject);
-		if (difftime(endinject,startinject)>60)
-		{
-			bool flag = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
-			if (flag)
+			// if (!access("/home/huawei/code/tmp/Sutekh.tar.gz",0)){
+			// 	bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/Sutekh.tar.gz","Sutekh.tar.gz");
+			// 	if (flag2)
+			// 	{
+			// 		bdvmi::logger <<"goodinjectfile2!"<< std::flush;
+			// 	}else
+			// 	{
+			// 		bdvmi::logger <<"errorinjectfile2!"<< std::flush;
+			// 	}
+			// }
+			if (!access("/home/huawei/code/tmp/main",0)){
+			bool flag1 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
+			if (flag1)
 			{
-				time(&startlog);
-				bdvmi::logger <<"goodinjectfile!"<< std::flush;
+				bdvmi::logger <<"goodinjectfile1!"<< std::flush;
 				successinject=true;
 			}else
 			{
-				bdvmi::logger <<"errorinjectfile!"<< std::flush;
+				bdvmi::logger <<"errorinjectfile1!"<< std::flush;
 			}
-		}
+			}
 	}
 	else {
-		if (!successlog){
-			time(&endlog);
-			if (difftime(endlog,startlog)>3)
-			{
-				bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
-				bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
-				bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
+		if (successinject&&!successlog){
+				bool flag1 = pim_->injectRunCommand("/bin/chown root:root /main");
+				// bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
+				bool flag2 = pim_->injectRunCommand("/bin/chmod 777 /main");
+				// bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
+				bool flag3 = pim_->injectRunCommand("/bin/su - root -s /bin/sh -c /main>/home/huawei/output.txt");
+				// bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
 				if (flag1&&flag2&&flag3)
 				{
 					bdvmi::logger <<"goodinjectcmd!"<< std::flush;
@@ -329,7 +337,6 @@ void HvmiEventHandler::runPostEvent()
 				// {
 				// 	bdvmi::logger <<"errorlog!"<< std::flush;
 				// }
-			}
 		}
 	}
 }

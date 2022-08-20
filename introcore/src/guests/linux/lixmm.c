@@ -614,8 +614,8 @@ IntLixMmFetchVma(
         goto _fill;
     }
 
-    WARNING("[WARNING] Failed to find addr 0x%llx in rbtree for task %s (%d, 0x%llx), mm 0x%llx. Status: 0x%08x\n",
-            Address, Task->Comm, Task->Pid, Task->Gva, Task->MmGva, status);
+    // WARNING("[WARNING] Failed to find addr 0x%llx in rbtree for task %s (%d, 0x%llx), mm 0x%llx. Status: 0x%08x\n",
+            // Address, Task->Comm, Task->Pid, Task->Gva, Task->MmGva, status);
 
     status = IntLixMmFindVmaInLinkedList(Task->MmGva, Address, &vmaGva, FALSE);
     if (INT_SUCCESS(status))
@@ -626,7 +626,7 @@ IntLixMmFetchVma(
     status = IntLixMmFindVmaInLinkedList(Task->MmGva, Address, &vmaGva, TRUE);
     if (!INT_SUCCESS(status))
     {
-        ERROR("[ERROR] Failed to find addr in linked list\n");
+        // ERROR("[ERROR] Failed to find addr in linked list\n");
         return INT_STATUS_NOT_FOUND;
     }
 

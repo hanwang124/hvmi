@@ -40,9 +40,13 @@ IntInjectProcessAgentInGuest(
     _In_opt_ const CHAR *Args
     );
 INTSTATUS
-IntInjectRunCommand12(
+IntInjectRunCommand(
     _In_ void *GuestHandle,
     _In_ const CHAR *cmd
+    );
+bool
+IntGetState(
+    _In_ void *GuestHandle
     );
 INTSTATUS
 IntInjectFileAgentInGuest(

@@ -1,0 +1,36 @@
+Hypervisor Memory Introspection Daemon is not currently running.
+-- Build system used: /usr/bin/make
+-- Build type: Release
+-- Compiler: GNU 7.5.0
+-- Passed CFLAGS:  -D__FILENAME__='"$(notdir $(abspath $<))"'
+-- Passed CFLAGS_RELEASE: -O3 -DNDEBUG
+-- Extracted version from /home/huawei/code/hvmi/bddisasm/inc/version.h: 1.34.10
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/huawei/code/hvmi/build
+Consolidate compiler generated dependencies of target bddisasm
+[  6%] Built target bddisasm
+Consolidate compiler generated dependencies of target bdshemu
+[  6%] Built target bdshemu
+Consolidate compiler generated dependencies of target introcore
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixapi.c.o
+CMakeFiles/introcore.dir/build.make:985: recipe for target 'CMakeFiles/introcore.dir/introcore/src/guests/linux/lixapi.c.o' failed
+CMakeFiles/Makefile2:107: recipe for target 'CMakeFiles/introcore.dir/all' failed
+Makefile:135: recipe for target 'all' failed
+[  3%] Built target bddisasm
+[  5%] Built target bdshemu
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixapi.c.o
+CMakeFiles/introcore.dir/build.make:985: recipe for target 'CMakeFiles/introcore.dir/introcore/src/guests/linux/lixapi.c.o' failed
+CMakeFiles/Makefile2:107: recipe for target 'CMakeFiles/introcore.dir/all' failed
+Makefile:135: recipe for target 'all' failed
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/huawei/code/hvmi/daemon/build
+Consolidate compiler generated dependencies of target hvmid
+[100%] Built target hvmid
+[100%] Built target hvmid
+Install the project...
+-- Install configuration: "Release"
+-- Up-to-date: /usr/local/etc/hvmid/policies/default.json
+-- Up-to-date: /usr/local/etc/hvmid/settings.json
+-- Up-to-date: /usr/local/bin/hvmid

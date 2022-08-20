@@ -1071,13 +1071,18 @@ bool IntrocoreManager::injectAgentKiller()
 bool IntrocoreManager::injectRunCommand(const std::string &cmd){
 	if ( guestNotRunning_ || disableIntroInProgress_ )
 		return false;
-	INTSTATUS ret = iface_.InjectRunCommand1(this,cmd.c_str());
+	INTSTATUS ret = iface_.InjectRunCommand(this,cmd.c_str());
 	if (!INT_SUCCESS( ret )){
 		return false;
 	}
 	return true;
 }
-
+bool IntrocoreManager::getState(){
+	return iface_.GetState(this);
+}
+bool IntrocoreManager::isIntroActive(){
+	return introActivated_&&introEnabled_;
+}
 bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::string &exeName, DWORD agentTag,
                                     const std::string &args, const std::string &archiveFile,
                                     const std::string &archiveName )
@@ -1093,7 +1098,7 @@ bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::strin
 	if ( !archiveFile.empty() ) {
 
 		if ( !mapFile( archiveFile, archBytes, archSize ) ) {
-			munmap( exeBytes, exeSize );
+			// munmap( exeBytes, exeSize );
 			return false;
 		}
 
@@ -1101,7 +1106,7 @@ bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::strin
 		if ( !INT_SUCCESS( ret ) ) {
 			bdvmi::logger << bdvmi::ERROR << "Could not inject agent file!" << std::flush;
 			munmap( archBytes, archSize );
-			munmap( exeBytes, exeSize );
+			// munmap( exeBytes, exeSize );
 			return false;
 		}
 		if ( ret == INT_STATUS_SUCCESS ) {
@@ -1110,18 +1115,18 @@ bool IntrocoreManager::injectAgent( const std::string &exeFile, const std::strin
 		}
 	}
 
-	INTSTATUS ret = iface_.InjectProcessAgent( this, agentTag, exeBytes, exeSize, exeName.c_str(), args.c_str() );
+	// INTSTATUS ret = iface_.InjectProcessAgent( this, agentTag, exeBytes, exeSize, exeName.c_str(), args.c_str() );
 
-	if ( ret == INT_STATUS_SUCCESS ) {
-		isAgentRunning_ = true;
-		return true;
-	}
+	// if ( ret == INT_STATUS_SUCCESS ) {
+	// 	isAgentRunning_ = true;
+	// 	return true;
+	// }
 
 	// InjectProcessAgent() failed. If it wouldn't had, we wouldn't have needed to call munmap()
 	// here - introcore has a dedicated unmap callback for successful agent injection.
-	munmap( exeBytes, exeSize );
+	// munmap( exeBytes, exeSize );
 
-	return false;
+	// return false;
 }
 
 INTSTATUS IntrocoreManager::IntQueryGuestInfo( void *GuestHandle, DWORD InfoClass, void *InfoParam, void *Buffer,
