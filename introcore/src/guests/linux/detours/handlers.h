@@ -132,6 +132,8 @@ typedef enum {
     det_sys_oldumount,
     det_sys_setgid16,
     det_sys_getcwd,
+    det_sys_clone,
+    // det_sys_fork,
     // det_sys_getgid16,
     // det_sys_times,
     // det_sys_mount,

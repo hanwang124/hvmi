@@ -125,6 +125,8 @@ def_detour_vars(sys_gettid);
 def_detour_vars(sys_oldumount);
 def_detour_vars(sys_setgid16);
 def_detour_vars(sys_getcwd);
+// def_detour_vars(sys_clone);
+// def_detour_vars(sys_fork);
 // def_detour_vars(sys_getgid16);
 // def_detour_vars(sys_times);
 // def_detour_vars(sys_mount);
@@ -385,6 +387,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_oldumount),
         init_detour_field(sys_setgid16),
         init_detour_field(sys_getcwd),
+        // init_detour_field(sys_clone),
+        // init_detour_field(sys_fork),
         // init_detour_field(sys_getgid16),
         // init_detour_field(sys_times),
         // init_detour_field(sys_mount),
@@ -2745,6 +2749,41 @@ void sys_getcwd(char *buf,long size,int c,int d,int e,int f,long *skip_call,
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // __default_fn_attr
+// void pre_sys_fork(int a,int b,int c,int d,int e,int f,long *skip_call)
+// {
+//     *skip_call=0;
+// }
+
+// __default_fn_attr
+// void sys_fork(int a,int b,int c,int d,int e,int f,long *skip_call)
+// {
+//     long save_rax = __read_reg("rax");
+//     vmcall_2(det_sys_fork, current_task,save_rax);
+// }
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// __default_fn_attr
+// void pre_sys_clone(unsigned long a, unsigned long b, long *c,
+// 	       long*d, unsigned long e,int f,long *skip_call,unsigned long *save_a, unsigned long *save_b, long **save_c,
+// 	       long**save_d, unsigned long *save_e)
+// {
+//     *skip_call=0;
+//     *save_a=a;
+//     *save_b=b;
+//     *save_c=c;
+//     *save_d=d;
+//     *save_e=e;
+// }
+
+// __default_fn_attr
+// void sys_clone(unsigned long a, unsigned long b, long *c,
+// 	       long*d, unsigned long e,int f,long *skip_call,unsigned long save_a, unsigned long save_b, long *save_c,
+// 	       long*save_d, unsigned long save_e)
+// {
+//     long save_rax = __read_reg("rax");
+//     vmcall_7(det_sys_clone, current_task,save_a,save_b,save_c,save_d,save_e,save_rax);
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// __default_fn_attr
 // void sys_getgid16()
 // {
 //     vmcall_1(det_sys_getgid16, current_task);
@@ -3422,6 +3461,8 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_oldumount);
     def_detour_asm_vars(sys_setgid16);
     def_detour_asm_vars(sys_getcwd);
+    // def_detour_asm_vars(sys_clone);
+    // def_detour_asm_vars(sys_fork);
     // def_detour_asm_vars(sys_getgid16);
     // def_detour_asm_vars(sys_times);
     // def_detour_asm_vars(sys_mount);

@@ -412,6 +412,8 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_oldumount,                  IntLixOldumountHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_setgid16,                   IntLixSetgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_getcwd,                     IntLixGetcwdHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_clone,                      IntLixCloneHandler,           DETOUR_ENABLE_ALWAYS                                    ),
+    // __init_detour_entry(sys_fork,                       IntLixForkHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     
     // __init_detour_entry(sys_getgid16,                   IntLixsys_getgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
     // __init_detour_entry(sys_times,                   IntLixsys_timesHandler,           DETOUR_ENABLE_ALWAYS                                    ),
@@ -524,6 +526,7 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     // __init_detour_entry(sys_ioprio_get,                   IntLixsys_ioprio_getHandler,           DETOUR_ENABLE_ALWAYS                                    ),
 
 };
+
 // INTSTATUS
 // IntLixsys_getgid16Handler(
 //     _In_ void *Detour
@@ -5538,7 +5541,7 @@ IntLixAlarmHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("[alarm] arg:(%s),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
+    LOG("[alarm] arg:(%u),execname:%s,procName:%s,pid:%d,tgid:%d,return:%ld,cmdline:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine);
     // LOG("process %s [%d,%d] sys_alarm(%u) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
