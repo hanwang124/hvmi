@@ -143,48 +143,57 @@ def Solve():
     os.system(cmd3)
     os.system(cmd1)
     while True:
-        for root, dirs, files in os.walk(sample):
-            for name in files:
-                samplepath = os.path.join(root, name)
-                if os.access(samplepath,os.F_OK):
-                    file_md5 = get_file_md5(samplepath)
-                    now = int(round(time.time() * 1000))
-                    time_stamp1 = time.strftime('_%Y-%m-%d_%H:%M:%S',time.localtime(now / 1000))
-                    path = report + name +'_'+ file_md5 + time_stamp1 + '.txt'
-                    pcappath = report + file_md5 + '.cap'
-                    cmd2 = 'journalctl -t hvmid -f'
-                    p2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                        shell=True, close_fds=True, preexec_fn=os.setsid)
-                    cmd4 = 'cp '+samplepath+' '+tmppath
-                    os.system(cmd4)
-                    time_stamp = get_time()
-                    print(time_stamp+name+" " + file_md5 +' begin')
-                    # cmd4 = 'echo 123456 | sudo -S tcpdump src host 192.168.79.220 or dst host 192.168.79.220 -w ' + pcappath
-                    # p4 = subprocess.Popen(cmd4, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True,close_fds=True,preexec_fn=os.setsid)
-                    try:
-                        Request('opening')
-                    except:
-                        print("server.py not run")
-                        return
-                    run = writefile(p2, path)
-                    Close(p2)
-                    # os.killpg(p4.pid, signal.SIGUSR1)
-                    cmd8 = 'rm -f ' + tmppath
-                    os.system(cmd8)
-                    cmd9 = 'mv -f ' + samplepath + ' ' +savesamplepath
-                    os.system(cmd9)
-                    # print("123")
-                    solvelog(path,name +'_'+ file_md5 + time_stamp1 + '.txt')
-                    time.sleep(3)
-        time.sleep(5);
-        time_stamp = get_time()
-        print(time_stamp+'sleep')
+        print("修改main.c文件命令")
+        print("修改完成继续输入y")
+        print("结束输入n")
+        in1 = input()
+        if in1 =='n':
+            return
+        if in1 == 'y':
+            os.system("gcc -o ./tmp/main ./tmp/main.c")
+            for root, dirs, files in os.walk(sample):
+                for name in files:
+                    samplepath = os.path.join(root, name)
+                    if os.access(samplepath,os.F_OK):
+                        file_md5 = get_file_md5(samplepath)
+                        now = int(round(time.time() * 1000))
+                        time_stamp1 = time.strftime('_%Y-%m-%d_%H:%M:%S',time.localtime(now / 1000))
+                        path = report + name +'_'+ file_md5 + time_stamp1 + '.txt'
+                        # pcappath = report + file_md5 + '.cap'
+                        cmd2 = 'journalctl -t hvmid -f'
+                        p2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                            shell=True, close_fds=True, preexec_fn=os.setsid)
+                        cmd4 = 'cp '+samplepath+' '+tmppath
+                        os.system(cmd4)
+                        time_stamp = get_time()
+                        print(time_stamp+name+" " + file_md5 +' begin')
+                        # cmd4 = 'echo 123456 | sudo -S tcpdump src host 192.168.79.220 or dst host 192.168.79.220 -w ' + pcappath
+                        # p4 = subprocess.Popen(cmd4, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True,close_fds=True,preexec_fn=os.setsid)
+                        try:
+                            Request('opening')
+                        except:
+                            print("server.py not run")
+                            return
+                        run = writefile(p2, path)
+                        Close(p2)
+                        # os.killpg(p4.pid, signal.SIGUSR1)
+                        # cmd8 = 'rm -f ' + tmppath
+                        # os.system(cmd8)
+                        # cmd9 = 'mv -f ' + samplepath + ' ' +savesamplepath
+                        # os.system(cmd9)
+                        # print("123")
+                        # solvelog(path,name +'_'+ file_md5 + time_stamp1 + '.txt')
+                        time.sleep(3)
+                    # return
+        # time.sleep(5);
+        # time_stamp = get_time()
+        # print(time_stamp+'sleep')
 
 
 if __name__ == "__main__":
     # benignReport = '/home/huawei/code/benignReport/'
     # malwareReport = '/home/huawei/code/malwareReport/'
-    tmppath = '/home/huawei/code/tmp/main'
+    tmppath = '/home/huawei/code/tmp/file'
     report = '/home/huawei/code/report/'
     solvereport = '/home/huawei/code/solvereport/'
     sample = '/home/huawei/code/sample/'

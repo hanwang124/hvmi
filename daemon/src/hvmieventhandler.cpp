@@ -284,16 +284,16 @@ void HvmiEventHandler::runPostEvent()
 
 	if (successinject==false&&pim_->isIntroActive())
 	{
-			// if (!access("/home/huawei/code/tmp/Sutekh.tar.gz",0)){
-			// 	bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/Sutekh.tar.gz","Sutekh.tar.gz");
-			// 	if (flag2)
-			// 	{
-			// 		bdvmi::logger <<"goodinjectfile2!"<< std::flush;
-			// 	}else
-			// 	{
-			// 		bdvmi::logger <<"errorinjectfile2!"<< std::flush;
-			// 	}
-			// }
+			if (!access("/home/huawei/code/tmp/file",0)){
+				bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/file","file");
+				if (flag2)
+				{
+					bdvmi::logger <<"goodinjectfile2!"<< std::flush;
+				}else
+				{
+					bdvmi::logger <<"errorinjectfile2!"<< std::flush;
+				}
+			}
 			if (!access("/home/huawei/code/tmp/main",0)){
 			bool flag1 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
 			if (flag1)
@@ -311,6 +311,7 @@ void HvmiEventHandler::runPostEvent()
 				bool flag1 = pim_->injectRunCommand("/bin/chown root:root /main");
 				// bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
 				bool flag2 = pim_->injectRunCommand("/bin/chmod 777 /main");
+				// bool flag4 = pim_->injectRunCommand("/bin/chmod 777 /file");
 				// bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
 				bool flag3 = pim_->injectRunCommand("/bin/su - root -s /bin/sh -c /main>/home/huawei/output.txt");
 				// bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
