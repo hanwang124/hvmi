@@ -284,6 +284,16 @@ void HvmiEventHandler::runPostEvent()
 
 	if (successinject==false&&pim_->isIntroActive())
 	{
+			if (!access("/home/huawei/code/tmp/parameter",0)){
+				bool flag3 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/parameter","parameter");
+				if (flag3)
+				{
+					bdvmi::logger <<"goodinjectfile3!"<< std::flush;
+				}else
+				{
+					bdvmi::logger <<"errorinjectfile3!"<< std::flush;
+				}
+			}
 			if (!access("/home/huawei/code/tmp/file",0)){
 				bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/file","file");
 				if (flag2)
