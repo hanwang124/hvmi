@@ -53,7 +53,11 @@ IntLixFileGetDentry(
     _In_ QWORD File,
     _Out_ QWORD *Dentry
     );
-
+INTSTATUS
+IntLixPathGetDentry(
+    _In_ QWORD Path,
+    _Out_ QWORD *Dentry
+    );
 INTSTATUS
 IntLixDentryGetName(
     _In_ QWORD Dentry,
@@ -75,7 +79,18 @@ IntLixFileGetPath(
     _Out_ char **Path,
     _Out_opt_ DWORD *Length
     );
-
+INTSTATUS
+IntLixFileReadDentry(
+    _In_ QWORD DentryGva,
+    _Out_ char *Name,
+    _Out_ DWORD *Length
+    );
+INTSTATUS
+IntLixPathGetPath(
+    _In_ QWORD crtDentryGva,
+    _Out_ char **Path,
+    _Out_opt_ DWORD *Length
+    );
 void
 IntLixFilesCacheUninit(
     void

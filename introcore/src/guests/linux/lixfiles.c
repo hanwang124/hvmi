@@ -190,6 +190,36 @@ IntLixFileCacheFindDentry(
     return NULL;
 }
 
+INTSTATUS
+IntLixPathGetDentry(
+    _In_ QWORD Path,
+    _Out_ QWORD *Dentry
+    )
+///
+/// @brief Reads the value of the dentry field of the 'struct file'.
+///
+/// @param[in]  File        The guest virtual address of the 'struct file'
+/// @param[in]  Dentry      The guest virtual address of the 'struct dentry'.
+///
+/// @retval     #INT_STATUS_SUCCESS         On success.
+/// @retval     #INT_STATUS_NOT_SUPPORTED   If the guest virtual address of the 'struct dentry' is not a kernel pointer.
+///
+{
+    INTSTATUS status = IntKernVirtMemFetchQword(Path + 8, Dentry);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntKernVirtMemFetchQword failed with status: 0x%08x\n", status);
+        return status;
+    }
+
+    if (!IS_KERNEL_POINTER_LIX(*Dentry))
+    {
+        ERROR("[ERROR] The value of the dentry is not a linux-kernel pointer!\n");
+        return INT_STATUS_NOT_SUPPORTED;
+    }
+
+    return INT_STATUS_SUCCESS;
+}
 
 INTSTATUS
 IntLixFileGetDentry(
@@ -299,7 +329,7 @@ IntLixDentryGetName(
 }
 
 
-static INTSTATUS
+INTSTATUS
 IntLixFileReadDentry(
     _In_ QWORD DentryGva,
     _Out_ char *Name,
@@ -343,6 +373,216 @@ IntLixFileReadDentry(
     *(Name + qstr.Length) = 0;
 
     *Length = qstr.Length;
+
+    return INT_STATUS_SUCCESS;
+}
+
+INTSTATUS
+IntLixPathGetPath(
+    _In_ QWORD pathGva,
+    _Out_ char **Path,
+    _Out_opt_ DWORD *Length
+    )
+///
+/// @brief Gets the path that corresponds to the provided FileStructGva (guest virtual address of the 'struct file').
+///
+/// For each iteration the parent of the dentry is fetched; the loop of iteration ends when the dentry.parent is equal
+/// with the current dentry guest virtual address or the dentry.parent is not a valid kernel guest virtual address.
+///
+/// @param[in]  crtDentryGva   The guest virtual address of the 'struct file'.
+/// @param[out] Path            On success, contains a pointer to the path of the file.
+/// @param[out] Length          On success, the length of the path.
+///
+/// @retval     #INT_STATUS_SUCCESS                 On success.
+/// @retval     #INT_STATUS_INVALID_PARAMETER_1     If the pointer to the 'struct dentry' is not a kernel pointer.
+/// @retval     #INT_STATUS_INVALID_PARAMETER_2     If the pointer to the Path parameter is invalid.
+/// @retval     #INT_STATUS_NOT_SUPPORTED           If the guest virtual address of the 'struct dentry' is not a kernel
+///                                                 pointer.
+///
+{
+    INTSTATUS status = INT_STATUS_SUCCESS;
+    DENTRY_PATH *pDentry = NULL;
+    QWORD cacheDentryGva = 0;
+    QWORD crtDentryGva = 0;
+    QWORD parentDentry = 0;
+    QWORD prevHashList = 0;
+    DWORD fileNameLength = 0;
+    DWORD dentryLevel = 0;
+    INT32 index = 0;
+    char tmpOutput[LIX_MAX_PATH] = { 0 };
+
+    if (!IS_KERNEL_POINTER_LIX(pathGva))
+    {
+        return INT_STATUS_INVALID_PARAMETER_1;
+    }
+
+    if (Path == NULL)
+    {
+        return INT_STATUS_INVALID_PARAMETER_2;
+    }
+
+    *Path = NULL;
+    status = IntLixPathGetDentry(pathGva, &crtDentryGva);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntLixFileGetDentry failed for file %llx: 0x%08x\n", pathGva, status);
+        return status;
+    }
+    status = IntKernVirtMemFetchQword(crtDentryGva + LIX_FIELD(Dentry, Parent), &parentDentry);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntKernVirtMemFetchQword failed for GVA 0x%016llx: 0x%08x\n",
+              crtDentryGva + LIX_FIELD(Dentry, Parent), status);
+        return status;
+    }
+
+    status = IntKernVirtMemFetchQword(crtDentryGva + LIX_FIELD(Dentry, HashList) + sizeof(QWORD), &prevHashList);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntKernVirtMemFetchQword failed for GVA 0x%016llx: 0x%08x\n",
+              crtDentryGva + LIX_FIELD(Dentry, HashList) + sizeof(QWORD), status);
+        return status;
+    }
+
+    if (!prevHashList && crtDentryGva == parentDentry)
+    {
+        DWORD length = CSTRLEN("(deleted)");
+        gLixPath[sizeof(gLixPath) - 1] = 0;
+        memcpy(gLixPath + sizeof(gLixPath) - length - 1, "(deleted)", length);
+        *Path = gLixPath + sizeof(gLixPath) - length - 1;
+
+        if (Length)
+        {
+            *Length = length;
+        }
+
+        return INT_STATUS_SUCCESS;
+    }
+
+    status = IntLixFileReadDentry(crtDentryGva, tmpOutput, &fileNameLength);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntLixFileReadDentry failed for dentry @ 0x%016llx : %08x", crtDentryGva, status);
+        return status;
+    }
+
+    index = sizeof(gLixPath) -1;
+    gLixPath[index] = 0;
+
+    // fileNameLength is ok, it can be maximum LIX_MAX_PATH (256). Check out IntLixFileReadDentry.
+    index -= fileNameLength;
+    memcpy(gLixPath + index, tmpOutput, fileNameLength);
+
+    index--;
+    gLixPath[index] = '/';
+
+    status = IntKernVirtMemFetchQword(crtDentryGva + LIX_FIELD(Dentry, Parent), &crtDentryGva);
+    if (!INT_SUCCESS(status))
+    {
+        ERROR("[ERROR] IntKernVirtMemFetchQword failed for GVA 0x%016llx: 0x%08x\n",
+              crtDentryGva + LIX_FIELD(Dentry, Parent), status);
+        return status;
+    }
+
+    if (!IS_KERNEL_POINTER_LIX(crtDentryGva))
+    {
+        return INT_STATUS_NOT_SUPPORTED;
+    }
+
+    cacheDentryGva = crtDentryGva;
+
+    while (crtDentryGva && dentryLevel < LIX_MAX_DENTRY_DEPTH)
+    {
+        QWORD dentryParentGva = 0;
+        DWORD crtNameLength = 0;
+
+        pDentry = IntLixFileCacheFindDentry(crtDentryGva);
+        if (pDentry)
+        {
+            break;
+        }
+
+        status = IntLixFileReadDentry(crtDentryGva, tmpOutput, &crtNameLength);
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntLixFileReadDentry failed for dentry @ 0x%016llx : %08x", crtDentryGva, status);
+            return status;
+        }
+
+        status = IntKernVirtMemFetchQword(crtDentryGva + LIX_FIELD(Dentry, Parent), &dentryParentGva);
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntKernVirtMemFetchQword failed for GVA 0x%016llx: 0x%08x\n",
+                  crtDentryGva + LIX_FIELD(Dentry, Parent), status);
+            return status;
+        }
+
+        // crtNameLength can be max LIX_MAX_PATH.
+        index -= crtNameLength;
+        if (index <= 0)
+        {
+            ERROR("[ERROR] Path for file 0x%llx is too big\n", crtDentryGva);
+            return INT_STATUS_INVALID_DATA_SIZE;
+        }
+
+        memcpy(gLixPath + index, tmpOutput, crtNameLength);
+        if (dentryParentGva != crtDentryGva)
+        {
+            index--;
+            gLixPath[index] = '/';
+        }
+        else if (index < (INT32)sizeof(gLixPath) - 1)
+        {
+            // 99.9% of cases the parent is '/', so handle that
+            if (gLixPath[index] == '/' && gLixPath[index + 1] == '/')
+            {
+                index++;
+            }
+        }
+
+        if (!IS_KERNEL_POINTER_LIX(dentryParentGva))
+        {
+            ERROR("[ERROR] Got to a invalid parent %llx in dentry %llx!\n", dentryParentGva, crtDentryGva);
+            break;
+        }
+        else if (dentryParentGva == crtDentryGva)
+        {
+            break;
+        }
+
+        crtDentryGva = dentryParentGva;
+
+        dentryLevel++;
+    }
+
+    if (!pDentry && IntLixFileCachePathIsValid(gLixPath + index))
+    {
+        IntLixFileCacheCreateDentryPath(gLixPath + index,
+                                        sizeof(gLixPath) - index - fileNameLength - 1,
+                                        cacheDentryGva);
+    }
+    else if (pDentry)
+    {
+        // The length of the 'd_entry' path is validated when the cache entry is created.
+        INT32 size = index - pDentry->Length + sizeof(char);
+
+        if (size < 0)
+        {
+            ERROR("[ERROR] The length (0x%08x) of the 'd_entry' path underflows the our buffer (0x%08x)\n",
+                  pDentry->Length, index);
+            return INT_STATUS_INVALID_DATA_SIZE;
+        }
+
+        memcpy(gLixPath + index - pDentry->Length + 1, pDentry->Path, pDentry->Length);
+        index -= pDentry->Length - 1;
+    }
+
+    *Path = gLixPath + index;
+
+    if (Length != NULL)
+    {
+        *Length = sizeof(gLixPath) - index - 1;
+    }
 
     return INT_STATUS_SUCCESS;
 }

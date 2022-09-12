@@ -1,0 +1,1350 @@
+handlers.c: In function ‘pre_do_sysinfo’:
+handlers.c:890:12: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+     *save_a=a;
+            ^
+handlers.c: In function ‘pre_sys_statfs’:
+handlers.c:943:15: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+     *save_path=path;
+               ^
+handlers.c: In function ‘pre_sys_sigprocmask’:
+handlers.c:1088:14: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+     *save_how=how;
+              ^
+handlers.c:1089:14: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_set=set;
+              ^
+handlers.c:1090:15: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_oset=oset;
+               ^
+handlers.c: In function ‘pre_sys_recvfrom’:
+handlers.c:2188:19: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+     *save_addr_len=addr_len;
+                   ^
+handlers.c: In function ‘pre_sys_dup2’:
+handlers.c:2263:16: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_newfd=save_newfd;
+                ^
+handlers.c: In function ‘pre_sys_execveat’:
+handlers.c:2384:19: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_filename=filename;
+                   ^
+handlers.c:2385:15: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_argv=argv;
+               ^
+handlers.c:2386:15: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
+     *save_envp=envp;
+               ^
+Hypervisor Memory Introspection Daemon is not currently running.
+-- Build system used: /usr/bin/make
+-- Build type: Release
+-- Compiler: GNU 7.5.0
+-- Passed CFLAGS:  -D__FILENAME__='"$(notdir $(abspath $<))"'
+-- Passed CFLAGS_RELEASE: -O3 -DNDEBUG
+-- Extracted version from /home/huawei/code/hvmi/bddisasm/inc/version.h: 1.34.10
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/huawei/code/hvmi/build
+Consolidate compiler generated dependencies of target bddisasm
+[  5%] Built target bddisasm
+Consolidate compiler generated dependencies of target bdshemu
+[  5%] Built target bdshemu
+Consolidate compiler generated dependencies of target introcore
+[  5%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixfiles.c.o
+[  5%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixguest.c.o
+[  5%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixmm.c.o
+[  5%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixprocess.c.o
+[  5%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixstack.c.o
+[  5%] Linking C shared library ../bin/x64/Release/libintrocore.so
+Copying library to the build directory
+[  5%] Built target introcore
+Loading file jsons/km-signatures-token-privs.json
+Parsing file jsons/km-signatures-token-privs.json
+
+Loading file jsons/um-signatures-ntdll.json
+Parsing file jsons/um-signatures-ntdll.json
+
+Loading file jsons/km-signatures-read.json
+Parsing file jsons/km-signatures-read.json
+
+Loading file jsons/um-signatures-chrome.json
+Parsing file jsons/um-signatures-chrome.json
+
+Loading file jsons/um-signatures-browsers-exports.json
+Parsing file jsons/um-signatures-browsers-exports.json
+
+Loading file jsons/um-signatures-firefox-exports.json
+Parsing file jsons/um-signatures-firefox-exports.json
+
+Loading file jsons/km-signatures-patchguard.json
+Parsing file jsons/km-signatures-patchguard.json
+
+Loading file jsons/um-signatures-browsers-codeblocks.json
+Parsing file jsons/um-signatures-browsers-codeblocks.json
+
+Loading file jsons/km-signatures-hal-heap.json
+Parsing file jsons/km-signatures-hal-heap.json
+
+Loading file jsons/km-um-signatures-exports.json
+Parsing file jsons/km-um-signatures-exports.json
+
+Loading file jsons/km-um-signatures-codeblocks.json
+Parsing file jsons/km-um-signatures-codeblocks.json
+
+Loading file jsons/km-signatures-sud-integrity.json
+Parsing file jsons/km-signatures-sud-integrity.json
+
+Loading file jsons/um-signatures-apc-system-exports.json
+Parsing file jsons/um-signatures-apc-system-exports.json
+
+Loading file jsons/um-signature-syscall.json
+Parsing file jsons/um-signature-syscall.json
+
+Loading file jsons/um-signatures-user32.json
+Parsing file jsons/um-signatures-user32.json
+
+Loading file jsons/km-signature-acl-edit.json
+Parsing file jsons/km-signature-acl-edit.json
+
+Loading file jsons/um-signatures-firefox-codeblocks.json
+Parsing file jsons/um-signatures-firefox-codeblocks.json
+
+Loading file jsons/km-signatures-dtr.json
+Parsing file jsons/km-signatures-dtr.json
+
+Loading file jsons/um-signatures-wow64-codeblocks.json
+Parsing file jsons/um-signatures-wow64-codeblocks.json
+
+Loading file jsons/km-signatures-write.json
+Parsing file jsons/km-signatures-write.json
+
+Loading file jsons/km-signature-security-descriptor.json
+Parsing file jsons/km-signature-security-descriptor.json
+
+Loading file jsons/km-exceptions-token-privs-write.json
+Parsing file jsons/km-exceptions-token-privs-write.json
+
+Loading file jsons/km-exceptions-logger-context-writes.json
+Parsing file jsons/km-exceptions-logger-context-writes.json
+
+Loading file jsons/km-exception-acl-edit-write.json
+Parsing file jsons/km-exception-acl-edit-write.json
+
+Loading file jsons/km-exceptions-write.json
+Parsing file jsons/km-exceptions-write.json
+
+Loading file jsons/km-exception-security-descriptor-write.json
+Parsing file jsons/km-exception-security-descriptor-write.json
+
+Loading file jsons/um-exceptions-system-processes.json
+Parsing file jsons/um-exceptions-system-processes.json
+
+Loading file jsons/um-exceptions-wow64-writes.json
+Parsing file jsons/um-exceptions-wow64-writes.json
+
+Loading file jsons/km-exceptions-dtr.json
+Parsing file jsons/km-exceptions-dtr.json
+
+Loading file jsons/km-exceptions-read.json
+Parsing file jsons/km-exceptions-read.json
+
+Loading file jsons/um-exceptions-firefox-injections.json
+Parsing file jsons/um-exceptions-firefox-injections.json
+
+Loading file jsons/km-exceptions-sud-integrity.json
+Parsing file jsons/km-exceptions-sud-integrity.json
+
+Loading file jsons/km-exceptions-patchguard-msr.json
+Parsing file jsons/km-exceptions-patchguard-msr.json
+
+Loading file jsons/um-exceptions-ntdll.json
+Parsing file jsons/um-exceptions-ntdll.json
+
+Loading file jsons/um-exceptions-firefox-writes.json
+Parsing file jsons/um-exceptions-firefox-writes.json
+
+Loading file jsons/um-exceptions-browsers-execs.json
+Parsing file jsons/um-exceptions-browsers-execs.json
+
+Loading file jsons/km-um-exceptions-write.json
+Parsing file jsons/km-um-exceptions-write.json
+
+Loading file jsons/km-exceptions-hal-heap.json
+Parsing file jsons/km-exceptions-hal-heap.json
+
+Loading file jsons/um-exceptions-user32.json
+Parsing file jsons/um-exceptions-user32.json
+
+Loading file jsons/um-exceptions-apc-system-processes.json
+Parsing file jsons/um-exceptions-apc-system-processes.json
+
+Loading file jsons/um-exceptions-chrome.json
+Parsing file jsons/um-exceptions-chrome.json
+
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'driver' (02), '32 64 write' (20000006), ['nt-rdata-writes'] ([2516582449])
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'driver imports' (03), '32 64 write' (20000006), ['kernel-iat-init'] ([2516582450])
+'[kernel]' (-0000001), '[kernel]' (00000002), '\filesystem\refs' (5a669414), 'fastio' (09), 'init integrity 32 64 write' (2000100e)
+'[kernel]' (-0000001), '[kernel]' (00000002), '[hal]' (00000003), 'hal-heap' (12), '32 64 write' (20000006)
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'infinity-hook' (17), 'integrity 32 64 write' (20001006)
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'token-privs' (19), '32 64 write' (20000006), ['kernel-token-privs-writes-32', 'kernel-token-privs-writes-64'] ([2516582401, 2516582402])
+'[hal]' (-0000001), '[hal]' (00000003), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['hal-idt'] ([1258291251])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'msr' (10), '32 64 write' (20000006), ['patchguard-lstar'] ([2516582417])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'hal-heap' (12), '32 64 write' (20000006), ['hal-heap-code-val-offset-0', 'hal-heap-code-val-offset-5', 'hal-heap-code-val-offset-8'] ([2097152019, 2097152020, 2097152021])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['init-x86-idt', 'x86-idt-null'] ([838860853, 1258291252])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['patchguard-idt-codeblocks', 'patchguard-idt'] ([1258291255, 2516582454])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt-reg' (15), '32 64 write' (20000006), ['patchguard-idtr-value-pattern-1', 'patchguard-idtr-value-pattern-2', 'patchguard-idtr-value-pattern-3', 'patchguard-idtr-value-pattern-4', 'patchguard-idtr-value-pattern-5', 'patchguard-idtr-value-pattern-6', 'patchguard-idtr-value-pattern-7'] ([2097152038, 2097152039, 2097152040, 2097152041, 2097152042, 2097152043, 2097152044])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt-reg' (15), '32 64 write' (20000006), ['patchguard-idtr-codeblocks'] ([2516582445])
+'-' (-0000001), '-' (00000004), '[kernel]' (00000002), 'driver exports' (18), 'read 32 64' (10000006), ['patchguard-nt-eat-read'] ([2516582408])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'token-privs' (19), 'integrity feedback 32 64 write' (20001007)
+'-' (-0000001), '-' (00000004), 'csrss.exe' (24324770), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'svchost.exe' (2d5d8a3e), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'microsoftedge.exe' (40b276e2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'startmenuexperiencehost' (41cf65ce), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'citrix.deliver' (4683a5db), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'msmpeng.exe' (6c10fce2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006), ['sec-desc-msmpeng'] ([838860856])
+'-' (-0000001), '-' (00000004), 'winstore.app.exe' (84fe4d9c), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'system' (87704fd7), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'smsvchost.exe' (9c9ef792), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'msiexec.exe' (9ce939ac), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'lsass.exe' (adbd0ef2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'acrord32.exe' (e814e360), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'microsoftedge.exe' (40b276e2), 'acl-edit' (23), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'citrix.deliver' (4683a5db), 'acl-edit' (23), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'system' (87704fd7), 'acl-edit' (23), 'integrity 32 64 write' (20001006), ['acl-edit-system'] ([838860832])
+'-' (-0000001), '-' (00000004), 'ProductTypeIsValid' (235b59e0), 'sud-modification' (24), 'integrity 32 64 write' (20001006), ['sig-producttypeisvalid'] ([838860827])
+'-' (-0000001), '-' (00000004), 'MitigationPolicies' (65a30d8b), 'sud-modification' (24), 'integrity 32 64 write' (20001006), ['sig-mitigationpolicies'] ([838860828])
+'*' (00000000), '*' (00000000), 'None' (00000000), 'process' (02), 'init child 32 64 write' (2000020e)
+'-' (00000004), '*' (00000000), 'firefox.exe' (209b1103), 'nx_zone' (05), '32 64 exec' (40000006), ['browsers-exec-syscall'] ([2097152030])
+'-' (00000004), '*' (00000000), 'chrome.exe' (80689a87), 'nx_zone' (05), '32 64 exec' (40000006), ['browsers-exec-syscall'] ([2097152030])
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206)
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206), ['browsers-common-inj-exports', 'firefox-inj-exports'] ([419430412, 419430413])
+'csrss.exe' (24324770), '*' (00000000), 'None' (00000000), 'process' (02), 'system-process 32 64 write' (20000106)
+'explorer.exe' (3a2949c5), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), '32 64 write' (20000006)
+'firefox.exe' (5e40ad5e), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['firefox-lib-writes-code'] ([2516582437])
+'firefox.exe' (5e40ad5e), 'ntdll.dll' (be9d4ec5), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['firefox-lib-writes-code'] ([2516582437])
+'wininit.exe' (72feee59), 'lsass.exe' (adbd0ef2), 'None' (00000000), 'process' (02), 'system-process child 32 64 write' (20000306)
+'wininit.exe' (72feee59), 'services.exe' (bbd3278a), 'None' (00000000), 'process' (02), 'system-process child 32 64 write' (20000306)
+'wmiprvse.exe' (805ae395), '*' (00000000), 'None' (00000000), 'process' (02), '32 64 write' (20000006)
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206)
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206), ['chrome-injection-exports', 'chrome-self-injection-exports'] ([419430409, 419430410])
+'chrome.exe' (8eb0d21f), 'kernel32.dll' (72f47653), 'chrome.exe' (80689a87), 'module exports' (06), '32 64 write' (20000006), ['chrome-export-codeblocks'] ([2516582411])
+'xul.dll' (96da11ae), 'kernelbase.dll' (2945f399), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernelbase.dll' (2945f399), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'mozglue-xul-code-64'] ([419430416, 2516582436])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), '32 64 write' (20000006), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'mozglue-xul-code-64'] ([419430416, 2516582436])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'plugin-container.exe' (497c70fd), 'module' (03), '32 64 write' (20000006), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'lsass.exe' (adbd0ef2), '*' (00000000), 'None' (00000000), 'process' (02), 'system-process 32 64 write' (20000106)
+'wow64.dll' (b29d7275), 'kernelbase.dll' (2945f399), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernel32.dll' (72f47653), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-self'] ([2516582446])
+'wow64.dll' (b29d7275), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), 'return 32 64 write' (20000016), ['wow64-self-ret'] ([2516582447])
+'wow64.dll' (b29d7275), 'user32.dll' (b8d0fd42), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernelbase.dll' (2945f399), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernel32.dll' (72f47653), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'user32.dll' (b8d0fd42), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), '*' (00000000), 'module exports' (06), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), '*' (00000000), 'module exports' (06), '32 64 write' (20000006), ['user32-export-writes'] ([2516582431])
+'services.exe' (bbd3278a), '*' (00000000), 'None' (00000000), 'apc-thread' (10), '64 32 system-process write' (20000106), ['um-apc-services-exports'] ([419430429])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-rdata-64'] ([2516582405])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-init-32'] ([2516582403])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-iat-writes'] ([2516582407])
+'ntdll.dll' (be9d4ec5), 'kernelbase.dll' (2945f399), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernelbase.dll' (2945f399), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ws2_32.dll' (3d20b35c), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ws2_32.dll' (3d20b35c), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernel32.dll' (72f47653), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wininet.dll' (7350cbf8), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wininet.dll' (7350cbf8), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wow64cpu.dll' (824c82be), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow64-init'] ([2516582404])
+'ntdll.dll' (be9d4ec5), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'wow64win.dll' (b3ad9cbb), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ntdll.dll' (be9d4ec5), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['ntdll-iat-writes'] ([2516582407])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module imports' (04), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'mozglue.dll' (e9044dde), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-kernel32-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430415, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-kernel32-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430415, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'ntdll.dll' (be9d4ec5), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-ntdll-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430414, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'ntdll.dll' (be9d4ec5), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-ntdll-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430414, 2516582435, 2516582436])
+'firefox.exe' (209b1103), '[kernel]' (00000002), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 write' (20000006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-firefox-exports'] ([419430422, 419430424, 2516582425, 2516582426])
+'chrome.exe' (80689a87), '[kernel]' (00000002), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 write' (20000006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-chromium-exports'] ([419430422, 419430423, 2516582425, 2516582426])
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 user write' (20008006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-firefox-exports'] ([419430422, 419430424, 2516582425, 2516582426])
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 user write' (20008006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-chromium-exports'] ([419430422, 419430423, 2516582425, 2516582426])
+'chrome-injection-exports' (419430409), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3183758248, 'delta': 16}]]
+'chrome-self-injection-exports' (419430410), 'chrome.exe' (8eb0d21f), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'browsers-common-inj-exports' (419430412), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3133994438, 'delta': 16}], [{'name': 3183758248, 'delta': 16}], [{'name': 1036825229, 'delta': 16}], [{'name': 1835162410, 'delta': 16}], [{'name': 2462062789, 'delta': 16}], [{'name': 297365065, 'delta': 16}], [{'name': 864572649, 'delta': 16}], [{'name': 729299144, 'delta': 16}], [{'name': 1587427818, 'delta': 16}], [{'name': 3826293868, 'delta': 16}], [{'name': 1771937089, 'delta': 16}], [{'name': 2734182245, 'delta': 16}]]
+'firefox-inj-exports' (419430413), 'firefox.exe' (5e40ad5e), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'mozglue-ntdll-hooked-functions' (419430414), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 71560827, 'delta': 13}]]
+'mozglue-kernel32-hooked-functions' (419430415), 'kernel32.dll' (72f47653), '32 64' (00000003), [[{'name': 2648873172, 'delta': 13}], [{'name': 1533682187, 'delta': 13}]]
+'xul-kernel32-hooked-functions' (419430416), 'kernel32.dll' (72f47653), '32 64' (00000003), [[{'name': 771864344, 'delta': 13}], [{'name': 2353207217, 'delta': 21}], [{'name': 628741775, 'delta': 21}], [{'name': 537488377, 'delta': 14}], [{'name': 2380543194, 'delta': 8}], [{'name': 1477476690, 'delta': 8}], [{'name': 488941392, 'delta': 32}], [{'name': 3260598090, 'delta': 32}], [{'name': 3449392723, 'delta': 32}], [{'name': 2840766610, 'delta': 16}], [{'name': 674554609, 'delta': 16}], [{'name': 2173257769, 'delta': 16}], [{'name': 2773382594, 'delta': 16}], [{'name': 1369096339, 'delta': 16}], [{'name': 39094037, 'delta': 16}], [{'name': 1477476690, 'delta': 2}], [{'name': 2380543194, 'delta': 2}]]
+'km-um-browsers-common-export-sig' (419430422), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3133994438, 'delta': 16}], [{'name': 3183758248, 'delta': 16}], [{'name': 1036825229, 'delta': 16}], [{'name': 1835162410, 'delta': 16}], [{'name': 2462062789, 'delta': 16}], [{'name': 297365065, 'delta': 16}], [{'name': 864572649, 'delta': 16}], [{'name': 729299144, 'delta': 16}], [{'name': 1587427818, 'delta': 16}], [{'name': 3826293868, 'delta': 16}], [{'name': 1771937089, 'delta': 16}], [{'name': 2734182245, 'delta': 16}]]
+'km-um-chromium-exports' (419430423), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 1022496270, 'delta': 16}], [{'name': 1248059028, 'delta': 16}], [{'name': 1617058692, 'delta': 16}], [{'name': 1830788433, 'delta': 16}], [{'name': 3066214296, 'delta': 16}], [{'name': 79521903, 'delta': 16}]]
+'km-um-firefox-exports' (419430424), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 71560827, 'delta': 13}], [{'name': 1022496270, 'delta': 16}]]
+'um-apc-services-exports' (419430429), 'sechost.dll' (df2e9203), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'sig-producttypeisvalid' (838860827), '32 64' (00000003), 01, [[{'offset': 0, 'size': 1, 'hash': 2298007401}]]
+'sig-mitigationpolicies' (838860828), '32 64' (00000003), 01, [[{'offset': 0, 'size': 1, 'hash': 522852065}]]
+'acl-edit-system' (838860832), '32 64' (00000003), 01, [[{'offset': 0, 'size': 108, 'hash': 374068040}]]
+'x86-idt-null' (838860853), '32 64' (00000003), 01, [[{'offset': 0, 'size': 8, 'hash': 18691962}]]
+'sec-desc-msmpeng' (838860856), '32 64' (00000003), 01, [[{'offset': 0, 'size': 208, 'hash': 839396830}], [{'offset': 0, 'size': 128, 'hash': 3079913513}], [{'offset': 0, 'size': 152, 'hash': 1147004232}]]
+'hal-idt' (1258291251), '32 64' (00000003), 02, (02)
+'init-x86-idt' (1258291252), '32 64' (00000003), 18, (18)
+'patchguard-idt' (1258291255), '32 64' (00000003), 01, (01)
+'hal-heap-code-val-offset-0' (2097152019), '32 64' (00000003), 00, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'hal-heap-code-val-offset-5' (2097152020), '32 64' (00000003), -5, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'hal-heap-code-val-offset-8' (2097152021), '32 64' (00000003), -8, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'browsers-exec-syscall' (2097152030), '64' (00000002), 00, [76, 139, 209, 184, 256, 256, 256, 256, 15, 5, 195]
+22
+'patchguard-idtr-value-pattern-1' (2097152038), '64' (00000002), 00, [15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 15, 35, 256, 15, 1, 157, 256, 256, 0, 0]
+48
+'patchguard-idtr-value-pattern-2' (2097152039), '64' (00000002), 00, [15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 198, 3, 241]
+34
+'patchguard-idtr-value-pattern-3' (2097152040), '64' (00000002), 00, [250, 15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 65, 15, 35, 256]
+38
+'patchguard-idtr-value-pattern-4' (2097152041), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 65, 15, 35, 256, 15, 1, 93, 256, 251]
+34
+'patchguard-idtr-value-pattern-5' (2097152042), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 65, 15, 35, 256, 15, 1, 93, 256, 251]
+34
+'patchguard-idtr-value-pattern-6' (2097152043), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 15, 35, 256, 15, 1, 93, 256, 251]
+32
+'patchguard-idtr-value-pattern-7' (2097152044), '64' (00000002), 00, [250, 15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 65, 15, 35, 256, 15, 1, 157, 256, 256, 0, 0, 251]
+54
+'kernel-token-privs-writes-32' (2516582401), '32' (00000001), 03, [[281570728, 449203408, 1150615657, 1224631159, 1373100621, 1660298739], [449203408, 830124883, 1075025592, 1373100621, 1500695542, 3201181277], [292082303, 1188281904, 1372505427, 1569332843, 4061615295, 4105275028], [277868932, 1654077300, 1984768790, 2213288563, 3088412765, 4288023956], [9048097, 568897635, 955482402, 2468656434, 2897205321, 2914640772], [299783781, 1471703489, 1703807811, 1892513686, 2102624118, 4058639582], [133555328, 989005222, 1892513686, 2319224302, 3215120248, 4133029176], [614930043, 747225956, 1316625745, 3574180229, 3643796949, 4284056577], [613831810, 656972011, 1359097158, 2059440521, 2132132143, 2735887156], [401522730, 443599050, 1290135257, 2538218699, 3197105316, 3585225809], [982923362, 2272093318, 2468656434, 2897205321, 2914640772, 4258313165], [1402037268, 1660298739, 1874351018, 2311142418, 3189885265, 3597421646], [292082303, 1569332843, 1652086904, 2538218699, 3326659428, 4061615295], [292082303, 1372505427, 1569332843, 2538218699, 3326659428, 4061615295], [157026195, 1148930452, 1654077300, 1806618570, 2213288563, 4269904040], [817420644, 924100142, 1080687287, 3456613473, 3887958451, 3925373182], [288772429, 1154188123, 1359097158, 2059440521, 2500631186, 3884209875], [19744722, 1632274444, 1703807811, 1939730946, 2559742578, 3270079983], [19744722, 2470186205, 3197105316, 3270079983, 3288288802, 3344504973], [752566801, 1548799411, 1852223281, 3300561073, 3458513784, 4229093882], [568897635, 1678669034, 2468656434, 2897205321, 2914640772, 4232607115], [19744722, 1027861568, 1703807811, 3216576279, 3270079983, 3593920575], [19744722, 585027412, 643593926, 2442566383, 3216576279, 3270079983], [820147477, 1869302931, 2524185996, 2600619305, 3300484579, 3597634345], [387290254, 1614702113, 1657691234, 2102624118, 3189885265, 3618244922], [157131106, 585027412, 599177173, 675719752, 755399149, 2104059761], [383795720, 603234891, 1654077300, 1797896628, 2887811891, 3599597035], [1607735773, 1654077300, 3088412765, 3449843478, 4229093882, 4288023956], [1818363126, 1874351018, 2063793086, 2421485784, 2739720198, 3181315384], [57407883, 941327882, 1290135257, 2383133179, 2756361722, 3419849604], [1487820539, 1487996720, 1654077300, 2213288563, 3121177205, 3434607146], [270013201, 546861325, 1703807811, 1939730946, 3221354051, 3690087598], [60507980, 350652505, 639525720, 1186366452, 1714512347, 2041293547], [181982205, 1503178056, 1654077300, 2213288563, 2859804856, 4269904040], [982923362, 1904336938, 2099958814, 2727140263, 2897205321, 3925373182], [212596445, 1314121287, 1325666163, 2350361555, 2528270075, 3935609784], [239302001, 321809446, 704648209, 941327882, 3937196585, 4061615295], [453396337, 466858106, 1436534047, 2248637841, 3146884147, 4133029176], [411210527, 598609466, 752566801, 2887424820, 3449843478, 4229093882], [181982205, 618012810, 1603188140, 2914640772, 3815136055, 4288023956], [656972011, 1373100621, 1729338552, 1737897512, 3985274795, 4133029176], [295201976, 598609466, 1548799411, 2309473969, 3023118099, 4136432179], [133566930, 555380530, 1904336938, 2099958814, 2897205321, 3127953693]]
+'kernel-token-privs-writes-64' (2516582402), '64' (00000002), 03, [[704648209, 1852223281, 2309473969, 2731323311, 3868306041, 4288023956], [886204382, 915321187, 1316877685, 2823155411, 3520470730, 3937196585], [324852445, 1702802820, 1870590455, 1937900846, 2211013002, 4133029176], [218381495, 752566801, 867156188, 2167101764, 2989108236, 3741046158], [89985828, 585409035, 989005222, 1153954462, 2772492721, 3086306911], [1391591686, 1495478428, 1740096629, 1937900846, 3531065824, 4074011018], [308386330, 1469463966, 3016215592, 3853216369, 3861178628, 4281404169], [408380436, 1007938896, 1640371217, 3768890756, 4130871231, 4133029176], [1495478428, 1995542556, 2335154300, 2824968409, 2889153412, 3696746758], [1995542556, 2885404138, 2889153412, 2921555511, 3414624062, 3666072769], [157131106, 675719752, 989005222, 2389553778, 2795650646, 3414624062], [195365725, 966278852, 3151971354, 4012081177, 4161562782, 4281404169], [752566801, 1548799411, 3067334701, 3300561073, 3458513784, 3741046158], [300174946, 1083014512, 1688226079, 1993264979, 2116237980, 2259593280], [315118676, 1245170908, 1575643394, 3956422945, 3988781979, 4133029176], [616247370, 634954408, 1121754025, 1575643394, 3956422945, 4198465512], [315118676, 1245170908, 1575643394, 3956422945, 3988781979, 4133029176], [761798359, 1332848220, 1640371217, 2446256021, 2473187572, 3363800274], [416096823, 925513613, 3124163520, 3208841906, 3823814442, 4133029176], [2591729561, 2885404138, 2952455770, 3414624062, 3688221203, 3809433217], [554886353, 1660298739, 2344682990, 3502253319, 3948876653, 4133029176], [1219256186, 1877647709, 2389553778, 2658706116, 2885404138, 3414624062], [186326843, 989005222, 1153954462, 2622767774, 2631409052, 2772492721], [453396337, 1391591686, 1495478428, 2248637841, 4074011018, 4234414794], [1458745512, 1654077300, 2213288563, 2859804856, 2866633624, 3230792946], [1561805126, 1814040936, 1914878713, 2954367686, 2985832169, 3218383535], [1654077300, 1960463623, 2813592987, 2992549023, 3088412765, 4288023956], [160141582, 268137289, 1548799411, 2503418980, 2992549023, 3603067323], [1447148800, 1814040936, 1926284111, 2899002236, 3218383535, 4109052645], [1130526115, 1153954462, 1566979584, 2244160733, 2772492721, 3948114440], [186326843, 239302001, 704648209, 989005222, 1640371217, 4133029176], [324852445, 1708090562, 1740096629, 1937900846, 2885404138, 3142035050], [585409035, 1902099701, 2527015475, 2952455770, 3688221203, 3721833612], [329471690, 1311501278, 1654077300, 2213288563, 2928540965, 3715242030], [411210527, 752566801, 1654077300, 2213288563, 3088412765, 4288023956], [925513613, 1378091871, 1389535834, 1995542556, 2824968409, 4144962538], [157131106, 675719752, 989005222, 1189365228, 3233080051, 3769259261], [416096823, 925513613, 1189365228, 1389535834, 1995542556, 3233080051], [348042388, 1750893084, 2010707102, 2458615640, 3165814787, 4113710682], [15633870, 1565192102, 1640371217, 2473187572, 2735854398, 4133029176], [734166566, 996918240, 1219256186, 1591927406, 1901336353, 2389553778], [315118676, 616247370, 1093623854, 3142035050, 3208841906, 4106043670], [279877387, 295201976, 1400843753, 2954367686, 3559428993, 3691288469], [812461679, 933016471, 1456399994, 1495478428, 3312259119, 4074011018], [750268672, 989005222, 1954834642, 2029338586, 3216576279, 3778342491]]
+'ntdll-init-32' (2516582403), 'medium 32' (00000005), 03, [[634480322, 1053017559, 1607258804, 2196891180], [49726270, 656616225, 860660817, 1814428706], [115832497, 1354043400, 2992001596, 4219240375], [1564874737, 2038595549, 3263632081, 4055713110], [1607258804, 1838922414, 3105372409, 3695030177]]
+'ntdll-wow64-init' (2516582404), 'medium 32 64' (00000007), 03, [[1082922035, 1127890662, 1139992428, 2334879076], [1747290196, 3229659914, 3591406953, 4211497316], [1696926792, 2247157078, 3537372212, 3951448443], [1927506487, 2976460581, 3543304542, 3675948434], [11089789, 181170254, 701056452, 2606575262], [784798852, 1026172202, 1480926712, 1857239553, 2612925817, 3404899012, 3707437697, 3927546192], [125110361, 365788458, 531874019, 2834180107, 3537372212, 3951448443, 3989969384, 4276734656], [242401103, 2497296596, 2610296596, 2913352589, 3335009488, 3775975372], [819098757, 1857239553, 2007893995, 2594129065, 2692644982, 4010894251]]
+'ntdll-rdata-64' (2516582405), 'medium 64' (00000006), 03, [[188732051, 3691993717, 4188194262, 4293324254], [1927506487, 2976460581, 3543304542, 3675948434]]
+'ntdll-wow-rdata-64' (2516582406), 'medium 64' (00000006), 03, [[1927506487, 2976460581, 3543304542, 3675948434], [1800908836, 3693212585, 3889892647, 4118536423]]
+'ntdll-iat-writes' (2516582407), 'medium 32 64' (00000007), 03, [[196382105, 234559042, 2138559430, 2688269315], [1514940764, 1587842486, 1783747452, 3594751436], [1363880422, 1846776069, 2040696414, 2232203069], [1078250937, 1735978761, 2126913849, 3045109399], [1514940764, 1783747452, 3379975230, 4057392405], [158436533, 3241406408, 3525950838, 3622171912], [567112377, 1587842486, 1783747452, 2255479024], [304233694, 1514940764, 1711553693, 3068395971], [304233694, 1711553693, 2309294775, 3634034944], [555687109, 3150781232, 3251314485, 3964848209], [285412363, 304233694, 1514940764, 3887663968], [523437248, 2689781402, 3972018863, 4188194262], [914075689, 1514940764, 1759491247, 2771184560], [1514940764, 2247157078, 3068395971, 4174480815], [1208471991, 1355806837, 2780993443, 3668714108], [581286023, 977500467, 2129595978, 3859650148], [736428921, 781176297, 1098678463, 3733271651], [304233694, 1336346765, 1514940764, 1759491247]]
+'patchguard-nt-eat-read' (2516582408), '64' (00000002), 05, [[44337047, 702927608, 989005222, 1451109557, 1806618570, 2112224108, 3350273957, 3880937151], [44337047, 989005222, 1451109557, 1763606913, 1806618570, 2112224108, 3350273957, 3880937151], [408380436, 466858106, 989005222, 1640371217, 1763606913, 1806618570, 3350273957, 3880937151], [1806618570, 2432355629, 2472353370, 2751091740, 3347559800, 3350273957, 3840715478, 3880937151], [186326843, 437377613, 951434239, 989005222, 989005222, 3347559800, 3744655522, 3996316951], [44337047, 430878933, 708968847, 989005222, 2102624118, 2895406783, 3485595925, 3505020443], [989005222, 2751091740, 2827896837, 3015688625, 3160897288, 3967044430, 4133029176, 4263463253], [675719752, 989005222, 1152302751, 1892513686, 2424348962, 2837711837, 3347559800, 3588946358], [410280717, 1763606913, 1852223281, 2309473969, 2412279101, 3106114542, 3295635386, 3768890756], [408380436, 410280717, 466858106, 1640371217, 1763606913, 2018672170, 2839877978, 3768890756], [266099475, 702927608, 1070437711, 1323268698, 1806618570, 2358859352, 3419397274, 4185318754], [437377613, 951434239, 1178319128, 2432355629, 3970623163, 3996316951], [44337047, 989005222, 1451109557, 2102624118, 2112224108, 2380558903, 2642498662, 2985918440]]
+'chrome-export-codeblocks' (2516582411), '32 64' (00000003), 03, [[707953379, 990857581, 1301028095, 3733031212], [1012755606, 1319971882, 2315211751, 3403256258]]
+'patchguard-lstar' (2516582417), '64' (00000002), 04, [[408380436, 850741707, 2358859352, 2432355629, 3332401835, 3419397274, 4133029176], [797598068, 2014594295, 2358859352, 2823980134, 3419397274, 4130871231, 4133029176], [168454709, 536929829, 2432355629, 3332401835, 3457058569, 4095720289, 4133029176], [1095096701, 2523575771, 2974397735, 3225840239, 3873964305, 3970623163, 4133029176], [119793369, 2518296027, 2518296027, 2523575771, 2958690136, 3970623163, 4133029176], [168454709, 536929829, 2523575771, 3970623163, 4133029176], [90527872, 675341469, 2369400552, 2523575771, 3283711231, 3970623163, 4133029176]]
+'browsers-init-codeblocks' (2516582418), '32 64' (00000003), 03, [[196382105, 234559042, 2138559430, 2417738887], [1363880422, 1846776069, 2040696414, 2232203069], [784644791, 1020098811, 1192771627, 1381368807], [115832497, 1354043400, 2688835452, 4219240375], [158436533, 243841083, 357415939, 3622171912], [555687109, 3150781232, 3251314485, 3964848209], [350740378, 426308805, 2757831327, 3803264907], [929268847, 2285495972, 3567023629, 3633657687], [531635870, 2058918870, 2886819235, 3269727621], [336510857, 1690413999, 2287016750, 3589813652], [1105862618, 1870712175, 2160526351, 3762621297], [539583682, 685987129, 1410627414, 3657766130], [1776948176, 2177358261, 3170329000, 4243867031], [871707928, 3212476061, 3596299577, 3859650148], [167983373, 330449282, 1071930291, 1248597475, 2247157078, 2476122950], [888935707, 2103452135, 2196343909, 2224724128, 3757330480, 4049456990], [487433589, 655321444, 928415435, 1071930291, 2247157078, 4160382530]]
+'km-um-codeblocks-sig-64' (2516582425), '64' (00000002), 03, [[299783781, 558433508, 2102624118, 2757831327, 2965317230, 3998956478], [387290254, 1547628705, 3235238625, 3998956478, 4006096616], [299783781, 1010353997, 1199895011, 2102624118], [83611667, 405952976, 1640371217, 1840869855, 1867535490, 1945952389], [448676169, 1640371217, 1793577412, 1867535490, 2581746460, 3327160971], [449430946, 938345836, 2071063476, 2358859352, 2465507536, 4133029176], [892729693, 1867535490, 2214639574, 2430222182, 3441348722, 3838279883], [1320409076, 2757831327, 4051293274, 4196128696, 4255221052], [487499951, 1418598134, 2671007322, 3156139104, 3338504217], [908102806, 911297943, 2460606816, 3557547536, 3624909056, 4255221052], [951434239, 989005222, 2062102002, 2757831327, 4255221052]]
+'km-um-codeblocks-sig-32' (2516582426), '32' (00000001), 03, [[540429560, 989005222, 1578027525, 1819927955, 3160897288, 4224126424], [596666473, 847504150, 1580307786, 3339164607, 3505020443, 3877687364], [1580307786, 2720215841, 3261067765, 3309381094, 3352248267, 3623127560], [507041688, 1566134341, 1648541823, 2309995640, 2992549023, 4252168029], [2409191127, 2479565244, 3261067765, 3309381094, 3707671088, 4027699193], [1281738782, 1580307786, 1915367706, 2720215841, 3352248267, 4025120108], [485939871, 1580307786, 3021443512, 3261067765, 3309381094, 3623127560], [570899650, 1736707503, 3021443512, 3261067765, 3309381094, 3891608784], [124905697, 587890525, 938345836, 3084643114, 3870114259, 4179308647], [1884192700, 3021443512, 3189885265, 3195096138, 3261067765, 3309381094], [1841755968, 3021443512, 3261067765, 3309381094, 3383657571, 4025193002], [384216288, 1619583547, 1736707503, 1965267398, 2957565269, 3623127560], [296898761, 523935757, 989005222, 1486180074, 1640371217, 4133029176], [822838690, 1339981856, 1938283345, 2157380967, 3557547536, 4133029176], [191887952, 837288180, 1562811474, 1580307786, 1792649938, 3418451188]]
+'user32-export-writes' (2516582431), 'medium 32 64' (00000007), 03, [[567837406, 1696926792, 2085814328, 2680874178]]
+'xul-codeblocks-32' (2516582433), 'medium 32' (00000005), 03, [[1734586897, 1734919426, 2373929772, 2887885664], [1734586897, 2373929772, 2887885664, 3719395329], [715040372, 1734586897, 1734919426, 2373929772, 2887885664, 3785919479], [433994973, 1826846597, 2721040275, 4123460445], [2344761084, 3173389633, 3276110054, 3431025757], [73453207, 203348527, 2882398601, 3646660977], [1834370822, 2010270059, 3280589144, 4000518656], [183882013, 1734919426, 2680874178, 3847901570], [339252210, 591061365, 703256082, 4087587314], [441546640, 928366685, 2648622823, 4189301619], [1670789503, 2812340787, 2919689018, 3349421030], [1783129316, 3220241499, 3898703126, 4219181554], [2003343611, 2139948557, 2920719896, 4147043648], [1319394463, 2270569189, 2563827811, 3517076078], [1177101609, 1272010507, 2654953887, 2920719896], [1405116388, 1480020253, 2154990044, 3740826609], [515827328, 1744225269, 2146784810, 2939257750], [2422706973, 2863350336, 2972415081, 3366708993], [1529347045, 1810561502, 2023095291, 2182558284], [2246752605, 2678910550, 2913606027, 3324098180], [427600569, 2246752605, 2590619499, 3324098180], [378945069, 433994973, 900930479, 1960357104], [64052570, 2006597003, 2361428165, 3976140741], [776236513, 2160526351, 3733323715, 3762621297], [3247121906, 3489332171, 3646660977, 4196217403], [2160526351, 2363437050, 2377547411, 2990976922], [235599882, 299599286, 1351962574, 2160526351, 2537700327, 2990976922, 3951155632], [2160526351, 2377547411, 2537700327, 2924875034], [798299369, 1224312498, 1317345664, 1775845613, 3113187869, 3733204666], [183817496, 337350129, 428607527, 1973307458, 2377795142, 2725173265, 3838752198, 4028317074], [411565561, 547349971, 1294561118, 1445635753, 2129523380, 2160526351, 2346956014, 3762621297], [490039406, 694836707, 1045903597, 2455593236, 2598305860, 2746290295, 3656919183, 3780543815]]
+'xul-codeblocks-64' (2516582434), 'medium 64' (00000006), 03, [[357786590, 1921550346, 2573991001, 3339345639], [1334399074, 1438719052, 2760796246, 3558803635], [203348527, 3247121906, 3646660977, 4196217403], [103376936, 2154990044, 2415418442, 2517327953], [1181979282, 1250299558, 1438719052, 2841683971], [755421547, 3091713377, 3710934899, 3930916146], [357786590, 1759036912, 2573991001, 3027452825], [183974552, 433909255, 2700942739, 3887191170], [168394915, 371981138, 576476848, 1063853496, 1181979282, 1460763867, 1777112432, 2054820546, 3424861155, 3426619048], [2416431690, 2638886308, 2671756828, 2833952779], [2246752605, 2590619499, 2678910550, 2913606027, 3324098180, 3358107043], [986215979, 1199223197, 1828884069, 3667766778], [64052570, 2006597003, 2361428165, 2368239109, 3976140741], [1325865318, 1761353974, 3286023430, 3713162939, 4007500026], [3247121906, 3489332171, 3646660977, 4196217403], [2160526351, 2363437050, 2377547411, 2990976922], [235599882, 299599286, 1351962574, 2160526351, 2537700327, 2990976922, 3951155632], [2160526351, 2377547411, 2537700327, 2924875034], [183817496, 727206531, 2456930740, 3009561800, 3871990076], [183817496, 337350129, 428607527, 1973307458, 2377795142, 2725173265, 3838752198, 4028317074], [357638365, 1726307710, 1813254730, 2434293230, 2472726680, 2798596431, 2921972616, 4016306800], [979392684, 2249702076, 3307997551, 3626462953]]
+'mozglue-codeblocks-32' (2516582435), 'medium 32' (00000005), 03, [[2246752605, 2678910550, 2913606027, 3324098180], [415049885, 441090523, 2264939409, 2812340787, 3622386145, 4160057869], [2246752605, 2590619499, 2678910550, 2913606027, 3324098180, 3358107043], [747757885, 1482350000, 3220241499, 3390551580, 4120908224], [843333235, 1077665897, 1306689491, 2356673317, 3030564183, 3106278395], [560683482, 1908704750, 3481797688, 4101258111], [349903452, 1706305463, 1877539392, 1908704750, 2170240936, 2834735361], [528783103, 610067175, 1234021442, 1311832797, 2134091132, 4167314164], [1263297190, 1334090587, 1486064172, 1670751608, 2213333529, 3652696882], [886234420, 1514940764, 1734586897, 2373929772, 2448117771, 2887885664], [411483034, 426022305, 1104977125, 2695086550, 2796885657, 3477143031]]
+'mozglue-xul-code-64' (2516582436), 'medium 64' (00000006), 04, [[64052570, 2006597003, 2361428165, 2368239109, 2593585195, 3976140741], [357786590, 1759036912, 1921550346, 2573991001, 3339345639, 3453171829], [1051881867, 1063853496, 1476400188, 2021475896, 2253235034, 3424861155], [64052570, 1205832245, 2006597003, 2103452135, 2361428165, 3976140741], [1456095791, 2631377237, 3464665024, 4082513011, 4231363254, 4284502038], [631995339, 727206531, 2663439279, 2939744050, 3565945020, 3871990076]]
+'firefox-lib-writes-code' (2516582437), 'medium 32 64' (00000007), 04, [[547349971, 1105862618, 1236175647, 1870712175, 2160526351, 3762621297], [707953379, 990857581, 1301028095, 2530081359, 3733031212, 4147074192], [1012755606, 1319971882, 2315211751, 2530081359, 4147074192, 4176474944]]
+'patchguard-idtr-codeblocks' (2516582445), '64' (00000002), 03, [[2394931, 78247809, 989005222, 2615700730, 3189885265, 3204810280, 4061366998], [702927608, 739161370, 1640371217, 2590303972, 3187546047, 3254834230, 3970623163, 4133029176], [28188399, 325362508, 1483786555, 2295793631, 2450673281, 3142035050, 3498484386, 3568176988, 3734725112, 4102725253], [370586138, 536929829, 573366575, 926034053, 2220616347, 2292164899, 3257555162, 3834493009, 3970623163], [186326843, 989005222, 1172030582, 3735124479, 3970623163, 4133029176, 4133029176], [2757831327, 3160897288, 3573376138], [186326843, 989005222, 2295793631, 2374987157, 2374987157, 2450673281, 3392083781], [989005222, 1199895011, 1287349739, 2071063476, 2374987157, 3160897288, 3916603958]]
+'wow64-self' (2516582446), 'medium 32' (00000005), 03, [[1199902627, 1550081613, 2058869633, 3136844076], [1026172202, 1173508923, 1934985897, 3056859653], [668973049, 1696926792, 2247157078, 2680874178], [2236711463, 3042412691, 3584829430, 3695409446], [2972115695, 3158756417, 3217722389, 3926369878], [1108886902, 1199902627, 1550882614, 3136844076], [842254127, 1783544808, 2722457566, 4005458197], [1493311058, 2058869633, 2807097021, 3450094213]]
+'wow64-self-ret' (2516582447), 'medium 32 64' (00000007), 03, [[1588661846, 2144482166, 3161719578, 4221229056]]
+'wow64-reverse-imports' (2516582448), 'medium 32 64' (00000007), 03, [[428019905, 1256359675, 3943141444, 4278442898], [406944502, 1256359675, 1404827425, 3860392659], [84390625, 1256359675, 2129523380, 3714809537], [1013292225, 1256359675, 1985837857, 2434783813]]
+'nt-rdata-writes' (2516582449), '64' (00000002), 06, [[194742203, 1306968141, 1370519349, 2001500782, 2494052403, 3400503237, 3481310868, 3578028708]]
+'kernel-iat-init' (2516582450), '32 64' (00000003), 03, [[408380436, 537517389, 620989194, 1849426752, 3929710157, 3988577654], [627975858, 790211746, 951434239, 2102624118, 2248117029, 2933053670], [359069680, 519157311, 894083480, 1032530710, 3171623114, 4133029176]]
+'patchguard-idt-codeblocks' (2516582454), '64' (00000002), 04, [[370586138, 536929829, 573366575, 702927608, 739161370, 926034053, 1640371217, 2220616347, 2292164899, 2523575771, 2590303972, 3187546047, 3254834230, 3257555162, 3834493009, 3970623163, 4133029176, 4133029176, 4160388488]]
+
+Generated 0032 kernel exceptions
+Generated 0065 user exceptions
+Generated 0004 kernel-user exceptions
+Generated 0056 signatures
+-------------------------------
+Total     0153 objects
+[  5%] Built target exceptions
+Loaded  KiDispatchException32.yaml
+Loaded  MiDeleteVirtualAddresses64.yaml
+Loaded  RtlpVirtualUnwind6.yaml
+Loaded  RtlpVirtualUnwind8.yaml
+Loaded  MiCommitExistingVad64.yaml
+Loaded  MiDeleteVirtualAddresses32.yaml
+Loaded  MiProtectVirtualMemory32.yaml
+Loaded  PspSetContextThreadInternal32.yaml
+Loaded  KiDispatchException64.yaml
+Loaded  NtSetSystemPowerState32.yaml
+Loaded  PspSetContextThreadInternal64.yaml
+Loaded  MiCommitExistingVad32.yaml
+Loaded  RtlpVirtualUnwind2.yaml
+Loaded  MmCopyVirtualMemory64.yaml
+Loaded  MiFinishVadDeletion32.yaml
+Loaded  KeBugCheck2.yaml
+Loaded  MiGetWsAndInsertVad64.yaml
+Loaded  MiInsertPrivateVad64.yaml
+Loaded  KiDisplayBlueScreen64.yaml
+Loaded  RtlpVirtualUnwind3.yaml
+Loaded  NtQueueApcThreadEx64.yaml
+Loaded  MiUnloadSystemImage64.yaml
+Loaded  MmCleanProcessAddressSpace32.yaml
+Loaded  MiProcessLoaderEntry32.yaml
+Loaded  KiDisplayBlueScreen32.yaml
+Loaded  MiInitializeLoadedModuleList.yaml
+Loaded  PspInsertProcess64.yaml
+Loaded  MiFinishVadDeletion64.yaml
+Loaded  MiUnloadSystemImage32.yaml
+Loaded  MiInsertPrivateVad32.yaml
+Loaded  PspInsertProcess32.yaml
+Loaded  RtlpVirtualUnwind7.yaml
+Loaded  NtQueueApcThreadEx32.yaml
+Loaded  PspWow64SetContextThread.yaml
+Loaded  MmCopyVirtualMemory32.yaml
+Loaded  MiProcessLoaderEntry64.yaml
+Loaded  RtlpVirtualUnwind5.yaml
+Loaded  RtlpVirtualUnwind1.yaml
+Loaded  MmCleanProcessAddressSpace64.yaml
+Loaded  NtSetSystemPowerState64.yaml
+Loaded  MiGetWsAndInsertVad32.yaml
+Loaded  MiProtectVirtualMemory64.yaml
+Loaded  MiInsertVad64.yaml
+Loaded  RtlpVirtualUnwind4.yaml
+Loaded  windows_7602_x86_kpti_ON.yaml
+Loaded  windows_7602_x64_kpti_ON.yaml
+Loaded  windows_7601_x64_kpti_OFF.yaml
+Loaded  windows_17763_x86_kpti_ON.yaml
+Loaded  windows_17763_x64_kpti_ON.yaml
+Loaded  windows_7601_x86_kpti_OFF.yaml
+Loaded  windows_7600_x86_kpti_OFF.yaml
+Loaded  windows_7601_x86_kpti_ON.yaml
+Loaded  windows_7601_x64_kpti_ON.yaml
+Loaded  windows_7600_x64_kpti_OFF.yaml
+Loaded  windows_um_7_x86.yaml
+Loaded  windows_um_10_17763-19041_x64.yaml
+Loaded  windows_um_7_x64.yaml
+Loaded  windows_um_10_17763-18362_x86.yaml
+Loaded  dist_sigs.yaml
+Loaded  centos-8.yaml
+Loaded  centos-8-2.yaml
+Loaded  ubuntu-18-04.yaml
+Loaded  options.yaml
+Loaded  syscalls.yaml
+Loaded 7 syscall patterns.
+Loaded 3 linux supported versions.
+Loaded 2 linux dist signatures.
+Loaded 10 windows supported versions.
+Linux OS 4.18.0-[80-166]*el8*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e03080) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+	- Hooks count:  24
+Linux OS 4.18.0-[167-]*el8*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e03080) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  1.128.0.0 (0x1008000000000)
+	- Max intro version:  MAX_ANY
+	- Hooks count:  24
+Linux OS 4.15.0-[24-]*Ubuntu*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e03080) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+	- Hooks count:  120
+Functions for Windows OS 7600 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  1 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  5 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  5 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  3 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  4 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7600 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  1 patterns and arguments: []
+        - MiInsertPrivateVad             with  2 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  2 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  3 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7601 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7601 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7601 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7601 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7602 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7602 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 17763 (is 64: False)
+        - KiDispatchException            with  8 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with 17 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3']
+        - PspSetContextThreadInternal    with  5 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  6 patterns and arguments: []
+        - MiCommitExistingVad            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiFinishVadDeletion            with  3 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_STACK1']
+        - KeBugCheck2                    with  2 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  8 patterns and arguments: ['DET_ARG_RCX']
+        - MiProcessLoaderEntry           with  8 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with 14 patterns and arguments: ['DET_ARG_RCX']
+        - MiInsertPrivateVad             with  8 patterns and arguments: ['DET_ARG_RCX']
+        - PspInsertProcess               with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK3']
+        - NtQueueApcThreadEx             with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  4 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with 11 patterns and arguments: ['DET_ARG_RCX']
+Functions for Windows OS 17763 (is 64: True)
+        - MiDeleteVirtualAddresses       with 18 patterns and arguments: []
+        - MiCommitExistingVad            with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with 16 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  8 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MmCopyVirtualMemory            with 17 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: []
+        - MiInsertPrivateVad             with  1 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - NtQueueApcThreadEx             with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with 17 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  2 patterns and arguments: []
+        - PspInsertProcess               with  7 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK5']
+        - MiFinishVadDeletion            with  2 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8']
+        - PspWow64SetContextThread       with  6 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  6 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MmCleanProcessAddressSpace     with 14 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  6 patterns and arguments: []
+        - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK5']
+        - MiInsertVad                    with  6 patterns and arguments: []
+Windows OS 7600  (kpti: False, 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7600  (kpti: False, 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: False, 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: False, 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7602  (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7602  (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 17763 (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 17763 (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f3a46e037b8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+[  5%] Built target cami
+[  3%] Built target bddisasm
+[  5%] Built target bdshemu
+Consolidate compiler generated dependencies of target introcore
+[100%] Built target introcore
+Loading file jsons/km-signatures-token-privs.json
+Parsing file jsons/km-signatures-token-privs.json
+
+Loading file jsons/um-signatures-ntdll.json
+Parsing file jsons/um-signatures-ntdll.json
+
+Loading file jsons/km-signatures-read.json
+Parsing file jsons/km-signatures-read.json
+
+Loading file jsons/um-signatures-chrome.json
+Parsing file jsons/um-signatures-chrome.json
+
+Loading file jsons/um-signatures-browsers-exports.json
+Parsing file jsons/um-signatures-browsers-exports.json
+
+Loading file jsons/um-signatures-firefox-exports.json
+Parsing file jsons/um-signatures-firefox-exports.json
+
+Loading file jsons/km-signatures-patchguard.json
+Parsing file jsons/km-signatures-patchguard.json
+
+Loading file jsons/um-signatures-browsers-codeblocks.json
+Parsing file jsons/um-signatures-browsers-codeblocks.json
+
+Loading file jsons/km-signatures-hal-heap.json
+Parsing file jsons/km-signatures-hal-heap.json
+
+Loading file jsons/km-um-signatures-exports.json
+Parsing file jsons/km-um-signatures-exports.json
+
+Loading file jsons/km-um-signatures-codeblocks.json
+Parsing file jsons/km-um-signatures-codeblocks.json
+
+Loading file jsons/km-signatures-sud-integrity.json
+Parsing file jsons/km-signatures-sud-integrity.json
+
+Loading file jsons/um-signatures-apc-system-exports.json
+Parsing file jsons/um-signatures-apc-system-exports.json
+
+Loading file jsons/um-signature-syscall.json
+Parsing file jsons/um-signature-syscall.json
+
+Loading file jsons/um-signatures-user32.json
+Parsing file jsons/um-signatures-user32.json
+
+Loading file jsons/km-signature-acl-edit.json
+Parsing file jsons/km-signature-acl-edit.json
+
+Loading file jsons/um-signatures-firefox-codeblocks.json
+Parsing file jsons/um-signatures-firefox-codeblocks.json
+
+Loading file jsons/km-signatures-dtr.json
+Parsing file jsons/km-signatures-dtr.json
+
+Loading file jsons/um-signatures-wow64-codeblocks.json
+Parsing file jsons/um-signatures-wow64-codeblocks.json
+
+Loading file jsons/km-signatures-write.json
+Parsing file jsons/km-signatures-write.json
+
+Loading file jsons/km-signature-security-descriptor.json
+Parsing file jsons/km-signature-security-descriptor.json
+
+Loading file jsons/km-exceptions-token-privs-write.json
+Parsing file jsons/km-exceptions-token-privs-write.json
+
+Loading file jsons/km-exceptions-logger-context-writes.json
+Parsing file jsons/km-exceptions-logger-context-writes.json
+
+Loading file jsons/km-exception-acl-edit-write.json
+Parsing file jsons/km-exception-acl-edit-write.json
+
+Loading file jsons/km-exceptions-write.json
+Parsing file jsons/km-exceptions-write.json
+
+Loading file jsons/km-exception-security-descriptor-write.json
+Parsing file jsons/km-exception-security-descriptor-write.json
+
+Loading file jsons/um-exceptions-system-processes.json
+Parsing file jsons/um-exceptions-system-processes.json
+
+Loading file jsons/um-exceptions-wow64-writes.json
+Parsing file jsons/um-exceptions-wow64-writes.json
+
+Loading file jsons/km-exceptions-dtr.json
+Parsing file jsons/km-exceptions-dtr.json
+
+Loading file jsons/km-exceptions-read.json
+Parsing file jsons/km-exceptions-read.json
+
+Loading file jsons/um-exceptions-firefox-injections.json
+Parsing file jsons/um-exceptions-firefox-injections.json
+
+Loading file jsons/km-exceptions-sud-integrity.json
+Parsing file jsons/km-exceptions-sud-integrity.json
+
+Loading file jsons/km-exceptions-patchguard-msr.json
+Parsing file jsons/km-exceptions-patchguard-msr.json
+
+Loading file jsons/um-exceptions-ntdll.json
+Parsing file jsons/um-exceptions-ntdll.json
+
+Loading file jsons/um-exceptions-firefox-writes.json
+Parsing file jsons/um-exceptions-firefox-writes.json
+
+Loading file jsons/um-exceptions-browsers-execs.json
+Parsing file jsons/um-exceptions-browsers-execs.json
+
+Loading file jsons/km-um-exceptions-write.json
+Parsing file jsons/km-um-exceptions-write.json
+
+Loading file jsons/km-exceptions-hal-heap.json
+Parsing file jsons/km-exceptions-hal-heap.json
+
+Loading file jsons/um-exceptions-user32.json
+Parsing file jsons/um-exceptions-user32.json
+
+Loading file jsons/um-exceptions-apc-system-processes.json
+Parsing file jsons/um-exceptions-apc-system-processes.json
+
+Loading file jsons/um-exceptions-chrome.json
+Parsing file jsons/um-exceptions-chrome.json
+
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'driver' (02), '32 64 write' (20000006), ['nt-rdata-writes'] ([2516582449])
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'driver imports' (03), '32 64 write' (20000006), ['kernel-iat-init'] ([2516582450])
+'[kernel]' (-0000001), '[kernel]' (00000002), '\filesystem\refs' (5a669414), 'fastio' (09), 'init integrity 32 64 write' (2000100e)
+'[kernel]' (-0000001), '[kernel]' (00000002), '[hal]' (00000003), 'hal-heap' (12), '32 64 write' (20000006)
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'infinity-hook' (17), 'integrity 32 64 write' (20001006)
+'[kernel]' (-0000001), '[kernel]' (00000002), '*' (00000000), 'token-privs' (19), '32 64 write' (20000006), ['kernel-token-privs-writes-32', 'kernel-token-privs-writes-64'] ([2516582401, 2516582402])
+'[hal]' (-0000001), '[hal]' (00000003), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['hal-idt'] ([1258291251])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'msr' (10), '32 64 write' (20000006), ['patchguard-lstar'] ([2516582417])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'hal-heap' (12), '32 64 write' (20000006), ['hal-heap-code-val-offset-0', 'hal-heap-code-val-offset-5', 'hal-heap-code-val-offset-8'] ([2097152019, 2097152020, 2097152021])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['init-x86-idt', 'x86-idt-null'] ([838860853, 1258291252])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt' (14), '32 64 write' (20000006), ['patchguard-idt-codeblocks', 'patchguard-idt'] ([1258291255, 2516582454])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt-reg' (15), '32 64 write' (20000006), ['patchguard-idtr-value-pattern-1', 'patchguard-idtr-value-pattern-2', 'patchguard-idtr-value-pattern-3', 'patchguard-idtr-value-pattern-4', 'patchguard-idtr-value-pattern-5', 'patchguard-idtr-value-pattern-6', 'patchguard-idtr-value-pattern-7'] ([2097152038, 2097152039, 2097152040, 2097152041, 2097152042, 2097152043, 2097152044])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'idt-reg' (15), '32 64 write' (20000006), ['patchguard-idtr-codeblocks'] ([2516582445])
+'-' (-0000001), '-' (00000004), '[kernel]' (00000002), 'driver exports' (18), 'read 32 64' (10000006), ['patchguard-nt-eat-read'] ([2516582408])
+'-' (-0000001), '-' (00000004), '*' (00000000), 'token-privs' (19), 'integrity feedback 32 64 write' (20001007)
+'-' (-0000001), '-' (00000004), 'csrss.exe' (24324770), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'svchost.exe' (2d5d8a3e), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'microsoftedge.exe' (40b276e2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'startmenuexperiencehost' (41cf65ce), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'citrix.deliver' (4683a5db), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'msmpeng.exe' (6c10fce2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006), ['sec-desc-msmpeng'] ([838860856])
+'-' (-0000001), '-' (00000004), 'winstore.app.exe' (84fe4d9c), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'system' (87704fd7), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'smsvchost.exe' (9c9ef792), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'msiexec.exe' (9ce939ac), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'lsass.exe' (adbd0ef2), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'acrord32.exe' (e814e360), 'security-descriptor' (22), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'microsoftedge.exe' (40b276e2), 'acl-edit' (23), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'citrix.deliver' (4683a5db), 'acl-edit' (23), 'integrity 32 64 write' (20001006)
+'-' (-0000001), '-' (00000004), 'system' (87704fd7), 'acl-edit' (23), 'integrity 32 64 write' (20001006), ['acl-edit-system'] ([838860832])
+'-' (-0000001), '-' (00000004), 'ProductTypeIsValid' (235b59e0), 'sud-modification' (24), 'integrity 32 64 write' (20001006), ['sig-producttypeisvalid'] ([838860827])
+'-' (-0000001), '-' (00000004), 'MitigationPolicies' (65a30d8b), 'sud-modification' (24), 'integrity 32 64 write' (20001006), ['sig-mitigationpolicies'] ([838860828])
+'*' (00000000), '*' (00000000), 'None' (00000000), 'process' (02), 'init child 32 64 write' (2000020e)
+'-' (00000004), '*' (00000000), 'firefox.exe' (209b1103), 'nx_zone' (05), '32 64 exec' (40000006), ['browsers-exec-syscall'] ([2097152030])
+'-' (00000004), '*' (00000000), 'chrome.exe' (80689a87), 'nx_zone' (05), '32 64 exec' (40000006), ['browsers-exec-syscall'] ([2097152030])
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206)
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206), ['browsers-common-inj-exports', 'firefox-inj-exports'] ([419430412, 419430413])
+'csrss.exe' (24324770), '*' (00000000), 'None' (00000000), 'process' (02), 'system-process 32 64 write' (20000106)
+'explorer.exe' (3a2949c5), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), '32 64 write' (20000006)
+'firefox.exe' (5e40ad5e), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['firefox-lib-writes-code'] ([2516582437])
+'firefox.exe' (5e40ad5e), 'ntdll.dll' (be9d4ec5), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['firefox-lib-writes-code'] ([2516582437])
+'wininit.exe' (72feee59), 'lsass.exe' (adbd0ef2), 'None' (00000000), 'process' (02), 'system-process child 32 64 write' (20000306)
+'wininit.exe' (72feee59), 'services.exe' (bbd3278a), 'None' (00000000), 'process' (02), 'system-process child 32 64 write' (20000306)
+'wmiprvse.exe' (805ae395), '*' (00000000), 'None' (00000000), 'process' (02), '32 64 write' (20000006)
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206)
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'None' (00000000), 'process' (02), 'child 32 64 write' (20000206), ['chrome-injection-exports', 'chrome-self-injection-exports'] ([419430409, 419430410])
+'chrome.exe' (8eb0d21f), 'kernel32.dll' (72f47653), 'chrome.exe' (80689a87), 'module exports' (06), '32 64 write' (20000006), ['chrome-export-codeblocks'] ([2516582411])
+'xul.dll' (96da11ae), 'kernelbase.dll' (2945f399), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernelbase.dll' (2945f399), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'mozglue-xul-code-64'] ([419430416, 2516582436])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), '32 64 write' (20000006), ['xul-kernel32-hooked-functions', 'xul-codeblocks-32', 'xul-codeblocks-64'] ([419430416, 2516582433, 2516582434])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-kernel32-hooked-functions', 'mozglue-xul-code-64'] ([419430416, 2516582436])
+'xul.dll' (96da11ae), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'plugin-container.exe' (497c70fd), 'module' (03), '32 64 write' (20000006), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'xul.dll' (96da11ae), 'user32.dll' (b8d0fd42), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['xul-codeblocks-32', 'xul-codeblocks-64'] ([2516582433, 2516582434])
+'lsass.exe' (adbd0ef2), '*' (00000000), 'None' (00000000), 'process' (02), 'system-process 32 64 write' (20000106)
+'wow64.dll' (b29d7275), 'kernelbase.dll' (2945f399), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernel32.dll' (72f47653), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-self'] ([2516582446])
+'wow64.dll' (b29d7275), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), 'return 32 64 write' (20000016), ['wow64-self-ret'] ([2516582447])
+'wow64.dll' (b29d7275), 'user32.dll' (b8d0fd42), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernelbase.dll' (2945f399), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'kernel32.dll' (72f47653), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'wow64.dll' (b29d7275), 'user32.dll' (b8d0fd42), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['wow64-reverse-imports'] ([2516582448])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), '*' (00000000), 'module exports' (06), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'user32.dll' (b8d0fd42), 'user32.dll' (b8d0fd42), '*' (00000000), 'module exports' (06), '32 64 write' (20000006), ['user32-export-writes'] ([2516582431])
+'services.exe' (bbd3278a), '*' (00000000), 'None' (00000000), 'apc-thread' (10), '64 32 system-process write' (20000106), ['um-apc-services-exports'] ([419430429])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-rdata-64'] ([2516582405])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-init-32'] ([2516582403])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-iat-writes'] ([2516582407])
+'ntdll.dll' (be9d4ec5), 'kernelbase.dll' (2945f399), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernelbase.dll' (2945f399), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ws2_32.dll' (3d20b35c), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ws2_32.dll' (3d20b35c), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'kernel32.dll' (72f47653), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wininet.dll' (7350cbf8), 'firefox.exe' (209b1103), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wininet.dll' (7350cbf8), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'wow64cpu.dll' (824c82be), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow64-init'] ([2516582404])
+'ntdll.dll' (be9d4ec5), 'wow64.dll' (b29d7275), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'wow64win.dll' (b3ad9cbb), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['ntdll-wow-rdata-64'] ([2516582406])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), 'chrome.exe' (80689a87), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'ntdll.dll' (be9d4ec5), '*' (00000000), 'module' (03), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['ntdll-iat-writes'] ([2516582407])
+'ntdll.dll' (be9d4ec5), '*' (00000000), '*' (00000000), 'module imports' (04), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'ntdll.dll' (be9d4ec5), 'user32.dll' (b8d0fd42), 'firefox.exe' (209b1103), 'module imports' (04), '32 64 write' (20000006), ['browsers-init-codeblocks'] ([2516582418])
+'mozglue.dll' (e9044dde), 'kernel32.dll' (72f47653), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-kernel32-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430415, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'kernel32.dll' (72f47653), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-kernel32-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430415, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'ntdll.dll' (be9d4ec5), 'firefox.exe' (209b1103), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-ntdll-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430414, 2516582435, 2516582436])
+'mozglue.dll' (e9044dde), 'ntdll.dll' (be9d4ec5), 'plugin-container.exe' (497c70fd), 'module' (03), 'return 32 64 write' (20000016), ['mozglue-ntdll-hooked-functions', 'mozglue-codeblocks-32', 'mozglue-xul-code-64'] ([419430414, 2516582435, 2516582436])
+'firefox.exe' (209b1103), '[kernel]' (00000002), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 write' (20000006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-firefox-exports'] ([419430422, 419430424, 2516582425, 2516582426])
+'chrome.exe' (80689a87), '[kernel]' (00000002), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 write' (20000006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-chromium-exports'] ([419430422, 419430423, 2516582425, 2516582426])
+'firefox.exe' (209b1103), 'firefox.exe' (209b1103), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 user write' (20008006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-firefox-exports'] ([419430422, 419430424, 2516582425, 2516582426])
+'chrome.exe' (80689a87), 'chrome.exe' (80689a87), 'ntdll.dll' (be9d4ec5), 'module' (02), '32 64 user write' (20008006), ['km-um-codeblocks-sig-64', 'km-um-codeblocks-sig-32', 'km-um-browsers-common-export-sig', 'km-um-chromium-exports'] ([419430422, 419430423, 2516582425, 2516582426])
+'chrome-injection-exports' (419430409), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3183758248, 'delta': 16}]]
+'chrome-self-injection-exports' (419430410), 'chrome.exe' (8eb0d21f), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'browsers-common-inj-exports' (419430412), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3133994438, 'delta': 16}], [{'name': 3183758248, 'delta': 16}], [{'name': 1036825229, 'delta': 16}], [{'name': 1835162410, 'delta': 16}], [{'name': 2462062789, 'delta': 16}], [{'name': 297365065, 'delta': 16}], [{'name': 864572649, 'delta': 16}], [{'name': 729299144, 'delta': 16}], [{'name': 1587427818, 'delta': 16}], [{'name': 3826293868, 'delta': 16}], [{'name': 1771937089, 'delta': 16}], [{'name': 2734182245, 'delta': 16}]]
+'firefox-inj-exports' (419430413), 'firefox.exe' (5e40ad5e), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'mozglue-ntdll-hooked-functions' (419430414), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 71560827, 'delta': 13}]]
+'mozglue-kernel32-hooked-functions' (419430415), 'kernel32.dll' (72f47653), '32 64' (00000003), [[{'name': 2648873172, 'delta': 13}], [{'name': 1533682187, 'delta': 13}]]
+'xul-kernel32-hooked-functions' (419430416), 'kernel32.dll' (72f47653), '32 64' (00000003), [[{'name': 771864344, 'delta': 13}], [{'name': 2353207217, 'delta': 21}], [{'name': 628741775, 'delta': 21}], [{'name': 537488377, 'delta': 14}], [{'name': 2380543194, 'delta': 8}], [{'name': 1477476690, 'delta': 8}], [{'name': 488941392, 'delta': 32}], [{'name': 3260598090, 'delta': 32}], [{'name': 3449392723, 'delta': 32}], [{'name': 2840766610, 'delta': 16}], [{'name': 674554609, 'delta': 16}], [{'name': 2173257769, 'delta': 16}], [{'name': 2773382594, 'delta': 16}], [{'name': 1369096339, 'delta': 16}], [{'name': 39094037, 'delta': 16}], [{'name': 1477476690, 'delta': 2}], [{'name': 2380543194, 'delta': 2}]]
+'km-um-browsers-common-export-sig' (419430422), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 3133994438, 'delta': 16}], [{'name': 3183758248, 'delta': 16}], [{'name': 1036825229, 'delta': 16}], [{'name': 1835162410, 'delta': 16}], [{'name': 2462062789, 'delta': 16}], [{'name': 297365065, 'delta': 16}], [{'name': 864572649, 'delta': 16}], [{'name': 729299144, 'delta': 16}], [{'name': 1587427818, 'delta': 16}], [{'name': 3826293868, 'delta': 16}], [{'name': 1771937089, 'delta': 16}], [{'name': 2734182245, 'delta': 16}]]
+'km-um-chromium-exports' (419430423), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 1022496270, 'delta': 16}], [{'name': 1248059028, 'delta': 16}], [{'name': 1617058692, 'delta': 16}], [{'name': 1830788433, 'delta': 16}], [{'name': 3066214296, 'delta': 16}], [{'name': 79521903, 'delta': 16}]]
+'km-um-firefox-exports' (419430424), 'ntdll.dll' (be9d4ec5), '32 64' (00000003), [[{'name': 71560827, 'delta': 13}], [{'name': 1022496270, 'delta': 16}]]
+'um-apc-services-exports' (419430429), 'sechost.dll' (df2e9203), '32 64' (00000003), [[{'name': 0, 'delta': 0}]]
+'sig-producttypeisvalid' (838860827), '32 64' (00000003), 01, [[{'offset': 0, 'size': 1, 'hash': 2298007401}]]
+'sig-mitigationpolicies' (838860828), '32 64' (00000003), 01, [[{'offset': 0, 'size': 1, 'hash': 522852065}]]
+'acl-edit-system' (838860832), '32 64' (00000003), 01, [[{'offset': 0, 'size': 108, 'hash': 374068040}]]
+'x86-idt-null' (838860853), '32 64' (00000003), 01, [[{'offset': 0, 'size': 8, 'hash': 18691962}]]
+'sec-desc-msmpeng' (838860856), '32 64' (00000003), 01, [[{'offset': 0, 'size': 208, 'hash': 839396830}], [{'offset': 0, 'size': 128, 'hash': 3079913513}], [{'offset': 0, 'size': 152, 'hash': 1147004232}]]
+'hal-idt' (1258291251), '32 64' (00000003), 02, (02)
+'init-x86-idt' (1258291252), '32 64' (00000003), 18, (18)
+'patchguard-idt' (1258291255), '32 64' (00000003), 01, (01)
+'hal-heap-code-val-offset-0' (2097152019), '32 64' (00000003), 00, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'hal-heap-code-val-offset-5' (2097152020), '32 64' (00000003), -5, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'hal-heap-code-val-offset-8' (2097152021), '32 64' (00000003), -8, [13, 256, 256, 256, 256, 15, 1, 193, 195]
+18
+'browsers-exec-syscall' (2097152030), '64' (00000002), 00, [76, 139, 209, 184, 256, 256, 256, 256, 15, 5, 195]
+22
+'patchguard-idtr-value-pattern-1' (2097152038), '64' (00000002), 00, [15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 15, 35, 256, 15, 1, 157, 256, 256, 0, 0]
+48
+'patchguard-idtr-value-pattern-2' (2097152039), '64' (00000002), 00, [15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 198, 3, 241]
+34
+'patchguard-idtr-value-pattern-3' (2097152040), '64' (00000002), 00, [250, 15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 65, 15, 35, 256]
+38
+'patchguard-idtr-value-pattern-4' (2097152041), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 65, 15, 35, 256, 15, 1, 93, 256, 251]
+34
+'patchguard-idtr-value-pattern-5' (2097152042), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 65, 15, 35, 256, 15, 1, 93, 256, 251]
+34
+'patchguard-idtr-value-pattern-6' (2097152043), '64' (00000002), 00, [15, 1, 77, 256, 15, 1, 93, 256, 15, 35, 256, 15, 1, 93, 256, 251]
+32
+'patchguard-idtr-value-pattern-7' (2097152044), '64' (00000002), 00, [250, 15, 1, 141, 256, 256, 0, 0, 15, 1, 157, 256, 256, 0, 0, 65, 15, 35, 256, 15, 1, 157, 256, 256, 0, 0, 251]
+54
+'kernel-token-privs-writes-32' (2516582401), '32' (00000001), 03, [[281570728, 449203408, 1150615657, 1224631159, 1373100621, 1660298739], [449203408, 830124883, 1075025592, 1373100621, 1500695542, 3201181277], [292082303, 1188281904, 1372505427, 1569332843, 4061615295, 4105275028], [277868932, 1654077300, 1984768790, 2213288563, 3088412765, 4288023956], [9048097, 568897635, 955482402, 2468656434, 2897205321, 2914640772], [299783781, 1471703489, 1703807811, 1892513686, 2102624118, 4058639582], [133555328, 989005222, 1892513686, 2319224302, 3215120248, 4133029176], [614930043, 747225956, 1316625745, 3574180229, 3643796949, 4284056577], [613831810, 656972011, 1359097158, 2059440521, 2132132143, 2735887156], [401522730, 443599050, 1290135257, 2538218699, 3197105316, 3585225809], [982923362, 2272093318, 2468656434, 2897205321, 2914640772, 4258313165], [1402037268, 1660298739, 1874351018, 2311142418, 3189885265, 3597421646], [292082303, 1569332843, 1652086904, 2538218699, 3326659428, 4061615295], [292082303, 1372505427, 1569332843, 2538218699, 3326659428, 4061615295], [157026195, 1148930452, 1654077300, 1806618570, 2213288563, 4269904040], [817420644, 924100142, 1080687287, 3456613473, 3887958451, 3925373182], [288772429, 1154188123, 1359097158, 2059440521, 2500631186, 3884209875], [19744722, 1632274444, 1703807811, 1939730946, 2559742578, 3270079983], [19744722, 2470186205, 3197105316, 3270079983, 3288288802, 3344504973], [752566801, 1548799411, 1852223281, 3300561073, 3458513784, 4229093882], [568897635, 1678669034, 2468656434, 2897205321, 2914640772, 4232607115], [19744722, 1027861568, 1703807811, 3216576279, 3270079983, 3593920575], [19744722, 585027412, 643593926, 2442566383, 3216576279, 3270079983], [820147477, 1869302931, 2524185996, 2600619305, 3300484579, 3597634345], [387290254, 1614702113, 1657691234, 2102624118, 3189885265, 3618244922], [157131106, 585027412, 599177173, 675719752, 755399149, 2104059761], [383795720, 603234891, 1654077300, 1797896628, 2887811891, 3599597035], [1607735773, 1654077300, 3088412765, 3449843478, 4229093882, 4288023956], [1818363126, 1874351018, 2063793086, 2421485784, 2739720198, 3181315384], [57407883, 941327882, 1290135257, 2383133179, 2756361722, 3419849604], [1487820539, 1487996720, 1654077300, 2213288563, 3121177205, 3434607146], [270013201, 546861325, 1703807811, 1939730946, 3221354051, 3690087598], [60507980, 350652505, 639525720, 1186366452, 1714512347, 2041293547], [181982205, 1503178056, 1654077300, 2213288563, 2859804856, 4269904040], [982923362, 1904336938, 2099958814, 2727140263, 2897205321, 3925373182], [212596445, 1314121287, 1325666163, 2350361555, 2528270075, 3935609784], [239302001, 321809446, 704648209, 941327882, 3937196585, 4061615295], [453396337, 466858106, 1436534047, 2248637841, 3146884147, 4133029176], [411210527, 598609466, 752566801, 2887424820, 3449843478, 4229093882], [181982205, 618012810, 1603188140, 2914640772, 3815136055, 4288023956], [656972011, 1373100621, 1729338552, 1737897512, 3985274795, 4133029176], [295201976, 598609466, 1548799411, 2309473969, 3023118099, 4136432179], [133566930, 555380530, 1904336938, 2099958814, 2897205321, 3127953693]]
+'kernel-token-privs-writes-64' (2516582402), '64' (00000002), 03, [[704648209, 1852223281, 2309473969, 2731323311, 3868306041, 4288023956], [886204382, 915321187, 1316877685, 2823155411, 3520470730, 3937196585], [324852445, 1702802820, 1870590455, 1937900846, 2211013002, 4133029176], [218381495, 752566801, 867156188, 2167101764, 2989108236, 3741046158], [89985828, 585409035, 989005222, 1153954462, 2772492721, 3086306911], [1391591686, 1495478428, 1740096629, 1937900846, 3531065824, 4074011018], [308386330, 1469463966, 3016215592, 3853216369, 3861178628, 4281404169], [408380436, 1007938896, 1640371217, 3768890756, 4130871231, 4133029176], [1495478428, 1995542556, 2335154300, 2824968409, 2889153412, 3696746758], [1995542556, 2885404138, 2889153412, 2921555511, 3414624062, 3666072769], [157131106, 675719752, 989005222, 2389553778, 2795650646, 3414624062], [195365725, 966278852, 3151971354, 4012081177, 4161562782, 4281404169], [752566801, 1548799411, 3067334701, 3300561073, 3458513784, 3741046158], [300174946, 1083014512, 1688226079, 1993264979, 2116237980, 2259593280], [315118676, 1245170908, 1575643394, 3956422945, 3988781979, 4133029176], [616247370, 634954408, 1121754025, 1575643394, 3956422945, 4198465512], [315118676, 1245170908, 1575643394, 3956422945, 3988781979, 4133029176], [761798359, 1332848220, 1640371217, 2446256021, 2473187572, 3363800274], [416096823, 925513613, 3124163520, 3208841906, 3823814442, 4133029176], [2591729561, 2885404138, 2952455770, 3414624062, 3688221203, 3809433217], [554886353, 1660298739, 2344682990, 3502253319, 3948876653, 4133029176], [1219256186, 1877647709, 2389553778, 2658706116, 2885404138, 3414624062], [186326843, 989005222, 1153954462, 2622767774, 2631409052, 2772492721], [453396337, 1391591686, 1495478428, 2248637841, 4074011018, 4234414794], [1458745512, 1654077300, 2213288563, 2859804856, 2866633624, 3230792946], [1561805126, 1814040936, 1914878713, 2954367686, 2985832169, 3218383535], [1654077300, 1960463623, 2813592987, 2992549023, 3088412765, 4288023956], [160141582, 268137289, 1548799411, 2503418980, 2992549023, 3603067323], [1447148800, 1814040936, 1926284111, 2899002236, 3218383535, 4109052645], [1130526115, 1153954462, 1566979584, 2244160733, 2772492721, 3948114440], [186326843, 239302001, 704648209, 989005222, 1640371217, 4133029176], [324852445, 1708090562, 1740096629, 1937900846, 2885404138, 3142035050], [585409035, 1902099701, 2527015475, 2952455770, 3688221203, 3721833612], [329471690, 1311501278, 1654077300, 2213288563, 2928540965, 3715242030], [411210527, 752566801, 1654077300, 2213288563, 3088412765, 4288023956], [925513613, 1378091871, 1389535834, 1995542556, 2824968409, 4144962538], [157131106, 675719752, 989005222, 1189365228, 3233080051, 3769259261], [416096823, 925513613, 1189365228, 1389535834, 1995542556, 3233080051], [348042388, 1750893084, 2010707102, 2458615640, 3165814787, 4113710682], [15633870, 1565192102, 1640371217, 2473187572, 2735854398, 4133029176], [734166566, 996918240, 1219256186, 1591927406, 1901336353, 2389553778], [315118676, 616247370, 1093623854, 3142035050, 3208841906, 4106043670], [279877387, 295201976, 1400843753, 2954367686, 3559428993, 3691288469], [812461679, 933016471, 1456399994, 1495478428, 3312259119, 4074011018], [750268672, 989005222, 1954834642, 2029338586, 3216576279, 3778342491]]
+'ntdll-init-32' (2516582403), 'medium 32' (00000005), 03, [[634480322, 1053017559, 1607258804, 2196891180], [49726270, 656616225, 860660817, 1814428706], [115832497, 1354043400, 2992001596, 4219240375], [1564874737, 2038595549, 3263632081, 4055713110], [1607258804, 1838922414, 3105372409, 3695030177]]
+'ntdll-wow64-init' (2516582404), 'medium 32 64' (00000007), 03, [[1082922035, 1127890662, 1139992428, 2334879076], [1747290196, 3229659914, 3591406953, 4211497316], [1696926792, 2247157078, 3537372212, 3951448443], [1927506487, 2976460581, 3543304542, 3675948434], [11089789, 181170254, 701056452, 2606575262], [784798852, 1026172202, 1480926712, 1857239553, 2612925817, 3404899012, 3707437697, 3927546192], [125110361, 365788458, 531874019, 2834180107, 3537372212, 3951448443, 3989969384, 4276734656], [242401103, 2497296596, 2610296596, 2913352589, 3335009488, 3775975372], [819098757, 1857239553, 2007893995, 2594129065, 2692644982, 4010894251]]
+'ntdll-rdata-64' (2516582405), 'medium 64' (00000006), 03, [[188732051, 3691993717, 4188194262, 4293324254], [1927506487, 2976460581, 3543304542, 3675948434]]
+'ntdll-wow-rdata-64' (2516582406), 'medium 64' (00000006), 03, [[1927506487, 2976460581, 3543304542, 3675948434], [1800908836, 3693212585, 3889892647, 4118536423]]
+'ntdll-iat-writes' (2516582407), 'medium 32 64' (00000007), 03, [[196382105, 234559042, 2138559430, 2688269315], [1514940764, 1587842486, 1783747452, 3594751436], [1363880422, 1846776069, 2040696414, 2232203069], [1078250937, 1735978761, 2126913849, 3045109399], [1514940764, 1783747452, 3379975230, 4057392405], [158436533, 3241406408, 3525950838, 3622171912], [567112377, 1587842486, 1783747452, 2255479024], [304233694, 1514940764, 1711553693, 3068395971], [304233694, 1711553693, 2309294775, 3634034944], [555687109, 3150781232, 3251314485, 3964848209], [285412363, 304233694, 1514940764, 3887663968], [523437248, 2689781402, 3972018863, 4188194262], [914075689, 1514940764, 1759491247, 2771184560], [1514940764, 2247157078, 3068395971, 4174480815], [1208471991, 1355806837, 2780993443, 3668714108], [581286023, 977500467, 2129595978, 3859650148], [736428921, 781176297, 1098678463, 3733271651], [304233694, 1336346765, 1514940764, 1759491247]]
+'patchguard-nt-eat-read' (2516582408), '64' (00000002), 05, [[44337047, 702927608, 989005222, 1451109557, 1806618570, 2112224108, 3350273957, 3880937151], [44337047, 989005222, 1451109557, 1763606913, 1806618570, 2112224108, 3350273957, 3880937151], [408380436, 466858106, 989005222, 1640371217, 1763606913, 1806618570, 3350273957, 3880937151], [1806618570, 2432355629, 2472353370, 2751091740, 3347559800, 3350273957, 3840715478, 3880937151], [186326843, 437377613, 951434239, 989005222, 989005222, 3347559800, 3744655522, 3996316951], [44337047, 430878933, 708968847, 989005222, 2102624118, 2895406783, 3485595925, 3505020443], [989005222, 2751091740, 2827896837, 3015688625, 3160897288, 3967044430, 4133029176, 4263463253], [675719752, 989005222, 1152302751, 1892513686, 2424348962, 2837711837, 3347559800, 3588946358], [410280717, 1763606913, 1852223281, 2309473969, 2412279101, 3106114542, 3295635386, 3768890756], [408380436, 410280717, 466858106, 1640371217, 1763606913, 2018672170, 2839877978, 3768890756], [266099475, 702927608, 1070437711, 1323268698, 1806618570, 2358859352, 3419397274, 4185318754], [437377613, 951434239, 1178319128, 2432355629, 3970623163, 3996316951], [44337047, 989005222, 1451109557, 2102624118, 2112224108, 2380558903, 2642498662, 2985918440]]
+'chrome-export-codeblocks' (2516582411), '32 64' (00000003), 03, [[707953379, 990857581, 1301028095, 3733031212], [1012755606, 1319971882, 2315211751, 3403256258]]
+'patchguard-lstar' (2516582417), '64' (00000002), 04, [[408380436, 850741707, 2358859352, 2432355629, 3332401835, 3419397274, 4133029176], [797598068, 2014594295, 2358859352, 2823980134, 3419397274, 4130871231, 4133029176], [168454709, 536929829, 2432355629, 3332401835, 3457058569, 4095720289, 4133029176], [1095096701, 2523575771, 2974397735, 3225840239, 3873964305, 3970623163, 4133029176], [119793369, 2518296027, 2518296027, 2523575771, 2958690136, 3970623163, 4133029176], [168454709, 536929829, 2523575771, 3970623163, 4133029176], [90527872, 675341469, 2369400552, 2523575771, 3283711231, 3970623163, 4133029176]]
+'browsers-init-codeblocks' (2516582418), '32 64' (00000003), 03, [[196382105, 234559042, 2138559430, 2417738887], [1363880422, 1846776069, 2040696414, 2232203069], [784644791, 1020098811, 1192771627, 1381368807], [115832497, 1354043400, 2688835452, 4219240375], [158436533, 243841083, 357415939, 3622171912], [555687109, 3150781232, 3251314485, 3964848209], [350740378, 426308805, 2757831327, 3803264907], [929268847, 2285495972, 3567023629, 3633657687], [531635870, 2058918870, 2886819235, 3269727621], [336510857, 1690413999, 2287016750, 3589813652], [1105862618, 1870712175, 2160526351, 3762621297], [539583682, 685987129, 1410627414, 3657766130], [1776948176, 2177358261, 3170329000, 4243867031], [871707928, 3212476061, 3596299577, 3859650148], [167983373, 330449282, 1071930291, 1248597475, 2247157078, 2476122950], [888935707, 2103452135, 2196343909, 2224724128, 3757330480, 4049456990], [487433589, 655321444, 928415435, 1071930291, 2247157078, 4160382530]]
+'km-um-codeblocks-sig-64' (2516582425), '64' (00000002), 03, [[299783781, 558433508, 2102624118, 2757831327, 2965317230, 3998956478], [387290254, 1547628705, 3235238625, 3998956478, 4006096616], [299783781, 1010353997, 1199895011, 2102624118], [83611667, 405952976, 1640371217, 1840869855, 1867535490, 1945952389], [448676169, 1640371217, 1793577412, 1867535490, 2581746460, 3327160971], [449430946, 938345836, 2071063476, 2358859352, 2465507536, 4133029176], [892729693, 1867535490, 2214639574, 2430222182, 3441348722, 3838279883], [1320409076, 2757831327, 4051293274, 4196128696, 4255221052], [487499951, 1418598134, 2671007322, 3156139104, 3338504217], [908102806, 911297943, 2460606816, 3557547536, 3624909056, 4255221052], [951434239, 989005222, 2062102002, 2757831327, 4255221052]]
+'km-um-codeblocks-sig-32' (2516582426), '32' (00000001), 03, [[540429560, 989005222, 1578027525, 1819927955, 3160897288, 4224126424], [596666473, 847504150, 1580307786, 3339164607, 3505020443, 3877687364], [1580307786, 2720215841, 3261067765, 3309381094, 3352248267, 3623127560], [507041688, 1566134341, 1648541823, 2309995640, 2992549023, 4252168029], [2409191127, 2479565244, 3261067765, 3309381094, 3707671088, 4027699193], [1281738782, 1580307786, 1915367706, 2720215841, 3352248267, 4025120108], [485939871, 1580307786, 3021443512, 3261067765, 3309381094, 3623127560], [570899650, 1736707503, 3021443512, 3261067765, 3309381094, 3891608784], [124905697, 587890525, 938345836, 3084643114, 3870114259, 4179308647], [1884192700, 3021443512, 3189885265, 3195096138, 3261067765, 3309381094], [1841755968, 3021443512, 3261067765, 3309381094, 3383657571, 4025193002], [384216288, 1619583547, 1736707503, 1965267398, 2957565269, 3623127560], [296898761, 523935757, 989005222, 1486180074, 1640371217, 4133029176], [822838690, 1339981856, 1938283345, 2157380967, 3557547536, 4133029176], [191887952, 837288180, 1562811474, 1580307786, 1792649938, 3418451188]]
+'user32-export-writes' (2516582431), 'medium 32 64' (00000007), 03, [[567837406, 1696926792, 2085814328, 2680874178]]
+'xul-codeblocks-32' (2516582433), 'medium 32' (00000005), 03, [[1734586897, 1734919426, 2373929772, 2887885664], [1734586897, 2373929772, 2887885664, 3719395329], [715040372, 1734586897, 1734919426, 2373929772, 2887885664, 3785919479], [433994973, 1826846597, 2721040275, 4123460445], [2344761084, 3173389633, 3276110054, 3431025757], [73453207, 203348527, 2882398601, 3646660977], [1834370822, 2010270059, 3280589144, 4000518656], [183882013, 1734919426, 2680874178, 3847901570], [339252210, 591061365, 703256082, 4087587314], [441546640, 928366685, 2648622823, 4189301619], [1670789503, 2812340787, 2919689018, 3349421030], [1783129316, 3220241499, 3898703126, 4219181554], [2003343611, 2139948557, 2920719896, 4147043648], [1319394463, 2270569189, 2563827811, 3517076078], [1177101609, 1272010507, 2654953887, 2920719896], [1405116388, 1480020253, 2154990044, 3740826609], [515827328, 1744225269, 2146784810, 2939257750], [2422706973, 2863350336, 2972415081, 3366708993], [1529347045, 1810561502, 2023095291, 2182558284], [2246752605, 2678910550, 2913606027, 3324098180], [427600569, 2246752605, 2590619499, 3324098180], [378945069, 433994973, 900930479, 1960357104], [64052570, 2006597003, 2361428165, 3976140741], [776236513, 2160526351, 3733323715, 3762621297], [3247121906, 3489332171, 3646660977, 4196217403], [2160526351, 2363437050, 2377547411, 2990976922], [235599882, 299599286, 1351962574, 2160526351, 2537700327, 2990976922, 3951155632], [2160526351, 2377547411, 2537700327, 2924875034], [798299369, 1224312498, 1317345664, 1775845613, 3113187869, 3733204666], [183817496, 337350129, 428607527, 1973307458, 2377795142, 2725173265, 3838752198, 4028317074], [411565561, 547349971, 1294561118, 1445635753, 2129523380, 2160526351, 2346956014, 3762621297], [490039406, 694836707, 1045903597, 2455593236, 2598305860, 2746290295, 3656919183, 3780543815]]
+'xul-codeblocks-64' (2516582434), 'medium 64' (00000006), 03, [[357786590, 1921550346, 2573991001, 3339345639], [1334399074, 1438719052, 2760796246, 3558803635], [203348527, 3247121906, 3646660977, 4196217403], [103376936, 2154990044, 2415418442, 2517327953], [1181979282, 1250299558, 1438719052, 2841683971], [755421547, 3091713377, 3710934899, 3930916146], [357786590, 1759036912, 2573991001, 3027452825], [183974552, 433909255, 2700942739, 3887191170], [168394915, 371981138, 576476848, 1063853496, 1181979282, 1460763867, 1777112432, 2054820546, 3424861155, 3426619048], [2416431690, 2638886308, 2671756828, 2833952779], [2246752605, 2590619499, 2678910550, 2913606027, 3324098180, 3358107043], [986215979, 1199223197, 1828884069, 3667766778], [64052570, 2006597003, 2361428165, 2368239109, 3976140741], [1325865318, 1761353974, 3286023430, 3713162939, 4007500026], [3247121906, 3489332171, 3646660977, 4196217403], [2160526351, 2363437050, 2377547411, 2990976922], [235599882, 299599286, 1351962574, 2160526351, 2537700327, 2990976922, 3951155632], [2160526351, 2377547411, 2537700327, 2924875034], [183817496, 727206531, 2456930740, 3009561800, 3871990076], [183817496, 337350129, 428607527, 1973307458, 2377795142, 2725173265, 3838752198, 4028317074], [357638365, 1726307710, 1813254730, 2434293230, 2472726680, 2798596431, 2921972616, 4016306800], [979392684, 2249702076, 3307997551, 3626462953]]
+'mozglue-codeblocks-32' (2516582435), 'medium 32' (00000005), 03, [[2246752605, 2678910550, 2913606027, 3324098180], [415049885, 441090523, 2264939409, 2812340787, 3622386145, 4160057869], [2246752605, 2590619499, 2678910550, 2913606027, 3324098180, 3358107043], [747757885, 1482350000, 3220241499, 3390551580, 4120908224], [843333235, 1077665897, 1306689491, 2356673317, 3030564183, 3106278395], [560683482, 1908704750, 3481797688, 4101258111], [349903452, 1706305463, 1877539392, 1908704750, 2170240936, 2834735361], [528783103, 610067175, 1234021442, 1311832797, 2134091132, 4167314164], [1263297190, 1334090587, 1486064172, 1670751608, 2213333529, 3652696882], [886234420, 1514940764, 1734586897, 2373929772, 2448117771, 2887885664], [411483034, 426022305, 1104977125, 2695086550, 2796885657, 3477143031]]
+'mozglue-xul-code-64' (2516582436), 'medium 64' (00000006), 04, [[64052570, 2006597003, 2361428165, 2368239109, 2593585195, 3976140741], [357786590, 1759036912, 1921550346, 2573991001, 3339345639, 3453171829], [1051881867, 1063853496, 1476400188, 2021475896, 2253235034, 3424861155], [64052570, 1205832245, 2006597003, 2103452135, 2361428165, 3976140741], [1456095791, 2631377237, 3464665024, 4082513011, 4231363254, 4284502038], [631995339, 727206531, 2663439279, 2939744050, 3565945020, 3871990076]]
+'firefox-lib-writes-code' (2516582437), 'medium 32 64' (00000007), 04, [[547349971, 1105862618, 1236175647, 1870712175, 2160526351, 3762621297], [707953379, 990857581, 1301028095, 2530081359, 3733031212, 4147074192], [1012755606, 1319971882, 2315211751, 2530081359, 4147074192, 4176474944]]
+'patchguard-idtr-codeblocks' (2516582445), '64' (00000002), 03, [[2394931, 78247809, 989005222, 2615700730, 3189885265, 3204810280, 4061366998], [702927608, 739161370, 1640371217, 2590303972, 3187546047, 3254834230, 3970623163, 4133029176], [28188399, 325362508, 1483786555, 2295793631, 2450673281, 3142035050, 3498484386, 3568176988, 3734725112, 4102725253], [370586138, 536929829, 573366575, 926034053, 2220616347, 2292164899, 3257555162, 3834493009, 3970623163], [186326843, 989005222, 1172030582, 3735124479, 3970623163, 4133029176, 4133029176], [2757831327, 3160897288, 3573376138], [186326843, 989005222, 2295793631, 2374987157, 2374987157, 2450673281, 3392083781], [989005222, 1199895011, 1287349739, 2071063476, 2374987157, 3160897288, 3916603958]]
+'wow64-self' (2516582446), 'medium 32' (00000005), 03, [[1199902627, 1550081613, 2058869633, 3136844076], [1026172202, 1173508923, 1934985897, 3056859653], [668973049, 1696926792, 2247157078, 2680874178], [2236711463, 3042412691, 3584829430, 3695409446], [2972115695, 3158756417, 3217722389, 3926369878], [1108886902, 1199902627, 1550882614, 3136844076], [842254127, 1783544808, 2722457566, 4005458197], [1493311058, 2058869633, 2807097021, 3450094213]]
+'wow64-self-ret' (2516582447), 'medium 32 64' (00000007), 03, [[1588661846, 2144482166, 3161719578, 4221229056]]
+'wow64-reverse-imports' (2516582448), 'medium 32 64' (00000007), 03, [[428019905, 1256359675, 3943141444, 4278442898], [406944502, 1256359675, 1404827425, 3860392659], [84390625, 1256359675, 2129523380, 3714809537], [1013292225, 1256359675, 1985837857, 2434783813]]
+'nt-rdata-writes' (2516582449), '64' (00000002), 06, [[194742203, 1306968141, 1370519349, 2001500782, 2494052403, 3400503237, 3481310868, 3578028708]]
+'kernel-iat-init' (2516582450), '32 64' (00000003), 03, [[408380436, 537517389, 620989194, 1849426752, 3929710157, 3988577654], [627975858, 790211746, 951434239, 2102624118, 2248117029, 2933053670], [359069680, 519157311, 894083480, 1032530710, 3171623114, 4133029176]]
+'patchguard-idt-codeblocks' (2516582454), '64' (00000002), 04, [[370586138, 536929829, 573366575, 702927608, 739161370, 926034053, 1640371217, 2220616347, 2292164899, 2523575771, 2590303972, 3187546047, 3254834230, 3257555162, 3834493009, 3970623163, 4133029176, 4133029176, 4160388488]]
+
+Generated 0032 kernel exceptions
+Generated 0065 user exceptions
+Generated 0004 kernel-user exceptions
+Generated 0056 signatures
+-------------------------------
+Total     0153 objects
+[100%] Built target exceptions
+Loaded  KiDispatchException32.yaml
+Loaded  MiDeleteVirtualAddresses64.yaml
+Loaded  RtlpVirtualUnwind6.yaml
+Loaded  RtlpVirtualUnwind8.yaml
+Loaded  MiCommitExistingVad64.yaml
+Loaded  MiDeleteVirtualAddresses32.yaml
+Loaded  MiProtectVirtualMemory32.yaml
+Loaded  PspSetContextThreadInternal32.yaml
+Loaded  KiDispatchException64.yaml
+Loaded  NtSetSystemPowerState32.yaml
+Loaded  PspSetContextThreadInternal64.yaml
+Loaded  MiCommitExistingVad32.yaml
+Loaded  RtlpVirtualUnwind2.yaml
+Loaded  MmCopyVirtualMemory64.yaml
+Loaded  MiFinishVadDeletion32.yaml
+Loaded  KeBugCheck2.yaml
+Loaded  MiGetWsAndInsertVad64.yaml
+Loaded  MiInsertPrivateVad64.yaml
+Loaded  KiDisplayBlueScreen64.yaml
+Loaded  RtlpVirtualUnwind3.yaml
+Loaded  NtQueueApcThreadEx64.yaml
+Loaded  MiUnloadSystemImage64.yaml
+Loaded  MmCleanProcessAddressSpace32.yaml
+Loaded  MiProcessLoaderEntry32.yaml
+Loaded  KiDisplayBlueScreen32.yaml
+Loaded  MiInitializeLoadedModuleList.yaml
+Loaded  PspInsertProcess64.yaml
+Loaded  MiFinishVadDeletion64.yaml
+Loaded  MiUnloadSystemImage32.yaml
+Loaded  MiInsertPrivateVad32.yaml
+Loaded  PspInsertProcess32.yaml
+Loaded  RtlpVirtualUnwind7.yaml
+Loaded  NtQueueApcThreadEx32.yaml
+Loaded  PspWow64SetContextThread.yaml
+Loaded  MmCopyVirtualMemory32.yaml
+Loaded  MiProcessLoaderEntry64.yaml
+Loaded  RtlpVirtualUnwind5.yaml
+Loaded  RtlpVirtualUnwind1.yaml
+Loaded  MmCleanProcessAddressSpace64.yaml
+Loaded  NtSetSystemPowerState64.yaml
+Loaded  MiGetWsAndInsertVad32.yaml
+Loaded  MiProtectVirtualMemory64.yaml
+Loaded  MiInsertVad64.yaml
+Loaded  RtlpVirtualUnwind4.yaml
+Loaded  windows_7602_x86_kpti_ON.yaml
+Loaded  windows_7602_x64_kpti_ON.yaml
+Loaded  windows_7601_x64_kpti_OFF.yaml
+Loaded  windows_17763_x86_kpti_ON.yaml
+Loaded  windows_17763_x64_kpti_ON.yaml
+Loaded  windows_7601_x86_kpti_OFF.yaml
+Loaded  windows_7600_x86_kpti_OFF.yaml
+Loaded  windows_7601_x86_kpti_ON.yaml
+Loaded  windows_7601_x64_kpti_ON.yaml
+Loaded  windows_7600_x64_kpti_OFF.yaml
+Loaded  windows_um_7_x86.yaml
+Loaded  windows_um_10_17763-19041_x64.yaml
+Loaded  windows_um_7_x64.yaml
+Loaded  windows_um_10_17763-18362_x86.yaml
+Loaded  dist_sigs.yaml
+Loaded  centos-8.yaml
+Loaded  centos-8-2.yaml
+Loaded  ubuntu-18-04.yaml
+Loaded  options.yaml
+Loaded  syscalls.yaml
+Loaded 7 syscall patterns.
+Loaded 3 linux supported versions.
+Loaded 2 linux dist signatures.
+Loaded 10 windows supported versions.
+Linux OS 4.18.0-[80-166]*el8*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9db70) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+	- Hooks count:  24
+Linux OS 4.18.0-[167-]*el8*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9db70) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  1.128.0.0 (0x1008000000000)
+	- Max intro version:  MAX_ANY
+	- Hooks count:  24
+Linux OS 4.15.0-[24-]*Ubuntu*:
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9db70) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+	- Hooks count:  120
+Functions for Windows OS 7600 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  1 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  5 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  5 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  3 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  4 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7600 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  1 patterns and arguments: []
+        - MiInsertPrivateVad             with  2 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  2 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  3 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7601 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7601 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7601 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7601 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 7602 (is 64: False)
+        - KiDispatchException            with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with  2 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiProtectVirtualMemory         with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  4 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MmCleanProcessAddressSpace     with  7 patterns and arguments: ['DET_ARG_RAX']
+        - MiProcessLoaderEntry           with  7 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with  6 patterns and arguments: ['DET_ARG_STACK1']
+        - MiInsertPrivateVad             with  3 patterns and arguments: ['DET_ARG_RDI']
+        - PspInsertProcess               with  6 patterns and arguments: ['DET_ARG_RAX', 'DET_ARG_STACK1', 'DET_ARG_STACK5']
+        - NtQueueApcThreadEx             with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  5 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: ['DET_ARG_RDI']
+Functions for Windows OS 7602 (is 64: True)
+        - MiDeleteVirtualAddresses       with  4 patterns and arguments: []
+        - RtlpVirtualUnwind6             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind8             with  1 patterns and arguments: []
+        - MiCommitExistingVad            with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind2             with  1 patterns and arguments: []
+        - MmCopyVirtualMemory            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  3 patterns and arguments: []
+        - MiInsertPrivateVad             with  5 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - RtlpVirtualUnwind3             with  1 patterns and arguments: []
+        - NtQueueApcThreadEx             with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with  4 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  1 patterns and arguments: []
+        - PspInsertProcess               with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK6']
+        - RtlpVirtualUnwind7             with  1 patterns and arguments: []
+        - PspWow64SetContextThread       with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - RtlpVirtualUnwind5             with  1 patterns and arguments: []
+        - RtlpVirtualUnwind1             with  1 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  5 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  1 patterns and arguments: []
+        - MiProtectVirtualMemory         with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - RtlpVirtualUnwind4             with  1 patterns and arguments: []
+Functions for Windows OS 17763 (is 64: False)
+        - KiDispatchException            with  8 patterns and arguments: ['DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - MiDeleteVirtualAddresses       with 17 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_STACK1', 'DET_ARG_STACK2', 'DET_ARG_STACK3']
+        - PspSetContextThreadInternal    with  5 patterns and arguments: ['DET_ARG_STACK3', 'DET_ARG_STACK4']
+        - NtSetSystemPowerState          with  6 patterns and arguments: []
+        - MiCommitExistingVad            with  2 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK1', 'DET_ARG_STACK2']
+        - MiFinishVadDeletion            with  3 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_STACK1']
+        - KeBugCheck2                    with  2 patterns and arguments: []
+        - MmCleanProcessAddressSpace     with  8 patterns and arguments: ['DET_ARG_RCX']
+        - MiProcessLoaderEntry           with  8 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - MiUnloadSystemImage            with 14 patterns and arguments: ['DET_ARG_RCX']
+        - MiInsertPrivateVad             with  8 patterns and arguments: ['DET_ARG_RCX']
+        - PspInsertProcess               with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK3']
+        - NtQueueApcThreadEx             with  5 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_STACK10', 'DET_ARG_STACK11', 'DET_ARG_RAX']
+        - MmCopyVirtualMemory            with  4 patterns and arguments: ['DET_ARG_STACK4', 'DET_ARG_STACK5', 'DET_ARG_STACK6', 'DET_ARG_STACK7', 'DET_ARG_STACK8']
+        - MiGetWsAndInsertVad            with 11 patterns and arguments: ['DET_ARG_RCX']
+Functions for Windows OS 17763 (is 64: True)
+        - MiDeleteVirtualAddresses       with 18 patterns and arguments: []
+        - MiCommitExistingVad            with  1 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - KiDispatchException            with 16 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9']
+        - PspSetContextThreadInternal    with  8 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MmCopyVirtualMemory            with 17 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK7']
+        - MiGetWsAndInsertVad            with  2 patterns and arguments: []
+        - MiInsertPrivateVad             with  1 patterns and arguments: []
+        - KiDisplayBlueScreen            with  2 patterns and arguments: []
+        - NtQueueApcThreadEx             with  4 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_RAX']
+        - MiUnloadSystemImage            with 17 patterns and arguments: ['DET_ARG_RCX']
+        - MiInitializeLoadedModuleList   with  2 patterns and arguments: []
+        - PspInsertProcess               with  7 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX', 'DET_ARG_STACK5']
+        - MiFinishVadDeletion            with  2 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8']
+        - PspWow64SetContextThread       with  6 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MiProcessLoaderEntry           with  6 patterns and arguments: ['DET_ARG_RCX', 'DET_ARG_RDX']
+        - MmCleanProcessAddressSpace     with 14 patterns and arguments: ['DET_ARG_RCX']
+        - NtSetSystemPowerState          with  6 patterns and arguments: []
+        - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK5']
+        - MiInsertVad                    with  6 patterns and arguments: []
+Windows OS 7600  (kpti: False, 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7600  (kpti: False, 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: False, 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: False, 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7601  (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7602  (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 7602  (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 17763 (kpti: True , 64: False)
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+Windows OS 17763 (kpti: True , 64: True )
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f2bbdb9d588) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Min intro version:  MIN_ANY
+	- Max intro version:  MAX_ANY
+[100%] Built target cami
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /usr/local/lib/libintrocore.so.1.133.0
+-- Up-to-date: /usr/local/lib/libintrocore.so.1
+-- Set runtime path of "/usr/local/lib/libintrocore.so.1.133.0" to "/usr/local/lib"
+-- Up-to-date: /usr/local/lib/libintrocore.so
+-- Up-to-date: /usr/local/include/hvmi/env.h
+-- Up-to-date: /usr/local/include/hvmi/glueiface.h
+-- Up-to-date: /usr/local/include/hvmi/hvmi.h
+-- Up-to-date: /usr/local/include/hvmi/intro_sal.h
+-- Up-to-date: /usr/local/include/hvmi/intro_types.h
+-- Up-to-date: /usr/local/include/hvmi/introstatus.h
+-- Up-to-date: /usr/local/include/hvmi/upperiface.h
+-- Up-to-date: /usr/local/include/hvmi/vecommon.h
+-- Up-to-date: /usr/local/lib/pkgconfig/libintrocore.pc
+-- Installing: /usr/local/share/introcore/exceptions.bin
+-- Installing: /usr/local/share/introcore/intro_live_update.bin
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/huawei/code/hvmi/daemon/build
+Consolidate compiler generated dependencies of target hvmid
+[100%] Built target hvmid
+[100%] Built target hvmid
+Install the project...
+-- Install configuration: "Release"
+-- Up-to-date: /usr/local/etc/hvmid/policies/default.json
+-- Up-to-date: /usr/local/etc/hvmid/settings.json
+-- Up-to-date: /usr/local/bin/hvmid
+mesg: ttyname failed: Inappropriate ioctl for device
