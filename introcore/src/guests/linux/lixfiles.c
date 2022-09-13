@@ -191,37 +191,6 @@ IntLixFileCacheFindDentry(
 }
 
 INTSTATUS
-IntLixPathGetDentry(
-    _In_ QWORD Path,
-    _Out_ QWORD *Dentry
-    )
-///
-/// @brief Reads the value of the dentry field of the 'struct file'.
-///
-/// @param[in]  File        The guest virtual address of the 'struct file'
-/// @param[in]  Dentry      The guest virtual address of the 'struct dentry'.
-///
-/// @retval     #INT_STATUS_SUCCESS         On success.
-/// @retval     #INT_STATUS_NOT_SUPPORTED   If the guest virtual address of the 'struct dentry' is not a kernel pointer.
-///
-{
-    INTSTATUS status = IntKernVirtMemFetchQword(Path + 8, Dentry);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] IntKernVirtMemFetchQword failed with status: 0x%08x\n", status);
-        return status;
-    }
-
-    if (!IS_KERNEL_POINTER_LIX(*Dentry))
-    {
-        ERROR("[ERROR] The value of the dentry is not a linux-kernel pointer!\n");
-        return INT_STATUS_NOT_SUPPORTED;
-    }
-
-    return INT_STATUS_SUCCESS;
-}
-
-INTSTATUS
 IntLixFileGetDentry(
     _In_ QWORD File,
     _Out_ QWORD *Dentry
@@ -379,17 +348,17 @@ IntLixFileReadDentry(
 
 INTSTATUS
 IntLixPathGetPath(
-    _In_ QWORD pathGva,
+    _In_ QWORD crtDentryGva,
     _Out_ char **Path,
     _Out_opt_ DWORD *Length
     )
 ///
-/// @brief Gets the path that corresponds to the provided FileStructGva (guest virtual address of the 'struct file').
+/// @brief Gets the path that corresponds to the provided crtDentryGva (guest virtual address of the 'struct path').
 ///
 /// For each iteration the parent of the dentry is fetched; the loop of iteration ends when the dentry.parent is equal
 /// with the current dentry guest virtual address or the dentry.parent is not a valid kernel guest virtual address.
 ///
-/// @param[in]  crtDentryGva   The guest virtual address of the 'struct file'.
+/// @param[in]  crtDentryGva   The guest virtual address of the 'struct path'.
 /// @param[out] Path            On success, contains a pointer to the path of the file.
 /// @param[out] Length          On success, the length of the path.
 ///
@@ -403,7 +372,6 @@ IntLixPathGetPath(
     INTSTATUS status = INT_STATUS_SUCCESS;
     DENTRY_PATH *pDentry = NULL;
     QWORD cacheDentryGva = 0;
-    QWORD crtDentryGva = 0;
     QWORD parentDentry = 0;
     QWORD prevHashList = 0;
     DWORD fileNameLength = 0;
@@ -411,23 +379,12 @@ IntLixPathGetPath(
     INT32 index = 0;
     char tmpOutput[LIX_MAX_PATH] = { 0 };
 
-    if (!IS_KERNEL_POINTER_LIX(pathGva))
-    {
-        return INT_STATUS_INVALID_PARAMETER_1;
-    }
-
     if (Path == NULL)
     {
         return INT_STATUS_INVALID_PARAMETER_2;
     }
 
     *Path = NULL;
-    status = IntLixPathGetDentry(pathGva, &crtDentryGva);
-    if (!INT_SUCCESS(status))
-    {
-        ERROR("[ERROR] IntLixFileGetDentry failed for file %llx: 0x%08x\n", pathGva, status);
-        return status;
-    }
     status = IntKernVirtMemFetchQword(crtDentryGva + LIX_FIELD(Dentry, Parent), &parentDentry);
     if (!INT_SUCCESS(status))
     {
@@ -469,7 +426,7 @@ IntLixPathGetPath(
     index = sizeof(gLixPath) -1;
     gLixPath[index] = 0;
 
-    // fileNameLength is ok, it can be maximum LIX_MAX_PATH (256). Check out IntLixFileReadDentry.
+    // fileNameLength is ok, it can be maximum LIX_MAX_PATH (256). Check out IntLixDentryGetName.
     index -= fileNameLength;
     memcpy(gLixPath + index, tmpOutput, fileNameLength);
 

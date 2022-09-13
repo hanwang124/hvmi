@@ -54,11 +54,6 @@ IntLixFileGetDentry(
     _Out_ QWORD *Dentry
     );
 INTSTATUS
-IntLixPathGetDentry(
-    _In_ QWORD Path,
-    _Out_ QWORD *Dentry
-    );
-INTSTATUS
 IntLixDentryGetName(
     _In_ QWORD Dentry,
     _Outptr_ char **FileName,
