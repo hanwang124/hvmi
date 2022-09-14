@@ -251,9 +251,9 @@ def_tramp_ret               sys_linkat                          5   sys_linkat_j
 def_tramp_ret               sys_symlink                         2   sys_symlink_jmp
 def_tramp_ret               sys_symlinkat                       3   sys_symlinkat_jmp
 def_tramp_ret               sys_access                          2   sys_access_jmp
-def_tramp_ret               sys_fstat                           2   sys_fstat_jmp
+def_tramp_ret               sys_newfstat                           2   sys_newfstat_jmp
 def_tramp_ret               sys_newstat                            2   sys_newstat_jmp
-def_tramp_ret               sys_lstat                           2   sys_lstat_jmp
+def_tramp_ret               sys_newlstat                           2   sys_newlstat_jmp
 def_tramp_ret               sys_newfstatat                      4   sys_newfstatat_jmp
 def_tramp_ret               sys_pwrite64                        4   sys_pwrite64_jmp
 def_tramp_ret               sys_pread64                         4   sys_pread64_jmp
@@ -294,4 +294,5 @@ def_tramp_ret               sys_gettid                          0   sys_gettid_j
 def_tramp_ret               sys_oldumount                       1   sys_oldumount_jmp
 def_tramp_ret               sys_setgid16                        1   sys_setgid16_jmp
 def_tramp_ret               sys_getcwd                          2   sys_getcwd_jmp
-def_tramp_ret               hrtimer_nanosleep                   3   hrtimer_nanosleep_jmp
+def_tramp_ret               sys_nanosleep                2   sys_nanosleep_jmp
+def_tramp_ret               sys_clock_nanosleep          4   sys_clock_nanosleep_jmp

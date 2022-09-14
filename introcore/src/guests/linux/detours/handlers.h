@@ -89,9 +89,9 @@ typedef enum {
     det_sys_symlink, //
     det_sys_symlinkat,//
     det_sys_access, ////
-    det_sys_fstat,
+    det_sys_newfstat,////
     det_sys_newstat,////
-    det_sys_lstat,
+    det_sys_newlstat,
     det_sys_newfstatat,////
     det_sys_pwrite64,////
     det_sys_pread64,////
@@ -133,7 +133,8 @@ typedef enum {
     det_sys_setgid16,
     det_sys_getcwd,
     det_sys_clone,
-    det_hrtimer_nanosleep,
+    det_sys_nanosleep,
+    det_sys_clock_nanosleep,
     
     det_max_id
 } DETOUR_ID;

@@ -81,9 +81,9 @@ def_detour_vars(sys_linkat);
 def_detour_vars(sys_symlink);
 def_detour_vars(sys_symlinkat);
 def_detour_vars(sys_access);
-def_detour_vars(sys_fstat);
+def_detour_vars(sys_newfstat);
 def_detour_vars(sys_newstat);
-def_detour_vars(sys_lstat);
+def_detour_vars(sys_newlstat);
 def_detour_vars(sys_newfstatat);
 def_detour_vars(sys_pwrite64);
 def_detour_vars(sys_pread64);
@@ -125,8 +125,8 @@ def_detour_vars(sys_gettid);
 def_detour_vars(sys_oldumount);
 def_detour_vars(sys_setgid16);
 def_detour_vars(sys_getcwd);
-def_detour_vars(hrtimer_nanosleep);
-
+def_detour_vars(sys_nanosleep);
+def_detour_vars(sys_clock_nanosleep);
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
 def_detour_vars(process_vm_rw_core);
@@ -233,9 +233,9 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_symlink),
         init_detour_field(sys_symlinkat),
         init_detour_field(sys_access),
-        init_detour_field(sys_fstat),
+        init_detour_field(sys_newfstat),
         init_detour_field(sys_newstat),
-        init_detour_field(sys_lstat),
+        init_detour_field(sys_newlstat),
         init_detour_field(sys_newfstatat),
         init_detour_field(sys_pwrite64),
         init_detour_field(sys_pread64),
@@ -277,7 +277,8 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_oldumount),
         init_detour_field(sys_setgid16),
         init_detour_field(sys_getcwd),
-        init_detour_field(hrtimer_nanosleep),
+        init_detour_field(sys_nanosleep),
+        init_detour_field(sys_clock_nanosleep),
     },
 };
 
@@ -1680,16 +1681,16 @@ void pre_sys_access(char *filename,long mode,int c,int d,int e,int f,long *skip_
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void sys_fstat(unsigned int fd,long *statbuf,int c,int d,int e,int f,long skip_call,unsigned int save_fd,long *save_statbuf)
+void sys_newfstat(unsigned int fd,long *statbuf,int c,int d,int e,int f,long skip_call,unsigned int save_fd,long *save_statbuf)
 {
     long save_rax = __read_reg("rax");
     //void *current = current_task;
-    vmcall_4(det_sys_fstat,current_task,save_fd,save_statbuf,save_rax);
+    vmcall_4(det_sys_newfstat,current_task,save_fd,save_statbuf,save_rax);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void pre_sys_fstat(unsigned int fd,long *statbuf,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long **save_statbuf)
+void pre_sys_newfstat(unsigned int fd,long *statbuf,int c,int d,int e,int f,long *skip_call,unsigned int *save_fd,long **save_statbuf)
 {
     *skip_call=0;
     *save_fd=fd;
@@ -1716,16 +1717,16 @@ void pre_sys_newstat(char *filename,long *statbuf,int c,int d,int e,int f,long *
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void sys_lstat(char *filename,long *statbuf,int c,int d,int e,int f,long skip_call,char *save_filename,long *save_statbuf)
+void sys_newlstat(char *filename,long *statbuf,int c,int d,int e,int f,long skip_call,char *save_filename,long *save_statbuf)
 {
     long save_rax = __read_reg("rax");
     //void *current = current_task;
-    vmcall_4(det_sys_lstat,current_task,save_filename,save_statbuf,save_rax);
+    vmcall_4(det_sys_newlstat,current_task,save_filename,save_statbuf,save_rax);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void pre_sys_lstat(char *filename,long *statbuf,int c,int d,int e,int f,long *skip_call,char **save_filename,long **save_statbuf)
+void pre_sys_newlstat(char *filename,long *statbuf,int c,int d,int e,int f,long *skip_call,char **save_filename,long **save_statbuf)
 {
     *skip_call=0;
     *save_filename=filename;
@@ -2271,25 +2272,7 @@ void sys_dup2(unsigned int oldfd, unsigned int newfd,int c,int d,int e,int f,lon
     long save_rax = __read_reg("rax");
     vmcall_4(det_sys_dup2, current_task, save_oldfd,save_newfd,save_rax);
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void pre_sys_dup3(unsigned int oldfd, unsigned int newfd,int flags,int d,int e,int f,long *skip_call,
-//                     unsigned int *save_oldfd, unsigned int *save_newfd,int *save_flags)
-// {
-//     *skip_call=0;
-//     *save_oldfd=oldfd;
-//     *save_newfd=save_newfd;
-//     *save_flags=flags;
-// }
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// __default_fn_attr
-// void sys_dup3(unsigned int oldfd, unsigned int newfd,int c,int d,int e,int f,long *skip_call,
-//                     unsigned int save_oldfd, unsigned int save_newfd,int save_flags)
-// {
-//     long save_rax = __read_reg("rax");
-//     vmcall_5(det_sys_dup2, current_task, save_oldfd,save_newfd,save_flags,save_rax);
-// }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
@@ -2309,7 +2292,7 @@ void sys_wait4(unsigned int pid, int *stat_addr,int options,long *ru,int e,int f
                     unsigned int save_pid, int *save_stat_addr,int save_options,long *save_ru)
 {
     long save_rax = __read_reg("rax");
-    vmcall_6(det_sys_dup2, current_task, save_pid,save_stat_addr,save_options,save_ru,save_rax);
+    vmcall_6(det_sys_wait4, current_task, save_pid,save_stat_addr,save_options,save_ru,save_rax);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2356,9 +2339,10 @@ void sys_sched_rr_get_interval(unsigned int pid,long *interval,int c,int d,int e
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void pre_sys_execve(char* filename,long *argv,long *envp,int d,int e,int f,long *skip_call,
-                    char** save_filename,long **save_argv,long **save_envp)
+void pre_sys_execve(char* filename,long **argv,long **envp,int d,int e,int f,long *skip_call,
+                    char** save_filename,long ***save_argv,long ***save_envp)
 {
+    
     *skip_call=0;
     *save_filename=filename;
     *save_argv=argv;
@@ -2367,10 +2351,11 @@ void pre_sys_execve(char* filename,long *argv,long *envp,int d,int e,int f,long 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void sys_execve(char* filename,long* argv,long* envp,int d,int e,int f,long *skip_call,
-                    char* save_filename,long* save_argv,long* save_envp)
+void sys_execve(char* filename,long** argv,long** envp,int d,int e,int f,long *skip_call,
+                    char* save_filename,long** save_argv,long** save_envp)
 {
     long save_rax = __read_reg("rax");
+    
     vmcall_5(det_sys_execve, current_task,save_filename,save_argv,save_envp,save_rax);
 }
 
@@ -2529,24 +2514,41 @@ void sys_getcwd(char *buf,long size,int c,int d,int e,int f,long *skip_call,
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void pre_hrtimer_nanosleep(long *rqtp,long mode,long clockid,int d,int e,int f,long *skip_call,
-                    long **save_rqtp,long *save_mode,long *save_clockid)
+void pre_sys_nanosleep(long *req,long *rem,long c,int d,int e,int f,long *skip_call,
+                    long **save_req,long **save_rem)
 {
     *skip_call=0;
-    *save_rqtp=rqtp;
-    *save_mode=mode;
-    *save_clockid=clockid;
+    *save_req=req;
+    *save_rem=rem;
 }
 
 __default_fn_attr
-void hrtimer_nanosleep(long *rqtp,long mode,long clockid,int d,int e,int f,long *skip_call,
-                    long *save_rqtp,long save_mode,long save_clockid)
+void sys_nanosleep(long *req,long *rem,long c,int d,int e,int f,long *skip_call,
+                    long *save_req,long *save_rem)
 {
     long save_rax = __read_reg("rax");
-    vmcall_5(det_hrtimer_nanosleep, current_task,save_rqtp,save_mode,save_clockid,save_rax);
+    vmcall_4(det_sys_nanosleep, current_task,save_req,save_rem,save_rax);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+__default_fn_attr
+void pre_sys_clock_nanosleep(long which_clock,int flags,long *req,long *rem,int e,int f,long *skip_call,
+                    long *save_which_clock,int *save_flags,long **save_req,long **save_rem)
+{
+    *skip_call=0;
+    *save_which_clock=which_clock;
+    *save_flags=flags;
+    *save_req=req;
+    *save_rem=rem;
+}
 
+__default_fn_attr
+void sys_clock_nanosleep(long which_clock,int flags,long *req,long *rem,int e,int f,long *skip_call,
+                    long save_which_clock,int save_flags,long *save_req,long *save_rem)
+{
+    long save_rax = __read_reg("rax");
+    vmcall_6(det_sys_clock_nanosleep, current_task,save_which_clock,save_flags,save_req,save_rem,save_rax);
+}
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
@@ -2632,9 +2634,9 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_symlink);
     def_detour_asm_vars(sys_symlinkat);
     def_detour_asm_vars(sys_access);
-    def_detour_asm_vars(sys_fstat);
+    def_detour_asm_vars(sys_newfstat);
     def_detour_asm_vars(sys_newstat);
-    def_detour_asm_vars(sys_lstat);
+    def_detour_asm_vars(sys_newlstat);
     def_detour_asm_vars(sys_newfstatat);
     def_detour_asm_vars(sys_pwrite64);
     def_detour_asm_vars(sys_pread64);
@@ -2676,5 +2678,6 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_oldumount);
     def_detour_asm_vars(sys_setgid16);
     def_detour_asm_vars(sys_getcwd);
-    def_detour_asm_vars(hrtimer_nanosleep);
+    def_detour_asm_vars(sys_nanosleep);
+    def_detour_asm_vars(sys_clock_nanosleep);
 }
