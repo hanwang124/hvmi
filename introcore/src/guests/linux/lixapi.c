@@ -21,6 +21,10 @@
 #include <linux/utsname.h>
 #include <linux/sched.h>
 #include "lixstack.h"
+#include "setjmp.h"
+jmp_buf Jump_Buffer;
+#define try if(!setjmp(Jump_Buffer))
+#define catch else
 
 INTSTATUS IntLixRmdirHandle(_In_ void *Detour);
 INTSTATUS IntLixSysfsHandle(_In_ void *Detour);
@@ -118,117 +122,10 @@ INTSTATUS IntLixGetpidHandler(_In_ void *Detour);
 INTSTATUS IntLixGettidHandler(_In_ void *Detour);
 INTSTATUS IntLixOldumountHandler(_In_ void *Detour);
 INTSTATUS IntLixSetgid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_getgid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_timesHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mountHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getcwdHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_faccessatHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_flistxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_readlinkatHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getpgidHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_flockHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_readvHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_writevHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_readlinkHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getpeernameHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_recvHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_utimeHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_lseekHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_listenHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_socketHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_vforkHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sendHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_setpgidHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_setgroups16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_semctlHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mlockallHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_inotify_initHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_fallocateHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_unshareHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_msyncHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getresuid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_add_keyHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_lsetxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_setreuid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_getpgrpHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_get_priority_maxHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_pselect6Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_setresgid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_signalfdHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mprotectHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_getschedulerHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_fcntlHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sigaltstackHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_semopHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_llistxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_epoll_pwaitHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mlockHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_pipe2Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_semgetHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_epoll_waitHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_keyctlHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getrandomHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_open_by_handle_atHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_munmapHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_set_robust_listHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_setpriorityHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_lgetxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_name_to_handle_atHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getsocknameHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getrusageHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getgroups16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_prlimit64Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_memfd_createHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_signalfd4Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_adjtimexHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getsockoptHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_personalityHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_setschedulerHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_getparamHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_clock_sys_nanosleepHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_get_priority_minHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_sched_setaffinityHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_remap_file_pagesHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_removexattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getresgid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_setsockoptHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getdentsHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_io_destroyHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_clock_getresHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_shmctlHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_setregid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_setitimerHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_utimensatHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_inotify_add_watchHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_msgrcvHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_epoll_createHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_getegid16Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_socketpairHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_rt_sigactionHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_epoll_create1Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_fsetxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_ppollHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_get_mempolicyHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_rt_sigsuspendHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_llseekHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_old_readdirHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_shmgetHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mremapHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_inotify_rm_watchHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_madviseHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_msggetHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_epoll_ctlHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_fgetxattrHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_mknodHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_shmatHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_eventfd2Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_getpriorityHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_inotify_init1Handler(_In_ void *Detour);
-INTSTATUS IntLixsys_io_setupHandler(_In_ void *Detour);
-INTSTATUS IntLixsys_ioprio_getHandler(_In_ void *Detour);
 INTSTATUS IntLixGetcwdHandler(_In_ void *Detour);
 INTSTATUS IntLixnanosleepHandler(_In_ void *Detour);
 INTSTATUS IntLixclock_nanosleepHandler(_In_ void *Detour);
+
 ///
 /// @brief Create a new #LIX_FN_DETOUR entry.
 ///
@@ -395,9 +292,9 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_sendmsg,                    IntLixSendmsgHandler,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_recvfrom,                   IntLixRecvfromHandler,          DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_recvmsg,                    IntLixRecvmsgHandler,           DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_close,                      IntLixCloseHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_dup,                        IntLixDupHandler,               DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_dup2,                       IntLixDup2Handler,              DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(sys_close,                      IntLixCloseHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_waitid,                     IntLixWaitidHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_wait4,                      IntLixWait4Handler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_sched_rr_get_interval,      IntLixSched_rr_get_intervalHandler,             DETOUR_ENABLE_ALWAYS                                    ),
@@ -413,8 +310,8 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_getcwd,                     IntLixGetcwdHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_nanosleep,              IntLixnanosleepHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_clock_nanosleep,              IntLixclock_nanosleepHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+  
     
-
 };
 
 char *d_path(QWORD addr){
@@ -454,6 +351,7 @@ IntLixclock_nanosleepHandler(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -465,6 +363,7 @@ IntLixclock_nanosleepHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("clock_nanosleep");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -472,7 +371,7 @@ IntLixclock_nanosleepHandler(
     strcpy(buf01,buf0);
     DWORD RetLength1 = 0;
     BYTE buf1[0x12] = {0};
-    status =IntVirtMemRead(pRegs->R11,0x10,pRegs->Cr3,buf1,&RetLength1);
+    status =IntVirtMemRead(pRegs->R9,0x10,pRegs->Cr3,buf1,&RetLength1);
     struct timespec sin;
     memcpy(&sin, &buf1, sizeof(sin));
     // LOG("[open] arg:(%s,%d,0%o),execname:%s,procName:%s,path:%s,%s,pid:%d,tgid:%d,return:%d,cmdline:%s,pwd:%s\n",buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Path->Name,pTask->Path->Path,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -493,6 +392,7 @@ IntLixnanosleepHandler(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -504,6 +404,7 @@ IntLixnanosleepHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("nanosleep\n");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -546,6 +447,7 @@ IntLixSetgid16Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_setgid16");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -581,6 +483,7 @@ IntLixOldumountHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_oldumount");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -618,6 +521,7 @@ IntLixGettidHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_gettid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -652,6 +556,7 @@ IntLixGetpidHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getpid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -686,6 +591,7 @@ IntLixSendmmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sendmmsg");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -720,6 +626,7 @@ IntLixSched_yieldHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sched_yield");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -754,6 +661,7 @@ IntLixSetuid16Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_setuid16");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -789,6 +697,7 @@ IntLixExecveatHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_execveat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -861,6 +770,7 @@ IntLixExecveHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_execve");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -903,6 +813,7 @@ IntLixSched_rr_get_intervalHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sched_rr_get_interval");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -938,6 +849,7 @@ IntLixWaitidHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_waitid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -973,6 +885,7 @@ IntLixWait4Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_wait4");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1009,6 +922,7 @@ IntLixDup2Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_dup2");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1092,6 +1006,7 @@ IntLixDupHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_dup");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1151,6 +1066,7 @@ IntLixCloseHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_close");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1208,6 +1124,7 @@ IntLixRecvmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_recvmsg");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1243,6 +1160,7 @@ IntLixRecvfromHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_recvfrom");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1294,6 +1212,7 @@ IntLixSendmsgHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sendmsg");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1329,6 +1248,7 @@ IntLixSendtoHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sendto");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1380,6 +1300,7 @@ IntLixConnectHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_connect");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1432,6 +1353,7 @@ IntLixBindHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_bind");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1484,6 +1406,7 @@ IntLixAccept4Handler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_accept4");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1536,6 +1459,7 @@ IntLixAcceptHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_accept");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1589,6 +1513,7 @@ IntLixGetcwdHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getcwd");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1628,6 +1553,7 @@ IntLixOpenHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("do_sys_open");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1640,6 +1566,58 @@ IntLixOpenHandler(
     buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
 
     return INT_STATUS_SUCCESS;
+}
+char *solvestring(char *buf,int n){
+    char *p = (char*)malloc(sizeof(char)*100);
+    int i=0;
+    p[0]='\0';
+    try{
+        char ch = buf[0];
+      } 
+      catch{
+        return p;
+      }
+    int num = 0;
+    while (i<n)
+    {
+        switch (buf[i])
+        {
+        case 7:
+            p[num++]='\\';
+            p[num++]='a';
+            break;
+        case 8:
+            p[num++]='\\';
+            p[num++]='b';
+            break;
+        case 12:
+            p[num++]='\\';
+            p[num++]='f';
+            break;
+        case 9:
+            p[num++]='\\';
+            p[num++]='t';
+            break;
+        case 11:
+            p[num++]='\\';
+            p[num++]='v';
+            break;
+        case 10:
+            p[num++]='\\';
+            p[num++]='n';
+            break;
+        case 13:
+            p[num++]='\\';
+            p[num++]='r';
+            break;
+        default:
+            p[num++]=buf[i];
+            break;
+        }
+        i++;
+    }
+    p[num]='\0';
+    return p;
 }
 //1234
 INTSTATUS
@@ -1666,6 +1644,7 @@ IntLixWriteHandle(
     }
     // LOG("%d\n",pTask->AgentTag);
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_write");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1674,9 +1653,10 @@ IntLixWriteHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    char *buf3 = solvestring(buf,RetLength);
     if ((int)pRegs->R9<0){
         LOG("[write] arg:(%lu,%s,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         
         // LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         // IntLixStackDumpUmStackTrace(pTask);
@@ -1702,12 +1682,12 @@ IntLixWriteHandle(
     if (!INT_SUCCESS(status))
     {
         LOG("[write] arg:(%lu,%s,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         
         // LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     }else{
         LOG("[write] arg:(%s,%s,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        path,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         
         // LOG("process %s [%d,%d] sys_write(%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     }
@@ -1738,6 +1718,7 @@ IntLixFinit_moduleHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_finit_module");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1807,6 +1788,7 @@ IntLixDelete_moduleHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_delete_module");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1845,6 +1827,7 @@ IntLixInit_moduleHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_init_module");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1883,6 +1866,7 @@ IntLixRebootHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_reboot");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1918,6 +1902,7 @@ IntLixNewunameHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_newuname");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1958,6 +1943,7 @@ IntLixPerf_event_openHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_perf_event_open");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -1993,6 +1979,7 @@ IntLixClock_gettimeHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_clock_gettime");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2033,6 +2020,7 @@ IntLixSelectHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_select");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2068,6 +2056,7 @@ IntLixSigactionHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("do_sigaction");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2103,6 +2092,7 @@ IntLixPrctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_prctl");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2139,13 +2129,14 @@ IntLixMmap_pgoffHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_mmap_pgoff");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
     char buf01[32];
     strcpy(buf01,buf0);
     if ((int)pRegs->R13<0){
-        LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
+        LOG("[mmap_pgoff] arg:(0x%x,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
@@ -2155,7 +2146,7 @@ IntLixMmap_pgoffHandle(
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
     if (!INT_SUCCESS(status))
     {
-        LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
+        LOG("[mmap_pgoff] arg:(0x%x,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
@@ -2173,12 +2164,12 @@ IntLixMmap_pgoffHandle(
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
-    LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
+    LOG("[mmap_pgoff] arg:(0x%x,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%lu,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pRegs->R14,pRegs->R15);
     else
-    LOG("[mmap_pgoff] arg:(%lu,%lu,%lu,%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
+    LOG("[mmap_pgoff] arg:(0x%x,%lu,%lu,%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R15,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_mmap_pgoff(%lu,%lu,%lu,%lu,%s,%lu) = %ld\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,path,pRegs->R14,pRegs->R15);
@@ -2208,6 +2199,7 @@ IntLixPread64Handle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_pread64");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2276,6 +2268,7 @@ IntLixPwrite64Handle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_pwrite64");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2344,6 +2337,7 @@ IntLixNewfstatatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_newfstatat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2412,6 +2406,7 @@ IntLixLstatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_lstat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2450,6 +2445,7 @@ IntLixStatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_stat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2483,6 +2479,7 @@ IntLixFstatHandle(
     UNREFERENCED_PARAMETER(Detour);
     pTask = IntLixTaskFindByGva(pRegs->R8);
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fstat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2553,6 +2550,7 @@ IntLixAccessHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_access");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2591,6 +2589,7 @@ IntLixSymlinkatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_symlinkat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2632,6 +2631,7 @@ IntLixSymlinkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_symlink");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2672,6 +2672,7 @@ IntLixLinkatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_linkat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2712,6 +2713,7 @@ IntLixUnlinkatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_unlinkat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2762,6 +2764,7 @@ IntLixUnlinkHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -2773,6 +2776,7 @@ IntLixUnlinkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_unlink");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2811,6 +2815,7 @@ IntLixLinkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_link");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2851,6 +2856,7 @@ IntLixOpenatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_openat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2919,6 +2925,7 @@ IntLixCreatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_creat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2957,6 +2964,7 @@ IntLixMkdirHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_mkdir");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -2995,6 +3003,7 @@ IntLixRenameatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_renameat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3035,6 +3044,7 @@ IntLixRenameat2Handle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_renameat2");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3075,6 +3085,7 @@ IntLixRenameHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_rename");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3115,6 +3126,7 @@ IntLixFchownatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fchownat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3183,6 +3195,7 @@ IntLixFchownHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fchown");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3245,6 +3258,7 @@ IntLixFchmodHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fchmod");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3310,6 +3324,7 @@ IntLixFchmodatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fchmodat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3378,6 +3393,7 @@ IntLixChownHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_chown");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3415,6 +3431,7 @@ IntLixChmodHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_chmod");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3452,6 +3469,7 @@ IntLixFchdirHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fchdir");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3514,6 +3532,7 @@ IntLixKillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_kill");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3548,6 +3567,7 @@ IntLixChrootHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_chroot");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3585,6 +3605,7 @@ IntLixTimeHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_time");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3619,6 +3640,7 @@ IntLixPtraceHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_ptrace");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3653,6 +3675,7 @@ IntLixAlarmHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_alarm");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3687,6 +3710,7 @@ IntLixChdirHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_chdir");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3724,6 +3748,7 @@ IntLixSetresuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_setresuid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3758,6 +3783,7 @@ IntLixGettimeofdayHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_gettimeofday");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3801,6 +3827,7 @@ IntLixBrkHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_brk");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3835,6 +3862,7 @@ IntLixIoctlHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_ioctl");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3869,6 +3897,7 @@ IntLixUmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_umask");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3903,6 +3932,7 @@ IntLixGetrlimitHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getrlimit");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3937,6 +3967,7 @@ IntLixSigprocmaskHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sigprocmask");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -3971,6 +4002,7 @@ IntLixPollHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_poll");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4005,6 +4037,7 @@ IntLixUstatHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("Ustat");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4039,6 +4072,7 @@ IntLixTkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_tkill");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4073,6 +4107,7 @@ IntLixTgkillHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_tgkill");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4107,6 +4142,7 @@ IntLixSeccompHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_seccomp");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4144,6 +4180,7 @@ IntLixSetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_setsid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4178,6 +4215,7 @@ IntLixFstatfsHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_fstatfs");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4241,6 +4279,7 @@ IntLixStatfsHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("Statfs");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4278,6 +4317,7 @@ IntLixCapsetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_capset");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4312,6 +4352,7 @@ IntLixCapgetHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_capget");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4347,6 +4388,7 @@ IntLixSysinfoeHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("do_sysinfo");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4375,6 +4417,7 @@ IntLixShutdownHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4386,6 +4429,7 @@ IntLixShutdownHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_shutdown");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4488,6 +4532,7 @@ IntLixGeteuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_geteuid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4522,6 +4567,7 @@ IntLixGetuidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getuid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4544,7 +4590,7 @@ IntLixGetsidHandle(
 ///
 /// @return INT_STATUS_SUCCESS on success.
 ///
-{
+{  
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4556,6 +4602,7 @@ IntLixGetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getsid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4579,6 +4626,7 @@ IntLixGetppidHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4590,6 +4638,7 @@ IntLixGetppidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_getppid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4613,6 +4662,7 @@ IntLixReadHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status,status1;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4624,6 +4674,7 @@ IntLixReadHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("read");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4632,9 +4683,10 @@ IntLixReadHandle(
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    char *buf3 = solvestring(buf,RetLength);
     if ((int)pRegs->R9<0){
         LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         // LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
         // IntLixStackDumpUmStackTrace(pTask);
         return INT_STATUS_SUCCESS;
@@ -4658,11 +4710,11 @@ IntLixReadHandle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
     LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        pRegs->R9,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         // LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
     else 
     LOG("[read] arg:(%s,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        path,buf,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+        path,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
         // LOG("process %s [%d,%d] sys_read(%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
@@ -4680,6 +4732,7 @@ IntLixSysfsHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4691,6 +4744,7 @@ IntLixSysfsHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("sys_sysfs");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4716,6 +4770,7 @@ IntLixRmdirHandle(
 /// @return INT_STATUS_SUCCESS on success.
 ///
 {
+    
     INTSTATUS status;
     LIX_TASK_OBJECT *pTask;
     IG_ARCH_REGS const *pRegs = &gVcpu->Regs;
@@ -4728,6 +4783,7 @@ IntLixRmdirHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
+    LOG("do_rmdir");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
@@ -4846,7 +4902,7 @@ IntLixApiHook(
             return INT_STATUS_NOT_FOUND;
         }
 
-        // TRACE("[DETOUR] Found function '%s' @ 0x%016llx\n", FnDetour->FunctionName, functionAddress);
+        TRACE("[DETOUR] Found function '%s' @ 0x%016llx\n", FnDetour->FunctionName, functionAddress);
     }
     else
     {

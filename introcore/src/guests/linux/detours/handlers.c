@@ -127,6 +127,7 @@ def_detour_vars(sys_setgid16);
 def_detour_vars(sys_getcwd);
 def_detour_vars(sys_nanosleep);
 def_detour_vars(sys_clock_nanosleep);
+
 def_detour_vars(arch_ptrace);
 def_detour_vars(compat_arch_ptrace);
 def_detour_vars(process_vm_rw_core);
@@ -2549,6 +2550,7 @@ void sys_clock_nanosleep(long which_clock,int flags,long *req,long *rem,int e,in
     long save_rax = __read_reg("rax");
     vmcall_6(det_sys_clock_nanosleep, current_task,save_which_clock,save_flags,save_req,save_rem,save_rax);
 }
+
 // Will be droped by the compiler, but will generate usefull #defines for asm
 void __asm_defines(void)
 {
