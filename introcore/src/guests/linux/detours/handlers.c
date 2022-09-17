@@ -125,7 +125,7 @@ def_detour_vars(sys_gettid);
 def_detour_vars(sys_oldumount);
 def_detour_vars(sys_setgid16);
 def_detour_vars(sys_getcwd);
-def_detour_vars(sys_nanosleep);
+def_detour_vars(hrtimer_nanosleep);
 def_detour_vars(sys_clock_nanosleep);
 
 def_detour_vars(arch_ptrace);
@@ -278,7 +278,7 @@ LIX_HYPERCALL_PAGE hypercall_info __section(".detours") = {
         init_detour_field(sys_oldumount),
         init_detour_field(sys_setgid16),
         init_detour_field(sys_getcwd),
-        init_detour_field(sys_nanosleep),
+        init_detour_field(hrtimer_nanosleep),
         init_detour_field(sys_clock_nanosleep),
     },
 };
@@ -2515,20 +2515,22 @@ void sys_getcwd(char *buf,long size,int c,int d,int e,int f,long *skip_call,
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 __default_fn_attr
-void pre_sys_nanosleep(long *req,long *rem,long c,int d,int e,int f,long *skip_call,
-                    long **save_req,long **save_rem)
+void pre_hrtimer_nanosleep(long *req,long *rem,long mode,long clockid,int e,int f,long *skip_call,
+                    long **save_req,long **save_rem,long *save_mode,long *save_clockid)
 {
     *skip_call=0;
     *save_req=req;
     *save_rem=rem;
+    *save_mode=mode;
+    *save_clockid=clockid;
 }
 
 __default_fn_attr
-void sys_nanosleep(long *req,long *rem,long c,int d,int e,int f,long *skip_call,
-                    long *save_req,long *save_rem)
+void hrtimer_nanosleep(long *req,long *rem,long mode,long clockid,int e,int f,long *skip_call,
+                    long **save_req,long **save_rem,long save_mode,long save_clockid)
 {
     long save_rax = __read_reg("rax");
-    vmcall_4(det_sys_nanosleep, current_task,save_req,save_rem,save_rax);
+    vmcall_6(det_hrtimer_nanosleep, current_task,save_req,save_rem,save_mode,save_clockid,save_rax);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2680,6 +2682,6 @@ void __asm_defines(void)
     def_detour_asm_vars(sys_oldumount);
     def_detour_asm_vars(sys_setgid16);
     def_detour_asm_vars(sys_getcwd);
-    def_detour_asm_vars(sys_nanosleep);
+    def_detour_asm_vars(hrtimer_nanosleep);
     def_detour_asm_vars(sys_clock_nanosleep);
 }

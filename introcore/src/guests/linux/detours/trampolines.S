@@ -294,5 +294,5 @@ def_tramp_ret               sys_gettid                          0   sys_gettid_j
 def_tramp_ret               sys_oldumount                       1   sys_oldumount_jmp
 def_tramp_ret               sys_setgid16                        1   sys_setgid16_jmp
 def_tramp_ret               sys_getcwd                          2   sys_getcwd_jmp
-def_tramp_ret               sys_nanosleep                       2   sys_nanosleep_jmp
+def_tramp_ret               hrtimer_nanosleep                   4   hrtimer_nanosleep_jmp
 def_tramp_ret               sys_clock_nanosleep                 4   sys_clock_nanosleep_jmp

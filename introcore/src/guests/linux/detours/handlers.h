@@ -132,7 +132,7 @@ typedef enum {
     det_sys_oldumount,
     det_sys_setgid16,
     det_sys_getcwd,
-    det_sys_nanosleep,
+    det_hrtimer_nanosleep,
     det_sys_clock_nanosleep,
     
     det_max_id

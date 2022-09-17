@@ -213,19 +213,19 @@ _memcpy:
 	.cfi_def_cfa_offset 32
 	.cfi_offset 2, -32
 # handlers.c:353:     while (len--)
-	xor	ecx, ecx	# ivtmp.519
+	xor	ecx, ecx	# ivtmp.521
 # handlers.c:349: {
 	push	rdx	#
 	.cfi_def_cfa_offset 40
 	.cfi_offset 1, -40
 .L14:
 # handlers.c:353:     while (len--)
-	cmp	rdx, rcx	# len, ivtmp.519
+	cmp	rdx, rcx	# len, ivtmp.521
 	je	.L17	#,
 # handlers.c:355:         *d++ = *s++;
-	mov	dil, BYTE PTR [rsi+rcx]	# _1, MEM[base: src_7(D), index: ivtmp.519_14, offset: 0B]
-	mov	BYTE PTR [rax+rcx], dil	# MEM[base: dest_6(D), index: ivtmp.519_14, offset: 0B], _1
-	inc	rcx	# ivtmp.519
+	mov	dil, BYTE PTR [rsi+rcx]	# _1, MEM[base: src_7(D), index: ivtmp.521_14, offset: 0B]
+	mov	BYTE PTR [rax+rcx], dil	# MEM[base: dest_6(D), index: ivtmp.521_14, offset: 0B], _1
+	inc	rcx	# ivtmp.521
 	jmp	.L14	#
 .L17:
 # handlers.c:359: }
@@ -11317,9 +11317,9 @@ sys_getcwd:
 .LFE218:
 	.size	sys_getcwd, .-sys_getcwd
 	.align 16
-	.globl	pre_sys_nanosleep
-	.type	pre_sys_nanosleep, @function
-pre_sys_nanosleep:
+	.globl	pre_hrtimer_nanosleep
+	.type	pre_hrtimer_nanosleep, @function
+pre_hrtimer_nanosleep:
 .LFB219:
 	.cfi_startproc
 	push	rdi	#
@@ -11328,20 +11328,36 @@ pre_sys_nanosleep:
 	push	rsi	#
 	.cfi_def_cfa_offset 24
 	.cfi_offset 4, -24
-	push	rax	#
+	push	rcx	#
 	.cfi_def_cfa_offset 32
-	.cfi_offset 0, -32
+	.cfi_offset 2, -32
+	push	rdx	#
+	.cfi_def_cfa_offset 40
+	.cfi_offset 1, -40
+	push	rax	#
+	.cfi_def_cfa_offset 48
+	.cfi_offset 0, -48
 # handlers.c:2521:     *skip_call=0;
-	mov	rax, QWORD PTR 32[rsp]	# skip_call, skip_call
+	mov	rax, QWORD PTR 48[rsp]	# skip_call, skip_call
 	mov	QWORD PTR [rax], 0	# *skip_call_2(D),
 # handlers.c:2522:     *save_req=req;
-	mov	rax, QWORD PTR 40[rsp]	# save_req, save_req
+	mov	rax, QWORD PTR 56[rsp]	# save_req, save_req
 	mov	QWORD PTR [rax], rdi	# *save_req_4(D), req
 # handlers.c:2523:     *save_rem=rem;
-	mov	rax, QWORD PTR 48[rsp]	# save_rem, save_rem
+	mov	rax, QWORD PTR 64[rsp]	# save_rem, save_rem
 	mov	QWORD PTR [rax], rsi	# *save_rem_7(D), rem
-# handlers.c:2524: }
+# handlers.c:2524:     *save_mode=mode;
+	mov	rax, QWORD PTR 72[rsp]	# save_mode, save_mode
+	mov	QWORD PTR [rax], rdx	# *save_mode_10(D), mode
+# handlers.c:2525:     *save_clockid=clockid;
+	mov	rax, QWORD PTR 80[rsp]	# save_clockid, save_clockid
+	mov	QWORD PTR [rax], rcx	# *save_clockid_13(D), clockid
+# handlers.c:2526: }
 	pop	rax	#
+	.cfi_def_cfa_offset 40
+	pop	rdx	#
+	.cfi_def_cfa_offset 32
+	pop	rcx	#
 	.cfi_def_cfa_offset 24
 	pop	rsi	#
 	.cfi_def_cfa_offset 16
@@ -11350,66 +11366,78 @@ pre_sys_nanosleep:
 	ret
 	.cfi_endproc
 .LFE219:
-	.size	pre_sys_nanosleep, .-pre_sys_nanosleep
+	.size	pre_hrtimer_nanosleep, .-pre_hrtimer_nanosleep
 	.align 16
-	.globl	sys_nanosleep
-	.type	sys_nanosleep, @function
-sys_nanosleep:
+	.globl	hrtimer_nanosleep
+	.type	hrtimer_nanosleep, @function
+hrtimer_nanosleep:
 .LFB220:
 	.cfi_startproc
-	push	r11	#
+	push	r13	#
 	.cfi_def_cfa_offset 16
-	.cfi_offset 11, -16
-	push	r10	#
+	.cfi_offset 13, -16
+	push	r12	#
 	.cfi_def_cfa_offset 24
-	.cfi_offset 10, -24
-	push	r9	#
+	.cfi_offset 12, -24
+	push	r11	#
 	.cfi_def_cfa_offset 32
-	.cfi_offset 9, -32
-	push	r8	#
+	.cfi_offset 11, -32
+	push	r10	#
 	.cfi_def_cfa_offset 40
-	.cfi_offset 8, -40
-	push	rdi	#
+	.cfi_offset 10, -40
+	push	r9	#
 	.cfi_def_cfa_offset 48
-	.cfi_offset 5, -48
-	push	rax	#
+	.cfi_offset 9, -48
+	push	r8	#
 	.cfi_def_cfa_offset 56
-	.cfi_offset 0, -56
-# handlers.c:2530:     long save_rax = __read_reg("rax");
+	.cfi_offset 8, -56
+	push	rdi	#
+	.cfi_def_cfa_offset 64
+	.cfi_offset 5, -64
+	push	rax	#
+	.cfi_def_cfa_offset 72
+	.cfi_offset 0, -72
+# handlers.c:2532:     long save_rax = __read_reg("rax");
 #APP
-# 2530 "handlers.c" 1
-	mov r11, rax	# val
+# 2532 "handlers.c" 1
+	mov r13, rax	# val
 	
 # 0 "" 2
-# handlers.c:2531:     vmcall_4(det_sys_nanosleep, current_task,save_req,save_rem,save_rax);
+# handlers.c:2533:     vmcall_6(det_hrtimer_nanosleep, current_task,save_req,save_rem,save_mode,save_clockid,save_rax);
 #NO_APP
 	mov	r8d, DWORD PTR hypercall_info[rip+12096]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 2531 "handlers.c" 1
+# 2533 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
-	mov	r9, QWORD PTR 64[rsp]	# __p2, save_req
-	mov	r10, QWORD PTR 72[rsp]	# __p3, save_rem
+	mov	r9, QWORD PTR 80[rsp]	# __p2, save_req
+	mov	r10, QWORD PTR 88[rsp]	# __p3, save_rem
+	mov	r11, QWORD PTR 96[rsp]	# __p4, save_mode
+	mov	r12, QWORD PTR 104[rsp]	# __p5, save_clockid
 	mov	edi, 123	#,
 	call	vmcall	#
-# handlers.c:2532: }
+# handlers.c:2534: }
 	pop	rax	#
-	.cfi_def_cfa_offset 48
+	.cfi_def_cfa_offset 64
 	pop	rdi	#
-	.cfi_def_cfa_offset 40
+	.cfi_def_cfa_offset 56
 	pop	r8	#
-	.cfi_def_cfa_offset 32
+	.cfi_def_cfa_offset 48
 	pop	r9	#
-	.cfi_def_cfa_offset 24
+	.cfi_def_cfa_offset 40
 	pop	r10	#
-	.cfi_def_cfa_offset 16
+	.cfi_def_cfa_offset 32
 	pop	r11	#
+	.cfi_def_cfa_offset 24
+	pop	r12	#
+	.cfi_def_cfa_offset 16
+	pop	r13	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
 .LFE220:
-	.size	sys_nanosleep, .-sys_nanosleep
+	.size	hrtimer_nanosleep, .-hrtimer_nanosleep
 	.align 16
 	.globl	pre_sys_clock_nanosleep
 	.type	pre_sys_clock_nanosleep, @function
@@ -11431,22 +11459,22 @@ pre_sys_clock_nanosleep:
 	push	rax	#
 	.cfi_def_cfa_offset 48
 	.cfi_offset 0, -48
-# handlers.c:2539:     *skip_call=0;
+# handlers.c:2541:     *skip_call=0;
 	mov	rax, QWORD PTR 48[rsp]	# skip_call, skip_call
 	mov	QWORD PTR [rax], 0	# *skip_call_2(D),
-# handlers.c:2540:     *save_which_clock=which_clock;
+# handlers.c:2542:     *save_which_clock=which_clock;
 	mov	rax, QWORD PTR 56[rsp]	# save_which_clock, save_which_clock
 	mov	QWORD PTR [rax], rdi	# *save_which_clock_4(D), which_clock
-# handlers.c:2541:     *save_flags=flags;
+# handlers.c:2543:     *save_flags=flags;
 	mov	rax, QWORD PTR 64[rsp]	# save_flags, save_flags
 	mov	DWORD PTR [rax], esi	# *save_flags_7(D), flags
-# handlers.c:2542:     *save_req=req;
+# handlers.c:2544:     *save_req=req;
 	mov	rax, QWORD PTR 72[rsp]	# save_req, save_req
 	mov	QWORD PTR [rax], rdx	# *save_req_10(D), req
-# handlers.c:2543:     *save_rem=rem;
+# handlers.c:2545:     *save_rem=rem;
 	mov	rax, QWORD PTR 80[rsp]	# save_rem, save_rem
 	mov	QWORD PTR [rax], rcx	# *save_rem_13(D), rem
-# handlers.c:2544: }
+# handlers.c:2546: }
 	pop	rax	#
 	.cfi_def_cfa_offset 40
 	pop	rdx	#
@@ -11491,17 +11519,17 @@ sys_clock_nanosleep:
 	push	rax	#
 	.cfi_def_cfa_offset 72
 	.cfi_offset 0, -72
-# handlers.c:2550:     long save_rax = __read_reg("rax");
+# handlers.c:2552:     long save_rax = __read_reg("rax");
 #APP
-# 2550 "handlers.c" 1
+# 2552 "handlers.c" 1
 	mov r13, rax	# val
 	
 # 0 "" 2
-# handlers.c:2551:     vmcall_6(det_sys_clock_nanosleep, current_task,save_which_clock,save_flags,save_req,save_rem,save_rax);
+# handlers.c:2553:     vmcall_6(det_sys_clock_nanosleep, current_task,save_which_clock,save_flags,save_req,save_rem,save_rax);
 #NO_APP
 	mov	r8d, DWORD PTR hypercall_info[rip+12096]	# hypercall_info.OsSpecificFields.CurrentTaskOffset, hypercall_info.OsSpecificFields.CurrentTaskOffset
 #APP
-# 2551 "handlers.c" 1
+# 2553 "handlers.c" 1
 	mov r8, gs:[r8]	# ret, hypercall_info.OsSpecificFields.CurrentTaskOffset
 # 0 "" 2
 #NO_APP
@@ -11511,7 +11539,7 @@ sys_clock_nanosleep:
 	mov	r12, QWORD PTR 104[rsp]	# __p5, save_rem
 	mov	edi, 124	#,
 	call	vmcall	#
-# handlers.c:2552: }
+# handlers.c:2554: }
 	pop	rax	#
 	.cfi_def_cfa_offset 64
 	pop	rdi	#
@@ -11537,508 +11565,508 @@ sys_clock_nanosleep:
 __asm_defines:
 .LFB223:
 	.cfi_startproc
-# handlers.c:2557:     def_detour_asm_vars(commit_creds);
+# handlers.c:2559:     def_detour_asm_vars(commit_creds);
 #APP
-# 2557 "handlers.c" 1
+# 2559 "handlers.c" 1
 	#define commit_creds_jmp 96	#
 # 0 "" 2
-# handlers.c:2558:     def_detour_asm_vars(arch_jump_label_transform);
-# 2558 "handlers.c" 1
+# handlers.c:2560:     def_detour_asm_vars(arch_jump_label_transform);
+# 2560 "handlers.c" 1
 	#define arch_jump_label_transform_jmp 192	#
 # 0 "" 2
-# handlers.c:2559:     def_detour_asm_vars(module_param_sysfs_setup);
-# 2559 "handlers.c" 1
+# handlers.c:2561:     def_detour_asm_vars(module_param_sysfs_setup);
+# 2561 "handlers.c" 1
 	#define module_param_sysfs_setup_jmp 288	#
 # 0 "" 2
-# handlers.c:2560:     def_detour_asm_vars(module_param_sysfs_remove);
-# 2560 "handlers.c" 1
+# handlers.c:2562:     def_detour_asm_vars(module_param_sysfs_remove);
+# 2562 "handlers.c" 1
 	#define module_param_sysfs_remove_jmp 384	#
 # 0 "" 2
-# handlers.c:2561:     def_detour_asm_vars(wake_up_new_task);
-# 2561 "handlers.c" 1
+# handlers.c:2563:     def_detour_asm_vars(wake_up_new_task);
+# 2563 "handlers.c" 1
 	#define wake_up_new_task_jmp 480	#
 # 0 "" 2
-# handlers.c:2562:     def_detour_asm_vars(flush_old_exec);
-# 2562 "handlers.c" 1
+# handlers.c:2564:     def_detour_asm_vars(flush_old_exec);
+# 2564 "handlers.c" 1
 	#define flush_old_exec_jmp 576	#
 # 0 "" 2
-# handlers.c:2563:     def_detour_asm_vars(begin_new_exec);
-# 2563 "handlers.c" 1
+# handlers.c:2565:     def_detour_asm_vars(begin_new_exec);
+# 2565 "handlers.c" 1
 	#define begin_new_exec_jmp 672	#
 # 0 "" 2
-# handlers.c:2564:     def_detour_asm_vars(do_exit);
-# 2564 "handlers.c" 1
+# handlers.c:2566:     def_detour_asm_vars(do_exit);
+# 2566 "handlers.c" 1
 	#define do_exit_jmp 768	#
 # 0 "" 2
-# handlers.c:2565:     def_detour_asm_vars(arch_ptrace);
-# 2565 "handlers.c" 1
+# handlers.c:2567:     def_detour_asm_vars(arch_ptrace);
+# 2567 "handlers.c" 1
 	#define arch_ptrace_jmp 864	#
 # 0 "" 2
-# handlers.c:2566:     def_detour_asm_vars(compat_arch_ptrace);
-# 2566 "handlers.c" 1
+# handlers.c:2568:     def_detour_asm_vars(compat_arch_ptrace);
+# 2568 "handlers.c" 1
 	#define compat_arch_ptrace_jmp 960	#
 # 0 "" 2
-# handlers.c:2567:     def_detour_asm_vars(process_vm_rw_core);
-# 2567 "handlers.c" 1
+# handlers.c:2569:     def_detour_asm_vars(process_vm_rw_core);
+# 2569 "handlers.c" 1
 	#define process_vm_rw_core_jmp 1056	#
 # 0 "" 2
-# handlers.c:2568:     def_detour_asm_vars(__vma_link_rb);
-# 2568 "handlers.c" 1
+# handlers.c:2570:     def_detour_asm_vars(__vma_link_rb);
+# 2570 "handlers.c" 1
 	#define __vma_link_rb_jmp 1152	#
 # 0 "" 2
-# handlers.c:2569:     def_detour_asm_vars(change_protection);
-# 2569 "handlers.c" 1
+# handlers.c:2571:     def_detour_asm_vars(change_protection);
+# 2571 "handlers.c" 1
 	#define change_protection_jmp 1248	#
 # 0 "" 2
-# handlers.c:2570:     def_detour_asm_vars(vma_adjust);
-# 2570 "handlers.c" 1
+# handlers.c:2572:     def_detour_asm_vars(vma_adjust);
+# 2572 "handlers.c" 1
 	#define vma_adjust_jmp 1344	#
 # 0 "" 2
-# handlers.c:2571:     def_detour_asm_vars(__vma_adjust);
-# 2571 "handlers.c" 1
+# handlers.c:2573:     def_detour_asm_vars(__vma_adjust);
+# 2573 "handlers.c" 1
 	#define __vma_adjust_jmp 1440	#
 # 0 "" 2
-# handlers.c:2572:     def_detour_asm_vars(vma_rb_erase);
-# 2572 "handlers.c" 1
+# handlers.c:2574:     def_detour_asm_vars(vma_rb_erase);
+# 2574 "handlers.c" 1
 	#define vma_rb_erase_jmp 1536	#
 # 0 "" 2
-# handlers.c:2573:     def_detour_asm_vars(__vma_rb_erase);
-# 2573 "handlers.c" 1
+# handlers.c:2575:     def_detour_asm_vars(__vma_rb_erase);
+# 2575 "handlers.c" 1
 	#define __vma_rb_erase_jmp 1632	#
 # 0 "" 2
-# handlers.c:2574:     def_detour_asm_vars(expand_downwards);
-# 2574 "handlers.c" 1
+# handlers.c:2576:     def_detour_asm_vars(expand_downwards);
+# 2576 "handlers.c" 1
 	#define expand_downwards_jmp 1728	#
 # 0 "" 2
-# handlers.c:2575:     def_detour_asm_vars(complete_signal);
-# 2575 "handlers.c" 1
+# handlers.c:2577:     def_detour_asm_vars(complete_signal);
+# 2577 "handlers.c" 1
 	#define complete_signal_jmp 1824	#
 # 0 "" 2
-# handlers.c:2576:     def_detour_asm_vars(text_poke);
-# 2576 "handlers.c" 1
+# handlers.c:2578:     def_detour_asm_vars(text_poke);
+# 2578 "handlers.c" 1
 	#define text_poke_jmp 1920	#
 # 0 "" 2
-# handlers.c:2577:     def_detour_asm_vars(__text_poke);
-# 2577 "handlers.c" 1
+# handlers.c:2579:     def_detour_asm_vars(__text_poke);
+# 2579 "handlers.c" 1
 	#define __text_poke_jmp 2016	#
 # 0 "" 2
-# handlers.c:2578:     def_detour_asm_vars(ftrace_write);
-# 2578 "handlers.c" 1
+# handlers.c:2580:     def_detour_asm_vars(ftrace_write);
+# 2580 "handlers.c" 1
 	#define ftrace_write_jmp 2112	#
 # 0 "" 2
-# handlers.c:2579:     def_detour_asm_vars(panic);
-# 2579 "handlers.c" 1
+# handlers.c:2581:     def_detour_asm_vars(panic);
+# 2581 "handlers.c" 1
 	#define panic_jmp 2208	#
 # 0 "" 2
-# handlers.c:2580:     def_detour_asm_vars(crash_kexec);
-# 2580 "handlers.c" 1
+# handlers.c:2582:     def_detour_asm_vars(crash_kexec);
+# 2582 "handlers.c" 1
 	#define crash_kexec_jmp 2304	#
 # 0 "" 2
-# handlers.c:2581:     def_detour_asm_vars(__access_remote_vm);
-# 2581 "handlers.c" 1
+# handlers.c:2583:     def_detour_asm_vars(__access_remote_vm);
+# 2583 "handlers.c" 1
 	#define __access_remote_vm_jmp 2400	#
 # 0 "" 2
-# handlers.c:2583:     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
-# 2583 "handlers.c" 1
+# handlers.c:2585:     def_detour_hijack_asm_vars(mprotect_fixup, vma_wants_writenotify);
+# 2585 "handlers.c" 1
 	#define mprotect_fixup_vma_wants_writenotify_jmp 2496	#
 # 0 "" 2
-# handlers.c:2584:     def_detour_hijack_asm_vars(do_munmap, rb_erase);
-# 2584 "handlers.c" 1
+# handlers.c:2586:     def_detour_hijack_asm_vars(do_munmap, rb_erase);
+# 2586 "handlers.c" 1
 	#define do_munmap_rb_erase_jmp 2592	#
 # 0 "" 2
-# handlers.c:2585:     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
-# 2585 "handlers.c" 1
+# handlers.c:2587:     def_detour_hijack_asm_vars(vma_adjust, rb_erase);
+# 2587 "handlers.c" 1
 	#define vma_adjust_rb_erase_jmp 2688	#
 # 0 "" 2
-# handlers.c:2587:     def_detour_asm_vars(do_rmdir);
-# 2587 "handlers.c" 1
+# handlers.c:2589:     def_detour_asm_vars(do_rmdir);
+# 2589 "handlers.c" 1
 	#define do_rmdir_jmp 2784	#
 # 0 "" 2
-# handlers.c:2588:     def_detour_asm_vars(sys_sysfs);
-# 2588 "handlers.c" 1
+# handlers.c:2590:     def_detour_asm_vars(sys_sysfs);
+# 2590 "handlers.c" 1
 	#define sys_sysfs_jmp 2880	#
 # 0 "" 2
-# handlers.c:2589:     def_detour_asm_vars(sys_read);
-# 2589 "handlers.c" 1
+# handlers.c:2591:     def_detour_asm_vars(sys_read);
+# 2591 "handlers.c" 1
 	#define sys_read_jmp 2976	#
 # 0 "" 2
-# handlers.c:2590:     def_detour_asm_vars(sys_getppid);
-# 2590 "handlers.c" 1
+# handlers.c:2592:     def_detour_asm_vars(sys_getppid);
+# 2592 "handlers.c" 1
 	#define sys_getppid_jmp 3072	#
 # 0 "" 2
-# handlers.c:2591:     def_detour_asm_vars(sys_getsid);
-# 2591 "handlers.c" 1
+# handlers.c:2593:     def_detour_asm_vars(sys_getsid);
+# 2593 "handlers.c" 1
 	#define sys_getsid_jmp 3168	#
 # 0 "" 2
-# handlers.c:2592:     def_detour_asm_vars(sys_getuid);
-# 2592 "handlers.c" 1
+# handlers.c:2594:     def_detour_asm_vars(sys_getuid);
+# 2594 "handlers.c" 1
 	#define sys_getuid_jmp 3264	#
 # 0 "" 2
-# handlers.c:2593:     def_detour_asm_vars(sys_geteuid);
-# 2593 "handlers.c" 1
+# handlers.c:2595:     def_detour_asm_vars(sys_geteuid);
+# 2595 "handlers.c" 1
 	#define sys_geteuid_jmp 3360	#
 # 0 "" 2
-# handlers.c:2594:     def_detour_asm_vars(sys_shutdown);
-# 2594 "handlers.c" 1
+# handlers.c:2596:     def_detour_asm_vars(sys_shutdown);
+# 2596 "handlers.c" 1
 	#define sys_shutdown_jmp 3456	#
 # 0 "" 2
-# handlers.c:2595:     def_detour_asm_vars(do_sysinfo);
-# 2595 "handlers.c" 1
+# handlers.c:2597:     def_detour_asm_vars(do_sysinfo);
+# 2597 "handlers.c" 1
 	#define do_sysinfo_jmp 3552	#
 # 0 "" 2
-# handlers.c:2596:     def_detour_asm_vars(sys_capget);
-# 2596 "handlers.c" 1
+# handlers.c:2598:     def_detour_asm_vars(sys_capget);
+# 2598 "handlers.c" 1
 	#define sys_capget_jmp 3648	#
 # 0 "" 2
-# handlers.c:2597:     def_detour_asm_vars(sys_capset);
-# 2597 "handlers.c" 1
+# handlers.c:2599:     def_detour_asm_vars(sys_capset);
+# 2599 "handlers.c" 1
 	#define sys_capset_jmp 3744	#
 # 0 "" 2
-# handlers.c:2598:     def_detour_asm_vars(sys_statfs);
-# 2598 "handlers.c" 1
+# handlers.c:2600:     def_detour_asm_vars(sys_statfs);
+# 2600 "handlers.c" 1
 	#define sys_statfs_jmp 3840	#
 # 0 "" 2
-# handlers.c:2599:     def_detour_asm_vars(sys_fstatfs);
-# 2599 "handlers.c" 1
+# handlers.c:2601:     def_detour_asm_vars(sys_fstatfs);
+# 2601 "handlers.c" 1
 	#define sys_fstatfs_jmp 3936	#
 # 0 "" 2
-# handlers.c:2600:     def_detour_asm_vars(sys_setsid);
-# 2600 "handlers.c" 1
+# handlers.c:2602:     def_detour_asm_vars(sys_setsid);
+# 2602 "handlers.c" 1
 	#define sys_setsid_jmp 4032	#
 # 0 "" 2
-# handlers.c:2601:     def_detour_asm_vars(sys_seccomp);
-# 2601 "handlers.c" 1
+# handlers.c:2603:     def_detour_asm_vars(sys_seccomp);
+# 2603 "handlers.c" 1
 	#define sys_seccomp_jmp 4128	#
 # 0 "" 2
-# handlers.c:2602:     def_detour_asm_vars(sys_tgkill);
-# 2602 "handlers.c" 1
+# handlers.c:2604:     def_detour_asm_vars(sys_tgkill);
+# 2604 "handlers.c" 1
 	#define sys_tgkill_jmp 4224	#
 # 0 "" 2
-# handlers.c:2603:     def_detour_asm_vars(sys_tkill);
-# 2603 "handlers.c" 1
+# handlers.c:2605:     def_detour_asm_vars(sys_tkill);
+# 2605 "handlers.c" 1
 	#define sys_tkill_jmp 4320	#
 # 0 "" 2
-# handlers.c:2604:     def_detour_asm_vars(sys_ustat);
-# 2604 "handlers.c" 1
+# handlers.c:2606:     def_detour_asm_vars(sys_ustat);
+# 2606 "handlers.c" 1
 	#define sys_ustat_jmp 4416	#
 # 0 "" 2
-# handlers.c:2605:     def_detour_asm_vars(sys_poll);
-# 2605 "handlers.c" 1
+# handlers.c:2607:     def_detour_asm_vars(sys_poll);
+# 2607 "handlers.c" 1
 	#define sys_poll_jmp 4512	#
 # 0 "" 2
-# handlers.c:2606:     def_detour_asm_vars(sys_sigprocmask);
-# 2606 "handlers.c" 1
+# handlers.c:2608:     def_detour_asm_vars(sys_sigprocmask);
+# 2608 "handlers.c" 1
 	#define sys_sigprocmask_jmp 4608	#
 # 0 "" 2
-# handlers.c:2607:     def_detour_asm_vars(sys_getrlimit);
-# 2607 "handlers.c" 1
+# handlers.c:2609:     def_detour_asm_vars(sys_getrlimit);
+# 2609 "handlers.c" 1
 	#define sys_getrlimit_jmp 4704	#
 # 0 "" 2
-# handlers.c:2608:     def_detour_asm_vars(sys_umask);
-# 2608 "handlers.c" 1
+# handlers.c:2610:     def_detour_asm_vars(sys_umask);
+# 2610 "handlers.c" 1
 	#define sys_umask_jmp 4800	#
 # 0 "" 2
-# handlers.c:2609:     def_detour_asm_vars(sys_ioctl);
-# 2609 "handlers.c" 1
+# handlers.c:2611:     def_detour_asm_vars(sys_ioctl);
+# 2611 "handlers.c" 1
 	#define sys_ioctl_jmp 4896	#
 # 0 "" 2
-# handlers.c:2610:     def_detour_asm_vars(sys_brk);
-# 2610 "handlers.c" 1
+# handlers.c:2612:     def_detour_asm_vars(sys_brk);
+# 2612 "handlers.c" 1
 	#define sys_brk_jmp 4992	#
 # 0 "" 2
-# handlers.c:2611:     def_detour_asm_vars(sys_gettimeofday);
-# 2611 "handlers.c" 1
+# handlers.c:2613:     def_detour_asm_vars(sys_gettimeofday);
+# 2613 "handlers.c" 1
 	#define sys_gettimeofday_jmp 5088	#
 # 0 "" 2
-# handlers.c:2612:     def_detour_asm_vars(sys_setresuid);
-# 2612 "handlers.c" 1
+# handlers.c:2614:     def_detour_asm_vars(sys_setresuid);
+# 2614 "handlers.c" 1
 	#define sys_setresuid_jmp 5184	#
 # 0 "" 2
-# handlers.c:2613:     def_detour_asm_vars(sys_chdir);
-# 2613 "handlers.c" 1
+# handlers.c:2615:     def_detour_asm_vars(sys_chdir);
+# 2615 "handlers.c" 1
 	#define sys_chdir_jmp 5280	#
 # 0 "" 2
-# handlers.c:2614:     def_detour_asm_vars(sys_alarm);
-# 2614 "handlers.c" 1
+# handlers.c:2616:     def_detour_asm_vars(sys_alarm);
+# 2616 "handlers.c" 1
 	#define sys_alarm_jmp 5376	#
 # 0 "" 2
-# handlers.c:2615:     def_detour_asm_vars(sys_ptrace);
-# 2615 "handlers.c" 1
+# handlers.c:2617:     def_detour_asm_vars(sys_ptrace);
+# 2617 "handlers.c" 1
 	#define sys_ptrace_jmp 5472	#
 # 0 "" 2
-# handlers.c:2616:     def_detour_asm_vars(sys_time);
-# 2616 "handlers.c" 1
+# handlers.c:2618:     def_detour_asm_vars(sys_time);
+# 2618 "handlers.c" 1
 	#define sys_time_jmp 5568	#
 # 0 "" 2
-# handlers.c:2617:     def_detour_asm_vars(sys_chroot);
-# 2617 "handlers.c" 1
+# handlers.c:2619:     def_detour_asm_vars(sys_chroot);
+# 2619 "handlers.c" 1
 	#define sys_chroot_jmp 5664	#
 # 0 "" 2
-# handlers.c:2618:     def_detour_asm_vars(sys_kill);
-# 2618 "handlers.c" 1
+# handlers.c:2620:     def_detour_asm_vars(sys_kill);
+# 2620 "handlers.c" 1
 	#define sys_kill_jmp 5760	#
 # 0 "" 2
-# handlers.c:2619:     def_detour_asm_vars(sys_fchdir);
-# 2619 "handlers.c" 1
+# handlers.c:2621:     def_detour_asm_vars(sys_fchdir);
+# 2621 "handlers.c" 1
 	#define sys_fchdir_jmp 5856	#
 # 0 "" 2
-# handlers.c:2620:     def_detour_asm_vars(sys_chmod);
-# 2620 "handlers.c" 1
+# handlers.c:2622:     def_detour_asm_vars(sys_chmod);
+# 2622 "handlers.c" 1
 	#define sys_chmod_jmp 5952	#
 # 0 "" 2
-# handlers.c:2621:     def_detour_asm_vars(sys_chown);
-# 2621 "handlers.c" 1
+# handlers.c:2623:     def_detour_asm_vars(sys_chown);
+# 2623 "handlers.c" 1
 	#define sys_chown_jmp 6048	#
 # 0 "" 2
-# handlers.c:2622:     def_detour_asm_vars(sys_fchmodat);
-# 2622 "handlers.c" 1
+# handlers.c:2624:     def_detour_asm_vars(sys_fchmodat);
+# 2624 "handlers.c" 1
 	#define sys_fchmodat_jmp 6144	#
 # 0 "" 2
-# handlers.c:2623:     def_detour_asm_vars(sys_fchmod);
-# 2623 "handlers.c" 1
+# handlers.c:2625:     def_detour_asm_vars(sys_fchmod);
+# 2625 "handlers.c" 1
 	#define sys_fchmod_jmp 6240	#
 # 0 "" 2
-# handlers.c:2624:     def_detour_asm_vars(sys_fchown);
-# 2624 "handlers.c" 1
+# handlers.c:2626:     def_detour_asm_vars(sys_fchown);
+# 2626 "handlers.c" 1
 	#define sys_fchown_jmp 6336	#
 # 0 "" 2
-# handlers.c:2625:     def_detour_asm_vars(sys_fchownat);
-# 2625 "handlers.c" 1
+# handlers.c:2627:     def_detour_asm_vars(sys_fchownat);
+# 2627 "handlers.c" 1
 	#define sys_fchownat_jmp 6432	#
 # 0 "" 2
-# handlers.c:2626:     def_detour_asm_vars(sys_rename);
-# 2626 "handlers.c" 1
+# handlers.c:2628:     def_detour_asm_vars(sys_rename);
+# 2628 "handlers.c" 1
 	#define sys_rename_jmp 6528	#
 # 0 "" 2
-# handlers.c:2627:     def_detour_asm_vars(sys_renameat2);
-# 2627 "handlers.c" 1
+# handlers.c:2629:     def_detour_asm_vars(sys_renameat2);
+# 2629 "handlers.c" 1
 	#define sys_renameat2_jmp 6624	#
 # 0 "" 2
-# handlers.c:2628:     def_detour_asm_vars(sys_renameat);
-# 2628 "handlers.c" 1
+# handlers.c:2630:     def_detour_asm_vars(sys_renameat);
+# 2630 "handlers.c" 1
 	#define sys_renameat_jmp 6720	#
 # 0 "" 2
-# handlers.c:2629:     def_detour_asm_vars(sys_mkdir);
-# 2629 "handlers.c" 1
+# handlers.c:2631:     def_detour_asm_vars(sys_mkdir);
+# 2631 "handlers.c" 1
 	#define sys_mkdir_jmp 6816	#
 # 0 "" 2
-# handlers.c:2630:     def_detour_asm_vars(sys_creat);
-# 2630 "handlers.c" 1
+# handlers.c:2632:     def_detour_asm_vars(sys_creat);
+# 2632 "handlers.c" 1
 	#define sys_creat_jmp 6912	#
 # 0 "" 2
-# handlers.c:2631:     def_detour_asm_vars(sys_openat);
-# 2631 "handlers.c" 1
+# handlers.c:2633:     def_detour_asm_vars(sys_openat);
+# 2633 "handlers.c" 1
 	#define sys_openat_jmp 7008	#
 # 0 "" 2
-# handlers.c:2632:     def_detour_asm_vars(sys_link);
-# 2632 "handlers.c" 1
+# handlers.c:2634:     def_detour_asm_vars(sys_link);
+# 2634 "handlers.c" 1
 	#define sys_link_jmp 7104	#
 # 0 "" 2
-# handlers.c:2633:     def_detour_asm_vars(sys_unlink);
-# 2633 "handlers.c" 1
+# handlers.c:2635:     def_detour_asm_vars(sys_unlink);
+# 2635 "handlers.c" 1
 	#define sys_unlink_jmp 7200	#
 # 0 "" 2
-# handlers.c:2634:     def_detour_asm_vars(sys_unlinkat);
-# 2634 "handlers.c" 1
+# handlers.c:2636:     def_detour_asm_vars(sys_unlinkat);
+# 2636 "handlers.c" 1
 	#define sys_unlinkat_jmp 7296	#
 # 0 "" 2
-# handlers.c:2635:     def_detour_asm_vars(sys_linkat);
-# 2635 "handlers.c" 1
+# handlers.c:2637:     def_detour_asm_vars(sys_linkat);
+# 2637 "handlers.c" 1
 	#define sys_linkat_jmp 7392	#
 # 0 "" 2
-# handlers.c:2636:     def_detour_asm_vars(sys_symlink);
-# 2636 "handlers.c" 1
+# handlers.c:2638:     def_detour_asm_vars(sys_symlink);
+# 2638 "handlers.c" 1
 	#define sys_symlink_jmp 7488	#
 # 0 "" 2
-# handlers.c:2637:     def_detour_asm_vars(sys_symlinkat);
-# 2637 "handlers.c" 1
+# handlers.c:2639:     def_detour_asm_vars(sys_symlinkat);
+# 2639 "handlers.c" 1
 	#define sys_symlinkat_jmp 7584	#
 # 0 "" 2
-# handlers.c:2638:     def_detour_asm_vars(sys_access);
-# 2638 "handlers.c" 1
+# handlers.c:2640:     def_detour_asm_vars(sys_access);
+# 2640 "handlers.c" 1
 	#define sys_access_jmp 7680	#
 # 0 "" 2
-# handlers.c:2639:     def_detour_asm_vars(sys_newfstat);
-# 2639 "handlers.c" 1
+# handlers.c:2641:     def_detour_asm_vars(sys_newfstat);
+# 2641 "handlers.c" 1
 	#define sys_newfstat_jmp 7776	#
 # 0 "" 2
-# handlers.c:2640:     def_detour_asm_vars(sys_newstat);
-# 2640 "handlers.c" 1
+# handlers.c:2642:     def_detour_asm_vars(sys_newstat);
+# 2642 "handlers.c" 1
 	#define sys_newstat_jmp 7872	#
 # 0 "" 2
-# handlers.c:2641:     def_detour_asm_vars(sys_newlstat);
-# 2641 "handlers.c" 1
+# handlers.c:2643:     def_detour_asm_vars(sys_newlstat);
+# 2643 "handlers.c" 1
 	#define sys_newlstat_jmp 7968	#
 # 0 "" 2
-# handlers.c:2642:     def_detour_asm_vars(sys_newfstatat);
-# 2642 "handlers.c" 1
+# handlers.c:2644:     def_detour_asm_vars(sys_newfstatat);
+# 2644 "handlers.c" 1
 	#define sys_newfstatat_jmp 8064	#
 # 0 "" 2
-# handlers.c:2643:     def_detour_asm_vars(sys_pwrite64);
-# 2643 "handlers.c" 1
+# handlers.c:2645:     def_detour_asm_vars(sys_pwrite64);
+# 2645 "handlers.c" 1
 	#define sys_pwrite64_jmp 8160	#
 # 0 "" 2
-# handlers.c:2644:     def_detour_asm_vars(sys_pread64);
-# 2644 "handlers.c" 1
+# handlers.c:2646:     def_detour_asm_vars(sys_pread64);
+# 2646 "handlers.c" 1
 	#define sys_pread64_jmp 8256	#
 # 0 "" 2
-# handlers.c:2645:     def_detour_asm_vars(sys_mmap_pgoff);
-# 2645 "handlers.c" 1
+# handlers.c:2647:     def_detour_asm_vars(sys_mmap_pgoff);
+# 2647 "handlers.c" 1
 	#define sys_mmap_pgoff_jmp 8352	#
 # 0 "" 2
-# handlers.c:2646:     def_detour_asm_vars(sys_prctl);
-# 2646 "handlers.c" 1
+# handlers.c:2648:     def_detour_asm_vars(sys_prctl);
+# 2648 "handlers.c" 1
 	#define sys_prctl_jmp 8448	#
 # 0 "" 2
-# handlers.c:2647:     def_detour_asm_vars(do_sigaction);
-# 2647 "handlers.c" 1
+# handlers.c:2649:     def_detour_asm_vars(do_sigaction);
+# 2649 "handlers.c" 1
 	#define do_sigaction_jmp 8544	#
 # 0 "" 2
-# handlers.c:2648:     def_detour_asm_vars(sys_select);
-# 2648 "handlers.c" 1
+# handlers.c:2650:     def_detour_asm_vars(sys_select);
+# 2650 "handlers.c" 1
 	#define sys_select_jmp 8640	#
 # 0 "" 2
-# handlers.c:2649:     def_detour_asm_vars(sys_clock_gettime);
-# 2649 "handlers.c" 1
+# handlers.c:2651:     def_detour_asm_vars(sys_clock_gettime);
+# 2651 "handlers.c" 1
 	#define sys_clock_gettime_jmp 8736	#
 # 0 "" 2
-# handlers.c:2650:     def_detour_asm_vars(sys_perf_event_open);
-# 2650 "handlers.c" 1
+# handlers.c:2652:     def_detour_asm_vars(sys_perf_event_open);
+# 2652 "handlers.c" 1
 	#define sys_perf_event_open_jmp 8832	#
 # 0 "" 2
-# handlers.c:2651:     def_detour_asm_vars(sys_newuname);
-# 2651 "handlers.c" 1
+# handlers.c:2653:     def_detour_asm_vars(sys_newuname);
+# 2653 "handlers.c" 1
 	#define sys_newuname_jmp 8928	#
 # 0 "" 2
-# handlers.c:2652:     def_detour_asm_vars(sys_reboot);
-# 2652 "handlers.c" 1
+# handlers.c:2654:     def_detour_asm_vars(sys_reboot);
+# 2654 "handlers.c" 1
 	#define sys_reboot_jmp 9024	#
 # 0 "" 2
-# handlers.c:2653:     def_detour_asm_vars(sys_init_module);
-# 2653 "handlers.c" 1
+# handlers.c:2655:     def_detour_asm_vars(sys_init_module);
+# 2655 "handlers.c" 1
 	#define sys_init_module_jmp 9120	#
 # 0 "" 2
-# handlers.c:2654:     def_detour_asm_vars(sys_delete_module);
-# 2654 "handlers.c" 1
+# handlers.c:2656:     def_detour_asm_vars(sys_delete_module);
+# 2656 "handlers.c" 1
 	#define sys_delete_module_jmp 9216	#
 # 0 "" 2
-# handlers.c:2655:     def_detour_asm_vars(sys_finit_module);
-# 2655 "handlers.c" 1
+# handlers.c:2657:     def_detour_asm_vars(sys_finit_module);
+# 2657 "handlers.c" 1
 	#define sys_finit_module_jmp 9312	#
 # 0 "" 2
-# handlers.c:2656:     def_detour_asm_vars(sys_write);
-# 2656 "handlers.c" 1
+# handlers.c:2658:     def_detour_asm_vars(sys_write);
+# 2658 "handlers.c" 1
 	#define sys_write_jmp 9408	#
 # 0 "" 2
-# handlers.c:2657:     def_detour_asm_vars(do_sys_open);
-# 2657 "handlers.c" 1
+# handlers.c:2659:     def_detour_asm_vars(do_sys_open);
+# 2659 "handlers.c" 1
 	#define do_sys_open_jmp 9504	#
 # 0 "" 2
-# handlers.c:2658:     def_detour_asm_vars(sys_accept);
-# 2658 "handlers.c" 1
+# handlers.c:2660:     def_detour_asm_vars(sys_accept);
+# 2660 "handlers.c" 1
 	#define sys_accept_jmp 9600	#
 # 0 "" 2
-# handlers.c:2659:     def_detour_asm_vars(sys_accept4);
-# 2659 "handlers.c" 1
+# handlers.c:2661:     def_detour_asm_vars(sys_accept4);
+# 2661 "handlers.c" 1
 	#define sys_accept4_jmp 9696	#
 # 0 "" 2
-# handlers.c:2660:     def_detour_asm_vars(sys_bind);
-# 2660 "handlers.c" 1
+# handlers.c:2662:     def_detour_asm_vars(sys_bind);
+# 2662 "handlers.c" 1
 	#define sys_bind_jmp 9792	#
 # 0 "" 2
-# handlers.c:2661:     def_detour_asm_vars(sys_connect);
-# 2661 "handlers.c" 1
+# handlers.c:2663:     def_detour_asm_vars(sys_connect);
+# 2663 "handlers.c" 1
 	#define sys_connect_jmp 9888	#
 # 0 "" 2
-# handlers.c:2662:     def_detour_asm_vars(sys_sendto);
-# 2662 "handlers.c" 1
+# handlers.c:2664:     def_detour_asm_vars(sys_sendto);
+# 2664 "handlers.c" 1
 	#define sys_sendto_jmp 9984	#
 # 0 "" 2
-# handlers.c:2663:     def_detour_asm_vars(sys_sendmsg);
-# 2663 "handlers.c" 1
+# handlers.c:2665:     def_detour_asm_vars(sys_sendmsg);
+# 2665 "handlers.c" 1
 	#define sys_sendmsg_jmp 10080	#
 # 0 "" 2
-# handlers.c:2664:     def_detour_asm_vars(sys_recvmsg);
-# 2664 "handlers.c" 1
+# handlers.c:2666:     def_detour_asm_vars(sys_recvmsg);
+# 2666 "handlers.c" 1
 	#define sys_recvmsg_jmp 10272	#
 # 0 "" 2
-# handlers.c:2665:     def_detour_asm_vars(sys_recvfrom);
-# 2665 "handlers.c" 1
+# handlers.c:2667:     def_detour_asm_vars(sys_recvfrom);
+# 2667 "handlers.c" 1
 	#define sys_recvfrom_jmp 10176	#
 # 0 "" 2
-# handlers.c:2666:     def_detour_asm_vars(sys_close);
-# 2666 "handlers.c" 1
+# handlers.c:2668:     def_detour_asm_vars(sys_close);
+# 2668 "handlers.c" 1
 	#define sys_close_jmp 10560	#
 # 0 "" 2
-# handlers.c:2667:     def_detour_asm_vars(sys_dup);
-# 2667 "handlers.c" 1
+# handlers.c:2669:     def_detour_asm_vars(sys_dup);
+# 2669 "handlers.c" 1
 	#define sys_dup_jmp 10368	#
 # 0 "" 2
-# handlers.c:2668:     def_detour_asm_vars(sys_dup2);
-# 2668 "handlers.c" 1
+# handlers.c:2670:     def_detour_asm_vars(sys_dup2);
+# 2670 "handlers.c" 1
 	#define sys_dup2_jmp 10464	#
 # 0 "" 2
-# handlers.c:2670:     def_detour_asm_vars(sys_waitid);
-# 2670 "handlers.c" 1
+# handlers.c:2672:     def_detour_asm_vars(sys_waitid);
+# 2672 "handlers.c" 1
 	#define sys_waitid_jmp 10656	#
 # 0 "" 2
-# handlers.c:2671:     def_detour_asm_vars(sys_wait4);
-# 2671 "handlers.c" 1
+# handlers.c:2673:     def_detour_asm_vars(sys_wait4);
+# 2673 "handlers.c" 1
 	#define sys_wait4_jmp 10752	#
 # 0 "" 2
-# handlers.c:2672:     def_detour_asm_vars(sys_sched_rr_get_interval);
-# 2672 "handlers.c" 1
+# handlers.c:2674:     def_detour_asm_vars(sys_sched_rr_get_interval);
+# 2674 "handlers.c" 1
 	#define sys_sched_rr_get_interval_jmp 10848	#
 # 0 "" 2
-# handlers.c:2673:     def_detour_asm_vars(sys_execve);
-# 2673 "handlers.c" 1
+# handlers.c:2675:     def_detour_asm_vars(sys_execve);
+# 2675 "handlers.c" 1
 	#define sys_execve_jmp 10944	#
 # 0 "" 2
-# handlers.c:2674:     def_detour_asm_vars(sys_execveat);
-# 2674 "handlers.c" 1
+# handlers.c:2676:     def_detour_asm_vars(sys_execveat);
+# 2676 "handlers.c" 1
 	#define sys_execveat_jmp 11040	#
 # 0 "" 2
-# handlers.c:2675:     def_detour_asm_vars(sys_setuid16);
-# 2675 "handlers.c" 1
+# handlers.c:2677:     def_detour_asm_vars(sys_setuid16);
+# 2677 "handlers.c" 1
 	#define sys_setuid16_jmp 11136	#
 # 0 "" 2
-# handlers.c:2676:     def_detour_asm_vars(sys_sched_yield);
-# 2676 "handlers.c" 1
+# handlers.c:2678:     def_detour_asm_vars(sys_sched_yield);
+# 2678 "handlers.c" 1
 	#define sys_sched_yield_jmp 11232	#
 # 0 "" 2
-# handlers.c:2677:     def_detour_asm_vars(sys_sendmmsg);
-# 2677 "handlers.c" 1
+# handlers.c:2679:     def_detour_asm_vars(sys_sendmmsg);
+# 2679 "handlers.c" 1
 	#define sys_sendmmsg_jmp 11328	#
 # 0 "" 2
-# handlers.c:2678:     def_detour_asm_vars(sys_getpid);
-# 2678 "handlers.c" 1
+# handlers.c:2680:     def_detour_asm_vars(sys_getpid);
+# 2680 "handlers.c" 1
 	#define sys_getpid_jmp 11424	#
 # 0 "" 2
-# handlers.c:2679:     def_detour_asm_vars(sys_gettid);
-# 2679 "handlers.c" 1
+# handlers.c:2681:     def_detour_asm_vars(sys_gettid);
+# 2681 "handlers.c" 1
 	#define sys_gettid_jmp 11520	#
 # 0 "" 2
-# handlers.c:2680:     def_detour_asm_vars(sys_oldumount);
-# 2680 "handlers.c" 1
+# handlers.c:2682:     def_detour_asm_vars(sys_oldumount);
+# 2682 "handlers.c" 1
 	#define sys_oldumount_jmp 11616	#
 # 0 "" 2
-# handlers.c:2681:     def_detour_asm_vars(sys_setgid16);
-# 2681 "handlers.c" 1
+# handlers.c:2683:     def_detour_asm_vars(sys_setgid16);
+# 2683 "handlers.c" 1
 	#define sys_setgid16_jmp 11712	#
 # 0 "" 2
-# handlers.c:2682:     def_detour_asm_vars(sys_getcwd);
-# 2682 "handlers.c" 1
+# handlers.c:2684:     def_detour_asm_vars(sys_getcwd);
+# 2684 "handlers.c" 1
 	#define sys_getcwd_jmp 11808	#
 # 0 "" 2
-# handlers.c:2683:     def_detour_asm_vars(sys_nanosleep);
-# 2683 "handlers.c" 1
-	#define sys_nanosleep_jmp 11904	#
+# handlers.c:2685:     def_detour_asm_vars(hrtimer_nanosleep);
+# 2685 "handlers.c" 1
+	#define hrtimer_nanosleep_jmp 11904	#
 # 0 "" 2
-# handlers.c:2684:     def_detour_asm_vars(sys_clock_nanosleep);
-# 2684 "handlers.c" 1
+# handlers.c:2686:     def_detour_asm_vars(sys_clock_nanosleep);
+# 2686 "handlers.c" 1
 	#define sys_clock_nanosleep_jmp 12000	#
 # 0 "" 2
-# handlers.c:2685: }
+# handlers.c:2687: }
 #NO_APP
 	ret
 	.cfi_endproc
@@ -13408,15 +13436,15 @@ hypercall_info:
 	.quad	sys_getcwd_reloc
 	.zero	16
 # Name:
-	.string	"sys_nanosleep"
-	.zero	18
+	.string	"hrtimer_nanosleep"
+	.zero	14
 # HijackName:
 	.byte	0
 	.zero	31
 # Address:
-	.quad	sys_nanosleep_trampoline
+	.quad	hrtimer_nanosleep_trampoline
 # RelocatedCode:
-	.quad	sys_nanosleep_reloc
+	.quad	hrtimer_nanosleep_reloc
 	.zero	16
 # Name:
 	.string	"sys_clock_nanosleep"

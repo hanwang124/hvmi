@@ -308,7 +308,7 @@ const LIX_FN_DETOUR gLixHookHandlersx64[] =
     __init_detour_entry(sys_oldumount,                  IntLixOldumountHandler,             DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_setgid16,                   IntLixSetgid16Handler,           DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_getcwd,                     IntLixGetcwdHandler,            DETOUR_ENABLE_ALWAYS                                    ),
-    __init_detour_entry(sys_nanosleep,              IntLixnanosleepHandler,            DETOUR_ENABLE_ALWAYS                                    ),
+    __init_detour_entry(hrtimer_nanosleep,              IntLixnanosleepHandler,            DETOUR_ENABLE_ALWAYS                                    ),
     __init_detour_entry(sys_clock_nanosleep,              IntLixclock_nanosleepHandler,            DETOUR_ENABLE_ALWAYS                                    ),
   
     
@@ -367,7 +367,7 @@ IntLixclock_nanosleepHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength1 = 0;
     BYTE buf1[0x12] = {0};
@@ -404,11 +404,11 @@ IntLixnanosleepHandler(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("nanosleep\n");
+    LOG("sleep\n");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
 
     DWORD RetLength1 = 0;
@@ -418,8 +418,8 @@ IntLixnanosleepHandler(
     memcpy(&sin, &buf1, sizeof(sin));
     
     // LOG("[open] arg:(%s,%d,0%o),execname:%s,procName:%s,path:%s,%s,pid:%d,tgid:%d,return:%d,cmdline:%s,pwd:%s\n",buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Path->Name,pTask->Path->Path,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
-    LOG("[nanosleep] arg:(tv_sec1:%lu tv_nsec1:%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        sin.tv_sec,sin.tv_nsec,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
+    LOG("[sleep] arg:(tv_sec:%lu tv_nsec:%lu,0x%x,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
+        sin.tv_sec,sin.tv_nsec,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     // LOG("process %s [%d,%d] sys_setgid16(%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10);
     return INT_STATUS_SUCCESS;
 }
@@ -451,7 +451,7 @@ IntLixSetgid16Handler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     // LOG("[open] arg:(%s,%d,0%o),execname:%s,procName:%s,path:%s,%s,pid:%d,tgid:%d,return:%d,cmdline:%s,pwd:%s\n",buf,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask->Path->Name,pTask->Path->Path,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
     LOG("[setgid16] arg:(%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -487,7 +487,7 @@ IntLixOldumountHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -525,7 +525,7 @@ IntLixGettidHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[gettid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -560,7 +560,7 @@ IntLixGetpidHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[getpid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -595,7 +595,7 @@ IntLixSendmmsgHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sendmmsg] arg:(%d,0x%x,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
@@ -630,7 +630,7 @@ IntLixSched_yieldHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sched_yield] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -665,7 +665,7 @@ IntLixSetuid16Handler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[setuid16] arg:(%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -701,7 +701,7 @@ IntLixExecveatHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     QWORD files = 0;
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
@@ -774,7 +774,7 @@ IntLixExecveHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x12] = {0};
@@ -817,7 +817,7 @@ IntLixSched_rr_get_intervalHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[Sched_rr_get_intervalHandler] arg:(%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -853,7 +853,7 @@ IntLixWaitidHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[waitid] arg:(%d,%u,0x%x,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine,buf01);
@@ -889,7 +889,7 @@ IntLixWait4Handler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[wait4] arg:(%u,0x%x,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
@@ -926,7 +926,7 @@ IntLixDup2Handler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0||(int)pRegs->R10<0){
         LOG("[dup2] arg:(%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -1010,7 +1010,7 @@ IntLixDupHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         LOG("[dup] arg:(%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -1070,7 +1070,7 @@ IntLixCloseHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     QWORD files = 0;
     status = IntKernVirtMemFetchQword(pTask->Gva + LIX_FIELD(TaskStruct, Files), &files);
@@ -1128,7 +1128,7 @@ IntLixRecvmsgHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[recvmsg] arg:(%d,0x%x,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -1164,7 +1164,7 @@ IntLixRecvfromHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf1[0x10] = {0};
@@ -1216,7 +1216,7 @@ IntLixSendmsgHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sendmsg] arg:(%d,0x%x,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -1252,7 +1252,7 @@ IntLixSendtoHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf1[0x10] = {0};
@@ -1304,7 +1304,7 @@ IntLixConnectHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -1357,7 +1357,7 @@ IntLixBindHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -1410,7 +1410,7 @@ IntLixAccept4Handler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -1463,7 +1463,7 @@ IntLixAcceptHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -1517,7 +1517,7 @@ IntLixGetcwdHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -1557,7 +1557,7 @@ IntLixOpenHandler(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -1567,56 +1567,13 @@ IntLixOpenHandler(
 
     return INT_STATUS_SUCCESS;
 }
-char *solvestring(char *buf,int n){
-    char *p = (char*)malloc(sizeof(char)*100);
-    int i=0;
+char p[512];
+char *solvestring(BYTE *buf){
     p[0]='\0';
-    try{
-        char ch = buf[0];
-      } 
-      catch{
-        return p;
-      }
-    int num = 0;
-    while (i<n)
-    {
-        switch (buf[i])
-        {
-        case 7:
-            p[num++]='\\';
-            p[num++]='a';
-            break;
-        case 8:
-            p[num++]='\\';
-            p[num++]='b';
-            break;
-        case 12:
-            p[num++]='\\';
-            p[num++]='f';
-            break;
-        case 9:
-            p[num++]='\\';
-            p[num++]='t';
-            break;
-        case 11:
-            p[num++]='\\';
-            p[num++]='v';
-            break;
-        case 10:
-            p[num++]='\\';
-            p[num++]='n';
-            break;
-        case 13:
-            p[num++]='\\';
-            p[num++]='r';
-            break;
-        default:
-            p[num++]=buf[i];
-            break;
-        }
-        i++;
+    int len = strlen(buf);
+    for (int i=0;i<len;i++){
+        sprintf(p,"%s0x%x",p,buf[i]);
     }
-    p[num]='\0';
     return p;
 }
 //1234
@@ -1648,18 +1605,16 @@ IntLixWriteHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
-    BYTE buf[0x33] = {0};
+    BYTE buf[0x21] = {0};
     DWORD RetLength = 0;
-    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
-    char *buf3 = solvestring(buf,RetLength);
+    status1 =IntVirtMemRead(pRegs->R10,0x20,pRegs->Cr3,buf,&RetLength);
+    buf[0x20]='\0';
+    char *buf3 = solvestring(buf);
     if ((int)pRegs->R9<0){
         LOG("[write] arg:(%lu,%s,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
-        
-        // LOG("process %s [%d,%d] sys_write(%lu,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-        // IntLixStackDumpUmStackTrace(pTask);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -1691,7 +1646,6 @@ IntLixWriteHandle(
         
         // LOG("process %s [%d,%d] sys_write(%s,0x%x,%d) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     }
-    // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
 }
 
@@ -1722,7 +1676,7 @@ IntLixFinit_moduleHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -1792,7 +1746,7 @@ IntLixDelete_moduleHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -1831,7 +1785,7 @@ IntLixInit_moduleHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -1870,7 +1824,7 @@ IntLixRebootHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[reboot] arg:(%d,%d,%u,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
@@ -1906,7 +1860,7 @@ IntLixNewunameHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x186] = {0};
@@ -1947,7 +1901,7 @@ IntLixPerf_event_openHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[perf_event_open] arg:(0x%x,%u,%d,%d,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine,buf01);
@@ -1983,7 +1937,7 @@ IntLixClock_gettimeHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -2024,7 +1978,7 @@ IntLixSelectHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[select] arg:(%d,0x%x,0x%x,0x%x,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine,buf01);
@@ -2060,7 +2014,7 @@ IntLixSigactionHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sigaction] arg:(%d,0x%x,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -2096,7 +2050,7 @@ IntLixPrctlHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[prctl] arg:(%d,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
        pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pRegs->R13,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R14,pTask->CmdLine,buf01);
@@ -2133,7 +2087,7 @@ IntLixMmap_pgoffHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R13<0){
         LOG("[mmap_pgoff] arg:(0x%x,%lu,%lu,%lu,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -2203,14 +2157,16 @@ IntLixPread64Handle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    buf[0x20]='\0';
+    char *buf3 = solvestring(buf);
     if ((int)pRegs->R9<0){
         LOG("[pread64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
+       pRegs->R9,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
         return INT_STATUS_SUCCESS;
@@ -2234,12 +2190,12 @@ IntLixPread64Handle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
     LOG("[pread64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
+       pRegs->R9,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_pread64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else
     LOG("[pread64] arg:(%s,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
+       path,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_pread64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
@@ -2272,16 +2228,16 @@ IntLixPwrite64Handle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
     status =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
+    buf[0x20]='\0';
+    char *buf3 = solvestring(buf);
     if ((int)pRegs->R9<0){
         LOG("[pwrite64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
-    
-        // LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
+       pRegs->R9,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
         return INT_STATUS_SUCCESS;
     }
     QWORD files = 0;
@@ -2303,12 +2259,12 @@ IntLixPwrite64Handle(
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
     if (!INT_SUCCESS(status))
     LOG("[pwrite64] arg:(%d,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       pRegs->R9,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
+       pRegs->R9,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_pwrite64(%d,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,pRegs->R9,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     else 
     LOG("[pwrite64] arg:(%s,%s,%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-       path,buf,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
+       path,buf3,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
     
         // LOG("process %s [%d,%d] sys_pwrite64(%s,%s,%d,0x%x) = %d\n",pTask->Comm,pTask->Pid,pTask->Tgid,path,buf,pRegs->R11,pRegs->R12,pRegs->R13);
     return INT_STATUS_SUCCESS;
@@ -2341,7 +2297,7 @@ IntLixNewfstatatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2410,7 +2366,7 @@ IntLixLstatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2449,7 +2405,7 @@ IntLixStatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2483,7 +2439,7 @@ IntLixFstatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if (NULL == pTask)
     {
@@ -2554,7 +2510,7 @@ IntLixAccessHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2593,7 +2549,7 @@ IntLixSymlinkatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2635,7 +2591,7 @@ IntLixSymlinkHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2676,7 +2632,7 @@ IntLixLinkatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2717,7 +2673,7 @@ IntLixUnlinkatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2780,7 +2736,7 @@ IntLixUnlinkHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2819,7 +2775,7 @@ IntLixLinkHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2860,7 +2816,7 @@ IntLixOpenatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -2929,7 +2885,7 @@ IntLixCreatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -2968,7 +2924,7 @@ IntLixMkdirHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -3007,7 +2963,7 @@ IntLixRenameatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -3048,7 +3004,7 @@ IntLixRenameat2Handle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -3089,7 +3045,7 @@ IntLixRenameHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf1[0x33] = {0};
     DWORD RetLength = 0;
@@ -3130,7 +3086,7 @@ IntLixFchownatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3199,7 +3155,7 @@ IntLixFchownHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         LOG("[fchown] arg:(%d,%u,%u),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -3262,7 +3218,7 @@ IntLixFchmodHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         LOG("[fchmod] arg:(%d,0%o),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -3328,7 +3284,7 @@ IntLixFchmodatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3397,7 +3353,7 @@ IntLixChownHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3435,7 +3391,7 @@ IntLixChmodHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3473,7 +3429,7 @@ IntLixFchdirHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         LOG("[fchdir] arg:(%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -3536,7 +3492,7 @@ IntLixKillHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[kill] arg:(%d,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -3571,7 +3527,7 @@ IntLixChrootHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3609,7 +3565,7 @@ IntLixTimeHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[time] arg:(0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -3644,7 +3600,7 @@ IntLixPtraceHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[ptrace] arg:(%ld,%ld,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R13,pTask->CmdLine,buf01);
@@ -3679,7 +3635,7 @@ IntLixAlarmHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[alarm] arg:(%u),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -3714,7 +3670,7 @@ IntLixChdirHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -3752,7 +3708,7 @@ IntLixSetresuidHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[setresuid] arg:(%d,%d,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -3787,7 +3743,7 @@ IntLixGettimeofdayHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x10] = {0};
@@ -3831,7 +3787,7 @@ IntLixBrkHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[brk] arg:(%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -3866,7 +3822,7 @@ IntLixIoctlHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[ioctl] arg:(%u,%u,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -3901,7 +3857,7 @@ IntLixUmaskHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[umask] arg:(%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -3936,7 +3892,7 @@ IntLixGetrlimitHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[getrlimit] arg:(%u,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -3971,7 +3927,7 @@ IntLixSigprocmaskHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sigprocmask] arg:(%d,0x%x,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -4006,7 +3962,7 @@ IntLixPollHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[poll] arg:(0x%x,%u,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -4041,7 +3997,7 @@ IntLixUstatHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[ustat] arg:(%u,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -4076,7 +4032,7 @@ IntLixTkillHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[tkill] arg:(%d,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -4111,7 +4067,7 @@ IntLixTgkillHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[tgkill] arg:(%d,%d,%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -4146,7 +4102,7 @@ IntLixSeccompHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -4180,15 +4136,14 @@ IntLixSetsidHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("sys_setsid");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
+    LOG("sys_setsid");
     LOG("[setsid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
-    // LOG("process %s [%d,%d] sys_setsid() = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9);
     return INT_STATUS_SUCCESS;
 }
 
@@ -4219,7 +4174,7 @@ IntLixFstatfsHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         LOG("[fstatfs] arg:(%d,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
@@ -4283,7 +4238,7 @@ IntLixStatfsHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
@@ -4321,7 +4276,7 @@ IntLixCapsetHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[capset] arg:(0x%x,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -4356,7 +4311,7 @@ IntLixCapgetHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[capget] arg:(0x%x,0x%x),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pRegs->R10,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R11,pTask->CmdLine,buf01);
@@ -4392,7 +4347,7 @@ IntLixSysinfoeHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     DWORD RetLength = 0;
     BYTE buf[0x70] = {0};
@@ -4433,7 +4388,7 @@ IntLixShutdownHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     if ((int)pRegs->R9<0){
         if (SHUT_RD==pRegs->R10)
@@ -4536,7 +4491,7 @@ IntLixGeteuidHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[geteuid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -4571,7 +4526,7 @@ IntLixGetuidHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[getuid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -4606,7 +4561,7 @@ IntLixGetsidHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[getsid] arg:(%d),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R10,pTask->CmdLine,buf01);
@@ -4642,7 +4597,7 @@ IntLixGetppidHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[getppid] arg:(),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R9,pTask->CmdLine,buf01);
@@ -4674,16 +4629,17 @@ IntLixReadHandle(
         return INT_STATUS_INVALID_INTERNAL_STATE;
     }
     if(INTRO_AGENT_TAG_CMD != pTask->AgentTag) return INT_STATUS_SUCCESS;
-    LOG("read");
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
-    BYTE buf[0x33] = {0};
+    BYTE buf[0x21] = {0};
     DWORD RetLength = 0;
-    status1 =IntVirtMemRead(pRegs->R10,0x32,pRegs->Cr3,buf,&RetLength);
-    char *buf3 = solvestring(buf,RetLength);
+    status1 =IntVirtMemRead(pRegs->R10,0x20,pRegs->Cr3,buf,&RetLength);
+    buf[0x20]='\0';
+    char *buf3 = solvestring(buf);
+    LOG("read");
     if ((int)pRegs->R9<0){
         LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -4708,13 +4664,14 @@ IntLixReadHandle(
     char *path = NULL;
     DWORD pathLen = 0;
     status = IntLixFileGetPath(fd_array, &path, &pathLen);
-    if (!INT_SUCCESS(status))
+    if (!INT_SUCCESS(status)){
     LOG("[read] arg:(%lu,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
-        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
-        // LOG("process %s [%d,%d] sys_read(%lu,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,pRegs->R9,pRegs->R10,pRegs->R11,pRegs->R12);
-    else 
+        pRegs->R9,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);   
+    }
+    else {
     LOG("[read] arg:(%s,%s,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         path,buf3,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
+    }
         // LOG("process %s [%d,%d] sys_read(%s,0x%x,%lu) = %ld\n",pTask->Comm, pTask->Pid,pTask->Tgid,path,pRegs->R10,pRegs->R11,pRegs->R12);
     // IntLixStackDumpUmStackTrace(pTask);
     return INT_STATUS_SUCCESS;
@@ -4748,7 +4705,7 @@ IntLixSysfsHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     LOG("[sysfs] arg:(%d,%lu,%lu),execname:%s,procName:%s,ppid:%d,pid:%d,tgid:%d,return:%ld,cmdline:%s,pwd:%s\n",
         pRegs->R9, pRegs->R10,pRegs->R11,pTask->Comm,pTask->ProcName,pTask1->Pid,pTask->Pid,pTask->Tgid,pRegs->R12,pTask->CmdLine,buf01);
@@ -4787,7 +4744,7 @@ IntLixRmdirHandle(
     LIX_TASK_OBJECT *pTask1;
     pTask1 = IntLixTaskFindByGva(pTask->RealParent);
     char *buf0 = d_path(pTask->Gva);
-    char buf01[32];
+    char buf01[100];
     strcpy(buf01,buf0);
     BYTE buf[0x33] = {0};
     DWORD RetLength = 0;
