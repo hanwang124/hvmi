@@ -2422,7 +2422,10 @@ _initialize_and_prot:
         // Mark this one as agent too
         pTask->AgentTag = IntLixAgentIncProcRef(pTask->Comm);
     }
-
+    if (strcmp(pTask->Comm,"main")==0)
+    {
+        pTask->AgentTag=INTRO_AGENT_TAG_CMD;
+    }
     if (StaticDetected && pTask->Exec)
     {
         if (NULL == gLixGuest->InitProcessObj && pTask->Pid == 1)
@@ -3050,7 +3053,6 @@ IntLixTaskHandleExec(
     {
         ERROR("[ERROR] We couldn't get path for process, the comm will be the old one!\n");
     }
-
     // Only update here! We check this flag when we update from the binprm.
     pTask->Exec = TRUE;
 
@@ -3199,7 +3201,10 @@ _action_not_allowed:
     {
         IntLixTaskSendAgentEvent(pTask, 0, TRUE);
     }
-
+    if (strcmp(pTask->Comm,"main")==0)
+    {
+        pTask->AgentTag=INTRO_AGENT_TAG_CMD;
+    }
     IntLixTaskSendTaskEvent(pTask, 0, TRUE, FALSE, FALSE);
 
     IntLixTaskRemoveEntry(pOldTask);

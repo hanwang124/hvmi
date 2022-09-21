@@ -1,0 +1,331 @@
+-- Logs begin at Sat 2022-08-20 19:25:54 CST. --
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 6
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 5
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 4
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 3
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 2
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 1
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 0
+9月 20 19:05:56 huawei hvmid[2158]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Unmap all
+9月 20 19:05:56 huawei hvmid[2145]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Parked
+9月 20 19:05:56 huawei hvmid[2145]: Hypervisor Memory Introspection Daemon shutdown complete
+-- Reboot --
+9月 20 19:12:09 huawei hvmid[2199]: Hypervisor Memory Introspection Daemon starting
+9月 20 19:12:09 huawei hvmid[2199]: Loading default policy file /usr/local/etc/hvmid/policies/default.json
+9月 20 19:12:09 huawei hvmid[2199]: Hardware concurrency: 4
+9月 20 19:12:09 huawei hvmid[2199]: Registering handlers
+9月 20 19:12:09 huawei hvmid[2199]: Waiting for domains to be started
+9月 20 19:12:10 huawei hvmid[2199]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Handshake authCookie: ''
+9月 20 19:12:10 huawei hvmid[2199]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Found domain: 'target'
+9月 20 19:12:10 huawei hvmid[2199]: Loading policy file /usr/local/etc/hvmid/policies/98af69e3-91ef-4003-8bfb-f7a62f6fc157.json
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Setting page cache limit to 512 mappings
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] The hypervisor backend has chosen a page cache limit of 512 mappings
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Guest start time: 1663667528
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 251 IntroCore initialised: version 1.133.0, build 00202, changeset 778fd91, built on Sep 20 2022 17:34:12 from branch amber
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Introcore init complete
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Introcore about to be initialized with options 0x7ff7ef7ffffff: km_nt km_hal km_hal_heap_exec km_hal_int_ctrl km_ssdt km_idt km_hdt km_sys_cr3 km_token km_nt_drivers km_av_drivers km_xen_drivers km_drvobj km_cr4 km_msr_syscall km_idtr km_self_map_entry km_gdtr kvm_logger_ctx km_nt_eat_reads um_misc_procs um_sys_procs evt_process evt_module evt_os_crash evt_process_crash agent_injection full_path_protection beta_detections bugcheck_cleanup in_guest_pt_filter
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Loading live update file /usr/local/share/introcore/intro_live_update.bin
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 135 [INTRO-INIT] Will use options: 0x0007ff7ef7ffffff
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1685 [INFO] Loaded cami version 1.4 build 0
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] No #VE support!
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] No VMFUNC support!
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] DTR events supported
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 835 [INTRO-INIT] CPU/HV support: #VE: no, VMFUNC: no, SPP: no, DTR events: yes
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 958 [WARNING] Both INTRO_OPT_IN_GUEST_PT_FILTER and INTRO_OPT_VE are set, will ignore INTRO_OPT_VE, because #VE is NOT initialized!
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Domain status: new
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1309 [UPDATE] Requested to update the intro exceptions...
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1467 [UPDATE] Updated exceptions to version 2.2.0
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Successfully loaded exceptions file: /usr/local/share/introcore/exceptions.bin, version: 2.2.0
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Introcore hook timed at 0.0145396 seconds
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Domain name: 'target'
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Waiting for events
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 651 [INTRO-INIT] Will try 0 time to static init the guest on CPU 00 with EFER 0x00000d01 and 4-level paging mode...
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 664 [INTRO-INIT] CPU 00: CR0 = 80050033, CR3 = 000000013108c002, CR4 = 003606f0, RIP = ffffffffb960014f
+9月 20 19:12:10 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 664 [INTRO-INIT] CPU 01: CR0 = 80050033, CR3 = 000000005840a004, CR4 = 003606e0, RIP = ffffffffb8c6c1aa
+9月 20 19:12:10 huawei hvmid[2199]: [4d805b8d-c0b1-4cfb-b523-3e8d700f1354] Handshake authCookie: ''
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 678 [INTRO-INIT] Identified OS type Linux
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1163 [LIXGUEST] KPTI active: 1
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 271 [LIXGUEST] Linux version complete: Linux version 4.15.0-29-generic (buildd@lgw01-amd64-057) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #31-Ubuntu SMP Tue Jul 17 15:39:52 UTC 2018 (Ubuntu 4.15.0-29.31-generic 4.15.18)
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 559 [CAMI] Will set new core options!
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1468 [WARNING] Both INTRO_OPT_IN_GUEST_PT_FILTER and INTRO_OPT_VE are set, will ignore INTRO_OPT_VE, because #VE is NOT initialized!
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1473 [DYNOPT] Change core options from 7ff7e77ffffff to 7ff7e77ffffff
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 581 [CAMI] Will set new shemu options!
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 526 [CAMI] New force off options: 0x0000000000000008
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 582 [OFFSETS] 'current' gs offset: 0x15c00
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 792 [OFFSETS] mm_struct->exe_file offset: 0x3a0
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 712 [OFFSETS] 'thread_struct' offset (task_struct): 0x1280
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1976 [LIX-AGENT] Linux agent state initialized.
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Adding protection for process: main with flags: 0xc0001dfc
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 4480 [PROT] Process main / main protected with c0001dfc
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1247 [LIX-AGENT] Agent with tag '1' (0) start execution on VCPU 1 at RIP ffffffffb8c0042e ...
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 2244 [WARNING] Task with TGID 475 is dead
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 2244 [WARNING] Task with TGID 475 is dead
+9月 20 19:12:11 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 357 [MODULE] Found the 'modules' list at 0xffffffffba0e9a30
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 4989 [LIXAPI] Ensuring no thread will return into our hooks!
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 185 [SWAPGS] 'native_swapgs' already detoured!
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb8c6bbe6 (POP       rbp) in function native_swapgs
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb8c6c691 (SYSRET) in function end_pv_cpu_ops_wbinvd
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb8c6c698 (MOV       eax, edi) in function end_pv_cpu_ops_usergs_sysret64
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9600000 (SYSRET) in function native_usergs_sysret64
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb960001a (MOV       qword ptr gs:[0x14fa0], rsp) in function entry_SYSCALL_64
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9600155 (SYSRET) in function syscall_return_via_sysret
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9601741 (JMP       0xffffffffb960177b) in function paranoid_exit
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb96018b1 (CLD) in function nmi
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9601a26 (POP       r15) in function nmi_swapgs
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9601b10 (MOV       r8d, esp) in function entry_SYSCALL_compat
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9601bfc (SYSRET) in function sysret32_from_system_call
+9月 20 19:12:12 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 302 [SWAPGS] Ignoring at RIP ffffffffb9801ffc (MOV       qword ptr [rel 0xffffffffb97fe1f8], rsp) in function entry_SYSCALL_64_trampoline
+9月 20 19:12:31 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sshd
+9月 20 19:12:32 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sshd
+9月 20 19:12:32 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 kill
+9月 20 19:12:33 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sshd
+9月 20 19:12:36 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sshd
+9月 20 19:12:39 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 systemd
+9月 20 19:12:39 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 30-systemd-envi
+9月 20 19:12:40 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 bash
+9月 20 19:12:40 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 gpgconf
+9月 20 19:12:40 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 gpgconf
+9月 20 19:12:40 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mawk
+9月 20 19:12:40 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 gpg-agent
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 systemctl
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 env
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 run-parts
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 env
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 run-parts
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 uname
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 head
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 tr
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 head
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:44 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:45 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:45 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 tr
+9月 20 19:12:45 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:45 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:46 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:46 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sed
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:12:47 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 stat
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 expr
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 stat
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 expr
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 find
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dirname
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mktemp
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 rm
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:49 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 stat
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mawk
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mount
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mawk
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 apt-config
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 find
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dirname
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mktemp
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dumpe2fs
+9月 20 19:12:50 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 rm
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 stat
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mawk
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 grep
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cut
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 date
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 cat
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 bash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 sftp-server
+9月 20 19:12:51 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 xauth
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 bash
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 groups
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 basename
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dirname
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dircolors
+9月 20 19:12:52 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 mesg
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 main
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3056 ZHANGSHICHEN
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 113 [LIX-CMDLINE] Scan request for task 'main' with PID 3114 using command line './main' (6)
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 118 [ERROR] IntNotifyEngines failed with status: 0xe1000508
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3144 [ERROR] IntLixCmdLineInspect failed with status: 0e1000508
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3161 [EXEC] Process bash (3114, a1d4c000, ffff9f97f7f096c0) exec to /root/main
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3166 [EXEC] Task '/root/main' has command line './main'
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1536 [PROC] Deactivated protection for process '/root/main' (3114, ffff9f97f7f096c0, a1d4c000)!
+9月 20 19:12:57 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 2594 [EXIT] Process /root/main (3114, a1d4c000, ffff9f97f7f096c0), crashed: 0, signal: 0
+9月 20 19:13:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:13:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:13:15 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:16 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:17 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:17 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:17 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 md5sum
+9月 20 19:13:18 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:13:18 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:13:19 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:20 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:22 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:22 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:13:22 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 md5sum
+9月 20 19:14:38 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 nm-dispatcher
+9月 20 19:14:38 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 main
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3056 ZHANGSHICHEN
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 113 [LIX-CMDLINE] Scan request for task 'main' with PID 3137 using command line './main' (6)
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 118 [ERROR] IntNotifyEngines failed with status: 0xe1000508
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3144 [ERROR] IntLixCmdLineInspect failed with status: 0e1000508
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3161 [EXEC] Process bash (3137, b1ae4000, ffff9f97f6ff96c0) exec to /root/main
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3166 [EXEC] Task '/root/main' has command line './main'
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1536 [PROC] Deactivated protection for process '/root/main' (3137, ffff9f97f6ff96c0, b1ae4000)!
+9月 20 19:16:37 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 2594 [EXIT] Process /root/main (3137, b1ae4000, ffff9f97f6ff96c0), crashed: 0, signal: 0
+9月 20 19:19:19 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:19:19 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:19:20 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:21 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:22 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:23 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:23 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dash
+9月 20 19:19:23 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 md5sum
+9月 20 19:19:23 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 python3.6
+9月 20 19:19:24 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:25 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:26 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:27 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 dpkg
+9月 20 19:19:27 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 3053 md5sum
+9月 20 19:20:13 huawei hvmid[2199]: Done waiting for domains
+9月 20 19:20:13 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Signal session over with guest status: connected
+9月 20 19:20:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 38 [DEPLOYER] Injecting agent process 'bdC2V4i7' command line '(null)'
+9月 20 19:20:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1473 [DYNOPT] Change core options from 7ff7e77ffffff to 0
+9月 20 19:20:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 209 [SAFENESS] Live RIP ffffffffc060103a points inside detour 0
+9月 20 19:20:14 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 936 [SAFENESS] IntThrSafeIsLiveRIPInIntro failed for CPU 0
+9月 20 19:20:20 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:20 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:27 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 110 [WARNING] Failed to map the stack page ffffbb4fc1440000 : e2400016
+9月 20 19:20:34 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:34 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:41 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:41 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:42 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:42 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 834 [WARNING] 'gs' for cpu 0 is not in kernel mode: 0
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1246 [INFO] Ignore safeness!
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 227 [STATS] Introspection stats (totaling 1381246 events):
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270         EptViolation:           30 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270              EptRead:           10 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270             EptWrite:           27 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270            EptKernel:           37 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270            EptDecode:           30 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270            EptLookup:           37 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270            EptHandle:           22 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270               EptRMW:           10 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270               Vmcall:      1380421 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270          CrViolation:            1 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270                Timer:          482 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270                 Int3:            4 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270         DeleteRegion:           63 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270            DeleteGva:         4958 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270           HookCommit:            8 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270          PtWriteProc:            2 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270           PtWriteEmu:           27 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270         PtWriteTotal:           22 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270          PtWriteHits:            2 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 270      PtWriteRelevant:            2 times
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1194 [ERROR] There should be no memcloaks remaining... Got one on ffffffffc0601000, 5840a000, 8192!
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] compiler_depend.ts : 1194 [ERROR] There should be no memcloaks remaining... Got one on ffffffffc0603000, 5840a000, 8192!
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Domain status: unhooked
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Introcore shutdown complete
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 6
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 5
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 4
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 3
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 2
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 1
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Events to wait for 0
+9月 20 19:20:48 huawei hvmid[2210]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Unmap all
+9月 20 19:20:48 huawei hvmid[2199]: [98af69e3-91ef-4003-8bfb-f7a62f6fc157] Parked
+9月 20 19:20:48 huawei hvmid[2199]: Hypervisor Memory Introspection Daemon shutdown complete

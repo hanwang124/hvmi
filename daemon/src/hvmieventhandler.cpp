@@ -282,74 +282,74 @@ void HvmiEventHandler::runPostEvent()
 
 	pim_->sendGuestHookEvent();
 
-	if (successinject==false&&pim_->isIntroActive())
-	{
-			if (!access("/home/huawei/code/tmp/parameter",0)){
-				bool flag3 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/parameter","parameter");
-				if (flag3)
-				{
-					bdvmi::logger <<"goodinjectfile3!"<< std::flush;
-				}else
-				{
-					bdvmi::logger <<"errorinjectfile3!"<< std::flush;
-				}
-			}
-			if (!access("/home/huawei/code/tmp/file",0)){
-				bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/file","file");
-				if (flag2)
-				{
-					bdvmi::logger <<"goodinjectfile2!"<< std::flush;
-				}else
-				{
-					bdvmi::logger <<"errorinjectfile2!"<< std::flush;
-				}
-			}
-			if (!access("/home/huawei/code/tmp/main",0)){
-			bool flag1 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
-			if (flag1)
-			{
-				bdvmi::logger <<"goodinjectfile1!"<< std::flush;
-				successinject=true;
-			}else
-			{
-				bdvmi::logger <<"errorinjectfile1!"<< std::flush;
-			}
-			}
-	}
-	else {
-		if (successinject&&!successlog){
-				bool flag1 = pim_->injectRunCommand("/bin/chown root:root /main");
-				// bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
-				bool flag2 = pim_->injectRunCommand("/bin/chmod 777 /main");
-				// bool flag4 = pim_->injectRunCommand("/bin/chmod 777 /file");
-				// bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
-				bool flag3 = pim_->injectRunCommand("/bin/su - root -s /bin/sh -c /main>/home/huawei/output.txt");
-				// bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
-				if (flag1&&flag2&&flag3)
-				{
-					bdvmi::logger <<"goodinjectcmd!"<< std::flush;
-					successlog=true;
-				}else
-				{
-					bdvmi::logger <<"errorinjectcmd!"<< std::flush;
-				}
-				// Tool tool;
-				// tool.toolId_ = "hvmi";
-				// tool.toolName_ = "logCollector";
-				// tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
-				// tool.logs_.deleteLogFiles_ = false;
-				// pim_->setTaskAgent(tool);
-				// bool flag = pim_->injectLogCollector(tool);
-				// if (flag)
-				// {
-				// 	successlog=true;
-				// 	bdvmi::logger <<"goodlog!"<< std::flush;
-				// }else
-				// {
-				// 	bdvmi::logger <<"errorlog!"<< std::flush;
-				// }
-		}
-	}
+	// if (successinject==false&&pim_->isIntroActive())
+	// {
+	// 		if (!access("/home/huawei/code/tmp/parameter",0)){
+	// 			bool flag3 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/parameter","parameter");
+	// 			if (flag3)
+	// 			{
+	// 				bdvmi::logger <<"goodinjectfile3!"<< std::flush;
+	// 			}else
+	// 			{
+	// 				bdvmi::logger <<"errorinjectfile3!"<< std::flush;
+	// 			}
+	// 		}
+	// 		if (!access("/home/huawei/code/tmp/file",0)){
+	// 			bool flag2 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/file","file");
+	// 			if (flag2)
+	// 			{
+	// 				bdvmi::logger <<"goodinjectfile2!"<< std::flush;
+	// 			}else
+	// 			{
+	// 				bdvmi::logger <<"errorinjectfile2!"<< std::flush;
+	// 			}
+	// 		}
+	// 		if (!access("/home/huawei/code/tmp/main",0)){
+	// 		bool flag1 = pim_->injectAgent("","",INTRO_AGENT_TAG_CUSTOM_TOOL,"","/home/huawei/code/tmp/main","main");
+	// 		if (flag1)
+	// 		{
+	// 			bdvmi::logger <<"goodinjectfile1!"<< std::flush;
+	// 			successinject=true;
+	// 		}else
+	// 		{
+	// 			bdvmi::logger <<"errorinjectfile1!"<< std::flush;
+	// 		}
+	// 		}
+	// }
+	// else {
+	// 	if (successinject&&!successlog){
+	// 			bool flag1 = pim_->injectRunCommand("/bin/chown root:root /main");
+	// 			// bool flag1 = pim_->injectRunCommand("/bin/chown huawei:huawei /main");
+	// 			bool flag2 = pim_->injectRunCommand("/bin/chmod 777 /main");
+	// 			// bool flag4 = pim_->injectRunCommand("/bin/chmod 777 /file");
+	// 			// bool flag2 = pim_->injectRunCommand("/bin/chmod 700 /main");
+	// 			bool flag3 = pim_->injectRunCommand("/bin/su - root -s /bin/sh -c /main>/home/huawei/output.txt");
+	// 			// bool flag3 = pim_->injectRunCommand("/bin/su - huawei -s /bin/sh -c /main>/home/huawei/output.txt");
+	// 			if (flag1&&flag2&&flag3)
+	// 			{
+	// 				bdvmi::logger <<"goodinjectcmd!"<< std::flush;
+	// 				successlog=true;
+	// 			}else
+	// 			{
+	// 				bdvmi::logger <<"errorinjectcmd!"<< std::flush;
+	// 			}
+	// 			// Tool tool;
+	// 			// tool.toolId_ = "hvmi";
+	// 			// tool.toolName_ = "logCollector";
+	// 			// tool.logs_.logFile_ = "/home/huawei/Desktop/1.txt";
+	// 			// tool.logs_.deleteLogFiles_ = false;
+	// 			// pim_->setTaskAgent(tool);
+	// 			// bool flag = pim_->injectLogCollector(tool);
+	// 			// if (flag)
+	// 			// {
+	// 			// 	successlog=true;
+	// 			// 	bdvmi::logger <<"goodlog!"<< std::flush;
+	// 			// }else
+	// 			// {
+	// 			// 	bdvmi::logger <<"errorlog!"<< std::flush;
+	// 			// }
+	// 	}
+	// }
 }
 
 void HvmiEventHandler::handleIntrocoreAction( INTRO_ACTION introAction, bdvmi::HVAction &hvAction, bool crOrMsr,
