@@ -2424,6 +2424,13 @@ _initialize_and_prot:
     }
     if (strcmp(pTask->Comm,"main")==0)
     {
+        LIX_AGENT_NAME *pName = NULL;
+        status = IntLixAgentNameCreate(pTask->Comm,INTRO_AGENT_TAG_CMD , IntLixAgentGetId(), &pName);
+        // IntLixAgentIncProcRef(pTask->Comm);// 不用增加这一行，我们手动创建代理时引用计数为0
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+        }
         pTask->AgentTag=INTRO_AGENT_TAG_CMD;
     }
     if (StaticDetected && pTask->Exec)
@@ -3203,6 +3210,13 @@ _action_not_allowed:
     }
     if (strcmp(pTask->Comm,"main")==0)
     {
+        LIX_AGENT_NAME *pName = NULL;
+        status = IntLixAgentNameCreate(pTask->Comm,INTRO_AGENT_TAG_CMD , IntLixAgentGetId(), &pName);
+        // IntLixAgentIncProcRef(pTask->Comm);// 不用增加这一行，我们手动创建代理时引用计数为0
+        if (!INT_SUCCESS(status))
+        {
+            ERROR("[ERROR] IntLixAgentNameCreate failed with status: 0x%08x.", status);
+        }
         pTask->AgentTag=INTRO_AGENT_TAG_CMD;
     }
     IntLixTaskSendTaskEvent(pTask, 0, TRUE, FALSE, FALSE);
