@@ -2518,6 +2518,8 @@ __default_fn_attr
 void pre_hrtimer_nanosleep(long *req,long *rem,long mode,long clockid,int e,int f,long *skip_call,
                     long **save_req,long **save_rem,long *save_mode,long *save_clockid)
 {
+    struct timespec *req1=req;
+    if (req1->tv_sec>3) req1->tv_sec=3;
     *skip_call=0;
     *save_req=req;
     *save_rem=rem;

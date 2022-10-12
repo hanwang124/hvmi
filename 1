@@ -34,7 +34,7 @@ handlers.c:2371:15: warning: assignment makes integer from pointer without a cas
 handlers.c:2372:15: warning: assignment makes integer from pointer without a cast [-Wint-conversion]
      *save_envp=envp;
                ^
-Waiting for the daemon to shutdown gracefully... Done
+Hypervisor Memory Introspection Daemon is not currently running.
 -- Build system used: /usr/bin/make
 -- Build type: Release
 -- Compiler: GNU 7.5.0
@@ -45,9 +45,9 @@ Waiting for the daemon to shutdown gracefully... Done
 -- Generating done
 -- Build files have been written to: /home/huawei/code/hvmi/build
 Consolidate compiler generated dependencies of target bddisasm
-[  3%] Built target bddisasm
+[  6%] Built target bddisasm
 Consolidate compiler generated dependencies of target bdshemu
-[  5%] Built target bdshemu
+[  6%] Built target bdshemu
 Consolidate compiler generated dependencies of target introcore
 [  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixapi.c.o
 In file included from /home/huawei/code/hvmi/introcore/include/decoder.h:8:0,
@@ -9364,10 +9364,69 @@ In file included from /home/huawei/code/hvmi/introcore/include/decoder.h:8:0,
 /home/huawei/code/hvmi/introcore/src/guests/linux/lixapi.c:4423:21: note: ‘sin1.tz_dsttime’ was declared here
      struct timezone sin1;
                      ^~~~
-[  7%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixguest.c.o
-[  8%] Linking C shared library ../bin/x64/Release/libintrocore.so
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixcmdline.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixcrash.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixcred.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixdeployer.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixfastread.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixfiles.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixguest.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixidt.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixkernel.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixksym.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixmm.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixmodule.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixnet.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixprocess.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixstack.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/linux/lixvdso.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/update/update_exceptions.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/update/update_guests.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winagent.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/windeployer.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winguest.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winguest_supported.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winnet.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winpe.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/winhkhnd.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winapi.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winbugcheck.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/windrv_protected.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/windriver.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/windrvobj.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winhal.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winidt.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/wininfinityhook.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winintobj.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winobj.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winpfn.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winpool.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winpower.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winselfmap.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winsud.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winvad.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/wintoken.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/kernel/winsecdesc.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/wincmdline.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/windpi.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winprocess.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winprocesshp.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winstack.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winthread.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winumcache.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winumcrash.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winumdoubleagent.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winummodule.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winummoduleblock.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winumpath.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/guests/windows/user/winuser_checks.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/utils/bitmask.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/utils/crc32.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/utils/rbtree.c.o
+[  6%] Building C object CMakeFiles/introcore.dir/introcore/src/utils/utils.c.o
+[  6%] Linking C shared library ../bin/x64/Release/libintrocore.so
 Copying library to the build directory
-[100%] Built target introcore
+[  6%] Built target introcore
 Loading file jsons/km-signatures-token-privs.json
 Parsing file jsons/km-signatures-token-privs.json
 
@@ -9666,7 +9725,7 @@ Generated 0004 kernel-user exceptions
 Generated 0056 signatures
 -------------------------------
 Total     0153 objects
-[100%] Built target exceptions
+[  6%] Built target exceptions
 Loaded  KiDispatchException32.yaml
 Loaded  MiDeleteVirtualAddresses64.yaml
 Loaded  RtlpVirtualUnwind6.yaml
@@ -9736,17 +9795,17 @@ Loaded 3 linux supported versions.
 Loaded 2 linux dist signatures.
 Loaded 10 windows supported versions.
 Linux OS 4.18.0-[80-166]*el8*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c9400) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e1646550) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 	- Hooks count:  24
 Linux OS 4.18.0-[167-]*el8*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c9400) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e1646550) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  1.128.0.0 (0x1008000000000)
 	- Max intro version:  MAX_ANY
 	- Hooks count:  24
 Linux OS 4.15.0-[24-]*Ubuntu*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c9400) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e1646550) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 	- Hooks count:  121
@@ -9957,46 +10016,46 @@ Functions for Windows OS 17763 (is 64: True)
         - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK5']
         - MiInsertVad                    with  6 patterns and arguments: []
 Windows OS 7600  (kpti: False, 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7600  (kpti: False, 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: False, 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: False, 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7602  (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7602  (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 17763 (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 17763 (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f6cdf2c92e8) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f32e12f4f98) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
-[100%] Built target cami
+[  6%] Built target cami
 [  3%] Built target bddisasm
 [  5%] Built target bdshemu
 Consolidate compiler generated dependencies of target introcore
@@ -10369,17 +10428,17 @@ Loaded 3 linux supported versions.
 Loaded 2 linux dist signatures.
 Loaded 10 windows supported versions.
 Linux OS 4.18.0-[80-166]*el8*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86a588) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179d30) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 	- Hooks count:  24
 Linux OS 4.18.0-[167-]*el8*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86a588) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179d30) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  1.128.0.0 (0x1008000000000)
 	- Max intro version:  MAX_ANY
 	- Hooks count:  24
 Linux OS 4.15.0-[24-]*Ubuntu*:
-	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86a588) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options: Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179d30) : Empty Shemu: off: 0x8 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 	- Hooks count:  121
@@ -10590,43 +10649,43 @@ Functions for Windows OS 17763 (is 64: True)
         - MiProtectVirtualMemory         with 10 patterns and arguments: ['DET_ARG_RDX', 'DET_ARG_R8', 'DET_ARG_R9', 'DET_ARG_STACK5']
         - MiInsertVad                    with  6 patterns and arguments: []
 Windows OS 7600  (kpti: False, 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7600  (kpti: False, 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: False, 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: False, 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7601  (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7602  (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 7602  (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 17763 (kpti: True , 64: False)
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 Windows OS 17763 (kpti: True , 64: True )
-	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7fcbef86ac50) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
+	- Options:  Core: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0 Process: ProcessOptionsList(0x7f9b98179668) : <*, off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0>  Shemu: off: 0x0 beta: 0x0 feedback: 0x0 on: 0x0
 	- Min intro version:  MIN_ANY
 	- Max intro version:  MAX_ANY
 [100%] Built target cami
@@ -10656,6 +10715,6 @@ Consolidate compiler generated dependencies of target hvmid
 Install the project...
 -- Install configuration: "Release"
 -- Up-to-date: /usr/local/etc/hvmid/policies/default.json
--- Installing: /usr/local/etc/hvmid/settings.json
+-- Up-to-date: /usr/local/etc/hvmid/settings.json
 -- Up-to-date: /usr/local/bin/hvmid
 mesg: ttyname failed: Inappropriate ioctl for device
