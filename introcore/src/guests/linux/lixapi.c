@@ -1734,8 +1734,7 @@ char *solvestring(BYTE *buf){
             p[num++]='v';
             break;
         default:
-            if (((long)buf[i])<=127)
-                p[num++]=buf[i];
+            p[num++]=buf[i];
             break;
         }
     }
