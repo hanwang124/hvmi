@@ -1230,8 +1230,21 @@ void sys_alarm(unsigned int seconds,int b,int c,int d,int e,int f,long *skip_cal
 __default_fn_attr
 void pre_sys_alarm(unsigned int seconds,int b,int c,int d,int e,int f,long *skip_call,unsigned int *save_seconds)
 {
-    *skip_call=0;
-    *save_seconds=seconds;
+
+    __asm__ __volatile__ (
+                        "cmp	rdi, 3 \n\t"
+                        "jbe	flag \n\t"
+                        "mov	rdi , 3 \n\t"
+                        "flag: \n\t"
+                        "push	rdi \n\t"
+                        "push	rax \n\t"
+                        "mov	rax, QWORD PTR 24[rsp] \n\t"
+                        "mov	QWORD PTR [rax], 0 \n\t"
+                            "mov	rax, QWORD PTR 32[rsp] \n\t"
+                        "mov	DWORD PTR [rax], edi \n\t"
+                        "pop	rax \n\t"
+                        "pop	rdi \n\t");
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
