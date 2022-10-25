@@ -1067,10 +1067,29 @@ void sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *
 __default_fn_attr
 void pre_sys_poll(long *ufds, unsigned int nfds,int timeout,int d,int e,int f,long *skip_call,long **save_ufds, unsigned int *save_nfds,int *save_timeout)
 {
-    *skip_call=0;
-    *save_ufds=ufds;
-    *save_nfds=nfds;
-    *save_nfds=timeout;
+    __asm__ __volatile__ (
+                        "cmp	rdx, 3 \n\t"
+                        "jbe	flag1 \n\t"
+                        "mov	rdx , 3 \n\t"
+                        "flag1: \n\t"
+                        "push	rdi \n\t"
+                        "push	rsi \n\t"
+                        "push	rdx \n\t"
+                        "push	rax \n\t"
+                        "mov	rax, QWORD PTR 40[rsp] \n\t"
+                        "mov	QWORD PTR [rax], 0 \n\t"
+                            "mov	rax, QWORD PTR 48[rsp] \n\t"
+                        "mov	QWORD PTR [rax], rdi \n\t"
+                        "mov	rax, QWORD PTR 56[rsp] \n\t"
+                        "mov	DWORD PTR [rax], esi \n\t"
+
+                        "mov	rax, QWORD PTR 64[rsp] \n\t"
+                        "mov	DWORD PTR [rax], edx \n\t"
+                        
+                        "pop	rax \n\t"
+                        "pop	rdx \n\t"
+                        "pop	rsi \n\t"
+                        "pop	rdi \n\t");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1892,6 +1911,8 @@ void sys_select(int n,long *inp,long *outp,long *exp,long *tvp,int f,long skip_c
 __default_fn_attr
 void pre_sys_select(int n,long *inp,long *outp,long *exp,long *tvp,int f,long *skip_call,int *save_n,long **save_inp,long **save_outp,long **save_exp,long **save_tvp)
 {
+    struct timespec *tvp1=tvp;
+    if (tvp1->tv_sec>3) tvp1->tv_sec=3;
     *skip_call=0;
     *save_n=n;
     *save_inp=inp;
