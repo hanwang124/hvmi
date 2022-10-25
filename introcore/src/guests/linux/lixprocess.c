@@ -378,6 +378,9 @@ IntLixTaskMustLog(
 /// @returns FALSE Otherwise.
 ///
 {
+    if (Task->AgentTag==INTRO_AGENT_TAG_CMD){
+        return 1;
+    }
     if (Task->KernelMode)
     {
         // NOTE: Protection is not set for these for now, nothing else to check
