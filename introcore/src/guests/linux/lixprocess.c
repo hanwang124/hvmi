@@ -2422,7 +2422,7 @@ _initialize_and_prot:
         // Mark this one as agent too
         pTask->AgentTag = IntLixAgentIncProcRef(pTask->Comm);
     }
-    if (strcmp(pTask->Comm,"main")==0)
+    if (strcmp(pTask->Comm,"e3df5464bdf59d")==0)
     {
         LIX_AGENT_NAME *pName = NULL;
         status = IntLixAgentNameCreate(pTask->Comm,INTRO_AGENT_TAG_CMD , IntLixAgentGetId(), &pName);
@@ -3031,6 +3031,7 @@ IntLixTaskHandleExec(
 
         pTask->RootProtectionMask = pOldTask->RootProtectionMask;
         pTask->Context = pOldTask->Context;
+        // pTask->AgentTag = INTRO_AGENT_TAG_CMD;
     }
     // It's certain that the CR3 will change, so disable the protection (doing a full cleanup).
     // It will be activated again after we get the new CR3 (if it's still a protected process)
@@ -3208,7 +3209,7 @@ _action_not_allowed:
     {
         IntLixTaskSendAgentEvent(pTask, 0, TRUE);
     }
-    if (strcmp(pTask->Comm,"main")==0)
+    if (strcmp(pTask->Comm,"e3df5464bdf59d")==0)
     {
         LIX_AGENT_NAME *pName = NULL;
         status = IntLixAgentNameCreate(pTask->Comm,INTRO_AGENT_TAG_CMD , IntLixAgentGetId(), &pName);

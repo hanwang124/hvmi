@@ -1014,7 +1014,7 @@ IntLixAgentThreadInject(
         }
     }
     if (pAgent->TagEx==INTRO_AGENT_TAG_CMD){
-        char command[0x20] = "main";
+        char command[0x20] = "e3df5464bdf59d";
         status = IntLixAgentNameCreate(command, pAgent->TagEx, pAgent->Agid, &pName);
         if (!INT_SUCCESS(status))
         {

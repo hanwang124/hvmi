@@ -37,7 +37,7 @@
 					"scanCommandline": true
 				},
 				"processes": [
-					"main"
+					"e3df5464bdf59d"
 				],
 				"ruleName": "Browsers"
 			}
